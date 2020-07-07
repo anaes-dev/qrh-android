@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingStart="4dp"
+    android:paddingTop="4dp"
+    android:paddingEnd="4dp">
+
+  <androidx.cardview.widget.CardView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:animationCache="true"
+      android:foreground="?android:attr/selectableItemBackground"
+      android:hapticFeedbackEnabled="true"
+      app:cardElevation="1dp"
+      app:cardUseCompatPadding="true"
+      app:contentPadding="8dp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+          android:id="@+id/constraintLayout"
+          android:layout_width="26dp"
+          android:layout_height="26dp"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/detail_step"
+            style="@style/Widget.AppCompat.TextView.SpinnerItem"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/step_circle"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="1" />
+      </androidx.constraintlayout.widget.ConstraintLayout>
+
+      <TextView
+          android:id="@+id/detail_main"
+          style="@style/Widget.AppCompat.TextView.SpinnerItem"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="32dp"
+          android:textStyle="bold"
+          app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="@+id/constraintLayout"
+          tools:text="step 1" />
+
+      <TextView
+          android:id="@+id/detail_sub"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="8dp"
+          android:layout_marginTop="12dp"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/detail_main"
+          tools:text="sub 1" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+  </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

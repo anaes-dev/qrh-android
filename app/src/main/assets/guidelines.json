@@ -1,0 +1,134 @@
+{
+  "guidelines": [
+    {
+      "codedisplay": "1-1",
+      "title": "Key basic plan",
+      "version": 1
+    },
+    {
+      "codedisplay": "2-1",
+      "title": "Cardiac arrest",
+      "version": 1
+    },
+    {
+      "codedisplay": "2-2",
+      "title": "Hypoxia / desaturation / cyanosis",
+      "version": 1
+    },
+    {
+      "codedisplay": "2-3",
+      "title": "Increased airway pressure",
+      "version":1
+    },
+    {
+      "codedisplay": "2-4",
+      "title": "Hypotension",
+      "version": 1
+    },
+    {
+      "codedisplay": "2-5",
+      "title": "Hypertension",
+      "version": 1
+    },
+    {
+      "codedisplay": "2-6",
+      "title": "Bradycardia",
+      "version": 1
+    },
+    {
+      "codedisplay": "2-7",
+      "title": "Tachycardia",
+      "version": 1
+    },
+    {
+      "codedisplay": "2-8",
+      "title": "Peri-operative hyperthermia",
+      "version": 1
+    },
+    {
+      "codedisplay": "3-1",
+      "title": "Anaphylaxis",
+      "version": 3
+    },
+    {
+      "codedisplay": "3-2",
+      "title": "Massive blood loss",
+      "version": 2
+    },
+    {
+      "codedisplay": "3-3",
+      "title": "Can't intubate, can't oxygenate (CICO)",
+      "version": 1
+    },
+    {
+      "codedisplay": "3-4",
+      "title": "Bronchospasm",
+      "version": 2
+    },
+    {
+      "codedisplay": "3-5",
+      "title": "Circulatory embolus",
+      "version": 1
+    },
+    {
+      "codedisplay": "3-6",
+      "title": "Laryngospasm and stridor",
+      "version": 1
+    },
+    {
+      "codedisplay": "3-7",
+      "title": "Patient fire",
+      "version": 1
+    },
+    {
+      "codedisplay": "3-8",
+      "title": "Malignant hyperthermia crisis",
+      "version": 1
+    },
+    {
+      "codedisplay": "3-9",
+      "title": "Cardiac tamponade",
+      "version": 1
+    },
+    {
+      "codedisplay": "3-10",
+      "title": "Local anaesthetic toxicity",
+      "version": 1
+    },
+    {
+      "codedisplay": "3-11",
+      "title": "High central neuraxial block",
+      "version": 1
+    },
+    {
+      "codedisplay": "3-12",
+      "title": "Cardiac ischaemia",
+      "version": 2
+    },
+    {
+      "codedisplay": "3-13",
+      "title": "Neuroprotection following cardiac arrest",
+      "version": 1
+    },
+    {
+      "codedisplay": "3-14",
+      "title": "Sepsis",
+      "version": 1
+    },
+    {
+      "codedisplay": "4-1",
+      "title": "Mains oxygen failure",
+      "version": 1
+    },
+    {
+      "codedisplay": "4-2",
+      "title": "Mains electricity failure",
+      "version": 1
+    },
+    {
+      "codedisplay": "4-3",
+      "title": "Emergency evacuation",
+      "version": 1
+    }
+  ]
+}
