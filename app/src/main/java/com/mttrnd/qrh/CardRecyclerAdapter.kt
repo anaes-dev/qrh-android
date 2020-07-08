@@ -1,7 +1,5 @@
 package com.mttrnd.qrh
 
-import android.content.Context
-import android.media.Image
 import android.net.Uri
 import android.os.Build
 import android.text.Html
@@ -14,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
 
+@Suppress("DEPRECATION")
 class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -26,12 +25,13 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>) :
         const val VIEW_SIX = 6
         const val VIEW_SEVEN = 7
         const val VIEW_EIGHT = 8
+        const val VIEW_NINE = 9
+        const val VIEW_TEN = 10
     }
 
    interface UpdateViewHolder {
         fun bindViews(detailContent: DetailContent)
     }
-
 
 
     class ViewHolder1(itemView: View) : RecyclerView.ViewHolder(itemView), UpdateViewHolder {
@@ -55,8 +55,11 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>) :
 
     class ViewHolder2(itemView: View) : RecyclerView.ViewHolder(itemView), UpdateViewHolder {
         override fun bindViews(detailContent: DetailContent) {
-            itemView.findViewById<TextView>(R.id.detail_main).setText(Html.fromHtml((detailContent.main)).trim())
-            itemView.findViewById<TextView>(R.id.detail_sub).setText(Html.fromHtml((detailContent.sub)).trim())
+            itemView.findViewById<TextView>(R.id.detail_main).text =
+                Html.fromHtml((detailContent.main)).trim()
+            itemView.findViewById<TextView>(R.id.detail_sub).text =
+                Html.fromHtml((detailContent.sub)).trim()
+
             val subCard = itemView.findViewById<TextView>(R.id.detail_sub)
             val subArrow = itemView.findViewById<ImageView>(R.id.detail_arrow)
 
@@ -90,6 +93,8 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>) :
             6 -> VIEW_SIX
             7 -> VIEW_SEVEN
             8 -> VIEW_EIGHT
+            9 -> VIEW_NINE
+            10 -> VIEW_TEN
             else -> VIEW_THREE
             }
         return type
@@ -101,10 +106,12 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>) :
             VIEW_TWO -> ViewHolder1(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_start, parent, false))
             VIEW_THREE -> ViewHolder1(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_standard, parent, false))
             VIEW_FOUR -> ViewHolder1(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_standard_oneline, parent, false))
-            VIEW_FIVE -> ViewHolder2(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_style1, parent, false))
-            VIEW_SIX -> ViewHolder2(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_style2, parent, false))
-            VIEW_SEVEN -> ViewHolder2(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_style3, parent, false))
-            VIEW_EIGHT -> ViewHolder3(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_image, parent, false))
+            VIEW_FIVE -> ViewHolder2(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_orange, parent, false))
+            VIEW_SIX -> ViewHolder2(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_blue, parent, false))
+            VIEW_SEVEN -> ViewHolder2(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_green, parent, false))
+            VIEW_EIGHT -> ViewHolder2(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_black, parent, false))
+            VIEW_NINE -> ViewHolder2(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_purple, parent, false))
+            VIEW_TEN -> ViewHolder3(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_image, parent, false))
             else ->  ViewHolder1(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_standard, parent, false))
             }
         return viewHolder
@@ -113,7 +120,7 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>) :
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val detailContent: DetailContent = dataSource[position]
         when (dataSource[position].type) {
-            5,6,7 -> {
+            5,6,7,8,9 -> {
                 holder.itemView.setOnClickListener {
                     if(detailContent.collapsed) {
                         detailContent.collapsed = false

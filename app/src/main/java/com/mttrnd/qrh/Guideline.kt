@@ -8,7 +8,7 @@ import org.json.JSONObject
 
 class Guideline(
     val title: String,
-    val codedisplay: String,
+    val code: String,
     val version: Int,
     val url: String) {
 
@@ -18,14 +18,14 @@ class Guideline(
             val guidelineList = ArrayList<Guideline>()
 
             try {
-                val jsonString = loadJsonFromAsset("guidelines.json", context)
+                val jsonString = loadJsonFromAsset(filename, context)
                 val json = JSONObject(jsonString)
                 val guidelines = json.getJSONArray("guidelines")
 
                 (0 until guidelines.length()).mapTo(guidelineList) {
                     Guideline(
                         guidelines.getJSONObject(it).getString("title"),
-                        guidelines.getJSONObject(it).getString("codedisplay"),
+                        guidelines.getJSONObject(it).getString("code"),
                         guidelines.getJSONObject(it).getInt("version"),
                         guidelines.getJSONObject(it).getString("url")
                     )

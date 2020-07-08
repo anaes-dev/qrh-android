@@ -33,7 +33,7 @@ class ListRecyclerAdapter(var dataSource: ArrayList<Guideline>, val clickListene
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListRecyclerAdapter.GuidelineHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GuidelineHolder {
         val inflater = LayoutInflater.from(parent.context)
         return GuidelineHolder(inflater,parent)
     }
@@ -42,10 +42,10 @@ class ListRecyclerAdapter(var dataSource: ArrayList<Guideline>, val clickListene
         return guidelineFilterList.size
     }
 
-    override fun onBindViewHolder(holder: ListRecyclerAdapter.GuidelineHolder, position: Int) {
+    override fun onBindViewHolder(holder: GuidelineHolder, position: Int) {
         val guideline: Guideline = guidelineFilterList[position]
         holder.mTitleView.text = guideline.title
-        holder.mCodeView.text= guideline.codedisplay
+        holder.mCodeView.text= guideline.code
 
         holder.bind(guidelineFilterList[position], clickListener)
         }
@@ -59,10 +59,10 @@ class ListRecyclerAdapter(var dataSource: ArrayList<Guideline>, val clickListene
                     guidelineFilterList = dataSource
                 } else {
                     val resultList = ArrayList<Guideline>()
-                    val charSearch = charSearch.toLowerCase();
+                    val charSearch = charSearch.toLowerCase()
 
                     for (item in dataSource) {
-                        if (item.title.toLowerCase(Locale.ROOT).contains(charSearch.toLowerCase(Locale.ROOT))) {
+                        if ((item.code.toLowerCase(Locale.ROOT)+(item.title.toLowerCase(Locale.ROOT))).contains(charSearch.toLowerCase(Locale.ROOT))) {
                             resultList.add(item)
                         }
                     }
