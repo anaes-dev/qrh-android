@@ -1,5 +1,8 @@
 package com.mttrnd.qrh
 
+import android.content.Context
+import android.media.Image
+import android.net.Uri
 import android.os.Build
 import android.text.Html
 import android.view.LayoutInflater
@@ -8,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 
 
 class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>) :
@@ -21,11 +25,13 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>) :
         const val VIEW_FIVE = 5
         const val VIEW_SIX = 6
         const val VIEW_SEVEN = 7
+        const val VIEW_EIGHT = 8
     }
 
    interface UpdateViewHolder {
         fun bindViews(detailContent: DetailContent)
     }
+
 
 
     class ViewHolder1(itemView: View) : RecyclerView.ViewHolder(itemView), UpdateViewHolder {
@@ -51,10 +57,8 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>) :
         override fun bindViews(detailContent: DetailContent) {
             itemView.findViewById<TextView>(R.id.detail_main).setText(Html.fromHtml((detailContent.main)).trim())
             itemView.findViewById<TextView>(R.id.detail_sub).setText(Html.fromHtml((detailContent.sub)).trim())
-
             val subCard = itemView.findViewById<TextView>(R.id.detail_sub)
             val subArrow = itemView.findViewById<ImageView>(R.id.detail_arrow)
-
 
             if(detailContent.collapsed) {
                 subCard.visibility = View.GONE
@@ -63,6 +67,16 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>) :
                 subCard.visibility = View.VISIBLE
                 subArrow.setImageResource(R.drawable.ic_arrow_down)
             }
+        }
+    }
+
+    class ViewHolder3(itemView: View) : RecyclerView.ViewHolder(itemView), UpdateViewHolder {
+        override fun bindViews(detailContent: DetailContent) {
+            val detailImage = itemView.findViewById<ImageView>(R.id.detail_image)
+            Glide
+                .with(itemView)
+                .load(Uri.parse(detailContent.main))
+                .into(detailImage)
         }
     }
 
@@ -75,6 +89,7 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>) :
             5 -> VIEW_FIVE
             6 -> VIEW_SIX
             7 -> VIEW_SEVEN
+            8 -> VIEW_EIGHT
             else -> VIEW_THREE
             }
         return type
@@ -89,6 +104,7 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>) :
             VIEW_FIVE -> ViewHolder2(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_style1, parent, false))
             VIEW_SIX -> ViewHolder2(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_style2, parent, false))
             VIEW_SEVEN -> ViewHolder2(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_style3, parent, false))
+            VIEW_EIGHT -> ViewHolder3(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_image, parent, false))
             else ->  ViewHolder1(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_standard, parent, false))
             }
         return viewHolder
