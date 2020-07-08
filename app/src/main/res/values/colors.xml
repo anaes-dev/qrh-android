@@ -3,4 +3,28 @@
     <color name="colorPrimary">#F44336</color>
     <color name="colorPrimaryDark">#F44336</color>
     <color name="colorAccent">#0096FF</color>
+
+    <color name="detailItemStandardTXT">#444444</color>
+
+    <color name="detailItemOrangeBG">#FBE9E7</color>
+    <color name="detailItemOrangeARR">#FFCCBC</color>
+    <color name="detailItemOrangeTXT">#E64A19</color>
+
+    <color name="detailItemBlueBG">#E1F5FE</color>
+    <color name="detailItemBlueARR">#BBDEFB</color>
+    <color name="detailItemBlueTXT">#1976D2</color>
+
+    <color name="detailItemGreenBG">#E8F5E9</color>
+    <color name="detailItemGreenARR">#C8E6C9</color>
+    <color name="detailItemGreenTXT">#388E3C</color>
+
+    <color name="detailItemBlackBG">#EDEDED</color>
+    <color name="detailItemBlackARR">#D1D1D1</color>
+    <color name="detailItemBlackTXT">#000000</color>
+
+    <color name="detailItemPurpleBG">#EDE7F6</color>
+    <color name="detailItemPurpleARR">#D1C4E9</color>
+    <color name="detailItemPurpleTXT">#7B1FA2</color>
+
+
 </resources>
