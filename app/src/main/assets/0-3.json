@@ -86,15 +86,9 @@
     },
     {
       "type": 4,
-      "main": "The original handbook PDF can be downloaded by clicking the button at the top-right of the screen.",
+      "main": "The original handbook for each section PDF can be downloaded by clicking the button at the top-right of the screen.",
       "sub": "",
       "step": "!"
-    },
-    {
-      "type": 2,
-      "main": "END",
-      "sub": "",
-      "step": ""
     }
   ]
 }
