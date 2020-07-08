@@ -55,19 +55,20 @@
       <TextView
           android:id="@+id/detail_main"
           style="@style/Widget.AppCompat.TextView.SpinnerItem"
-          android:layout_width="wrap_content"
+          android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:layout_marginStart="32dp"
-          app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
+          android:layout_marginTop="2dp"
+          app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="@+id/constraintLayout"
           tools:text="step 1" />
 
       <TextView
           android:id="@+id/detail_sub"
-          android:visibility="gone"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
+          android:visibility="gone"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="parent" />
 

@@ -1,5 +1,6 @@
 package com.mttrnd.qrh
 
+import android.os.Build
 import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
@@ -27,14 +28,41 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>) :
     }
 
 
-
     class ViewHolder1(itemView: View) : RecyclerView.ViewHolder(itemView), UpdateViewHolder {
         override fun bindViews(detailContent: DetailContent) {
+
+            itemView.findViewById<TextView>(R.id.detail_main).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Html.fromHtml(detailContent.main).trim()
+            } else {
+                Html.fromHtml(detailContent.main, null, BulletHandler()).trim()
+            }
+
+            itemView.findViewById<TextView>(R.id.detail_sub).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Html.fromHtml(detailContent.sub).trim()
+            } else {
+                Html.fromHtml(detailContent.sub, null, BulletHandler()).trim()
+            }
+
+            itemView.findViewById<TextView>(R.id.detail_step).setText(detailContent.step).toString()
         }
     }
+
     class ViewHolder2(itemView: View) : RecyclerView.ViewHolder(itemView), UpdateViewHolder {
         override fun bindViews(detailContent: DetailContent) {
+            itemView.findViewById<TextView>(R.id.detail_main).setText(Html.fromHtml((detailContent.main)).trim())
+            itemView.findViewById<TextView>(R.id.detail_sub).setText(Html.fromHtml((detailContent.sub)).trim())
 
+            val subCard = itemView.findViewById<TextView>(R.id.detail_sub)
+            val subArrow = itemView.findViewById<ImageView>(R.id.detail_arrow)
+
+
+            if(detailContent.collapsed) {
+                subCard.visibility = View.GONE
+                subArrow.setImageResource(R.drawable.ic_arrow_left)
+            } else {
+                subCard.visibility = View.VISIBLE
+                subArrow.setImageResource(R.drawable.ic_arrow_down)
+            }
         }
     }
 
@@ -48,7 +76,7 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>) :
             6 -> VIEW_SIX
             7 -> VIEW_SEVEN
             else -> VIEW_THREE
-        }
+            }
         return type
     }
 
@@ -69,42 +97,25 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>) :
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val detailContent: DetailContent = dataSource[position]
         when (dataSource[position].type) {
-            5,6,7 ->  {
-                holder.apply {
-                    itemView.findViewById<TextView>(R.id.detail_main).setText(Html.fromHtml((detailContent.main)).trim())
-                    itemView.findViewById<TextView>(R.id.detail_sub).setText(Html.fromHtml((detailContent.sub)).trim())
-                }
+            5,6,7 -> {
                 holder.itemView.setOnClickListener {
-                    val subCard = holder.itemView.findViewById<TextView>(R.id.detail_sub)
-                    val subArrow = holder.itemView.findViewById<ImageView>(R.id.detail_arrow)
                     if(detailContent.collapsed) {
-                        subCard.visibility = View.VISIBLE
-                        subArrow.setImageResource(R.drawable.ic_arrow_down)
                         detailContent.collapsed = false
+                        notifyItemChanged(position)
                     } else {
-                        subCard.visibility = View.GONE
-                        subArrow.setImageResource(R.drawable.ic_arrow_left)
                         detailContent.collapsed = true
+                        notifyItemChanged(position)
                     }
                 }
             }
-
-            else -> {
-                holder.apply {
-                    itemView.findViewById<TextView>(R.id.detail_main).setText(Html.fromHtml((detailContent.main)).trim())
-                    itemView.findViewById<TextView>(R.id.detail_sub).setText(Html.fromHtml((detailContent.sub)).trim())
-                    itemView.findViewById<TextView>(R.id.detail_step).setText(detailContent.step).toString()
-                }
-            }
         }
-
         (holder as UpdateViewHolder).bindViews(detailContent)
     }
+
 
     override fun getItemCount(): Int {
         return dataSource.size
     }
-
 
 }
 

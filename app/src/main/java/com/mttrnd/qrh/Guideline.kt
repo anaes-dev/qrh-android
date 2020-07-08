@@ -9,7 +9,8 @@ import org.json.JSONObject
 class Guideline(
     val title: String,
     val codedisplay: String,
-    val version: Int) {
+    val version: Int,
+    val url: String) {
 
     companion object {
 
@@ -25,7 +26,8 @@ class Guideline(
                     Guideline(
                         guidelines.getJSONObject(it).getString("title"),
                         guidelines.getJSONObject(it).getString("codedisplay"),
-                        guidelines.getJSONObject(it).getInt("version")
+                        guidelines.getJSONObject(it).getInt("version"),
+                        guidelines.getJSONObject(it).getString("url")
                     )
                 }
             } catch (e: JSONException) {

@@ -8,6 +8,7 @@ import android.widget.AdapterView
 import android.widget.Filter
 import android.widget.Filterable
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.list_item_guideline.view.*
 import java.util.*
@@ -45,6 +46,7 @@ class ListRecyclerAdapter(var dataSource: ArrayList<Guideline>, val clickListene
         val guideline: Guideline = guidelineFilterList[position]
         holder.mTitleView.text = guideline.title
         holder.mCodeView.text= guideline.codedisplay
+
         holder.bind(guidelineFilterList[position], clickListener)
         }
 
