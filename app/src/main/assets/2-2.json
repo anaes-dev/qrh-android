@@ -21,7 +21,7 @@
     {
       "type": 3,
       "main": "Adequate oxygen delivery",
-      "sub": "<li>Pause surgery if possible.</li>Increase fresh gas flow AND give 100% oxygen AND check measured F<small>i</small>O₂.<li>Visual inspection of entire breathing system including valves and connections.</li><li>Rapidly confirm reservoir bag moving OR ventilator bellows moving.</li><li>If S<small>p</small>O₂ low, is it accurate? Consider whether poor perfusion could be the problem.</li>",
+      "sub": "<li>Pause surgery if possible.</li><li>Increase fresh gas flow AND give 100% oxygen AND check measured F<small>i</small>O₂.<li>Visual inspection of entire breathing system including valves and connections.</li><li>Rapidly confirm reservoir bag moving OR ventilator bellows moving.</li><li>If S<small>p</small>O₂ low, is it accurate? Consider whether poor perfusion could be the problem.</li>",
       "step": "1"
     },
     {
@@ -39,7 +39,7 @@
     {
       "type": 3,
       "main": "Breathing",
-      "sub": "<li>Check chest symmetry, rate, breath sounds, S<small>p</small>O₂, measured VT<small>exp</small>, ETCO₂.</li><li>Feel the airway pressure using reservoir bag and APL valve <b>(Box C)</b> <3 breaths.</li><li>Consider potential causes and actions <b>(Box D)</b>.</li><li>Consider muscle relaxation to optimise ventilation.</li>",
+      "sub": "<li>Check chest symmetry, rate, breath sounds, S<small>p</small>O₂, measured VT<small>exp</small>, ETCO₂.</li><li>Feel the airway pressure using reservoir bag and APL valve <b>(Box C)</b> &lt;3 breaths.</li><li>Consider potential causes and actions <b>(Box D)</b>.</li><li>Consider muscle relaxation to optimise ventilation.</li>",
       "step": "3"
     },
     {
