@@ -15,7 +15,7 @@
     {
       "type": 5,
       "main": "Box A: CRITICAL CHANGES",
-      "sub": "If problem worsens significantly or a new problem arises, call for <strong>help</strong> and go back to <strong>START</strong> of key basic plan.",
+      "sub": "If problem worsens significantly or a new problem arises, call for <b>help</b> and go back to <b>START</b> of key basic plan.",
       "step": ""
     },
     {
@@ -27,7 +27,7 @@
     {
       "type": 3,
       "main": "Adequate oxygen delivery",
-      "sub": "<li>Pause surgery if possible.</li><li>Check fresh gas flow for circuit in use AND check measured F<sub><small>i</small></sub>O<sub><small>2</small></sub> <strong>(Box B)</strong>.</li><li>Visual inspection of entire breathing system including valves and connections.</li><li>Rapidly confirm reservoir bag moving OR ventilator bellows moving.</li>",
+      "sub": "<li>Pause surgery if possible.</li><li>Check fresh gas flow for circuit in use AND check measured F<small>i</small>O₂ <b>(Box B)</b>.</li><li>Visual inspection of entire breathing system including valves and connections.</li><li>Rapidly confirm reservoir bag moving OR ventilator bellows moving.</li>",
       "step": "1"
     },
     {
@@ -39,7 +39,7 @@
     {
       "type": 3,
       "main": "Airway",
-      "sub": "<li>Check position of airway device and listen for noise (including larynx and stomach). <strong>(Box C)</strong></li><li>Check capnogram shape compatible with patent airway.</li><li>Confirm airway device is patent (consider passing suction catheter).</li><li>Consider whether you need to isolate equipment <strong>(Box D)</strong>.</li>",
+      "sub": "<li>Check position of airway device and listen for noise (including larynx and stomach). <b>(Box C)</b></li><li>Check capnogram shape compatible with patent airway.</li><li>Confirm airway device is patent (consider passing suction catheter).</li><li>Consider whether you need to isolate equipment <b>(Box D)</b>.</li>",
       "step": "2"
     },
     {
@@ -51,13 +51,13 @@
     {
       "type": 8,
       "main": "Box D: ISOLATE EQUIPMENT",
-      "sub": "Ventilate lungs using self-inflating bag connected <strong>DIRECTLY</strong> to tracheal tube connector. <strong>DO NOT</strong> use the HME filter, angle piece or catheter mount.<br /><li>If increased pressure manually confirmed, re-connect machine.</li><li>If increased pressure NOT manually confirmed, assume problem with machine/circuit/HME/filter/angle piece/catheter mount:  check and replace as indicated.</li>",
+      "sub": "Ventilate lungs using self-inflating bag connected <b>DIRECTLY</b> to tracheal tube connector. <b>DO NOT</b> use the HME filter, angle piece or catheter mount.<br /><li>If increased pressure manually confirmed, re-connect machine.</li><li>If increased pressure NOT manually confirmed, assume problem with machine/circuit/HME/filter/angle piece/catheter mount:  check and replace as indicated.</li>",
       "step": ""
     },
     {
       "type": 3,
       "main": "Breathing",
-      "sub": "<li>Check chest symmetry, rate, breath sounds, SpO<sub><small>2</small></sub>, measured VT<sub><small>exp</small></sub>, EtCO<sub><small>2</small></sub>.</li><li>Feel the airway pressure using reservoir bag and APL valve <strong>(Box E)</strong> <3 breaths.</li>",
+      "sub": "<li>Check chest symmetry, rate, breath sounds, S<small>p</small>O₂, measured VT<small>exp</small>, ETCO₂.</li><li>Feel the airway pressure using reservoir bag and APL valve <b>(Box E)</b> <3 breaths.</li>",
       "step": "3"
     },
     {
@@ -89,12 +89,6 @@
       "main": "Call for help if problem not resolving quickly.",
       "sub": "",
       "step": "7"
-    },
-    {
-      "type": 2,
-      "main": "END",
-      "sub": "",
-      "step": ""
     }
   ]
 }
