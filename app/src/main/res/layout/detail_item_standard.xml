@@ -8,7 +8,9 @@
     android:orientation="horizontal"
     android:paddingStart="4dp"
     android:paddingTop="4dp"
-    android:paddingEnd="4dp">
+    android:paddingEnd="4dp"
+
+    >
 
   <androidx.cardview.widget.CardView
       android:layout_width="match_parent"
@@ -22,7 +24,8 @@
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent">
+      app:layout_constraintTop_toTopOf="parent"
+  >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
