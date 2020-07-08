@@ -9,7 +9,7 @@
     android:paddingStart="4dp"
     android:paddingTop="4dp"
     android:paddingEnd="4dp"
->
+    >
 
   <androidx.cardview.widget.CardView
       android:layout_width="match_parent"
@@ -18,35 +18,42 @@
       android:layout_marginLeft="32dp"
       android:foreground="?android:attr/selectableItemBackground"
       android:hapticFeedbackEnabled="true"
-      app:cardBackgroundColor="#EDEDED"
+      app:cardBackgroundColor="@color/detailItemBlackBG"
+      app:cardCornerRadius="6dp"
       app:cardElevation="4dp"
       app:cardUseCompatPadding="true"
-      app:contentPadding="8dp"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent">
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingRight="4dp"
+        android:paddingBottom="5dp">
 
       <ImageView
           android:id="@+id/detail_arrow"
           android:layout_width="20dp"
           android:layout_height="20dp"
-          android:background="#D1D1D1"
+          android:layout_marginEnd="2dp"
+          android:layout_marginRight="2dp"
+          android:background="@color/detailItemBlackARR"
           android:contentDescription="@string/arrow"
           android:src="@drawable/ic_arrow_left"
+          app:layout_constraintBottom_toBottomOf="@+id/detail_main"
           app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintTop_toTopOf="parent" />
+          app:layout_constraintTop_toTopOf="@+id/detail_main" />
 
       <TextView
           android:id="@+id/detail_main"
           style="@style/Widget.AppCompat.TextView.SpinnerItem"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
-          android:textColor="#000000"
+          android:textColor="@color/detailItemBlackTXT"
           android:textStyle="bold"
           app:layout_constraintEnd_toStartOf="@+id/detail_arrow"
           app:layout_constraintStart_toStartOf="parent"
