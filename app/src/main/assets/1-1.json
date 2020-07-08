@@ -57,7 +57,7 @@
     {
       "type": 3,
       "main": "Breathing",
-      "sub": "<li>Check chest symmetry, rate, breath sounds, S<small>p</small>O₂, measured VT<small>exp</small>, ETCO₂.</li><li>Feel the airway pressure using reservoir bag and APL valve <b>(Box E)</b> <3 breaths.</li>",
+      "sub": "<li>Check chest symmetry, rate, breath sounds, S<small>p</small>O₂, measured VT<small>exp</small>, ETCO₂.</li><li>Feel the airway pressure using reservoir bag and APL valve <b>(Box E)</b> &lt;3 breaths.</li>",
       "step": "3"
     },
     {
