@@ -3,15 +3,16 @@
 <img src="./readme/screenshot1.png" width="240px"> | <img src="./readme/screenshot2.png" width="240px"> | <img src="./readme/screenshot3.png" width="240px">
 
 ## Features
-- Unofficial derivative of Association of Anaesthetists Quick Reference Handbook (QRH) https://anaesthetists.org/Quick-Reference-Handbook
-- Easily searchable guideline list
+- Unofficial derivative of Association of Anaesthetists Quick Reference Handbook (QRH) www.anaesthetists.org/qrh
+- ***Not endorsed by the Association of Anaesthetists***
+- Rapidly searchable guideline list
 - Simple guideline layout echoing original guidelines
 - Easily updatable through modification of JSON assets
 - [![CC BY-NC-SA 4.0][cc-by-nc-sa-shield]][cc-by-nc-sa] Released under same Creative Commons license as original work
 
 ## Todo
 - [ ] Populate data
-- [ ] Collapsing cards for boxes
+- [x] Collapsing cards for boxes
 - [ ] 1st release
 - [ ] Tablet layout
 
