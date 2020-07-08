@@ -12,7 +12,7 @@
 
 ## Todo
 - [ ] Populate data
-- [*] Collapsing cards for boxes
+- [x] Collapsing cards for boxes
 - [ ] 1st release
 - [ ] Tablet layout
 
