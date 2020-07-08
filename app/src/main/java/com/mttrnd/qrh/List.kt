@@ -1,6 +1,5 @@
 package com.mttrnd.qrh
 
-import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -12,8 +11,6 @@ import android.widget.SearchView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_list.*
@@ -56,7 +53,14 @@ class List : AppCompatActivity() {
         } else {
             if(isAlreadyRunning() != true) {
                 val snack =
-                    Snackbar.make(container, "Unofficial adaptation of Quick Reference Handbook.\nNot endorsed by Association of Anaesthetists.", Snackbar.LENGTH_SHORT)
+                    Snackbar
+                        .make(container, "Unofficial adaptation of Quick Reference Handbook.\nNot endorsed by Association of Anaesthetists.", Snackbar.LENGTH_SHORT)
+                        .setAction(R.string.title_about) {
+                            this.startActivity(Intent(this,About::class.java))
+                        }
+                val snackbarView: View = snack.getView()
+                val snackTextView = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text) as TextView
+                snackTextView.setMaxLines(2);
                 snack.show()
                 setAlreadyRunning()
             }

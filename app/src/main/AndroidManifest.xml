@@ -11,7 +11,8 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".List"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,7 +21,8 @@
         </activity>
         <activity
             android:name=".Detail"
-            android:parentActivityName=".List" >
+            android:parentActivityName=".List"
+            android:configChanges="orientation|screenSize">
         </activity>
         <activity
             android:name=".About"
