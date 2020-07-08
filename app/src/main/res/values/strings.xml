@@ -1,8 +1,23 @@
 <resources>
     <string name="app_name">QRH</string>
+    <string name="long_name">Quick Reference Handbook (QRH)</string>
     <string name="title_list">Guidelines</string>
     <string name="title_about">About</string>
+    <string name="github"><u>github.com/mttrnd/qrh</u></string>
+    <string name="author">Matt Round</string>
+
+    <string name="updated">Updated July 2020</string>
+    <string name="about_1">Adaptation of the Association of Anaesthetists Quick Reference Handbook (QRH) August 2019 version. https://anaesthetists.org/Quick-Reference-Handbook</string>
+    <string name="about_2">Subject to Creative Commons license CC BY-NC-SA 4.0. You may distribute original version or adapt for yourself and distribute with acknowledgement of source. You may not use for commercial purposes.</string>
+    <string name="about_3">Please report any bugs on the github page, or email matthew.round@nhs.net</string>
+    <string name="about_4">The guidelines in this handbook are not intended to be standards of medical care. The ultimate judgement with regard to a particular clinical procedure or treatment plan must be made by the clinician in the light of the clinical data presented and the diagnostic and treatment options available."</string>
+    <string name="about_5">The guidelines in this handbook are not intended to be standards of medical care. The ultimate judgement with regard to a particular clinical procedure or treatment plan must be made by the clinician in the light of the clinical data presented and the diagnostic and treatment options available.\n\nThe developer assumes no responsibility or liability for any errors or omissions in the content of this handbook. The information is provided on an "as is" basis with no guarantees of completeness, accuracy, usefulness or timeliness. The developer, handbook authors, or anyone else connected in any way with the application, cannot be held responsible for your use of the information contained in or linked from this application.\n\nPlease uninstall if you disagree."</string>
+
+
     <string name="arrow">Arrow</string>
     <string name="image">Image</string>
     <string name="emptySearch">No results</string>
+    <string name="welcome">Disclaimer:</string>
+    <string name="close">Agree and close</string>
+
 </resources>
