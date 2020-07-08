@@ -24,6 +24,17 @@ class List : AppCompatActivity() {
     private lateinit var linearLayoutManager: LinearLayoutManager
     private val PREF_NAME = "com.mround.bwh.seenwarning"
 
+    companion object {
+        var alreadyRunning: Boolean = false
+
+        fun setAlreadyRunning(){
+            var alreadyRunning: Boolean = true
+        }
+
+        fun isAlreadyRunning(): Boolean = this.alreadyRunning
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list)
@@ -31,6 +42,7 @@ class List : AppCompatActivity() {
         val sharedPref: SharedPreferences = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
         val seenWarning: Boolean? = sharedPref.getBoolean(PREF_NAME, false)
         val editor = sharedPref.edit()
+
 
         if(seenWarning != true){
             editor.putBoolean(PREF_NAME, true)
@@ -41,6 +53,13 @@ class List : AppCompatActivity() {
 
             val toast = Toast.makeText(applicationContext, "Welcome... disclaimer will show on first run only", Toast.LENGTH_SHORT)
             toast.show()
+        } else {
+            if(isAlreadyRunning() != true) {
+                val snack =
+                    Snackbar.make(container, "Unofficial adaptation of Quick Reference Handbook.\nNot endorsed by Association of Anaesthetists.", Snackbar.LENGTH_SHORT)
+                snack.show()
+                setAlreadyRunning()
+            }
         }
 
         val guidelineList = Guideline.getGuidelinesFromFile("guidelines.json", this)
@@ -86,10 +105,11 @@ class List : AppCompatActivity() {
     private fun guidelineClicked(guideline : Guideline) {
         val showGuidelineIntent = Intent(this, Detail::class.java)
         showGuidelineIntent.putExtra("TITLE", guideline.title)
-        showGuidelineIntent.putExtra("CODE", guideline.codedisplay)
+        showGuidelineIntent.putExtra("CODE", guideline.code)
         showGuidelineIntent.putExtra("VERSION", guideline.version.toString())
         showGuidelineIntent.putExtra("URL", guideline.url)
         startActivity(showGuidelineIntent)
     }
+
 
 }

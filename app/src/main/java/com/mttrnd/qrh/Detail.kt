@@ -5,10 +5,12 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_detail.*
+import org.w3c.dom.Text
 
 class Detail : AppCompatActivity() {
 
@@ -23,17 +25,20 @@ class Detail : AppCompatActivity() {
 
         setTitle(title)
 
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+
         val filenameSuffix = ".json"
         val filename = code + filenameSuffix
 
         val content = DetailContent.getContentFromFile(filename, this)
         val adapter = CardRecyclerAdapter(content)
 
+        findViewById<TextView>(R.id.detail_code).setText(code)
         findViewById<TextView>(R.id.detail_version).setText("v.$version").toString()
 
         linearLayoutManager = LinearLayoutManager(this)
         detail_recyclerview.layoutManager = linearLayoutManager
-        detail_recyclerview.setNestedScrollingEnabled(false);
+        detail_recyclerview.setNestedScrollingEnabled(false)
         detail_recyclerview.adapter = adapter
 
     }
@@ -51,5 +56,10 @@ class Detail : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
     }
 }

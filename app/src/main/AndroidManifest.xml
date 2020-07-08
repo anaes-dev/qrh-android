@@ -21,17 +21,12 @@
         <activity
             android:name=".Detail"
             android:parentActivityName=".List" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".List" />
         </activity>
         <activity
             android:name=".About"
             android:parentActivityName=".List" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".List" />
         </activity>
+
     </application>
 
 </manifest>

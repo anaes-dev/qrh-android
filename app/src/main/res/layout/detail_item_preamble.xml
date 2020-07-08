@@ -40,6 +40,7 @@
         android:id="@+id/detail_main"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:autoLink="web"
         tools:text="step 1" />
 
   </androidx.cardview.widget.CardView>

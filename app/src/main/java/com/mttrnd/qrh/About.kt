@@ -10,6 +10,7 @@ class About : AppCompatActivity() {
         setContentView(R.layout.activity_about)
         setTitle("About")
 
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         val verCode: Int = BuildConfig.VERSION_CODE
         val verCodeString = verCode.toString()
@@ -17,5 +18,10 @@ class About : AppCompatActivity() {
         findViewById<TextView>(R.id.about_version).setText(verOutput)
 
 
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
     }
 }
