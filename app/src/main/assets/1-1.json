@@ -83,6 +83,12 @@
       "main": "Call for help if problem not resolving quickly.",
       "sub": "",
       "step": "7"
+    },
+    {
+      "type": 2,
+      "main": "END",
+      "sub": "",
+      "step": ""
     }
   ]
 }

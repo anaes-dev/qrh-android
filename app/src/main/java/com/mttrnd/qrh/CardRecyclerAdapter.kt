@@ -1,11 +1,10 @@
 package com.mttrnd.qrh
 
-import android.text.Editable
 import android.text.Html
-import android.text.Html.TagHandler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
@@ -27,12 +26,15 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>) :
         fun bindViews(detailContent: DetailContent)
     }
 
+
+
     class ViewHolder1(itemView: View) : RecyclerView.ViewHolder(itemView), UpdateViewHolder {
         override fun bindViews(detailContent: DetailContent) {
         }
     }
     class ViewHolder2(itemView: View) : RecyclerView.ViewHolder(itemView), UpdateViewHolder {
         override fun bindViews(detailContent: DetailContent) {
+
         }
     }
 
@@ -56,24 +58,47 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>) :
             VIEW_TWO -> ViewHolder1(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_start, parent, false))
             VIEW_THREE -> ViewHolder1(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_standard, parent, false))
             VIEW_FOUR -> ViewHolder1(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_standard_oneline, parent, false))
-            VIEW_FIVE -> ViewHolder1(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_style1, parent, false))
-            VIEW_SIX -> ViewHolder1(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_style2, parent, false))
-            VIEW_SEVEN -> ViewHolder1(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_style3, parent, false))
+            VIEW_FIVE -> ViewHolder2(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_style1, parent, false))
+            VIEW_SIX -> ViewHolder2(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_style2, parent, false))
+            VIEW_SEVEN -> ViewHolder2(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_style3, parent, false))
             else ->  ViewHolder1(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_standard, parent, false))
             }
         return viewHolder
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-       val detailContent: DetailContent = dataSource[position]
+        val detailContent: DetailContent = dataSource[position]
+        when (dataSource[position].type) {
+            5,6,7 ->  {
+                holder.apply {
+                    itemView.findViewById<TextView>(R.id.detail_main).setText(Html.fromHtml((detailContent.main)).trim())
+                    itemView.findViewById<TextView>(R.id.detail_sub).setText(Html.fromHtml((detailContent.sub)).trim())
+                }
+                holder.itemView.setOnClickListener {
+                    val subCard = holder.itemView.findViewById<TextView>(R.id.detail_sub)
+                    val subArrow = holder.itemView.findViewById<ImageView>(R.id.detail_arrow)
+                    if(detailContent.collapsed) {
+                        subCard.visibility = View.VISIBLE
+                        subArrow.setImageResource(R.drawable.ic_arrow_down)
+                        detailContent.collapsed = false
+                    } else {
+                        subCard.visibility = View.GONE
+                        subArrow.setImageResource(R.drawable.ic_arrow_left)
+                        detailContent.collapsed = true
+                    }
+                }
+            }
 
+            else -> {
+                holder.apply {
+                    itemView.findViewById<TextView>(R.id.detail_main).setText(Html.fromHtml((detailContent.main)).trim())
+                    itemView.findViewById<TextView>(R.id.detail_sub).setText(Html.fromHtml((detailContent.sub)).trim())
+                    itemView.findViewById<TextView>(R.id.detail_step).setText(detailContent.step).toString()
+                }
+            }
+        }
 
-       holder.apply {
-           itemView.findViewById<TextView>(R.id.detail_main).setText(Html.fromHtml((detailContent.main)).trim())
-           itemView.findViewById<TextView>(R.id.detail_sub).setText(Html.fromHtml((detailContent.sub)).trim())
-           itemView.findViewById<TextView>(R.id.detail_step).setText(detailContent.step).toString()
-       }
-        (holder as UpdateViewHolder).bindViews(dataSource[position])
+        (holder as UpdateViewHolder).bindViews(detailContent)
     }
 
     override fun getItemCount(): Int {

@@ -9,7 +9,8 @@ class DetailContent(
     val type: Int,
     val step: String,
     val main: String,
-    val sub: String) {
+    val sub: String,
+    var collapsed: Boolean) {
 
     companion object {
 
@@ -26,7 +27,8 @@ class DetailContent(
                         contentCards.getJSONObject(it).getInt("type"),
                         contentCards.getJSONObject(it).getString("step"),
                         contentCards.getJSONObject(it).getString("main"),
-                        contentCards.getJSONObject(it).getString("sub")
+                        contentCards.getJSONObject(it).getString("sub"),
+                        collapsed = true
                     )
                 }
             } catch (e: JSONException) {
