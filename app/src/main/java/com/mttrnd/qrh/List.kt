@@ -6,8 +6,10 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.SearchView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -40,6 +42,8 @@ class List : AppCompatActivity() {
                 return false
             }
         })
+
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -59,9 +63,10 @@ class List : AppCompatActivity() {
 
     private fun guidelineClicked(guideline : Guideline) {
         val showGuidelineIntent = Intent(this, Detail::class.java)
-        showGuidelineIntent.putExtra("TITLE", guideline.title.toString())
-        showGuidelineIntent.putExtra("CODE", guideline.codedisplay.toString())
+        showGuidelineIntent.putExtra("TITLE", guideline.title)
+        showGuidelineIntent.putExtra("CODE", guideline.codedisplay)
         showGuidelineIntent.putExtra("VERSION", guideline.version.toString())
+        showGuidelineIntent.putExtra("URL", guideline.url)
         startActivity(showGuidelineIntent)
     }
 

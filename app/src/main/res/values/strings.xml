@@ -3,4 +3,5 @@
     <string name="title_list">Guidelines</string>
     <string name="title_about">About</string>
     <string name="arrow">Arrow</string>
+    <string name="emptySearch">No results</string>
 </resources>

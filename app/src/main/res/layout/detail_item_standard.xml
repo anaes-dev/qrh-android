@@ -58,11 +58,12 @@
       <TextView
           android:id="@+id/detail_main"
           style="@style/Widget.AppCompat.TextView.SpinnerItem"
-          android:layout_width="wrap_content"
+          android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:layout_marginStart="32dp"
+          android:layout_marginTop="2dp"
           android:textStyle="bold"
-          app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
+          app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="@+id/constraintLayout"
           tools:text="step 1" />
