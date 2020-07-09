@@ -11,7 +11,7 @@
 - [![CC BY-NC-SA 4.0][cc-by-nc-sa-shield]][cc-by-nc-sa] Released under same Creative Commons license as original work
 
 ## Todo
-- [ ] Populate data
+- [x] Populate data
 - [x] Collapsing cards for boxes
 - [ ] 1st release
 - [ ] Tablet layout
