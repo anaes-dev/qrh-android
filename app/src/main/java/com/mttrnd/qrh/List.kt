@@ -1,16 +1,15 @@
 package com.mttrnd.qrh
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.SearchView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.getColor
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_list.*
@@ -19,52 +18,41 @@ import kotlinx.android.synthetic.main.activity_list.*
 class List : AppCompatActivity() {
 
     private lateinit var linearLayoutManager: LinearLayoutManager
-    private val PREF_NAME = "com.mround.bwh.seenwarning"
-
-    companion object {
-        var alreadyRunning: Boolean = false
-
-        fun setAlreadyRunning(){
-            var alreadyRunning: Boolean = true
-        }
-
-        fun isAlreadyRunning(): Boolean = this.alreadyRunning
-    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list)
 
-        val sharedPref: SharedPreferences = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
-        val seenWarning: Boolean? = sharedPref.getBoolean(PREF_NAME, false)
-        val editor = sharedPref.edit()
+        val isStartup = intent.getBooleanExtra("STARTUP", false)
+        val isFirstrun = intent.getBooleanExtra("FIRSTRUN", false)
 
 
-        if(seenWarning != true){
-            editor.putBoolean(PREF_NAME, true)
-            editor.apply()
-
-            val newFragment = Firstrun()
-            newFragment.show(supportFragmentManager, "")
-
-            val toast = Toast.makeText(applicationContext, "Welcome... disclaimer will show on first run only", Toast.LENGTH_SHORT)
-            toast.show()
-        } else {
-            if(isAlreadyRunning() != true) {
-                val snack =
-                    Snackbar
-                        .make(container, "Unofficial adaptation of Quick Reference Handbook.\nNot endorsed by Association of Anaesthetists.", Snackbar.LENGTH_SHORT)
-                        .setAction(R.string.title_about) {
-                            this.startActivity(Intent(this,About::class.java))
-                        }
-                val snackbarView: View = snack.getView()
-                val snackTextView = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text) as TextView
-                snackTextView.setMaxLines(2);
-                snack.show()
-                setAlreadyRunning()
-            }
+        if(isStartup) {
+            val snack =
+                Snackbar
+                    .make(container, "Unofficial adaptation of Quick Reference Handbook.\nNot endorsed by Association of Anaesthetists.\nTo provide information for professional use only.\nDecisions should rely on your own knowledge and judgement.", Snackbar.LENGTH_SHORT)
+                    .setBackgroundTint(getColor(this, R.color.snackbarBackground))
+                    .setAction(R.string.title_about) {
+                        this.startActivity(Intent(this,About::class.java))
+                    }
+            val snackbarView: View = snack.getView()
+            val snackTextView = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text) as TextView
+            snackTextView.maxLines = 4
+            snackTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12F)
+            snack.show()
         }
+
+        if(isFirstrun) {
+            val snack =
+                Snackbar
+                    .make(container, "Welcome", Snackbar.LENGTH_SHORT)
+                    .setBackgroundTint(getColor(this, R.color.snackbarBackground))
+            snack.show()
+        }
+
+
+
 
         val guidelineList = Guideline.getGuidelinesFromFile("guidelines.json", this)
         val adapter = ListRecyclerAdapter(guidelineList, { guideline : Guideline -> guidelineClicked(guideline) })
