@@ -13,6 +13,12 @@
       "step": ""
     },
     {
+      "type": 2,
+      "main": "START",
+      "sub": "",
+      "step": ""
+    },
+    {
       "type": 4,
       "main": "Call for help. Inform theatre team of problem. Measure and record <u>core</u> temperature.",
       "sub": "",

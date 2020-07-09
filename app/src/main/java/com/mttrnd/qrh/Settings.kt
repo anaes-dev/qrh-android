@@ -1,7 +1,10 @@
 package com.mttrnd.qrh
 
 import android.os.Bundle
+import android.text.InputFilter
+import android.text.InputType
 import androidx.appcompat.app.AppCompatActivity
+import androidx.preference.EditTextPreference
 import androidx.preference.PreferenceFragmentCompat
 
 class Settings : AppCompatActivity() {
@@ -19,6 +22,19 @@ class Settings : AppCompatActivity() {
     class SettingsFragment : PreferenceFragmentCompat() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey)
+
+            val locations = resources.getStringArray(R.array.locations_list)
+            for(locations in locations) {
+                val editTextPreference = preferenceManager.findPreference<EditTextPreference>(locations)
+                editTextPreference!!.setOnBindEditTextListener { editText ->
+                    editText.inputType = InputType.TYPE_CLASS_TEXT
+                    val maxLength = 40
+                    val filters = arrayOfNulls<InputFilter>(1)
+                    filters[0] = InputFilter.LengthFilter(maxLength)
+                    editText.setFilters(filters)
+                }
+            }
+
         }
     }
 

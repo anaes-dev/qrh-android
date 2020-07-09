@@ -33,7 +33,8 @@
         android:layout_height="wrap_content"
         android:paddingTop="5dp"
         android:paddingRight="4dp"
-        android:paddingBottom="5dp">
+        android:paddingBottom="5dp"
+        android:paddingEnd="4dp">
 
       <ImageView
           android:id="@+id/detail_arrow"
@@ -67,6 +68,7 @@
           android:layout_marginStart="8dp"
           android:layout_marginLeft="8dp"
           android:layout_marginTop="8dp"
+          android:autoLink="web"
           android:visibility="gone"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="@id/detail_main"
