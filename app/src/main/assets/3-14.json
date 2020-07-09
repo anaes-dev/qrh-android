@@ -39,7 +39,7 @@
     {
       "type": 7,
       "main": "Box B: SET PHYSIOLOGICAL GOALS",
-      "sub": "<li>Central venous pressure</li><li><Mean arterial pressure</li><li>Urine output</li><li>Central venous (superior vena cava) or mixed venous saturation</li>",
+      "sub": "<li>Central venous pressure</li><li>Mean arterial pressure</li><li>Urine output</li><li>Central venous (superior vena cava) or mixed venous saturation</li>",
       "step": ""
     },
     {
@@ -87,7 +87,7 @@
     {
       "type": 6,
       "main": "Box D: DRUG THERAPY",
-      "sub": "<li><b>Noradrenaline (NA)</b> as first choice vasopressor.</li><li><b>Adrenaline<b> added to noradrenaline when additional agent needed.</li><li><b>Vasopressin</b> 0.03 units.min⁻¹ added to ↑MAP or ↓noradrenaline need.</li><li><b>Dobutamine</b> up to 20 µg.kg⁻¹.min⁻¹ if evidence of myocardial dysfunction or ongoing signs of hypoperfusion despite adequate MAP and adequate intravascular volume.</li><li><b>Hydrocortisone</b> if unable to restore haemodynamic stability.</li>",
+      "sub": "<li><b>Noradrenaline (NA)</b> as first choice vasopressor.</li><li><b>Adrenaline</b> added to noradrenaline when additional agent needed.</li><li><b>Vasopressin</b> 0.03 units.min⁻¹ added to ↑MAP or ↓noradrenaline need.</li><li><b>Dobutamine</b> up to 20 µg.kg⁻¹.min⁻¹ if evidence of myocardial dysfunction or ongoing signs of hypoperfusion despite adequate MAP and adequate intravascular volume.</li><li><b>Hydrocortisone</b> if unable to restore haemodynamic stability.</li>",
       "step": ""
     },
     {
