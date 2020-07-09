@@ -43,6 +43,11 @@
     <string name="location_cooled">Cooled fluids</string>
     <string name="location_ice">Nearest ice machine</string>
     <string name="location_sugammadex">Sugammadex</string>
+    <string name="location_firealarm">Fire alarm</string>
+    <string name="location_fireext">Fire extinguisher</string>
+
+    <string name="location_equipmentbox">EQUIPMENT LOCATIONS</string>
+    <string name="location_settingshint">Update in location settings (top right)</string>
 
     <string name="location_additional_1a">Additional 1 name</string>
     <string name="location_additional_1b">Additional 1 content</string>
@@ -70,11 +75,19 @@
         <item>location_cooled</item>
         <item>location_ice</item>
         <item>location_sugammadex</item>
-        <item>location_additional_1a</item>
-        <item>location_additional_1b</item>
-        <item>location_additional_2a</item>
-        <item>location_additional_2b</item>
-        <item>location_additional_3a</item>
-        <item>location_additional_3b</item>
+        <item>location_firealarm</item>
+        <item>location_fireext</item>
+        <item>additional_1_name</item>
+        <item>additional_1_location</item>
+        <item>additional_2_name</item>
+        <item>additional_2_location</item>
+        <item>additional_3_name</item>
+        <item>additional_3_location</item>
     </string-array>
+
+
+    <string name="fire1">Evidence of fire (smoke, heat, odour, flash, flame) on patient or drapes, or in patient’s airway</string>
+    <string name="fire2">START</string>
+    <string name="fire3">Call for help and inform theatre team</string>
+    <string name="fire4">&lt;li&gt;Activate fire alarm&lt;li&gt;Dial hospital fire emergency number and report location and nature of fire&lt;li&gt;Bring CO2 fire extinguisher into theatre</string>
 </resources>

@@ -1,0 +1,57 @@
+{
+  "DetailContent": [
+    {
+      "type": 1,
+      "main": "<b>If <u>AIRWAY</u> fire:",
+      "sub": "",
+      "step": ""
+    },
+    {
+      "type": 3,
+      "main": "Extinguish fire:",
+      "sub": "<li>Stop laser or diathermy</li><li>Discontinue ventilation AND fresh gas flow</li><li>Remove tracheal tube if on fire</li><li>Remove flammable material from airway</li><li>Flood airway with 0.9% saline</li>",
+      "step": "2"
+    },
+    {
+      "type": 3,
+      "main": "After fire extinguished:",
+      "sub": "<li>Re-establish ventilation </li><li>Minimise O₂, avoid N₂O</li><li>Check airway for damage and debris</li><li>Consider bronchoscopy</li><li>Re-intubate</li>",
+      "step": "3"
+    },{
+      "type": 1,
+      "main": "<b>If <u>NON-AIRWAY</u> fire:",
+      "sub": "",
+      "step": ""
+    },
+    {
+      "type": 3,
+      "main": "Extinguish fire:",
+      "sub": "<li>Stop laser or diathermy</li><li>Remove all drapes and burning material</li><li>Flood fire with 0.9% saline or saline soaked gauze</li><li>Use CO₂ extinguisher</li>",
+      "step": "2"
+    },
+    {
+      "type": 3,
+      "main": "After fire extinguished:",
+      "sub": "<li>Re-establish ventilation </li><li>Minimise O₂, avoid N₂O</li><li>Assess damage</li><li>Consider inhalational injury if not intubated</li><li>Consider intubation depending on degree of injury</li>",
+      "step": "3"
+    },
+    {
+      "type": 4,
+      "main": "Assess patient and devise ongoing management plan. Confirm no secondary fire, assess smoke risk to patient, consider intensive care.",
+      "sub": "",
+      "step": "4"
+    },
+    {
+      "type": 4,
+      "main": "Keep involved materials or devices for inspection and report to the MHRA.",
+      "sub": "",
+      "step": "5"
+    },
+    {
+      "type": 4,
+      "main": "If secondary non-patient fire occurs, or concerned about smoke/fire risk to staff, follow local fire procedures.",
+      "sub": "",
+      "step": "6"
+    }
+  ]
+}

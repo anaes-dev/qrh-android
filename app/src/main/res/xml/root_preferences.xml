@@ -14,8 +14,6 @@
             app:dialogTitle="Set location"
             app:useSimpleSummaryProvider="true" />
         <EditTextPreference
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:clipToPadding="false"
             android:icon="@drawable/ic_edit_location"
             android:key="location_pacing"
@@ -96,8 +94,6 @@
             app:dialogTitle="Set location"
             app:useSimpleSummaryProvider="true" />
         <EditTextPreference
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:clipToPadding="false"
             android:icon="@drawable/ic_edit_location"
             android:key="location_videoscope"
@@ -108,8 +104,6 @@
             app:dialogTitle="Set location"
             app:useSimpleSummaryProvider="true" />
         <EditTextPreference
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:clipToPadding="false"
             android:icon="@drawable/ic_edit_location"
             android:key="location_cric"
@@ -120,8 +114,6 @@
             app:dialogTitle="Set location"
             app:useSimpleSummaryProvider="true" />
         <EditTextPreference
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:clipToPadding="false"
             android:icon="@drawable/ic_edit_location"
             android:key="location_jet"
@@ -132,8 +124,6 @@
             app:dialogTitle="Set location"
             app:useSimpleSummaryProvider="true" />
         <EditTextPreference
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:clipToPadding="false"
             android:icon="@drawable/ic_edit_location"
             android:key="location_scope"
@@ -144,8 +134,6 @@
             app:dialogTitle="Set location"
             app:useSimpleSummaryProvider="true" />
         <EditTextPreference
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:clipToPadding="false"
             android:icon="@drawable/ic_edit_location"
             android:key="location_helpp"
@@ -156,8 +144,6 @@
             app:dialogTitle="Set location"
             app:useSimpleSummaryProvider="true" />
         <EditTextPreference
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:clipToPadding="false"
             android:icon="@drawable/ic_edit_location"
             android:key="location_muster"
@@ -168,8 +154,6 @@
             app:dialogTitle="Set location"
             app:useSimpleSummaryProvider="true" />
         <EditTextPreference
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:clipToPadding="false"
             android:icon="@drawable/ic_edit_location"
             android:key="location_cooled"
@@ -180,8 +164,6 @@
             app:dialogTitle="Set location"
             app:useSimpleSummaryProvider="true" />
         <EditTextPreference
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:clipToPadding="false"
             android:icon="@drawable/ic_edit_location"
             android:key="location_ice"
@@ -192,14 +174,32 @@
             app:dialogTitle="Set location"
             app:useSimpleSummaryProvider="true" />
         <EditTextPreference
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:clipToPadding="false"
             android:icon="@drawable/ic_edit_location"
             android:key="location_sugammadex"
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="@string/location_sugammadex"
+            app:dialogIcon="@drawable/ic_edit_location"
+            app:dialogTitle="Set location"
+            app:useSimpleSummaryProvider="true" />
+        <EditTextPreference
+            android:clipToPadding="false"
+            android:icon="@drawable/ic_edit_location"
+            android:key="location_firealarm"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/location_firealarm"
+            app:dialogIcon="@drawable/ic_edit_location"
+            app:dialogTitle="Set location"
+            app:useSimpleSummaryProvider="true" />
+        <EditTextPreference
+            android:clipToPadding="false"
+            android:icon="@drawable/ic_edit_location"
+            android:key="location_fireext"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/location_fireext"
             app:dialogIcon="@drawable/ic_edit_location"
             app:dialogTitle="Set location"
             app:useSimpleSummaryProvider="true" />
@@ -214,8 +214,6 @@
             android:title="Additional location 1"
             app:iconSpaceReserved="false"/>
         <EditTextPreference
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:clipToPadding="false"
             android:icon="@drawable/ic_add_location"
             android:dependency="additional_1"
@@ -227,8 +225,6 @@
             app:dialogTitle="Set name"
             app:useSimpleSummaryProvider="true" />
         <EditTextPreference
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:clipToPadding="false"
             android:icon="@drawable/ic_edit_location"
             android:key="additional_1_location"
@@ -245,8 +241,6 @@
             android:title="Additional location 2"
             app:iconSpaceReserved="false"/>
         <EditTextPreference
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:clipToPadding="false"
             android:icon="@drawable/ic_add_location"
             android:dependency="additional_2"
@@ -258,8 +252,6 @@
             app:dialogTitle="Set name"
             app:useSimpleSummaryProvider="true" />
         <EditTextPreference
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:clipToPadding="false"
             android:icon="@drawable/ic_edit_location"
             android:key="additional_2_location"
@@ -276,8 +268,6 @@
             android:title="Additional location 3"
             app:iconSpaceReserved="false"/>
         <EditTextPreference
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:clipToPadding="false"
             android:icon="@drawable/ic_add_location"
             android:dependency="additional_3"
@@ -289,8 +279,6 @@
             app:dialogTitle="Set name"
             app:useSimpleSummaryProvider="true" />
         <EditTextPreference
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:clipToPadding="false"
             android:icon="@drawable/ic_edit_location"
             android:key="additional_3_location"
