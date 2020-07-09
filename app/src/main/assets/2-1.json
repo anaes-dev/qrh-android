@@ -51,7 +51,7 @@
     {
       "type": 3,
       "main": "Circulation",
-      "sub": "<li>Check rate and adequacy of chest compressions (visual and ETCO₂).<li>Encourage rotation of personnel performing compressions.</li>If IV access fails or impossible use intraosseous (IO) route.<li>Check ECG rhythm for no more than 5 seconds.</li><li>Follow Resuscitation Council (UK) and ERC Guidelines.</li><li>See <b>Boxes B and C</b> for reminders about drugs and defibrillation.</li>",
+      "sub": "<li>Check rate and adequacy of chest compressions (visual and ETCO₂).<li>Encourage rotation of personnel performing compressions.</li><li>If IV access fails or impossible use intraosseous (IO) route.</li><li>Check ECG rhythm for no more than 5 seconds.</li><li>Follow Resuscitation Council (UK) and ERC Guidelines.</li><li>See <b>Boxes B and C</b> for reminders about drugs and defibrillation.</li>",
       "step": "5"
     },
     {
