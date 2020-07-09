@@ -27,7 +27,7 @@
     {
       "type": 9,
       "main": "Box A: ACTION FROM LOCAL COORDINATOR",
-      "sub": "Local coordinator should activate any local incident plan and urgently establish and brief teams on:</li>Extent of failure<li></li><li>Likely duration of failure</li><li>Interruption to other services (eg oxygen, water)</li>",
+      "sub": "Local coordinator should activate any local incident plan and urgently establish and brief teams on:<li>Extent of failure</li><li>Likely duration of failure</li><li>Interruption to other services (eg oxygen, water)</li>",
       "step": ""
     },
     {

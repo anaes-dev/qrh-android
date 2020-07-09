@@ -20,8 +20,8 @@
     },
     {
       "type": 9,
-      "main": "Box A: UNABLE TO MOVE PATIENT\n",
-      "sub": "<li>Ensure adequate depth of anaesthesia</li><li>• Ensure adequate reserve: 100% oxygen, low flow, fill vaporiser</li><li>Ensure adequate neuromuscular blockade if relevant</li><li>Evacuate all staff, including anaesthetist when indicated</li><li>Inform rescue services and theatre coordinator</li>",
+      "main": "Box A: UNABLE TO MOVE PATIENT",
+      "sub": "<li>Ensure adequate depth of anaesthesia</li><li>Ensure adequate reserve: 100% oxygen, low flow, fill vaporiser</li><li>Ensure adequate neuromuscular blockade if relevant</li><li>Evacuate all staff, including anaesthetist when indicated</li><li>Inform rescue services and theatre coordinator</li>",
       "step": ""
     },
     {

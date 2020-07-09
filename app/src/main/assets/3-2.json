@@ -87,7 +87,7 @@
     {
       "type": 6,
       "main": "Box C: DRUG DOSES",
-      "sub": "<b>CALCIUM:</b> (use either the chloride or gluconate)<li>Adult: 10 ml of 10% calcium chloride i.v.</li><li>Adult: 20 ml of 10% calcium gluconate i.v.</li><li>Child: 0.2 ml.kg⁻¹ of 10% calcium chloride i.v.</li><li>Child: 0.5 ml.kg⁻¹ of 10% calcium gluconate i.v. </li><br><b>TRANEXAMIC ACID:</b><li>Child: 15 mg.kg⁻¹ i.v. bolus then 2 mg.kg⁻¹.h⁻¹ until bleeding stops</li><li>Adult: 1 g i.v. bolus, then:<br><small>Obstetric haemorrhage, repeat dose 30 mins later</small><br><small>Non-obstetric haemorrhage, 1 g i.v. infusion over next 8 h</small></li>",
+      "sub": "<b>CALCIUM:</b> (use either the chloride or gluconate)<li>Adult: 10 ml of 10% calcium chloride intraVENOUS</li><li>Adult: 20 ml of 10% calcium gluconate intraVENOUS</li><li>Child: 0.2 ml.kg⁻¹ of 10% calcium chloride intraVENOUS</li><li>Child: 0.5 ml.kg⁻¹ of 10% calcium gluconate intraVENOUS </li><br><b>TRANEXAMIC ACID:</b><li>Child: 15 mg.kg⁻¹ intraVENOUS bolus then 2 mg.kg⁻¹.h⁻¹ until bleeding stops</li><li>Adult: 1 g intraVENOUS bolus, then:<br><small>Obstetric haemorrhage, repeat dose 30 mins later</small><br><small>Non-obstetric haemorrhage, 1 g intraVENOUS infusion over next 8 h</small></li>",
       "step": ""
     },
     {
