@@ -8,4 +8,9 @@
         <item name="maxActionInlineWidth">48dp</item>
     </style>
 
+    <style name="Widget.App.Snackbar" parent="Widget.MaterialComponents.Snackbar">
+        <item name="backgroundColor">@color/detailItemPurpleTXT</item>
+    </style>
+
+
 </resources>
