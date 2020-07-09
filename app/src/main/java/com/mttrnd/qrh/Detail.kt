@@ -1,6 +1,5 @@
 package com.mttrnd.qrh
 
-import android.animation.LayoutTransition
 import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
@@ -80,8 +79,6 @@ class Detail : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeLi
 
             else -> {
                 setContentView(R.layout.activity_detail)
-                val layoutTransition = rootLinearLayout.layoutTransition
-                layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
                 supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
                 val filenameSuffix = ".json"
