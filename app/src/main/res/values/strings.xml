@@ -3,6 +3,7 @@
     <string name="long_name">Quick Reference Handbook (QRH)</string>
     <string name="title_list">Guidelines</string>
     <string name="title_about">About</string>
+    <string name="title_settings">Edit locations</string>
     <string name="github"><u>github.com/mttrnd/qrh</u></string>
     <string name="author">Matt Round</string>
     <string name="app_type">Android</string>
@@ -21,4 +22,33 @@
     <string name="welcome">Disclaimer:</string>
     <string name="close">Agree and close</string>
 
+
+    <string name="locations_header">Locations</string>
+    <string name="locations_additional">Additional locations</string>
+
+    <string name="location_arrest">Cardiac arrest trolley</string>
+    <string name="location_pacing">Pacing defibrillator</string>
+    <string name="location_airway">Airway rescue trolley</string>
+    <string name="location_mh">Dantrolene / malignant hyperthermia kit</string>
+    <string name="location_la">Lipid rescue / local anaesthetic toxicity kit</string>
+    <string name="location_anaphylaxis">Anaphylaxis kit</string>
+    <string name="location_rapid">Rapid infusor for i.v. fluid</string>
+    <string name="location_salvage">Cell salvage equipment</string>
+    <string name="location_ultrasound">Ultrasound machine</string>
+    <string name="location_videoscope">Videolaryngoscope</string>
+    <string name="location_cric">Cricothyrotomy kit</string>
+    <string name="location_jet">Jet ventilator</string>
+    <string name="location_scope">Flexible intubating scope</string>
+    <string name="location_helpp">Ramping mattress for obese</string>
+    <string name="location_muster">Muster points for evacuation</string>
+    <string name="location_cooled">Cooled fluids</string>
+    <string name="location_ice">Nearest ice machine</string>
+    <string name="location_sugammadex">Sugammadex</string>
+
+    <string name="location_additional_1a">Additional 1 name</string>
+    <string name="location_additional_1b">Additional 1 content</string>
+    <string name="location_additional_2a">Additional 2 name</string>
+    <string name="location_additional_2b">Additional 2 content</string>
+    <string name="location_additional_3a">Additional 3 name</string>
+    <string name="location_additional_3b">Additional 3 content</string>
 </resources>
