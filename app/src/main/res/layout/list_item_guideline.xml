@@ -17,7 +17,7 @@
       android:foreground="?android:attr/selectableItemBackground"
       android:hapticFeedbackEnabled="true"
       app:cardUseCompatPadding="true"
-      app:contentPadding="16dp"
+      app:contentPadding="8dp"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
@@ -25,7 +25,11 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp">
 
       <TextView
           android:id="@+id/guideline_code"
@@ -43,9 +47,10 @@
       <TextView
           android:id="@+id/guideline_title"
           style="@style/Widget.AppCompat.TextView.SpinnerItem"
-          android:layout_width="wrap_content"
+          android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:layout_marginStart="40dp"
+          android:layout_marginLeft="40dp"
           android:textStyle="bold"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintStart_toStartOf="@+id/guideline_code"
