@@ -24,10 +24,20 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent">
 
+    <TextView
+        android:id="@+id/detail_caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.TextView.SpinnerItem"
+        android:textColor="@color/detailItemBlackTXT"
+        android:textStyle="bold"
+        />
+
     <ImageView
         android:id="@+id/detail_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:contentDescription="@string/image"
         app:srcCompat="@android:drawable/stat_notify_sync" />
 

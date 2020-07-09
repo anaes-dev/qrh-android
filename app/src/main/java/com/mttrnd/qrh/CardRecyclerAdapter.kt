@@ -82,6 +82,7 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>) :
     class ViewHolder3(itemView: View) : RecyclerView.ViewHolder(itemView), UpdateViewHolder {
         override fun bindViews(detailContent: DetailContent) {
             val detailImage = itemView.findViewById<ImageView>(R.id.detail_image)
+            itemView.findViewById<TextView>(R.id.detail_caption).setText(detailContent.sub).toString()
             Glide
                 .with(itemView)
                 .load(Uri.parse(detailContent.main))
