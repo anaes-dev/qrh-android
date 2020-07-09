@@ -6,15 +6,15 @@ import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AlphaAnimation
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import org.w3c.dom.Text
 
 
 @Suppress("DEPRECATION")
-class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>) :
+class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>, val codePassed: String?) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
@@ -33,6 +33,7 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>) :
    interface UpdateViewHolder {
         fun bindViews(detailContent: DetailContent)
     }
+
 
 /*    fun setFadeAnimation(view: View) {
         val anim = AlphaAnimation(0.0f, 1.0f)
@@ -56,6 +57,8 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>) :
             }
 
             itemView.findViewById<TextView>(R.id.detail_step).setText(detailContent.step).toString()
+
+
         }
     }
 
@@ -140,6 +143,11 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>) :
                 }
             }
         }
+
+        if(codePassed == "3-14") {
+            holder.itemView.findViewById<TextView>(R.id.detail_sub).autoLinkMask = 0
+        }
+
         (holder as UpdateViewHolder).bindViews(detailContent)
     }
 

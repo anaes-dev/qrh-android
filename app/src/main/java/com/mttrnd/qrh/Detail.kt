@@ -69,7 +69,7 @@ class Detail : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeLi
                 update_firelocations()
 
                 val content = DetailContent.getContentFromFile("3-7.json", this)
-                val adapter = CardRecyclerAdapter(content)
+                val adapter = CardRecyclerAdapter(content, code)
                 linearLayoutManager = LinearLayoutManager(this)
                 detail_recyclerview2.layoutManager = linearLayoutManager
                 detail_recyclerview2.setNestedScrollingEnabled(false)
@@ -84,16 +84,18 @@ class Detail : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeLi
                 val filenameSuffix = ".json"
                 val filename = code + filenameSuffix
 
-                val content = DetailContent.getContentFromFile(filename, this)
-                val adapter = CardRecyclerAdapter(content)
-
                 findViewById<TextView>(R.id.detail_code).setText(code)
                 findViewById<TextView>(R.id.detail_version).setText("v.$version").toString()
+
+                val content = DetailContent.getContentFromFile(filename, this)
+                val adapter = CardRecyclerAdapter(content, code)
 
                 linearLayoutManager = LinearLayoutManager(this)
                 detail_recyclerview.layoutManager = linearLayoutManager
                 detail_recyclerview.setNestedScrollingEnabled(false)
                 detail_recyclerview.adapter = adapter
+
+
             }
         }
     }
