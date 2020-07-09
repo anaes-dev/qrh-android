@@ -1,9 +1,12 @@
 package com.mttrnd.qrh
 
+import android.animation.LayoutTransition
 import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.text.Html
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -13,7 +16,8 @@ import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.activity_detail_0_4.*
-import org.w3c.dom.Text
+import kotlinx.android.synthetic.main.activity_detail_3_7.*
+
 
 class Detail : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -31,46 +35,78 @@ class Detail : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeLi
         val version = intent.getStringExtra("VERSION")
         setTitle(title)
 
-        if (code == "0-4") {
-            setContentView(R.layout.activity_detail_0_4)
-            supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-            findViewById<TextView>(R.id.detail_version).setText("v.$version").toString()
-
-            val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
-            sharedPref.registerOnSharedPreferenceChangeListener(this)
-
-            update_locations()
 
 
-        } else {
+        when (code) {
 
-            setContentView(R.layout.activity_detail)
+            "0-4" -> {
+                setContentView(R.layout.activity_detail_0_4)
+                supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+                findViewById<TextView>(R.id.detail_version).setText("v.$version").toString()
 
-            supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+                val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
+                sharedPref.registerOnSharedPreferenceChangeListener(this)
 
-            val filenameSuffix = ".json"
-            val filename = code + filenameSuffix
+                update_locations()
+            }
 
-            val content = DetailContent.getContentFromFile(filename, this)
-            val adapter = CardRecyclerAdapter(content)
+            "3-7" -> {
+                setContentView(R.layout.activity_detail_3_7)
+                supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+                findViewById<TextView>(R.id.detail_version).setText("v.$version").toString()
 
-            findViewById<TextView>(R.id.detail_code).setText(code)
-            findViewById<TextView>(R.id.detail_version).setText("v.$version").toString()
+                findViewById<TextView>(R.id.fire_main).text = getString(R.string.fire3)
+                findViewById<TextView>(R.id.fire_step).text = "1"
 
-            linearLayoutManager = LinearLayoutManager(this)
-            detail_recyclerview.layoutManager = linearLayoutManager
-            detail_recyclerview.setNestedScrollingEnabled(false)
-            detail_recyclerview.adapter = adapter
+                findViewById<TextView>(R.id.fire_sub).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    Html.fromHtml(getString(R.string.fire4)).trim()
+                } else {
+                    Html.fromHtml(getString(R.string.fire4), null, BulletHandler()).trim()
+                }
 
+                val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
+                sharedPref.registerOnSharedPreferenceChangeListener(this)
+
+                update_firelocations()
+
+                val content = DetailContent.getContentFromFile("3-7.json", this)
+                val adapter = CardRecyclerAdapter(content)
+                linearLayoutManager = LinearLayoutManager(this)
+                detail_recyclerview2.layoutManager = linearLayoutManager
+                detail_recyclerview2.setNestedScrollingEnabled(false)
+                detail_recyclerview2.adapter = adapter
+
+            }
+
+            else -> {
+                setContentView(R.layout.activity_detail)
+                val layoutTransition = rootLinearLayout.layoutTransition
+                layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
+                supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+
+                val filenameSuffix = ".json"
+                val filename = code + filenameSuffix
+
+                val content = DetailContent.getContentFromFile(filename, this)
+                val adapter = CardRecyclerAdapter(content)
+
+                findViewById<TextView>(R.id.detail_code).setText(code)
+                findViewById<TextView>(R.id.detail_version).setText("v.$version").toString()
+
+                linearLayoutManager = LinearLayoutManager(this)
+                detail_recyclerview.layoutManager = linearLayoutManager
+                detail_recyclerview.setNestedScrollingEnabled(false)
+                detail_recyclerview.adapter = adapter
+            }
         }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val code = intent.getStringExtra("CODE")
-        if (code == "0-4") {
-            menuInflater.inflate(R.menu.menu_detail_0_4, menu)
-        }else {
-            menuInflater.inflate(R.menu.menu_detail, menu)
+        when (code) {
+            "0-4" -> menuInflater.inflate(R.menu.menu_detail_0_4, menu)
+            "3-7" -> menuInflater.inflate(R.menu.menu_detail_0_4, menu)
+            else -> menuInflater.inflate(R.menu.menu_detail, menu)
         }
         return true
     }
@@ -115,7 +151,6 @@ class Detail : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeLi
         location_ice.text = sharedPref.getString("location_ice", "")
         location_sugammadex.text = sharedPref.getString("location_sugammadex", "")
 
-
         if(sharedPref.getBoolean("additional_1", false)) {
             additional1.visibility= View.VISIBLE
             additional_1_name.text = sharedPref.getString("additional_1_name", "")
@@ -142,7 +177,19 @@ class Detail : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeLi
 
     }
 
+    fun update_firelocations() {
+        val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
+        location_firealarm.text = sharedPref.getString("location_firealarm", "")
+        location_fireext.text = sharedPref.getString("location_fireext", "")
+    }
+
     override fun onSharedPreferenceChanged(sharedPref: SharedPreferences?, key: String?) {
-        update_locations()
+        val code = intent.getStringExtra("CODE")
+        when (code) {
+            "0-4" -> update_locations()
+            "3-7" -> update_firelocations()
+        }
+
+
     }
 }

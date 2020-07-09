@@ -6,6 +6,7 @@ import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AlphaAnimation
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -33,6 +34,11 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>) :
         fun bindViews(detailContent: DetailContent)
     }
 
+/*    fun setFadeAnimation(view: View) {
+        val anim = AlphaAnimation(0.0f, 1.0f)
+        anim.duration = 1000
+        view.startAnimation(anim)
+    }*/
 
     class ViewHolder1(itemView: View) : RecyclerView.ViewHolder(itemView), UpdateViewHolder {
         override fun bindViews(detailContent: DetailContent) {
@@ -119,6 +125,7 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>) :
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val detailContent: DetailContent = dataSource[position]
+//        setFadeAnimation(holder.itemView);
         when (dataSource[position].type) {
             5,6,7,8,9 -> {
                 holder.itemView.setOnClickListener {
