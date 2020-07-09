@@ -1,8 +1,8 @@
 {
   "DetailContent": [
     {
-      "type": 1,
-      "main": "<b>If <u>AIRWAY</u> fire:",
+      "type": 2,
+      "main": "If <u>AIRWAY</u> fire:",
       "sub": "",
       "step": ""
     },
@@ -18,8 +18,8 @@
       "sub": "<li>Re-establish ventilation </li><li>Minimise O₂, avoid N₂O</li><li>Check airway for damage and debris</li><li>Consider bronchoscopy</li><li>Re-intubate</li>",
       "step": "3"
     },{
-      "type": 1,
-      "main": "<b>If <u>NON-AIRWAY</u> fire:",
+      "type": 2,
+      "main": "If <u>NON-AIRWAY</u> fire:",
       "sub": "",
       "step": ""
     },
