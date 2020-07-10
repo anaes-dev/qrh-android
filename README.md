@@ -10,14 +10,7 @@
 - Easily updatable through modification of JSON assets
 - [![CC BY-NC-SA 4.0][cc-by-nc-sa-shield]][cc-by-nc-sa] Released under same Creative Commons license as original work
 
-## Todo
-- [x] Populate data
-- [x] Collapsing cards for boxes
-- [x] Section 0-4 (locations)
-- [X] 1st release candidate
-- [ ] 1st stable release
-- [ ] Streamline architecture
-- [ ] Tablet layout
+
 
 ## License
 This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0
@@ -62,7 +55,14 @@ Type integer value determines the appearance of the generated card:
 12. Red disclaimer card (main only)
 
 Basic HTML tags (B, U, I, LI) can be used within these for formatting where required. Unicode subscript and superscript characters are used rather than SUB and SUP spans.
-
+## Todo
+- [x] Populate data
+- [x] Collapsing cards for boxes
+- [x] Section 0-4 (locations)
+- [X] 1st release candidate
+- [ ] 1st stable release
+- [ ] Streamline architecture
+- [ ] Tablet layout
 ## Accompanying Guidance & Disclaimers
 
 ### 1. 
