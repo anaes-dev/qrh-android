@@ -1,25 +1,22 @@
 <resources>
     <string name="app_name">QRH</string>
     <string name="long_name">Quick Reference Handbook</string>
-    <string name="title_list">Guidelines</string>
     <string name="title_about">About</string>
     <string name="title_settings">Edit locations</string>
     <string name="github"><u>github.com/mttrnd/qrh</u></string>
-    <string name="author">Matt Round</string>
     <string name="app_type">Android</string>
 
     <string name="updated">Updated July 2020</string>
     <string name="about_1">Unofficial adaptation of the Association of Anaesthetists Quick Reference Handbook (QRH) August 2019 version. www.anaesthetists.org/qrh</string>
     <string name="about_2">Subject to Creative Commons license CC BY-NC-SA 4.0. You may distribute original version or adapt for yourself and distribute with acknowledgement of source. You may not use for commercial purposes.</string>
-    <string name="about_3">Please report any bugs via the issue tracker on the github page, or email matthew.round@nhs.net</string>
+    <string name="about_3">Please report any bugs via the the github page</string>
     <string name="about_4">The guidelines in this handbook are not intended to be standards of medical care. The ultimate judgement with regard to a particular clinical procedure or treatment plan must be made by the clinician in the light of the clinical data presented and the diagnostic and treatment options available.</string>
-    <string name="about_5">This is an unofficial adaptation of the Association of Anaesthetists Quick Reference Handbook. It is not endorsed by the Association of Anaesthetists.\n\nThe guidelines in this handbook are not intended to be standards of medical care. The ultimate judgement with regard to a particular clinical procedure or treatment plan must be made by the clinician in the light of the clinical data presented and the diagnostic and treatment options available.\n\nThe developer assumes no responsibility or liability for any errors or omissions in the content. The information is provided on an "as is" basis with no guarantees of completeness, accuracy, usefulness or timeliness. The developer, handbook authors, or anyone else connected in any way with the works, cannot be held responsible for your use of the information contained in or linked from this application."</string>
 
     <string name="splash_1">As this is your first launch, please read and consider the following:</string>
     <string name="splash_2a">This application is an unofficial adaptation of the Association of
         Anaesthetists Quick Reference Handbook (QRH); a collection of guidelines for unexpected or uncommon
         anaesthesia-related emergencies. It is not endorsed by the Association of Anaesthetists. As per the original accompanying guidance:</string>
-    <string name="splash_2b">\"The QRH is not a substitute for learning and practicing clinical
+    <string name="splash_2b">\"The QRH is not a substitute for learning and practising clinical
         skills. Nor is it a substitute for being familiar with more detailed guidelines and
         algorithms, such as those for managing cardiac arrest or difficult airway.\n\nIt\'s
         essential that clinicians learn about these and practice their implementation elsewhere.
@@ -33,7 +30,7 @@
         such as cardiac arrest in theatre, the guideline should be used from the outset to help
         avoid missing out useful steps in resolving the situation.\"</string>
     <string name="splash_3">This application is intended only for use by healthcare professionals practising
-        in the United Kingdom who are already familiar with the QRH. At the time of release this
+        in the United Kingdom who are already familiar with the QRH. At the time of release, this
         app would not be considered a medical device in the United Kingdom, insofar that it only
         provides reference information to help a healthcare professional use their knowledge to
         make a clinical decision. According to the Medicines and Healthcare products Regulatory
@@ -42,25 +39,25 @@
         digital format, provides information to follow the path of a procedure/treatment, or it
         has decision points but the healthcare professional decides which path to take.\n\n
         Regulations may change with time. Active distribution by the developer will be ceased if this application
-        subsequently becomes subject to regulatory approval. Due to the offline and open source nature
+        subsequently becomes subject to regulatory approval. Due to the offline and open-source nature
         of the application, however, the developer cannot be held responsible for ongoing use and distribution
         of the application or its source code by other parties beyond this time. Please periodically check whether regulations have changed.
         \n\n
         For more information please see: https://www.gov.uk/government/publications/medical-devices-software-applications-apps</string>
     <string name="splash_4">This application reproduces the August 2019 version of the QRH, adapted to fit the mobile application format.
         Content has largely been transcribed verbatim, except for minor formatting, punctuation and structure tweaks that do not meaningfully
-        alter the guidelines, and the introduction of TALLman Lettering to improve readability of certain words. The developer assumes no
+        alter the guidelines, and the introduction of TALLman Lettering to improve the readability of certain words. The developer assumes no
         responsibility or liability for any errors or omissions in the content. The information is provided on an \"as is\" basis with no
-        guarantees of completeness, accuracy, usefulness or timeliness. Likewise the application is provided on an \"as is\" basis with no
+        guarantees of completeness, accuracy, usefulness or timeliness. Likewise, the application is provided on an \"as is\" basis with no
         guarantees of usefulness, performance or reliability. The developer, original QRH authors, or anyone else connected in any
         way with the QRH or application, cannot be held responsible for your use of the information contained in or linked from this application.
         \n\nThe QRH is updated from time to time. A version number is displayed next to each guideline in the list view, and at the bottom of each guideline when opened;
-        these correspond with the  Association of Anaesthetist guideline versioning. It is important that you check that the guidelines you are using are up to date.
-        The developer will endeavour to keep the application updated with any new QRH revision, however there will be a delay between release from the Association of
+        these correspond with the  Association of Anaesthetist guideline versioning. You must check that the guidelines you are using are up to date.
+        The developer will endeavour to keep the application updated with any new QRH revision, but there will be a delay between release from the Association of
         Anaesthetists and release of an application update. If any guidelines contained within the application become superseded, please revert to using the latest
-        version from the Association of Anaesthetists. Alternatively, the source code could be obtained from github.com/mttrnd/qrh and updated by the end user.
+        version from the Association of Anaesthetists. Alternatively, the source code could be obtained from github.com/mttrnd/qrh and updated by the end-user.
         \n\nThis application allows you to set short reminders for locations of emergency equipment. Please do not use this function to store any personal, sensitive or
-        patient-related data. No data is transmitted by this application itself, however data stored by the application my be automatically backed up by the Android
+        patient-related data. No data is transmitted by this application itself, however, data stored by the application my be automatically backed up by the Android
         operating system (including transmission over the internet) or accessed by other applications. If you wish to clear any data stored with the application,
         please click the \'RESET DATA &amp; EXIT\' button on the About page.
     </string>
@@ -75,8 +72,6 @@
     <string name="image">Image</string>
     <string name="version_hint">Adapted from QRH section </string>
     <string name="emptySearch">No results</string>
-    <string name="welcome">Disclaimer:</string>
-    <string name="close">Agree and close</string>
 
     <string name="locations_header">Locations</string>
     <string name="locations_additional">Additional locations</string>

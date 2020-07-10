@@ -12,18 +12,20 @@ import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_splash.*
 import kotlin.system.exitProcess
 
 
 class Splash : AppCompatActivity(), ViewTreeObserver.OnScrollChangedListener {
 
-    private val PREF_NAME = "com.mround.bwh.seenwarning"
+    private val PREFNAME = "com.mround.bwh.seenwarning"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val sharedPref: SharedPreferences = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
-        val seenWarning: Boolean? = sharedPref.getBoolean(PREF_NAME, false)
+        val sharedPref: SharedPreferences = getSharedPreferences(PREFNAME, Context.MODE_PRIVATE)
+        val seenWarning: Boolean? = sharedPref.getBoolean(PREFNAME, false)
         val editor = sharedPref.edit()
 
         if(seenWarning == true) {
@@ -34,9 +36,9 @@ class Splash : AppCompatActivity(), ViewTreeObserver.OnScrollChangedListener {
         } else {
             setContentView(R.layout.activity_splash)
 
-            val button_exit = findViewById<Button>(R.id.button_exit)
-            val button_agree_inactive = findViewById<Button>(R.id.button_agree_inactive)
-            val button_agree_active = findViewById<Button>(R.id.button_agree_active)
+            val buttonExit = findViewById<Button>(R.id.button_exit)
+            val buttonAgreeInactive = findViewById<Button>(R.id.button_agree_inactive)
+            val buttonAgreeActive = findViewById<Button>(R.id.button_agree_active)
             val scrollViewSplash = findViewById<ScrollView>(R.id.splash_scroll)
 
             scrollViewSplash.getViewTreeObserver().addOnScrollChangedListener(this)
@@ -50,20 +52,25 @@ class Splash : AppCompatActivity(), ViewTreeObserver.OnScrollChangedListener {
             if (scrolledToBottom.getLocalVisibleRect(scrollBounds)) {
                 findViewById<Button>(R.id.button_agree_active).visibility = View.VISIBLE
                 findViewById<Button>(R.id.button_agree_inactive).visibility = View.GONE
-                button_agree_active.isClickable = true
-                button_agree_inactive.isClickable = false
+                buttonAgreeActive.isClickable = true
+                buttonAgreeInactive.isClickable = false
             }
 
-            button_exit.setOnClickListener {
+            buttonExit.setOnClickListener {
                 exitProcess(1)
             }
 
-            button_agree_inactive.setOnClickListener {
-                Toast.makeText(this@Splash, "Please scroll and agree before continuing.", Toast.LENGTH_SHORT).show()
+            buttonAgreeInactive.setOnClickListener {
+
+                Snackbar.make(findViewById(android.R.id.content), "Please scroll and read before continuing.", Snackbar.LENGTH_SHORT)
+                    .setBackgroundTint(ContextCompat.getColor(this, R.color.snackbarBackground))
+                    .setAction("Dismiss") {
+                    }
+                    .show()
             }
 
-            button_agree_active.setOnClickListener {
-                editor.putBoolean(PREF_NAME, true)
+            buttonAgreeActive.setOnClickListener {
+                editor.putBoolean(PREFNAME, true)
                 editor.apply()
                 val intent = Intent(this, List::class.java)
                 intent.putExtra("FIRSTRUN", true)

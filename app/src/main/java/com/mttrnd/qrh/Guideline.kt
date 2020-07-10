@@ -1,7 +1,6 @@
 package com.mttrnd.qrh
 
 import android.content.Context
-import android.view.View
 import org.json.JSONException
 import org.json.JSONObject
 

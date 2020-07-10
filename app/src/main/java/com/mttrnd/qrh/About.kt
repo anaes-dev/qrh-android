@@ -4,13 +4,10 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.text.method.TextKeyListener.clear
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
 import kotlinx.android.synthetic.main.activity_about.*
-import kotlinx.android.synthetic.main.activity_disclaimers.*
-import kotlin.system.exitProcess
 
 class About : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

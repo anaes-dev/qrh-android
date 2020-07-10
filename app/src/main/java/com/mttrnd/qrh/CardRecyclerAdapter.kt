@@ -43,27 +43,55 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>, val codePass
             itemView.findViewById<TextView>(R.id.detail_main).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 Html.fromHtml(detailContent.main).trim()
             } else {
-                Html.fromHtml(detailContent.main, null, BulletHandler()).trim()
+                Html.fromHtml(detailContent.main, null,
+                    Html.TagHandler { opening, tag, output, xmlReader ->
+                        if (tag == "br" && opening) output.append("\n")
+                        if (tag == "p" && opening) output.append("\n\n")
+                        if (tag == "li" && opening) output.append("\n\n• ")
+                    }).trim()
             }
 
             itemView.findViewById<TextView>(R.id.detail_sub).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 Html.fromHtml(detailContent.sub).trim()
             } else {
-                Html.fromHtml(detailContent.sub, null, BulletHandler()).trim()
+                Html.fromHtml(detailContent.sub, null,
+                    Html.TagHandler { opening, tag, output, xmlReader ->
+                        if (tag == "br" && opening) output.append("\n")
+                        if (tag == "p" && opening) output.append("\n\n")
+                        if (tag == "li" && opening) output.append("\n\n• ")
+                }).trim()
             }
 
-            itemView.findViewById<TextView>(R.id.detail_step).setText(detailContent.step).toString()
 
+            itemView.findViewById<TextView>(R.id.detail_step).setText(detailContent.step).toString()
         }
     }
 
     //ViewHolder2 = collapsible boxes
     class ViewHolder2(itemView: View) : RecyclerView.ViewHolder(itemView), UpdateViewHolder {
         override fun bindViews(detailContent: DetailContent) {
-            itemView.findViewById<TextView>(R.id.detail_main).text =
-                Html.fromHtml((detailContent.main)).trim()
-            itemView.findViewById<TextView>(R.id.detail_sub).text =
-                Html.fromHtml((detailContent.sub)).trim()
+
+            itemView.findViewById<TextView>(R.id.detail_main).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Html.fromHtml(detailContent.main).trim()
+            } else {
+                Html.fromHtml(detailContent.main, null,
+                    Html.TagHandler { opening, tag, output, xmlReader ->
+                        if (tag == "br" && opening) output.append("\n")
+                        if (tag == "p" && opening) output.append("\n\n")
+                        if (tag == "li" && opening) output.append("\n\n•")
+                    }).trim()
+            }
+
+            itemView.findViewById<TextView>(R.id.detail_sub).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Html.fromHtml(detailContent.sub).trim()
+            } else {
+                Html.fromHtml(detailContent.sub, null,
+                    Html.TagHandler { opening, tag, output, xmlReader ->
+                        if (tag == "br" && opening) output.append("\n")
+                        if (tag == "p" && opening) output.append("\n\n")
+                        if (tag == "li" && opening) output.append("\n\n•")
+                    }).trim()
+            }
 
             val subCard = itemView.findViewById<TextView>(R.id.detail_sub)
             val subArrow = itemView.findViewById<ImageView>(R.id.detail_arrow)
