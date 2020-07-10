@@ -59,12 +59,10 @@ class List : AppCompatActivity() {
         if(isFirstrun) {
             val snack =
                 Snackbar
-                    .make(container, "Welcome", Snackbar.LENGTH_SHORT)
+                    .make(container, "Welcome to the Quick Reference Handbook", Snackbar.LENGTH_SHORT)
                     .setBackgroundTint(getColor(this, R.color.snackbarBackground))
             snack.show()
         }
-
-
 
 
         val guidelineList = Guideline.getGuidelinesFromFile("guidelines.json", this)
@@ -115,6 +113,10 @@ class List : AppCompatActivity() {
         showGuidelineIntent.putExtra("VERSION", guideline.version.toString())
         showGuidelineIntent.putExtra("URL", guideline.url)
         startActivity(showGuidelineIntent)
+    }
+
+    override fun onBackPressed() {
+        moveTaskToBack(true)
     }
 
 

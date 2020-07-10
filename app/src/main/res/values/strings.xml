@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">QRH</string>
-    <string name="long_name">Quick Reference Handbook (QRH)</string>
+    <string name="long_name">Quick Reference Handbook</string>
     <string name="title_list">Guidelines</string>
     <string name="title_about">About</string>
     <string name="title_settings">Edit locations</string>
@@ -15,9 +15,65 @@
     <string name="about_4">The guidelines in this handbook are not intended to be standards of medical care. The ultimate judgement with regard to a particular clinical procedure or treatment plan must be made by the clinician in the light of the clinical data presented and the diagnostic and treatment options available.</string>
     <string name="about_5">This is an unofficial adaptation of the Association of Anaesthetists Quick Reference Handbook. It is not endorsed by the Association of Anaesthetists.\n\nThe guidelines in this handbook are not intended to be standards of medical care. The ultimate judgement with regard to a particular clinical procedure or treatment plan must be made by the clinician in the light of the clinical data presented and the diagnostic and treatment options available.\n\nThe developer assumes no responsibility or liability for any errors or omissions in the content. The information is provided on an "as is" basis with no guarantees of completeness, accuracy, usefulness or timeliness. The developer, handbook authors, or anyone else connected in any way with the works, cannot be held responsible for your use of the information contained in or linked from this application."</string>
 
+    <string name="splash_1">As this is your first launch, please read and consider the following:</string>
+    <string name="splash_2a">This application is an unofficial adaptation of the Association of
+        Anaesthetists Quick Reference Handbook (QRH); a collection of guidelines for unexpected or uncommon
+        anaesthesia-related emergencies. It is not endorsed by the Association of Anaesthetists. As per the original accompanying guidance:</string>
+    <string name="splash_2b">\"The QRH is not a substitute for learning and practicing clinical
+        skills. Nor is it a substitute for being familiar with more detailed guidelines and
+        algorithms, such as those for managing cardiac arrest or difficult airway.\n\nIt\'s
+        essential that clinicians learn about these and practice their implementation elsewhere.
+        For example, it\'s expected that in using the QRH guideline for managing cardiac arrest,
+        clinicians will already have underlying knowledge of conditions causing cardiac arrest and
+        will be competent in providing advanced life support.\n\nThe QRH is also not intended to be
+        used as a rule book every single time one of the guideline situations is encountered. For
+        instance, most ordinary occasions of hypotension will have a simple cause and will respond
+        to obvious remedies. The hypotension guideline becomes useful if the situation is out of the
+        ordinary or becomes unremitting. Conversely, for the more immediate and uncommon problems,
+        such as cardiac arrest in theatre, the guideline should be used from the outset to help
+        avoid missing out useful steps in resolving the situation.\"</string>
+    <string name="splash_3">This application is intended only for use by healthcare professionals practising
+        in the United Kingdom who are already familiar with the QRH. At the time of release this
+        app would not be considered a medical device in the United Kingdom, insofar that it only
+        provides reference information to help a healthcare professional use their knowledge to
+        make a clinical decision. According to the Medicines and Healthcare products Regulatory
+        Agency guidance \"Medical device stand-alone software including apps\" (Last updated 4th
+        June 2020); software is unlikely to be a device if it just reproduces a paper document in
+        digital format, provides information to follow the path of a procedure/treatment, or it
+        has decision points but the healthcare professional decides which path to take.\n\n
+        Regulations may change with time. Active distribution by the developer will be ceased if this application
+        subsequently becomes subject to regulatory approval. Due to the offline and open source nature
+        of the application, however, the developer cannot be held responsible for ongoing use and distribution
+        of the application or its source code by other parties beyond this time. Please periodically check whether regulations have changed.
+        \n\n
+        For more information please see: https://www.gov.uk/government/publications/medical-devices-software-applications-apps</string>
+    <string name="splash_4">This application reproduces the August 2019 version of the QRH, adapted to fit the mobile application format.
+        Content has largely been transcribed verbatim, except for minor formatting, punctuation and structure tweaks that do not meaningfully
+        alter the guidelines, and the introduction of TALLman Lettering to improve readability of certain words. The developer assumes no
+        responsibility or liability for any errors or omissions in the content. The information is provided on an \"as is\" basis with no
+        guarantees of completeness, accuracy, usefulness or timeliness. Likewise the application is provided on an \"as is\" basis with no
+        guarantees of usefulness, performance or reliability. The developer, original QRH authors, or anyone else connected in any
+        way with the QRH or application, cannot be held responsible for your use of the information contained in or linked from this application.
+        \n\nThe QRH is updated from time to time. A version number is displayed next to each guideline in the list view, and at the bottom of each guideline when opened;
+        these correspond with the  Association of Anaesthetist guideline versioning. It is important that you check that the guidelines you are using are up to date.
+        The developer will endeavour to keep the application updated with any new QRH revision, however there will be a delay between release from the Association of
+        Anaesthetists and release of an application update. If any guidelines contained within the application become superseded, please revert to using the latest
+        version from the Association of Anaesthetists. Alternatively, the source code could be obtained from github.com/mttrnd/qrh and updated by the end user.
+        \n\nThis application allows you to set short reminders for locations of emergency equipment. Please do not use this function to store any personal, sensitive or
+        patient-related data. No data is transmitted by this application itself, however data stored by the application my be automatically backed up by the Android
+        operating system (including transmission over the internet) or accessed by other applications. If you wish to clear any data stored with the application,
+        please click the \'RESET DATA &amp; EXIT\' button on the About page.
+    </string>
+    <string name="splash_5">If you disagree with any of the above, please click the \'EXIT\' button below and uninstall the application.
+        If you agree, please click the \'AGREE &amp; CONTINUE\' button to launch the application.
+        This disclaimer can be accessed at any time from the About page by clicking the icon at the top-right corner of the main application screen.
+        A small popup reminder of this disclaimer and the unofficial nature of this QRH adaptation will be displayed at each launch.
+    </string>
+    <string name="splash_6">Thank you for reading</string>
 
     <string name="arrow">Arrow</string>
     <string name="image">Image</string>
+    <string name="version_hint">Adapted from QRH section </string>
     <string name="emptySearch">No results</string>
     <string name="welcome">Disclaimer:</string>
     <string name="close">Agree and close</string>
@@ -47,7 +103,7 @@
     <string name="location_fireext">Fire extinguisher</string>
 
     <string name="location_equipmentbox">EQUIPMENT LOCATIONS</string>
-    <string name="location_settingshint">Update in location settings (top right)</string>
+    <string name="location_settingshint">Please enter locations (top-right)</string>
 
     <string name="location_additional_1a">Additional 1 name</string>
     <string name="location_additional_1b">Additional 1 content</string>
@@ -90,4 +146,16 @@
     <string name="fire2">START</string>
     <string name="fire3">Call for help and inform theatre team</string>
     <string name="fire4">&lt;li&gt;Activate fire alarm&lt;li&gt;Dial hospital fire emergency number and report location and nature of fire&lt;li&gt;Bring CO2 fire extinguisher into theatre</string>
+    <string name="exit">Exit</string>
+    <string name="agree_amp_continue"><![CDATA[Agree & Continue]]></string>
+
+    <string name="disclaimers">View disclaimers</string>
+    <string name="resetexit">Reset data &amp; exit</string>
+    <string name="iconhint">Click this icon at the top\-right of each guideline to access the original PDF file from the Association of Anaesthetists website.</string>
+    <string name="settinghint">Click this icon at the top\-right of pages 0\-4 and 3\-7 to edit location reminders.</string>
+    <string name="_1">1</string>
+    <string name="_2">2</string>
+    <string name="_3">3</string>
+    <string name="_4">4</string>
+
 </resources>

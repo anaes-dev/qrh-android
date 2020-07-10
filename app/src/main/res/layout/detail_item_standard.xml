@@ -33,30 +33,28 @@
 
       <androidx.constraintlayout.widget.ConstraintLayout
           android:id="@+id/constraintLayout"
-          android:layout_width="32dp"
-          android:layout_height="32dp"
+          android:layout_width="28dp"
+          android:layout_height="28dp"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/detail_step"
             style="@style/Widget.AppCompat.TextView.SpinnerItem"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
             android:background="@drawable/step_circle"
             android:gravity="center"
             android:minLines="1"
             android:textAlignment="center"
             android:textColor="#FFFFFF"
-            android:textSize="14sp"
-            app:autoSizeTextType="uniform"
-            app:autoSizeMaxTextSize="18sp"
             android:textStyle="bold"
+            app:autoSizeMaxTextSize="16sp"
+            app:autoSizeTextType="uniform"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="1" />
+            app:layout_constraintTop_toTopOf="parent" />
       </androidx.constraintlayout.widget.ConstraintLayout>
 
       <TextView
@@ -64,9 +62,9 @@
           style="@style/Widget.AppCompat.TextView.SpinnerItem"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
-          android:layout_marginStart="30dp"
-          android:layout_marginLeft="30dp"
-          android:layout_marginTop="8dp"
+          android:layout_marginStart="28dp"
+          android:layout_marginLeft="28dp"
+          android:layout_marginTop="6dp"
           android:textSize="15sp"
           android:textStyle="bold"
           app:layout_constraintEnd_toEndOf="parent"

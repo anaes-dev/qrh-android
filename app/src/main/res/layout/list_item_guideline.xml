@@ -17,27 +17,38 @@
       android:foreground="?android:attr/selectableItemBackground"
       android:hapticFeedbackEnabled="true"
       app:cardUseCompatPadding="true"
-      app:contentPadding="8dp"
+      app:contentPadding="4dp"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="8dp">
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp">
+
+      <TextView
+          android:id="@+id/guideline_version"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="bottom|end"
+          android:layout_marginTop="16dp"
+          android:textColor="?attr/colorButtonNormal"
+          android:textSize="10sp"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toTopOf="@+id/guideline_title"
+          tools:text="version" />
 
       <TextView
           android:id="@+id/guideline_code"
           style="@style/TextAppearance.MaterialComponents.Overline"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:textColor="@android:color/secondary_text_dark"
-          android:textSize="12sp"
+          android:textColor="@android:color/tertiary_text_dark"
+          android:textSize="14sp"
           android:textStyle="bold"
           app:layout_constraintBottom_toBottomOf="@+id/guideline_title"
           app:layout_constraintStart_toStartOf="parent"
@@ -56,6 +67,7 @@
           app:layout_constraintStart_toStartOf="@+id/guideline_code"
           app:layout_constraintTop_toTopOf="parent"
           tools:text="title" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
   </androidx.cardview.widget.CardView>

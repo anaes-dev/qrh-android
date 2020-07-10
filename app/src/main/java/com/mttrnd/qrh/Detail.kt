@@ -6,16 +6,20 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
+import android.text.TextUtils.isEmpty
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.activity_detail_0_4.*
 import kotlinx.android.synthetic.main.activity_detail_3_7.*
+
 
 
 class Detail : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
@@ -27,31 +31,57 @@ class Detail : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeLi
         sharedPref.registerOnSharedPreferenceChangeListener(this)
     }
 
+    @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val title = intent.getStringExtra("TITLE")
         val code = intent.getStringExtra("CODE")
-        val version = intent.getStringExtra("VERSION")
+        // val version = intent.getStringExtra("VERSION")
         setTitle(title)
 
 
+        //Setup different views for pages 0-4 and 3-7
 
         when (code) {
 
             "0-4" -> {
                 setContentView(R.layout.activity_detail_0_4)
                 supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+                val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
 
                 setupSharedPreferences()
+
+                //Show snackbar hint on fist visit
+                if(!sharedPref.getBoolean("seen_location_view", false)) {
+                    Snackbar.make(findViewById(android.R.id.content), "Please enter locations (top-right)", Snackbar.LENGTH_LONG)
+                        .setBackgroundTint(ContextCompat.getColor(this, R.color.snackbarBackground))
+                        .setDuration(8000)
+                        .setAction("Edit Locations") {
+                            this.startActivity(Intent(this,Settings::class.java))
+                        }
+                        .show()
+                }
+
                 update_locations()
+
+                //Show text hint if empty
+                if(isEmpty(sharedPref.getString("location_arrest", ""))) {
+                    location_hint.visibility = View.VISIBLE
+                } else {
+                    location_hint.visibility = View.GONE
+                }
+
             }
 
             "3-7" -> {
+
+                //First part of page is static layout
                 setContentView(R.layout.activity_detail_3_7)
                 supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
                 findViewById<TextView>(R.id.fire_main).text = getString(R.string.fire3)
                 findViewById<TextView>(R.id.fire_step).text = "1"
+                findViewById<TextView>(R.id.detail_code).setText(code)
 
                 findViewById<TextView>(R.id.fire_sub).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     Html.fromHtml(getString(R.string.fire4)).trim()
@@ -59,9 +89,30 @@ class Detail : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeLi
                     Html.fromHtml(getString(R.string.fire4), null, BulletHandler()).trim()
                 }
 
+                val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
                 setupSharedPreferences()
+
+                //Show snackbar hint on fist visit
+                if(!sharedPref.getBoolean("seen_fire_view", false)) {
+                    Snackbar.make(findViewById(android.R.id.content), "Please enter locations (top-right)", Snackbar.LENGTH_LONG)
+                        .setBackgroundTint(ContextCompat.getColor(this, R.color.snackbarBackground))
+                        .setDuration(8000)
+                        .setAction("Edit Locations") {
+                            this.startActivity(Intent(this,Settings::class.java))
+                        }
+                        .show()
+                }
+
                 update_firelocations()
 
+                //Show text hint if empty
+                if(isEmpty(sharedPref.getString("location_firealarm", "")) && isEmpty(sharedPref.getString("location_fireext", ""))) {
+                    fire_hint.visibility = View.VISIBLE
+                } else {
+                    fire_hint.visibility = View.GONE
+                }
+
+                //Recyclerview / CardRecyclerAdapter still used to populate second half of page
                 val content = DetailContent.getContentFromFile("3-7.json", this)
                 val adapter = CardRecyclerAdapter(content, code)
                 linearLayoutManager = LinearLayoutManager(this)
@@ -75,10 +126,12 @@ class Detail : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeLi
                 setContentView(R.layout.activity_detail)
                 supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
+                //Feed relevant JSON to Recyclerview / CardRecyclerAdapter
+
                 val filenameSuffix = ".json"
                 val filename = code + filenameSuffix
 
-                findViewById<TextView>(R.id.detail_code).setText(code)
+                findViewById<TextView>(R.id.detail_code).text = code
 
                 val content = DetailContent.getContentFromFile(filename, this)
                 val adapter = CardRecyclerAdapter(content, code)
@@ -87,15 +140,18 @@ class Detail : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeLi
                 detail_recyclerview.layoutManager = linearLayoutManager
                 detail_recyclerview.setNestedScrollingEnabled(false)
                 detail_recyclerview.adapter = adapter
+
             }
         }
+
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val code = intent.getStringExtra("CODE")
+        //Inflate different menu for 0-4 and 3-7
         when (code) {
-            "0-4" -> menuInflater.inflate(R.menu.menu_detail_0_4, menu)
-            "3-7" -> menuInflater.inflate(R.menu.menu_detail_0_4, menu)
+            "0-4","3-7" -> menuInflater.inflate(R.menu.menu_detail_0_4, menu)
             else -> menuInflater.inflate(R.menu.menu_detail, menu)
         }
         return true
@@ -164,13 +220,36 @@ class Detail : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeLi
         } else {
             additional3.visibility= View.GONE
         }
+        val editor = sharedPref.edit()
+        editor.putBoolean("seen_location_view", true)
+        editor.apply()
 
-    }
+        if(isEmpty(sharedPref.getString("location_arrest", ""))) {
+            location_hint.visibility = View.VISIBLE
+        } else {
+            location_hint.visibility = View.GONE
+        }
+
+        }
+
 
     fun update_firelocations() {
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
+
         location_firealarm.text = sharedPref.getString("location_firealarm", "")
         location_fireext.text = sharedPref.getString("location_fireext", "")
+
+        val editor = sharedPref.edit()
+        editor.putBoolean("seen_fire_view", true)
+        editor.apply()
+
+
+        if(isEmpty(sharedPref.getString("location_firealarm", "")) && isEmpty(sharedPref.getString("location_fireext", ""))) {
+            fire_hint.visibility = View.VISIBLE
+        } else {
+            fire_hint.visibility = View.GONE
+        }
+
     }
 
     override fun onSharedPreferenceChanged(sharedPref: SharedPreferences?, key: String?) {

@@ -14,26 +14,32 @@
     },
     {
       "type": 4,
-      "main": "Guideline number, name and version number.",
+      "main": "Guideline number and name (version number is displayed at the bottom of the page)",
       "sub": "",
       "step": "1"
     },
     {
       "type": 4,
-      "main": "A brief description of the clinical situation for which the guideline is written.",
+      "main": "A brief description of the clinical situation for which the guideline is written",
       "sub": "",
       "step": "2"
     },
     {
+      "type": 2,
+      "main": "START",
+      "sub": "",
+      "step": ""
+    },
+    {
       "type": 4,
-      "main": "The body of the guideline. ",
+      "main": "The body of the guideline with steps",
       "sub": "",
       "step": "3"
     },
     {
       "type": 4,
-      "main": "Call out boxes, which may be referred to in the body text.",
-      "sub": "Boxes expand on clicking",
+      "main": "Call out boxes, which may be referred to in the steps",
+      "sub": "",
       "step": "4"
     },
     {
