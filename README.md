@@ -37,9 +37,29 @@ You may not use for commercial purposes.
 Please download Version 1 Release Candidate 1 from here:
 https://github.com/mttrnd/qrh/releases/tag/v1.0rc1
 
-## Technical notes
+## Technical
 
+The guideline list is generated from JSON in /assets/guidelines.json.
 
+Guidelines are stored as JSON objects in the assets folder.
+
+Each array contains 'type', 'main', 'sub' and 'step' keys.
+
+Type value determines the appearance of the generated card:
+1. Introductory text (main only)
+2. START text (main only)
+3. Guideline step with bold heading and separate content (main, sub and step)
+4. Guideline step with single text field (main and step)
+5. Orange expanding box (main and sub)
+6. Blue expanding box (main and sub)
+7. Green expanding box (main and sub)
+8. Black expanding box (main and sub)
+9. Purple expanding box (main and sub)
+10. Image (path/URL in main, caption in sub)
+11. Version text (main only)
+12. Red disclaimer card (main only)
+
+Basic HTML tags (B, U, I, LI) can be used within these for formatting where required. Unicode subscript and superscript characters are used rather than SUB and SUP spans.
 
 ## Accompanying Guidance & Disclaimers
 
