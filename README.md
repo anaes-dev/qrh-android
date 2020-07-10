@@ -13,8 +13,10 @@
 ## Todo
 - [x] Populate data
 - [x] Collapsing cards for boxes
-- [x] Section 0-2 (locations)
-- [ ] 1st release
+- [x] Section 0-4 (locations)
+- [X] 1st release candidate
+- [ ] 1st stable release
+- [ ] Streamline architecture
 - [ ] Tablet layout
 
 ## License
@@ -34,6 +36,9 @@ You may not use for commercial purposes.
 
 Please download Version 1 Release Candidate 1 from here:
 https://github.com/mttrnd/qrh/releases/tag/v1.0rc1
+
+## Technical notes
+
 
 
 ## Accompanying Guidance & Disclaimers
