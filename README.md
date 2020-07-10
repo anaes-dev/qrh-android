@@ -45,7 +45,7 @@ Guidelines are stored as JSON objects in the assets folder.
 
 Each array contains 'type', 'main', 'sub' and 'step' keys.
 
-Type value determines the appearance of the generated card:
+Type integer value determines the appearance of the generated card:
 1. Introductory text (main only)
 2. START text (main only)
 3. Guideline step with bold heading and separate content (main, sub and step)
