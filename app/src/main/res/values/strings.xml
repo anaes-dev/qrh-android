@@ -112,34 +112,6 @@
     <string name="location_additional_3a">Additional 3 name</string>
     <string name="location_additional_3b">Additional 3 content</string>
 
-    <string-array name="locations_list">
-        <item>location_arrest</item>
-        <item>location_pacing</item>
-        <item>location_airway</item>
-        <item>location_mh</item>
-        <item>location_la</item>
-        <item>location_anaphylaxis</item>
-        <item>location_rapid</item>
-        <item>location_salvage</item>
-        <item>location_ultrasound</item>
-        <item>location_videoscope</item>
-        <item>location_cric</item>
-        <item>location_jet</item>
-        <item>location_scope</item>
-        <item>location_helpp</item>
-        <item>location_muster</item>
-        <item>location_cooled</item>
-        <item>location_ice</item>
-        <item>location_sugammadex</item>
-        <item>location_firealarm</item>
-        <item>location_fireext</item>
-        <item>additional_1_name</item>
-        <item>additional_1_location</item>
-        <item>additional_2_name</item>
-        <item>additional_2_location</item>
-        <item>additional_3_name</item>
-        <item>additional_3_location</item>
-    </string-array>
 
 
     <string name="fire1">Evidence of fire (smoke, heat, odour, flash, flame) on patient or drapes, or in patient’s airway</string>

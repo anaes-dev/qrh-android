@@ -1,12 +1,30 @@
 <resources>
-    <!-- Reply Preference -->
-    <string-array name="reply_entries">
-        <item>Reply</item>
-        <item>Reply to all</item>
-    </string-array>
-
-    <string-array name="reply_values">
-        <item>reply</item>
-        <item>reply_all</item>
+    <string-array name="locations_list">
+        <item>location_arrest</item>
+        <item>location_pacing</item>
+        <item>location_airway</item>
+        <item>location_mh</item>
+        <item>location_la</item>
+        <item>location_anaphylaxis</item>
+        <item>location_rapid</item>
+        <item>location_salvage</item>
+        <item>location_ultrasound</item>
+        <item>location_videoscope</item>
+        <item>location_cric</item>
+        <item>location_jet</item>
+        <item>location_scope</item>
+        <item>location_helpp</item>
+        <item>location_muster</item>
+        <item>location_cooled</item>
+        <item>location_ice</item>
+        <item>location_sugammadex</item>
+        <item>location_firealarm</item>
+        <item>location_fireext</item>
+        <item>additional_1_name</item>
+        <item>additional_1_location</item>
+        <item>additional_2_name</item>
+        <item>additional_2_location</item>
+        <item>additional_3_name</item>
+        <item>additional_3_location</item>
     </string-array>
 </resources>
