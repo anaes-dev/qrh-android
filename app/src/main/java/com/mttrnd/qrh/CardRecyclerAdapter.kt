@@ -15,6 +15,8 @@ import com.bumptech.glide.Glide
 class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>, val codePassed: String?) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+
+    //Define view type codes
     companion object {
         const val VIEW_ONE = 1
         const val VIEW_TWO = 2
@@ -34,6 +36,7 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>, val codePass
         fun bindViews(detailContent: DetailContent)
     }
 
+    //ViewHolder1 = all three text fields
     class ViewHolder1(itemView: View) : RecyclerView.ViewHolder(itemView), UpdateViewHolder {
         override fun bindViews(detailContent: DetailContent) {
 
@@ -54,6 +57,7 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>, val codePass
         }
     }
 
+    //ViewHolder2 = collapsible boxes
     class ViewHolder2(itemView: View) : RecyclerView.ViewHolder(itemView), UpdateViewHolder {
         override fun bindViews(detailContent: DetailContent) {
             itemView.findViewById<TextView>(R.id.detail_main).text =
@@ -75,6 +79,7 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>, val codePass
         }
     }
 
+    //ViewHolder3 = images with glide (put path in 'main' in JSON)
     class ViewHolder3(itemView: View) : RecyclerView.ViewHolder(itemView), UpdateViewHolder {
         override fun bindViews(detailContent: DetailContent) {
             val detailImage = itemView.findViewById<ImageView>(R.id.detail_image)
@@ -86,12 +91,15 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>, val codePass
         }
     }
 
+    //ViewHolder4 = single text item
     class ViewHolder4(itemView: View) : RecyclerView.ViewHolder(itemView), UpdateViewHolder {
         override fun bindViews(detailContent: DetailContent) {
-            itemView.findViewById<TextView>(R.id.detail_text).setText(detailContent.main).toString()
+            itemView.findViewById<TextView>(R.id.detail_text).setText((Html.fromHtml(detailContent.main)).trim())
         }
     }
 
+
+    //Get view type
     override fun getItemViewType(position: Int): Int {
         return when (dataSource[position].type) {
             1 -> VIEW_ONE
@@ -110,6 +118,7 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>, val codePass
             }
     }
 
+    //Inflate item layout according to view type
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             VIEW_ONE -> ViewHolder1(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_preamble, parent, false))
@@ -128,9 +137,11 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>, val codePass
         }
     }
 
+
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val detailContent: DetailContent = dataSource[position]
 
+        //Collapsing box logic
         when (dataSource[position].type) {
             5,6,7,8,9 -> {
                 holder.itemView.setOnClickListener {
@@ -145,6 +156,12 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>, val codePass
             }
         }
 
+        //Override first box on instructions page to be expanded
+        if(codePassed == "0-3" && dataSource[position].type == 5) {
+            detailContent.collapsed = false
+        }
+
+        //Override autotext for sepsis page (parses ml.kg as URL)
         if(codePassed == "3-14") {
             when (dataSource[position].type) {
                 5,6,7,8,9 -> holder.itemView.findViewById<TextView>(R.id.detail_sub).autoLinkMask = 0

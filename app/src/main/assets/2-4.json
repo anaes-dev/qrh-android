@@ -51,7 +51,7 @@
     {
       "type": 6,
       "main": "Box C: VASOPRESSOR DRUGS",
-      "sub": "<li>Ephedrine 100 μg.kg⁻¹ <small>(adult 3-12 mg)</small></li><li>Phenylephrine 5 μg.kg⁻¹ <small>(adult 100 μg)</small></li><li>Metaraminol 5 μg.kg⁻¹ <small>(adult 500 μg)</small></li><li>Adrenaline 1 μg.kg⁻¹ <small>(adult 10-100 μg) in emergency only</small></li>",
+      "sub": "<li>ePHEDrine 100 μg.kg⁻¹ <small>(adult 3-12 mg)</small></li><li>Phenylephrine 5 μg.kg⁻¹ <small>(adult 100 μg)</small></li><li>Metaraminol 5 μg.kg⁻¹ <small>(adult 500 μg)</small></li><li>Adrenaline 1 μg.kg⁻¹ <small>(adult 10-100 μg) in emergency only</small></li>",
       "step": "4"
     },
     {

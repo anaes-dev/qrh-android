@@ -27,6 +27,7 @@ class ListRecyclerAdapter(var dataSource: ArrayList<Guideline>, val clickListene
         RecyclerView.ViewHolder(inflater.inflate(R.layout.list_item_guideline, parent, false)) {
         val mTitleView: TextView = itemView.findViewById(R.id.guideline_title)
         val mCodeView: TextView = itemView.findViewById(R.id.guideline_code)
+        val mVersionView: TextView = itemView.findViewById(R.id.guideline_version)
 
         fun bind(guideline: Guideline, clickListener: (Guideline) -> Unit) {
             itemView.setOnClickListener { clickListener(guideline) }
@@ -46,6 +47,9 @@ class ListRecyclerAdapter(var dataSource: ArrayList<Guideline>, val clickListene
         val guideline: Guideline = guidelineFilterList[position]
         holder.mTitleView.text = guideline.title
         holder.mCodeView.text= guideline.code
+
+        val guidelineVersion = guideline.version.toString()
+        holder.mVersionView.text = "v.$guidelineVersion"
 
         holder.bind(guidelineFilterList[position], clickListener)
         }

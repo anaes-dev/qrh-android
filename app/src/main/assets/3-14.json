@@ -45,7 +45,7 @@
     {
       "type": 9,
       "main": "Box C: PAEDIATRIC CONSIDERATIONS",
-      "sub": "<li>Goals: capillary refill time (CRT) ≤ 2 secs, normal BP for age, normal peripheral pulses, warm extremities, urine &gt;1 ml.kg⁻¹.hr⁻¹, SCVO2 &gt;70%.</li><li>Give 20 ml.kg⁻¹ initially up to or over 60 ml.kg⁻¹ fluid until goals or unless rales or hepatomegaly develops.</li><li>Begin peripheral inotropic support pending central/intraosseous access.</li><li>If warm shock (↑HR, ↓BP) start noradrenaline.</li><li>If cold shock (↑HR, ↓CRT) start dopamine and, if resistant,adrenaline.</li>",
+      "sub": "<li>Goals: capillary refill time (CRT) ≤ 2 secs, normal BP for age, normal peripheral pulses, warm extremities, urine &gt;1 ml.kg⁻¹.hr⁻¹, SCVO2 &gt;70%.</li><li>Give 20 ml.kg⁻¹ initially up to or over 60 ml.kg⁻¹ fluid until goals or unless rales or hepatomegaly develops.</li><li>Begin peripheral inotropic support pending central/intraosseous access.</li><li>If warm shock (↑HR, ↓BP) start NORadrenaline.</li><li>If cold shock (↑HR, ↓CRT) start dopamine and, if resistant,adrenaline.</li>",
       "step": ""
     },
     {
@@ -80,14 +80,14 @@
     },
     {
       "type": 4,
-      "main": "Start noradrenaline to achieve mean arterial pressure ≥ 65 mmHg <b>(Box D)</b>",
+      "main": "Start NORadrenaline to achieve mean arterial pressure ≥ 65 mmHg <b>(Box D)</b>",
       "sub": "",
       "step": "9"
     },
     {
       "type": 6,
       "main": "Box D: DRUG THERAPY",
-      "sub": "<li><b>Noradrenaline (NA)</b> as first choice vasopressor.</li><li><b>Adrenaline</b> added to noradrenaline when additional agent needed.</li><li><b>Vasopressin</b> 0.03 units.min⁻¹ added to ↑MAP or ↓noradrenaline need.</li><li><b>Dobutamine</b> up to 20 µg.kg⁻¹.min⁻¹ if evidence of myocardial dysfunction or ongoing signs of hypoperfusion despite adequate MAP and adequate intravascular volume.</li><li><b>Hydrocortisone</b> if unable to restore haemodynamic stability.</li>",
+      "sub": "<li><b>NORadrenaline (NA)</b> as first choice vasopressor.</li><li><b>Adrenaline</b> added to noradrenaline when additional agent needed.</li><li><b>Vasopressin</b> 0.03 units.min⁻¹ added to ↑MAP or ↓noradrenaline need.</li><li><b>DOBUTamine</b> up to 20 µg.kg⁻¹.min⁻¹ if evidence of myocardial dysfunction or ongoing signs of hypoperfusion despite adequate MAP and adequate intravascular volume.</li><li><b>Hydrocortisone</b> if unable to restore haemodynamic stability.</li>",
       "step": ""
     },
     {

@@ -3,11 +3,13 @@ package com.mttrnd.qrh
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
 import android.view.ViewTreeObserver
 import android.widget.Button
 import android.widget.ScrollView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_splash.*
@@ -39,6 +41,19 @@ class Splash : AppCompatActivity(), ViewTreeObserver.OnScrollChangedListener {
 
             scrollViewSplash.getViewTreeObserver().addOnScrollChangedListener(this)
 
+            val verCode = BuildConfig.VERSION_NAME
+            val verOutput = "Version $verCode"
+            findViewById<TextView>(R.id.about_version).setText(verOutput)
+
+            val scrollBounds = Rect()
+            scrollViewSplash.getHitRect(scrollBounds)
+            if (scrolledToBottom.getLocalVisibleRect(scrollBounds)) {
+                findViewById<Button>(R.id.button_agree_active).visibility = View.VISIBLE
+                findViewById<Button>(R.id.button_agree_inactive).visibility = View.GONE
+                button_agree_active.isClickable = true
+                button_agree_inactive.isClickable = false
+            }
+
             button_exit.setOnClickListener {
                 exitProcess(1)
             }
@@ -60,6 +75,16 @@ class Splash : AppCompatActivity(), ViewTreeObserver.OnScrollChangedListener {
 
     override fun onScrollChanged() {
         val scrollViewSplash: ScrollView = findViewById(R.id.splash_scroll)
+        val scrollBounds = Rect()
+        scrollViewSplash.getHitRect(scrollBounds)
+
+        if (scrolledToBottom.getLocalVisibleRect(scrollBounds)) {
+            findViewById<Button>(R.id.button_agree_active).visibility = View.VISIBLE
+            findViewById<Button>(R.id.button_agree_inactive).visibility = View.GONE
+            button_agree_active.isClickable = true
+            button_agree_inactive.isClickable = false
+        }
+
         if (!scrollViewSplash.canScrollVertically(1)) {
             findViewById<Button>(R.id.button_agree_active).visibility = View.VISIBLE
             findViewById<Button>(R.id.button_agree_inactive).visibility = View.GONE

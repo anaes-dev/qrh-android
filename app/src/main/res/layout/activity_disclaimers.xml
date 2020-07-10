@@ -4,72 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Splash"
+    tools:context=".Disclaimers"
     tools:ignore="inefficientWeight">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:background="#EBEBEB"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <Button
-            android:id="@+id/button_exit"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
-            android:layout_height="36dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:background="@drawable/button_border"
-            android:text="@string/exit"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/button_agree_active"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/button_agree_active"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginBottom="8dp"
-            android:clickable="false"
-            android:text="@string/agree_amp_continue"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <Button
-            android:id="@+id/button_agree_inactive"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:clickable="false"
-            android:text="@string/agree_amp_continue"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/button_exit"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ScrollView
         android:id="@+id/splash_scroll"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:fadeScrollbars="false"
         android:scrollbarSize="8dp"
         android:scrollbarStyle="insideOverlay"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -81,96 +26,6 @@
             android:orientation="vertical"
             android:padding="8dp">
 
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_gravity="center"
-                    android:layout_weight="0"
-                    android:contentDescription="@string/image"
-                    app:srcCompat="@drawable/ic_launcher_round" />
-
-                <TextView
-                    style="@style/TextAppearance.AppCompat.Headline"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0"
-                    android:padding="8dp"
-                    android:text="@string/long_name"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    android:text="@string/app_type" />
-
-                <TextView
-                    android:id="@+id/about_version"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    android:text="@string/updated" />
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:autoLink="web"
-                android:padding="8dp"
-                android:text="@string/about_1" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="120dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="start"
-                    android:contentDescription="@string/image"
-                    android:padding="8dp"
-                    app:srcCompat="@drawable/by_nc_sa" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    android:text="@string/about_2"
-                    android:textSize="10sp" />
-
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="8dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:text="@string/splash_1"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -252,7 +107,7 @@
                     android:background="@drawable/step_circle"
                     android:gravity="center"
                     android:minLines="1"
-                    android:text="_2"
+                    android:text="@string/_2"
                     android:textAlignment="center"
                     android:textColor="#FFFFFF"
                     android:textSize="12sp"
@@ -286,7 +141,7 @@
                     android:background="@drawable/step_circle"
                     android:gravity="center"
                     android:minLines="1"
-                    android:text="_3"
+                    android:text="@string/_3"
                     android:textAlignment="center"
                     android:textColor="#FFFFFF"
                     android:textSize="12sp"
@@ -320,7 +175,7 @@
                     android:background="@drawable/step_circle"
                     android:gravity="center"
                     android:minLines="1"
-                    android:text="-4"
+                    android:text="@string/_4"
                     android:textAlignment="center"
                     android:textColor="#FFFFFF"
                     android:textSize="12sp"
@@ -347,15 +202,35 @@
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/empty" />
 
-            <TextView
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:autoLink="web"
-                android:padding="8dp"
-                android:text="@string/splash_6"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                android:layout_height="match_parent">
+
+                <Button
+                    android:id="@+id/button_exit2"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:background="@drawable/button_border"
+                    android:text="@string/exit"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/button_agree_active2"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:text="@string/agree_amp_continue"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </ScrollView>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
