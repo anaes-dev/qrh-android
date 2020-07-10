@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.getColor
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_list.*
 
@@ -26,21 +27,33 @@ class List : AppCompatActivity() {
 
         val isStartup = intent.getBooleanExtra("STARTUP", false)
         val isFirstrun = intent.getBooleanExtra("FIRSTRUN", false)
+        val rvScrollListener = findViewById<RecyclerView>(R.id.list_recyclerview)
+
 
 
         if(isStartup) {
             val snack =
                 Snackbar
-                    .make(container, "Unofficial adaptation of Quick Reference Handbook.\nNot endorsed by Association of Anaesthetists.\nTo provide information for professional use only.\nDecisions should rely on your own knowledge and judgement.", Snackbar.LENGTH_SHORT)
+                    .make(container, "Unofficial adaptation of Quick Reference Handbook\nNot endorsed by the Association of Anaesthetists\nTo provide information for healthcare professionals only\nNo guarantees of completeness, accuracy or performance\nShould not override your own knowledge and judgement", Snackbar.LENGTH_LONG)
                     .setBackgroundTint(getColor(this, R.color.snackbarBackground))
+                    .setDuration(8000)
                     .setAction(R.string.title_about) {
                         this.startActivity(Intent(this,About::class.java))
                     }
             val snackbarView: View = snack.getView()
             val snackTextView = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text) as TextView
-            snackTextView.maxLines = 4
+            snackTextView.maxLines = 5
             snackTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12F)
             snack.show()
+
+
+
+            rvScrollListener.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    if (dy > 2) snack.dismiss()
+                }
+            })
         }
 
         if(isFirstrun) {
@@ -60,6 +73,7 @@ class List : AppCompatActivity() {
         linearLayoutManager = LinearLayoutManager(this)
         list_recyclerview.layoutManager = linearLayoutManager
         list_recyclerview.adapter = adapter
+
 
 
         list_searchview.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -102,6 +116,7 @@ class List : AppCompatActivity() {
         showGuidelineIntent.putExtra("URL", guideline.url)
         startActivity(showGuidelineIntent)
     }
+
 
 
 }

@@ -41,18 +41,14 @@ class Detail : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeLi
             "0-4" -> {
                 setContentView(R.layout.activity_detail_0_4)
                 supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-                findViewById<TextView>(R.id.detail_version).setText("v.$version").toString()
 
-                val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
-                sharedPref.registerOnSharedPreferenceChangeListener(this)
-
+                setupSharedPreferences()
                 update_locations()
             }
 
             "3-7" -> {
                 setContentView(R.layout.activity_detail_3_7)
                 supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-                findViewById<TextView>(R.id.detail_version).setText("v.$version").toString()
 
                 findViewById<TextView>(R.id.fire_main).text = getString(R.string.fire3)
                 findViewById<TextView>(R.id.fire_step).text = "1"
@@ -63,9 +59,7 @@ class Detail : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeLi
                     Html.fromHtml(getString(R.string.fire4), null, BulletHandler()).trim()
                 }
 
-                val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
-                sharedPref.registerOnSharedPreferenceChangeListener(this)
-
+                setupSharedPreferences()
                 update_firelocations()
 
                 val content = DetailContent.getContentFromFile("3-7.json", this)
@@ -85,7 +79,6 @@ class Detail : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeLi
                 val filename = code + filenameSuffix
 
                 findViewById<TextView>(R.id.detail_code).setText(code)
-                findViewById<TextView>(R.id.detail_version).setText("v.$version").toString()
 
                 val content = DetailContent.getContentFromFile(filename, this)
                 val adapter = CardRecyclerAdapter(content, code)
@@ -94,8 +87,6 @@ class Detail : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeLi
                 detail_recyclerview.layoutManager = linearLayoutManager
                 detail_recyclerview.setNestedScrollingEnabled(false)
                 detail_recyclerview.adapter = adapter
-
-
             }
         }
     }

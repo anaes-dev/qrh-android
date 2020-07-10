@@ -10,8 +10,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import org.w3c.dom.Text
-
 
 @Suppress("DEPRECATION")
 class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>, val codePassed: String?) :
@@ -28,18 +26,13 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>, val codePass
         const val VIEW_EIGHT = 8
         const val VIEW_NINE = 9
         const val VIEW_TEN = 10
+        const val VIEW_ELEVEN = 11
+        const val VIEW_TWELVE = 12
     }
 
-   interface UpdateViewHolder {
+    interface UpdateViewHolder {
         fun bindViews(detailContent: DetailContent)
     }
-
-
-/*    fun setFadeAnimation(view: View) {
-        val anim = AlphaAnimation(0.0f, 1.0f)
-        anim.duration = 1000
-        view.startAnimation(anim)
-    }*/
 
     class ViewHolder1(itemView: View) : RecyclerView.ViewHolder(itemView), UpdateViewHolder {
         override fun bindViews(detailContent: DetailContent) {
@@ -57,7 +50,6 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>, val codePass
             }
 
             itemView.findViewById<TextView>(R.id.detail_step).setText(detailContent.step).toString()
-
 
         }
     }
@@ -79,6 +71,7 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>, val codePass
                 subCard.visibility = View.VISIBLE
                 subArrow.setImageResource(R.drawable.ic_arrow_down)
             }
+
         }
     }
 
@@ -93,8 +86,14 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>, val codePass
         }
     }
 
+    class ViewHolder4(itemView: View) : RecyclerView.ViewHolder(itemView), UpdateViewHolder {
+        override fun bindViews(detailContent: DetailContent) {
+            itemView.findViewById<TextView>(R.id.detail_text).setText(detailContent.main).toString()
+        }
+    }
+
     override fun getItemViewType(position: Int): Int {
-        val type = when (dataSource[position].type) {
+        return when (dataSource[position].type) {
             1 -> VIEW_ONE
             2 -> VIEW_TWO
             3 -> VIEW_THREE
@@ -105,15 +104,16 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>, val codePass
             8 -> VIEW_EIGHT
             9 -> VIEW_NINE
             10 -> VIEW_TEN
+            11 -> VIEW_ELEVEN
+            12 -> VIEW_TWELVE
             else -> VIEW_THREE
             }
-        return type
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val viewHolder: RecyclerView.ViewHolder = when (viewType) {
+        return when (viewType) {
             VIEW_ONE -> ViewHolder1(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_preamble, parent, false))
-            VIEW_TWO -> ViewHolder1(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_start, parent, false))
+            VIEW_TWO -> ViewHolder4(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_start, parent, false))
             VIEW_THREE -> ViewHolder1(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_standard, parent, false))
             VIEW_FOUR -> ViewHolder1(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_standard_oneline, parent, false))
             VIEW_FIVE -> ViewHolder2(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_orange, parent, false))
@@ -122,14 +122,15 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>, val codePass
             VIEW_EIGHT -> ViewHolder2(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_black, parent, false))
             VIEW_NINE -> ViewHolder2(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_purple, parent, false))
             VIEW_TEN -> ViewHolder3(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_image, parent, false))
+            VIEW_ELEVEN -> ViewHolder4(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_version, parent, false))
+            VIEW_TWELVE -> ViewHolder4(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_end, parent, false))
             else ->  ViewHolder1(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_standard, parent, false))
-            }
-        return viewHolder
+        }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val detailContent: DetailContent = dataSource[position]
-//        setFadeAnimation(holder.itemView);
+
         when (dataSource[position].type) {
             5,6,7,8,9 -> {
                 holder.itemView.setOnClickListener {
@@ -145,7 +146,10 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>, val codePass
         }
 
         if(codePassed == "3-14") {
-            holder.itemView.findViewById<TextView>(R.id.detail_sub).autoLinkMask = 0
+            when (dataSource[position].type) {
+                5,6,7,8,9 -> holder.itemView.findViewById<TextView>(R.id.detail_sub).autoLinkMask = 0
+                1 -> holder.itemView.findViewById<TextView>(R.id.detail_main).autoLinkMask = 0
+            }
         }
 
         (holder as UpdateViewHolder).bindViews(detailContent)

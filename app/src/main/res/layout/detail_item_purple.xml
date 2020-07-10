@@ -27,13 +27,14 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent">
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="5dp"
+        android:paddingLeft="0dp"
+        android:paddingTop="6dp"
         android:paddingRight="4dp"
         android:paddingBottom="5dp"
+        android:paddingStart="0dp"
         android:paddingEnd="4dp">
 
       <ImageView

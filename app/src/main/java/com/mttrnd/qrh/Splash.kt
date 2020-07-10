@@ -14,7 +14,6 @@ import kotlinx.android.synthetic.main.activity_splash.*
 import kotlin.system.exitProcess
 
 
-@Suppress("DEPRECATION")
 class Splash : AppCompatActivity(), ViewTreeObserver.OnScrollChangedListener {
 
     private val PREF_NAME = "com.mround.bwh.seenwarning"
@@ -25,7 +24,12 @@ class Splash : AppCompatActivity(), ViewTreeObserver.OnScrollChangedListener {
         val seenWarning: Boolean? = sharedPref.getBoolean(PREF_NAME, false)
         val editor = sharedPref.edit()
 
-        if(seenWarning != true){
+        if(seenWarning == true) {
+            val intent = Intent(this, List::class.java)
+            intent.putExtra("STARTUP", true)
+            startActivity(intent)
+            finish()
+        } else {
             setContentView(R.layout.activity_splash)
 
             val button_exit = findViewById<Button>(R.id.button_exit)
@@ -34,7 +38,6 @@ class Splash : AppCompatActivity(), ViewTreeObserver.OnScrollChangedListener {
             val scrollViewSplash = findViewById<ScrollView>(R.id.splash_scroll)
 
             scrollViewSplash.getViewTreeObserver().addOnScrollChangedListener(this)
-
 
             button_exit.setOnClickListener {
                 exitProcess(1)
@@ -50,15 +53,8 @@ class Splash : AppCompatActivity(), ViewTreeObserver.OnScrollChangedListener {
                 val intent = Intent(this, List::class.java)
                 intent.putExtra("FIRSTRUN", true)
                 startActivity(intent)
-               finish()
+                finish()
             }
-
-
-        } else {
-            val intent = Intent(this, List::class.java)
-            intent.putExtra("STARTUP", true)
-            startActivity(intent)
-            finish()
         }
     }
 
