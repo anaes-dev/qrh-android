@@ -252,7 +252,7 @@
                     android:background="@drawable/step_circle"
                     android:gravity="center"
                     android:minLines="1"
-                    android:text="_2"
+                    android:text="@string/_2"
                     android:textAlignment="center"
                     android:textColor="#FFFFFF"
                     android:textSize="12sp"
@@ -286,7 +286,7 @@
                     android:background="@drawable/step_circle"
                     android:gravity="center"
                     android:minLines="1"
-                    android:text="_3"
+                    android:text="@string/_3"
                     android:textAlignment="center"
                     android:textColor="#FFFFFF"
                     android:textSize="12sp"
@@ -320,7 +320,7 @@
                     android:background="@drawable/step_circle"
                     android:gravity="center"
                     android:minLines="1"
-                    android:text="-4"
+                    android:text="@string/_4"
                     android:textAlignment="center"
                     android:textColor="#FFFFFF"
                     android:textSize="12sp"
@@ -345,6 +345,7 @@
                 android:id="@+id/scrolledToBottom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:contentDescription="@string/image"
                 app:srcCompat="@drawable/empty" />
 
             <TextView

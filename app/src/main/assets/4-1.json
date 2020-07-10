@@ -56,7 +56,7 @@
     },
     {
       "type": 4,
-      "main": "Minimise auxiliary gas usage:<p>Some ventilator systems are gas-driven. If so, switching to manual ventilation will prolong oxygen cylinder supply.",
+      "main": "Minimise auxiliary gas usage:<br>Some ventilator systems are gas-driven. If so, switching to manual ventilation will prolong oxygen cylinder supply.",
       "sub": "",
       "step": "6"
     },

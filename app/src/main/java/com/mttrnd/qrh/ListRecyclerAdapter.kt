@@ -1,16 +1,11 @@
 package com.mttrnd.qrh
 
-import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.Filter
 import android.widget.Filterable
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.list_item_guideline.view.*
 import java.util.*
 import kotlin.collections.ArrayList
 

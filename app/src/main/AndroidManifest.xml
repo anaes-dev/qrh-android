@@ -3,7 +3,7 @@
     package="com.mttrnd.qrh">
 
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -20,7 +20,7 @@
         <activity
             android:name=".Settings"
             android:label="@string/title_settings" />
-        
+
         <activity
             android:name=".List"
             android:configChanges="orientation|screenSize"

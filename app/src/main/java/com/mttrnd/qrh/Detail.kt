@@ -62,7 +62,7 @@ class Detail : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeLi
                         .show()
                 }
 
-                update_locations()
+                updateLocations()
 
                 //Show text hint if empty
                 if(isEmpty(sharedPref.getString("location_arrest", ""))) {
@@ -86,8 +86,15 @@ class Detail : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeLi
                 findViewById<TextView>(R.id.fire_sub).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     Html.fromHtml(getString(R.string.fire4)).trim()
                 } else {
-                    Html.fromHtml(getString(R.string.fire4), null, BulletHandler()).trim()
+                    Html.fromHtml(getString(R.string.fire4), null,
+                        Html.TagHandler { opening, tag, output, xmlReader ->
+                            if (tag == "br" && opening) output.append("\n")
+                            if (tag == "p" && opening) output.append("\n\n")
+                            if (tag == "li" && opening) output.append("\n\n• ")
+                        }).trim()
                 }
+
+
 
                 val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
                 setupSharedPreferences()
@@ -103,7 +110,7 @@ class Detail : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeLi
                         .show()
                 }
 
-                update_firelocations()
+                updateFirelocations()
 
                 //Show text hint if empty
                 if(isEmpty(sharedPref.getString("location_firealarm", "")) && isEmpty(sharedPref.getString("location_fireext", ""))) {
@@ -148,9 +155,8 @@ class Detail : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeLi
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        val code = intent.getStringExtra("CODE")
         //Inflate different menu for 0-4 and 3-7
-        when (code) {
+        when (intent.getStringExtra("CODE")) {
             "0-4","3-7" -> menuInflater.inflate(R.menu.menu_detail_0_4, menu)
             else -> menuInflater.inflate(R.menu.menu_detail, menu)
         }
@@ -176,7 +182,7 @@ class Detail : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeLi
         return true
     }
 
-    fun update_locations() {
+    fun updateLocations() {
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
         location_arrest.text = sharedPref.getString("location_arrest", "")
         location_pacing.text = sharedPref.getString("location_pacing", "")
@@ -233,7 +239,7 @@ class Detail : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeLi
         }
 
 
-    fun update_firelocations() {
+    fun updateFirelocations() {
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
 
         location_firealarm.text = sharedPref.getString("location_firealarm", "")
@@ -253,12 +259,9 @@ class Detail : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeLi
     }
 
     override fun onSharedPreferenceChanged(sharedPref: SharedPreferences?, key: String?) {
-        val code = intent.getStringExtra("CODE")
-        when (code) {
-            "0-4" -> update_locations()
-            "3-7" -> update_firelocations()
+        when (intent.getStringExtra("CODE")) {
+            "0-4" -> updateLocations()
+            "3-7" -> updateFirelocations()
         }
-
-
     }
 }

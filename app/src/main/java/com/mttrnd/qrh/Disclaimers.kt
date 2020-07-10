@@ -1,12 +1,8 @@
 package com.mttrnd.qrh
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_disclaimers.*
-import kotlin.collections.List
-import kotlin.system.exitProcess
 
 class Disclaimers : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
