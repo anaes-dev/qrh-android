@@ -83,6 +83,18 @@
       "main": "Box D: DONT'T FORGET!",
       "sub": "<li><b>Use waveform capnography. No expired CO₂ = lungs not being ventilated (assume and exclude oesophageal intubation). Very rarely, absent/minimal expired CO₂ = CPR not occurring OR pulmonary circulation disconnected from systemic (e.g. in major trauma).</b> Sudden increase in ETCO₂ usually signals return of spontaneous circulation</li><li>Optimise position for chest compressions (use overhead for bariatric patients)</li><li>Uterine displacement in pregnant patients.</li><li>Ventilator can free up hands but remember to set to volume control. Minimise intrathoracic pressure: avoid excessive tidal volume and hyperventilation.</li>",
       "step": ""
+    },
+    {
+      "type": 11,
+      "main": "v.1",
+      "sub": "",
+      "step": ""
+    },
+    {
+      "type": 12,
+      "main": "The guidelines in this handbook are not intended to be standards of medical care. The ultimate judgement with regard to a particular clinical procedure or treatment plan must be made by the clinician in the light of the clinical data presented and the diagnostic and treatment options available.",
+      "sub": "",
+      "step": ""
     }
   ]
 }

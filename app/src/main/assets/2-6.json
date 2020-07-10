@@ -86,6 +86,18 @@
       "main": "Box D: TRANSCUTANEOUS PACING",
       "sub": "<li>Attach pads and ECG leads from pacing defibrillator</li><li>Set to PACING MODE</li><li>Set PACER RATE</li><li>Increase PACER OUTPUT from 60 mA until capture (spikes align QRS)</li><li>Confirm capture: electrical AND mechanical (femoral pulse)</li><li>Set PACER OUTPUT 10 mA above capture</li>",
       "step": ""
+    },
+    {
+      "type": 11,
+      "main": "v.1",
+      "sub": "",
+      "step": ""
+    },
+    {
+      "type": 12,
+      "main": "The guidelines in this handbook are not intended to be standards of medical care. The ultimate judgement with regard to a particular clinical procedure or treatment plan must be made by the clinician in the light of the clinical data presented and the diagnostic and treatment options available.",
+      "sub": "",
+      "step": ""
     }
 
   ]

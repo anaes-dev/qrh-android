@@ -95,6 +95,18 @@
       "main": "Box D: AFTER THE EVENT",
       "sub": "Admit to critical care environment and consult cardiology<br>Maintain head up position if practicable<br>Obtain serial 12-lead ECGs and cardiac enzymes",
       "step": ""
+    },
+    {
+      "type": 11,
+      "main": "v.2",
+      "sub": "",
+      "step": ""
+    },
+    {
+      "type": 12,
+      "main": "The guidelines in this handbook are not intended to be standards of medical care. The ultimate judgement with regard to a particular clinical procedure or treatment plan must be made by the clinician in the light of the clinical data presented and the diagnostic and treatment options available.",
+      "sub": "",
+      "step": ""
     }
   ]
 }

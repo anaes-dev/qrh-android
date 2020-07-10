@@ -95,6 +95,18 @@
       "main": "Box D: RE-ESTABLISHMENT OF SERVICES",
       "sub": "<li>Disconnect equipment from failed wall/pendant outlets</li><li>When re-established, output may not initially be 100% oxygen</li><li>Do not re-use outlet until gas composition and quality satisfactorily confirmed by a competent authority</li>",
       "step": ""
+    },
+    {
+      "type": 11,
+      "main": "v.1",
+      "sub": "",
+      "step": ""
+    },
+    {
+      "type": 12,
+      "main": "The guidelines in this handbook are not intended to be standards of medical care. The ultimate judgement with regard to a particular clinical procedure or treatment plan must be made by the clinician in the light of the clinical data presented and the diagnostic and treatment options available.",
+      "sub": "",
+      "step": ""
     }
     ]
 }

@@ -89,6 +89,20 @@
       "main": "The original handbook PDF for each section can be downloaded by clicking the button at the top-right of the screen.",
       "sub": "",
       "step": "!"
+    },
+    {
+      "type": 11,
+      "main": "v.1",
+      "sub": "",
+      "step": ""
+    },
+    {
+      "type": 12,
+      "main": "The guidelines in this handbook are not intended to be standards of medical care. The ultimate judgement with regard to a particular clinical procedure or treatment plan must be made by the clinician in the light of the clinical data presented and the diagnostic and treatment options available.",
+      "sub": "",
+      "step": ""
     }
+
+
   ]
 }
