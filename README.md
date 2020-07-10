@@ -39,11 +39,13 @@ https://github.com/mttrnd/qrh/releases/tag/v1.0rc1
 
 ## Technical
 
-The guideline list is generated from JSON in /assets/guidelines.json.
+The guideline list is generated from /assets/guidelines.json. 
 
 Guidelines are stored as JSON objects in the assets folder.
 
 Each array contains 'type', 'main', 'sub' and 'step' keys.
+
+
 
 Type integer value determines the appearance of the generated card:
 1. Introductory text (main only)
