@@ -29,7 +29,14 @@
         <activity
             android:name=".Detail"
             android:configChanges="orientation|screenSize"
-            android:parentActivityName=".List" />
+            android:parentActivityName=".List" >
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.intent.action.VIEW"/>
+                <data android:scheme="com.mttrnd.qrh.detail"/>
+            </intent-filter>
+
+        </activity>
 
         <activity
             android:name=".About"

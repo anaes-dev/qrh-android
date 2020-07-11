@@ -21,7 +21,6 @@ import kotlinx.android.synthetic.main.activity_detail_0_4.*
 import kotlinx.android.synthetic.main.activity_detail_3_7.*
 
 
-
 class Detail : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
 
     private lateinit var linearLayoutManager: LinearLayoutManager
@@ -34,11 +33,22 @@ class Detail : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeLi
     @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val title = intent.getStringExtra("TITLE")
-        val code = intent.getStringExtra("CODE")
-        // val version = intent.getStringExtra("VERSION")
-        setTitle(title)
 
+        val data = intent.data
+
+        val code: String? = if(data != null) {
+            data.toString().replace("com.mttrnd.qrh.detail://","")
+        } else {
+            intent.getStringExtra("CODE")
+        }
+
+        val title: String? = if(data != null) {
+            getTItleFromCode(code)
+        } else {
+            intent.getStringExtra("TITLE")
+        }
+
+        setTitle(title)
 
         //Setup different views for pages 0-4 and 3-7
 
@@ -263,5 +273,11 @@ class Detail : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeLi
             "0-4" -> updateLocations()
             "3-7" -> updateFirelocations()
         }
+    }
+
+    fun getTItleFromCode(codePassed: String?): String {
+        val guideList = Guideline.getGuidelinesFromFile("guidelines.json", this)
+        val position: Int = guideList.indexOfFirst { it.code == codePassed }
+        return guideList[position].title
     }
 }
