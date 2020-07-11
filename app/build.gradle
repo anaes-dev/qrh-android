@@ -10,8 +10,8 @@ android {
         applicationId "com.mttrnd.qrh"
         minSdkVersion 16
         targetSdkVersion 30
-        versionCode 3
-        versionName "RC1"
+        versionCode 4
+        versionName "1.1 RC1"
     }
 
     buildTypes {

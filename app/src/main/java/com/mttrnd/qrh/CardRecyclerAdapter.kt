@@ -211,8 +211,9 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>, val codePass
         //Linkify Function
 
         fun linkifyFunction(textView: TextView) {
+            //Excuse fudge for MHRA website
             val patternURL = Pattern.compile(
-                "((ht|f)tp(s?):\\/\\/|www\\.)" + "(([\\w\\-]+\\.){1,}?([\\w\\-.~]+\\/?)*"
+                "((ht|f)tp(s?):\\/\\/|www\\.|yellowcard\\.)" + "(([\\w\\-]+\\.){1,}?([\\w\\-.~]+\\/?)*"
                         + "[\\p{Alnum}.,%_=?&#\\-+()\\[\\]\\*$~@!:/{};']*)",
                 Pattern.CASE_INSENSITIVE or Pattern.MULTILINE or Pattern.DOTALL
             )
