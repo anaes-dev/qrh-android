@@ -7,9 +7,9 @@
 - ***Not endorsed by the Association of Anaesthetists***
 - Rapidly searchable guideline list
 - Simple guideline layout echoing original handbook
+- Clickable links between guidelines
 - Easily updatable through modification of JSON assets
-- [![CC BY-NC-SA 4.0][cc-by-nc-sa-shield]][cc-by-nc-sa] Released under same Creative Commons license as original work
-
+- [![CC BY-NC-SA 4.0][cc-by-nc-sa-shield]][cc-by-nc-sa] Released under same Creative Commons license as original work  
 
 
 ## License
@@ -21,14 +21,13 @@ International License][cc-by-nc-sa].
 [cc-by-nc-sa]: http://creativecommons.org/licenses/by-nc-sa/4.0/
 [cc-by-nc-sa-image]: https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png
 [cc-by-nc-sa-shield]: https://img.shields.io/badge/License-CC%20BY--NC%20SA%204.0-lightgrey.svg
-
 You may distribute original version or adapt for yourself and distribute with acknowledgement of source. 
-You may not use for commercial purposes.
+You may not use for commercial purposes.  
 
 ## Download
 
 Please download Version 1 Release Candidate 1 from here:
-https://github.com/mttrnd/qrh/releases/tag/v1.0rc1
+https://github.com/mttrnd/qrh/releases/tag/v1.0rc1  
 
 ## Technical
 
@@ -36,9 +35,9 @@ The guideline list is generated from /assets/guidelines.json.
 
 Guidelines are stored as JSON objects in the assets folder.
 
-Each array contains 'type', 'main', 'sub' and 'step' keys.
+Each array contains 'type', 'main', 'sub' and 'step' keys.  
 
-
+### Card views
 
 Type integer value determines the appearance of the generated card:
 1. Introductory text (main only)
@@ -52,9 +51,27 @@ Type integer value determines the appearance of the generated card:
 9. Purple expanding box (main and sub)
 10. Image (path/URL in main, caption in sub)
 11. Version text (main only)
-12. Red disclaimer card (main only)
+12. Red disclaimer card (main only)  
 
-Basic HTML tags (B, U, I, LI) can be used within these for formatting where required. Unicode subscript and superscript characters are used rather than SUB and SUP spans.
+### Card contents
+
+Basic HTML tags (B, U, I, LI) can be used within for formatting where required.
+
+Unicode subscript and superscript characters are used rather than SUB and SUP spans.
+
+Links are parsed as following:
+
+#### Guideline links
+Generated when the following regex is matched:  
+`/[(]?[→][\s]?[1-3][-][0-9]{1,2}[)]?/`  
+Therefore can have with or without parentheses, and is insensitive to space between → and guideline code.
+
+#### Phone links
+Generated from 11 digit numbers beginning with 0
+
+#### Web links
+URLs beginning with http(s):// or www.  
+  
 ## Todo
 - [x] Populate data
 - [x] Collapsing cards for boxes
@@ -62,7 +79,8 @@ Basic HTML tags (B, U, I, LI) can be used within these for formatting where requ
 - [X] 1st release candidate
 - [ ] 1st stable release
 - [ ] Streamline architecture
-- [ ] Tablet layout
+- [ ] Tablet layout  
+
 ## Accompanying Guidance & Disclaimers
 
 ### 1. 
