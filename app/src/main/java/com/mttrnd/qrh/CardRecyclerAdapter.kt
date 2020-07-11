@@ -3,6 +3,8 @@ package com.mttrnd.qrh
 import android.net.Uri
 import android.os.Build
 import android.text.Html
+import android.text.util.Linkify
+import android.text.util.Linkify.TransformFilter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,27 +12,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import java.util.regex.Pattern
+
 
 @Suppress("DEPRECATION")
 class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>, val codePassed: String?) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-
-    //Define view type codes
-    companion object {
-        const val VIEW_ONE = 1
-        const val VIEW_TWO = 2
-        const val VIEW_THREE = 3
-        const val VIEW_FOUR = 4
-        const val VIEW_FIVE = 5
-        const val VIEW_SIX = 6
-        const val VIEW_SEVEN = 7
-        const val VIEW_EIGHT = 8
-        const val VIEW_NINE = 9
-        const val VIEW_TEN = 10
-        const val VIEW_ELEVEN = 11
-        const val VIEW_TWELVE = 12
-    }
 
     interface UpdateViewHolder {
         fun bindViews(detailContent: DetailContent)
@@ -62,6 +50,8 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>, val codePass
                 }).trim()
             }
 
+            linkifyFunction(itemView.findViewById(R.id.detail_sub))
+            linkifyFunction(itemView.findViewById(R.id.detail_main))
 
             itemView.findViewById<TextView>(R.id.detail_step).setText(detailContent.step).toString()
         }
@@ -92,6 +82,8 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>, val codePass
                         if (tag == "li" && opening) output.append("\n\n•")
                     }).trim()
             }
+
+            linkifyFunction(itemView.findViewById(R.id.detail_sub))
 
             val subCard = itemView.findViewById<TextView>(R.id.detail_sub)
             val subArrow = itemView.findViewById<ImageView>(R.id.detail_arrow)
@@ -171,9 +163,9 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>, val codePass
 
         //Collapsing box logic
         when (dataSource[position].type) {
-            5,6,7,8,9 -> {
+            5, 6, 7, 8, 9 -> {
                 holder.itemView.setOnClickListener {
-                    if(detailContent.collapsed) {
+                    if (detailContent.collapsed) {
                         detailContent.collapsed = false
                         notifyItemChanged(position)
                     } else {
@@ -185,16 +177,8 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>, val codePass
         }
 
         //Override first box on instructions page to be expanded
-        if(codePassed == "0-3" && dataSource[position].type == 5) {
+        if (codePassed == "0-3" && dataSource[position].type == 5) {
             detailContent.collapsed = false
-        }
-
-        //Override autotext for sepsis page (parses ml.kg as URL)
-        if(codePassed == "3-14") {
-            when (dataSource[position].type) {
-                5,6,7,8,9 -> holder.itemView.findViewById<TextView>(R.id.detail_sub).autoLinkMask = 0
-                1 -> holder.itemView.findViewById<TextView>(R.id.detail_main).autoLinkMask = 0
-            }
         }
 
         (holder as UpdateViewHolder).bindViews(detailContent)
@@ -204,6 +188,53 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>, val codePass
     override fun getItemCount(): Int {
         return dataSource.size
     }
+
+    //Define view type codes
+    companion object {
+
+        //Define view type codes
+
+        const val VIEW_ONE = 1
+        const val VIEW_TWO = 2
+        const val VIEW_THREE = 3
+        const val VIEW_FOUR = 4
+        const val VIEW_FIVE = 5
+        const val VIEW_SIX = 6
+        const val VIEW_SEVEN = 7
+        const val VIEW_EIGHT = 8
+        const val VIEW_NINE = 9
+        const val VIEW_TEN = 10
+        const val VIEW_ELEVEN = 11
+        const val VIEW_TWELVE = 12
+
+
+        //Linkify Function
+
+        fun linkifyFunction(textView: TextView) {
+            val patternURL = Pattern.compile(
+                "((ht|f)tp(s?):\\/\\/|www\\.)" + "(([\\w\\-]+\\.){1,}?([\\w\\-.~]+\\/?)*"
+                        + "[\\p{Alnum}.,%_=?&#\\-+()\\[\\]\\*$~@!:/{};']*)",
+                Pattern.CASE_INSENSITIVE or Pattern.MULTILINE or Pattern.DOTALL
+            )
+
+            val patternPhone = Pattern.compile ("[0][0-9]{10}")
+
+            val patternGuideline = Pattern.compile("[(]?[→][\\s]?[1-3][-][0-9]{1,2}[)]?")
+
+            val linkGuideline = "com.mttrnd.qrh.Detail://"
+
+            val transformFilter =
+                TransformFilter { match, url ->
+                    url.toString().replace("→ ", "").replace("→","").replace(")","").replace("(","")
+                }
+
+            Linkify.addLinks(textView, patternURL, "http://")
+            Linkify.addLinks(textView, patternPhone, "tel:")
+            Linkify.addLinks(textView, patternGuideline, linkGuideline, null, transformFilter)
+        }
+
+    }
+
 
 }
 

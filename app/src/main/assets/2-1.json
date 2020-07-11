@@ -15,7 +15,7 @@
     {
       "type": 3,
       "main": "IMMEDIATE ACTION",
-      "sub": "<li><b>Declare “cardiac arrest”</b> to the theatre team AND note time.</li><li>Delegate one person (minimum) to chest compressions 100 min<sup style=\"vertical-align:top,line-height:\"+HEIGHT_IN_EM+\"em\"><small>-1</small></sup>, depth 5 cm.</li><li>Call for help: nearby theatres / emergency bell / senior on-call / dial emergency number.</li><li>Call for cardiac arrest trolley.</li><li>As soon as possible, delegate task of evaluating potential causes <b>(Box A)</b>.</li>",
+      "sub": "<li><b>Declare “cardiac arrest”</b> to the theatre team AND note time.</li><li>Delegate one person (minimum) to chest compressions 100 min⁻¹, depth 5 cm.</li><li>Call for help: nearby theatres / emergency bell / senior on-call / dial emergency number.</li><li>Call for cardiac arrest trolley.</li><li>As soon as possible, delegate task of evaluating potential causes <b>(Box A)</b>.</li>",
       "step": "1"
     },
     {

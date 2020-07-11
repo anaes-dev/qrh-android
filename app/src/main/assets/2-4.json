@@ -39,7 +39,7 @@
     {
       "type": 3,
       "main": "Circulation",
-      "sub": "<li>Check heart rate, rhythm, perfusion, recheck blood pressure.</li><li>If heart rate &lt;60 bpm consider giving anticholinergic drug <b>(Box B)</b>.</li><li>Consider giving vasopressor <b>(Box C)</b> and positioning (e.g. move head down).</li><li>Consider fluid boluses (250 ml adult, 10 ml.kg⁻¹ paediatric).</li><li>If heart rate &gt;100 bpm sinus rhythm, treat as hypovolaemia: give IV fluid bolus.</li><li>If heart rate &gt;100 bpm and non-sinus <b>(→ 2-7 Tachycardia)</b></li>",
+      "sub": "<li>Check heart rate, rhythm, perfusion, recheck blood pressure.</li><li>If heart rate &lt;60 bpm consider giving anticholinergic drug <b>(Box B)</b>.</li><li>Consider giving vasopressor <b>(Box C)</b> and positioning (e.g. move head down).</li><li>Consider fluid boluses (250 ml adult, 10 ml.kg⁻¹ paediatric).</li><li>If heart rate &gt;100 bpm sinus rhythm, treat as hypovolaemia: give IV fluid bolus.</li><li>If heart rate &gt;100 bpm and non-sinus: <b>(→ 2-7)</b></li>",
       "step": "4"
     },
     {
