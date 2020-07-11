@@ -32,20 +32,20 @@
     },
     {
       "type": 4,
-      "main": "Make an initial diagnosis of the cause as this affects further management <b>(Box A)</b>:<li>Actively maintained fever (typically cold peripheries, vasoconstricted) OR</li><li>Non-febrile hyperthermia (typically warm peripheries, vasodilated)</li><li>Suspect malignant hyperthermia crisis or neuroleptic malignant syndrome? <b>(→ 3-8)</b></li>",
+      "main": "Make an initial diagnosis of the cause as this affects further management <b>(Box A)</b>:<li>Actively maintained fever (typically cold peripheries, vasoconstricted) OR</li><li>Non-febrile hyperthermia (typically warm peripheries, vasodilated)</li><li>Suspect malignant hyperthermia crisis or neuroleptic malignant syndrome? <b>→3-8</b></li>",
       "sub": "",
       "step": "3"
     },
     {
       "type": 9,
       "main": "Box A: COMMON CAUSES",
-      "sub": "<li>Excessive insulation, high ambient temperature, external warming devices, especially infants and children (most common)</li><li>Surgical devices, e.g. HIFU, diathermy, radiotherapy</li><li>Prolonged epidural anaesthesia</li><li>Sepsis <b>(→ 3-14)</b> e.g. during manipulation of a urological device</li><li>Blood transfusion</li><li>Allergic reaction / anaphylaxis <b>(→ 3-1)</b></li>",
+      "sub": "<li>Excessive insulation, high ambient temperature, external warming devices, especially infants and children (most common)</li><li>Surgical devices, e.g. HIFU, diathermy, radiotherapy</li><li>Prolonged epidural anaesthesia</li><li>Sepsis <b>→3-14</b> e.g. during manipulation of a urological device</li><li>Blood transfusion</li><li>Allergic reaction / anaphylaxis <b>→3-1</b></li>",
       "step": ""
     },
     {
       "type": 9,
       "main": "Box A: DRUG CAUSES",
-      "sub": "<li>Neuroleptic malignant syndrome (e.g. haloperidol and other antipsychotics)</li><li>Malignant hyperthermia crisis (late sign) <b>(→ 3-8)</b></li><li></li><li>Serotonin syndrome (cocaine, amphetamine, phencyclidine, MDMA)</li><li>Anticholinergic syndrome (tricyclic antidepressants, antipsychotics, antihistamines)</li><li>Sympathomimetic syndrome (cocaine, MDMA, amphetamines)</li>",
+      "sub": "<li>Neuroleptic malignant syndrome (e.g. haloperidol and other antipsychotics)</li><li>Malignant hyperthermia crisis (late sign) <b>→3-8</b></li><li></li><li>Serotonin syndrome (cocaine, amphetamine, phencyclidine, MDMA)</li><li>Anticholinergic syndrome (tricyclic antidepressants, antipsychotics, antihistamines)</li><li>Sympathomimetic syndrome (cocaine, MDMA, amphetamines)</li>",
       "step": ""
     },
     {
@@ -98,7 +98,7 @@
     },
     {
       "type": 4,
-      "main": "Monitor and manage life-threatening complications especially:<li>Hyperkalaemia, hypoglycaemia, acidosis</li><li>Hypotension <b>(→ 2-4)</b>, malignant hypertension</li><li>Altered conscious level, convulsions</li><li>Coagulopathy and disseminated intravascular coagulation</li>",
+      "main": "Monitor and manage life-threatening complications especially:<li>Hyperkalaemia, hypoglycaemia, acidosis</li><li>Hypotension <b>→2-4</b>, malignant hypertension</li><li>Altered conscious level, convulsions</li><li>Coagulopathy and disseminated intravascular coagulation</li>",
       "sub": "",
       "step": "8"
     },

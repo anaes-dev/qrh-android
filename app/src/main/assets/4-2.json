@@ -20,7 +20,7 @@
     },
     {
       "type": 4,
-      "main": "Liaise with local coordinator to activate appropriate local plan <b>(Box A)</b>:<li>If immediate evacuation necessary <b>→ 4-3</b></li>",
+      "main": "Liaise with local coordinator to activate appropriate local plan <b>(Box A)</b>:<li>If immediate evacuation necessary <b>→4-3</b></li>",
       "sub": "",
       "step": "2"
     },
@@ -56,7 +56,7 @@
     },
     {
       "type": 4,
-      "main": "Check mains oxygen supply intact. If failed <b>→ 4-1</b>",
+      "main": "Check mains oxygen supply intact. If failed <b>→4-1</b>",
       "sub": "",
       "step": "6"
     },
@@ -87,7 +87,7 @@
     {
       "type": 5,
       "main": "Box D: CRITICAL CHANGES",
-      "sub": "Mains oxygen failure <b>→ 4-1</b><br>Emergency evacuation <b>→ 4-3</b>",
+      "sub": "Mains oxygen failure <b>→4-1</b><br>Emergency evacuation <b>→4-3</b>",
       "step": ""
     },
     {

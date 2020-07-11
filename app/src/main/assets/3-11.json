@@ -69,7 +69,7 @@
     {
       "type": 5,
       "main": "Box C: CRITICAL CHANGES",
-      "sub": "<li>Cardiac arrest <b>→ 2-1</b></li><li>Hypotension <b>→ 2-4</b></li><li>Bradycardia <b>→ 2-6</b></li><li>Local anaesthetic toxicity <b>→ 3-10</b></li>",
+      "sub": "<li>Cardiac arrest <b>→2-1</b></li><li>Hypotension <b>→2-4</b></li><li>Bradycardia <b>→2-6</b></li><li>Local anaesthetic toxicity <b>→3-10</b></li>",
       "step": ""
     },
     {

@@ -81,7 +81,7 @@
     {
       "type": 8,
       "main": "Box E: ALTERNATIVE DIAGNOSES",
-      "sub": "<li>Pneumothorax (+/- tension)</li><li>Bronchospasm <b>(→ 3-4)</b></li><li>Pulmonary oedema</li><li>Cardiogenic shock</li><li>Hypovolaemia</li><li>Myocardial failure</li><li>Sepsis <b>(→ 3-14)</b></li><li>Bone cement implantation syndrome</li><li>Anaphylaxis <b>(→ 3-1)</b></li>",
+      "sub": "<li>Pneumothorax (+/- tension)</li><li>Bronchospasm <b>→3-4</b></li><li>Pulmonary oedema</li><li>Cardiogenic shock</li><li>Hypovolaemia</li><li>Myocardial failure</li><li>Sepsis <b>→3-14</b></li><li>Bone cement implantation syndrome</li><li>Anaphylaxis <b>→3-1</b></li>",
       "step": ""
     },
     {

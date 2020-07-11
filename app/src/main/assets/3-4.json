@@ -50,7 +50,7 @@
     },
     {
       "type": 4,
-      "main": "If anaphylaxis suspected <b>→ 3-1</b>",
+      "main": "If anaphylaxis suspected <b>→3-1</b>",
       "sub": "",
       "step": "7"
     },
@@ -122,7 +122,7 @@
     },
     {
       "type": 4,
-      "main": "If raised airway pressure and/or desaturation persists, consider <b>→ 2-2 Hypoxia/desaturation/cyanosis</b>",
+      "main": "If raised airway pressure and/or desaturation persists, consider <b>→2-2 (Hypoxia/desaturation/cyanosis)</b>",
       "sub": "",
       "step": "12"
     },
