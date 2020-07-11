@@ -63,7 +63,7 @@ Links are parsed as following:
 
 #### Guideline links
 Generated when the following regex is matched:  
-`/[(]?[→][\s]?[1-3][-][0-9]{1,2}[)]?/`  
+`/[(]?[→][\s]?[1-4][-][0-9]{1,2}[)]?/`  
 Therefore can have with or without parentheses, and is insensitive to space between → and guideline code.
 
 #### Phone links
