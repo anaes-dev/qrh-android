@@ -21,13 +21,13 @@
     {
       "type": 9,
       "main": "Box A: POTENTIAL CAUSES",
-      "sub": "<b>4 H's, 4 T's</b><p><li>Hypoxia <b>(→ 2-2)</b></li><li>Hypovolaemia</li><li>Hypo/hyperkalaemia</li><li>Hypothermia</li><br><li>Tamponade <b>(→ 3-9)</b></li><li>Thrombosis <b>(→ 3-5)</b></li><li>Toxins</li><li>Tension pneumothorax</li>",
+      "sub": "<b>4 H's, 4 T's</b><p><li>Hypoxia <b>→2-2</b></li><li>Hypovolaemia</li><li>Hypo/hyperkalaemia</li><li>Hypothermia</li><br><li>Tamponade <b>→3-9</b></li><li>Thrombosis <b>→3-5</b></li><li>Toxins</li><li>Tension pneumothorax</li>",
       "step": ""
     },
     {
       "type": 9,
       "main": "Specific peri-operative problems:",
-      "sub": "<li>Vagal tone</li><Li>Drug error</li><li>Local anaesthetic toxicity <b>(→ 3-10)</b></li><li>Acidosis</li><li>Anaphylaxis <b>(→ 3-1)</b></li><li>Embolism, gas/fat/amniotic <b>(→ 3-5)</b></li><li>Massive blood loss <b>(→ 3-2)</b></li>",
+      "sub": "<li>Vagal tone</li><Li>Drug error</li><li>Local anaesthetic toxicity <b>→3-10</b></li><li>Acidosis</li><li>Anaphylaxis <b>→3-1</b></li><li>Embolism, gas/fat/amniotic <b>→3-5</b></li><li>Massive blood loss <b>→3-2</b></li>",
       "step": ""
     },
     {

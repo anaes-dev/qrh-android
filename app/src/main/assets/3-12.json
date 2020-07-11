@@ -39,7 +39,7 @@
     {
       "type": 5,
       "main": "Box A: HAEMODYNAMIC INSTABILITY",
-      "sub": "<li>Cardiac arrest <b>→ 2-1</b></li><li>Hypotension <b>→ 2-4</b></li><li>Hypertension <b>→ 2-5</b></li><li>Bradycardia <b>→ 2-6</b></li><li>Tachycardia <b>→ 2-7</b></li>",
+      "sub": "<li>Cardiac arrest <b>→2-1</b></li><li>Hypotension <b>→2-4</b></li><li>Hypertension <b>→2-5</b></li><li>Bradycardia <b>→2-6</b></li><li>Tachycardia <b>→2-7</b></li>",
       "step": ""
     },
     {

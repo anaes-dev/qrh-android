@@ -39,7 +39,7 @@
     {
       "type": 3,
       "main": "Circulation",
-      "sub": "<li>Check heart rate, rhythm, perfusion, recheck blood pressure.</li><li>If heart rate &lt;60 bpm consider giving anticholinergic drug <b>(Box B)</b>.</li><li>Consider giving vasopressor <b>(Box C)</b> and positioning (e.g. move head down).</li><li>Consider fluid boluses (250 ml adult, 10 ml.kg⁻¹ paediatric).</li><li>If heart rate &gt;100 bpm sinus rhythm, treat as hypovolaemia: give IV fluid bolus.</li><li>If heart rate &gt;100 bpm and non-sinus: <b>(→ 2-7)</b></li>",
+      "sub": "<li>Check heart rate, rhythm, perfusion, recheck blood pressure.</li><li>If heart rate &lt;60 bpm consider giving anticholinergic drug <b>(Box B)</b>.</li><li>Consider giving vasopressor <b>(Box C)</b> and positioning (e.g. move head down).</li><li>Consider fluid boluses (250 ml adult, 10 ml.kg⁻¹ paediatric).</li><li>If heart rate &gt;100 bpm sinus rhythm, treat as hypovolaemia: give IV fluid bolus.</li><li>If heart rate &gt;100 bpm and non-sinus: <b>→2-7</b></li>",
       "step": "4"
     },
     {
@@ -87,7 +87,7 @@
     {
       "type": 9,
       "main": "Also consider:",
-      "sub": "<li>Cardiac ischaemia <b>(→ 3-12)</b></li><li>Anaphylaxis <b>(→ 3-1)</b></li><li>Cardiac tamponade <b>(→ 3-9)</b></li><li>Local anaesthetic toxicity <b>(→ 3-10)</b></li><li>Sepsis <b>(→ 3-14)</b></li><li>Cardiac valvular problem</li><li>Endocrine cause (e.g. steroid dependency)</li>",
+      "sub": "<li>Cardiac ischaemia <b>→3-12</b></li><li>Anaphylaxis <b>→3-1</b></li><li>Cardiac tamponade <b>→3-9</b></li><li>Local anaesthetic toxicity <b>→3-10</b></li><li>Sepsis <b>→3-14</b></li><li>Cardiac valvular problem</li><li>Endocrine cause (e.g. steroid dependency)</li>",
       "step": ""
     },
     {

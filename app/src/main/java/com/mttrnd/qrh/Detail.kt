@@ -43,7 +43,7 @@ class Detail : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeLi
         }
 
         val title: String? = if(data != null) {
-            getTItleFromCode(code)
+            getTitleFromCode(code)[0]
         } else {
             intent.getStringExtra("TITLE")
         }
@@ -174,9 +174,24 @@ class Detail : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeLi
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        val data = intent.data
+
+        val code: String? = if(data != null) {
+            data.toString().replace("com.mttrnd.qrh.detail://","")
+        } else {
+            intent.getStringExtra("CODE")
+        }
+
+        val URL: String? = if(data != null) {
+            getTitleFromCode(code)[1]
+        } else {
+            intent.getStringExtra("URL")
+        }
+
         return when (item.itemId) {
             R.id.navigation_download -> {
-                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(intent.getStringExtra("URL"))))
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(URL)))
                 return true
             }
             R.id.navigation_settings -> {
@@ -275,9 +290,9 @@ class Detail : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeLi
         }
     }
 
-    fun getTItleFromCode(codePassed: String?): String {
+    fun getTitleFromCode(codePassed: String?): Array<String> {
         val guideList = Guideline.getGuidelinesFromFile("guidelines.json", this)
         val position: Int = guideList.indexOfFirst { it.code == codePassed }
-        return guideList[position].title
+        return arrayOf(guideList[position].title,guideList[position].url)
     }
 }
