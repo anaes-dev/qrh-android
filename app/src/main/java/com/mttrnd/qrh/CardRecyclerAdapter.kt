@@ -219,7 +219,7 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>, val codePass
 
             val patternPhone = Pattern.compile ("[0][0-9]{10}")
 
-            val patternGuideline = Pattern.compile("[(]?[→][\\s]?[1-3][-][0-9]{1,2}[)]?")
+            val patternGuideline = Pattern.compile("[(]?[→][\\s]?[1-4][-][0-9]{1,2}[)]?")
 
             val linkGuideline = "com.mttrnd.qrh.Detail://"
 

@@ -167,7 +167,8 @@ class Detail : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeLi
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         //Inflate different menu for 0-4 and 3-7
         when (intent.getStringExtra("CODE")) {
-            "0-4","3-7" -> menuInflater.inflate(R.menu.menu_detail_0_4, menu)
+            "0-4" -> menuInflater.inflate(R.menu.menu_detail_0_4, menu)
+            "3-7" -> menuInflater.inflate(R.menu.menu_detail_3_7, menu)
             else -> menuInflater.inflate(R.menu.menu_detail, menu)
         }
         return true
@@ -175,23 +176,15 @@ class Detail : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeLi
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
-        val data = intent.data
-
-        val code: String? = if(data != null) {
-            data.toString().replace("com.mttrnd.qrh.detail://","")
-        } else {
-            intent.getStringExtra("CODE")
-        }
-
-        val URL: String? = if(data != null) {
-            getTitleFromCode(code)[1]
+        val downloadURL: String? = if(intent.data != null) {
+            getTitleFromCode(intent.data.toString().replace("com.mttrnd.qrh.detail://",""))[1]
         } else {
             intent.getStringExtra("URL")
         }
 
         return when (item.itemId) {
             R.id.navigation_download -> {
-                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(URL)))
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(downloadURL)))
                 return true
             }
             R.id.navigation_settings -> {
