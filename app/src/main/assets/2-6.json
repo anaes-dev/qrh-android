@@ -25,7 +25,7 @@
     {
       "type": 6,
       "main": "Box B: DRUGS FOR BRADYCARDIA",
-      "sub": "<li>Glycopyrrolate 5 µg.kg⁻¹ <small>(adult 200-400 µg)</small></li><li>Ephedrine 100 µg.kg⁻¹ <small>(adult 3-12 mg)</small></li><li>Atropine 10 µg.kg⁻¹ <small>(adult 300-600 µg)</small></li><li>Isoprenaline 0.5 µg.kg.min⁻¹ <small>(adult 5 µg.min-1)</small></li><li>Adrenaline 1 µg.kg⁻¹ <small>(adult 10-100 µg) in emergency only</small></li>",
+      "sub": "<li>Glycopyrrolate 5 µg.kg⁻¹ <small>(adult 200-400 µg)</small></li><li>Ephedrine 100 µg.kg⁻¹ <small>(adult 3-12 mg)</small></li><li>Atropine 10 µg.kg⁻¹ <small>(adult 300-600 µg)</small></li><li>Isoprenaline 0.5 µg.kg.min⁻¹ <small>(adult 5 µg.min⁻¹)</small></li><li>Adrenaline 1 µg.kg⁻¹ <small>(adult 10-100 µg) in emergency only</small></li>",
       "step": ""
     },
     {
