@@ -16,9 +16,10 @@ import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_detail.*
-import kotlinx.android.synthetic.main.activity_detail_0_4.*
-import kotlinx.android.synthetic.main.activity_detail_3_7.*
+import com.google.android.material.appbar.CollapsingToolbarLayout
+import kotlinx.android.synthetic.main.activity_detail_0_4_scrollingcontent.*
+import kotlinx.android.synthetic.main.activity_detail_3_7_scrollingcontent.*
+import kotlinx.android.synthetic.main.activity_detail_scrollingcontent.*
 
 
 class Detail : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
@@ -33,7 +34,6 @@ class Detail : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeLi
     @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         val data = intent.data
 
         val code: String? = if(data != null) {
@@ -43,12 +43,19 @@ class Detail : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeLi
         }
 
         val title: String? = if(data != null) {
-            getTitleFromCode(code)[0]
+            getDetailsFromCode(code)[0]
         } else {
             intent.getStringExtra("TITLE")
         }
 
+        val version: String? = if(data != null) {
+            "v."+getDetailsFromCode(code)[2]
+        } else {
+            "v."+intent.getStringExtra("VERSION")
+        }
+
         setTitle(title)
+
 
         //Setup different views for pages 0-4 and 3-7
 
@@ -56,9 +63,13 @@ class Detail : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeLi
 
             "0-4" -> {
                 setContentView(R.layout.activity_detail_0_4)
+                setSupportActionBar(findViewById(R.id.toolbar))
+                findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout).title = title
                 supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-                val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
+                findViewById<TextView>(R.id.detail_code).text = code
+                findViewById<TextView>(R.id.detail_version).text = version
 
+                val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
                 setupSharedPreferences()
 
                 //Show snackbar hint on fist visit
@@ -87,11 +98,14 @@ class Detail : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeLi
 
                 //First part of page is static layout
                 setContentView(R.layout.activity_detail_3_7)
+                setSupportActionBar(findViewById(R.id.toolbar))
+                findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout).title = title
                 supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+                findViewById<TextView>(R.id.detail_code).text = code
+                findViewById<TextView>(R.id.detail_version).text = version
 
                 findViewById<TextView>(R.id.fire_main).text = getString(R.string.fire3)
                 findViewById<TextView>(R.id.fire_step).text = "1"
-                findViewById<TextView>(R.id.detail_code).setText(code)
 
                 findViewById<TextView>(R.id.fire_sub).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     Html.fromHtml(getString(R.string.fire4)).trim()
@@ -103,8 +117,6 @@ class Detail : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeLi
                             if (tag == "li" && opening) output.append("\n\n• ")
                         }).trim()
                 }
-
-
 
                 val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
                 setupSharedPreferences()
@@ -134,28 +146,30 @@ class Detail : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeLi
                 val adapter = CardRecyclerAdapter(content, code)
                 linearLayoutManager = LinearLayoutManager(this)
                 detail_recyclerview2.layoutManager = linearLayoutManager
-                detail_recyclerview2.setNestedScrollingEnabled(false)
+                detail_recyclerview2.isNestedScrollingEnabled = false
                 detail_recyclerview2.adapter = adapter
-
             }
 
             else -> {
                 setContentView(R.layout.activity_detail)
+                setSupportActionBar(findViewById(R.id.toolbar))
+                findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout).title = title
                 supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+                findViewById<TextView>(R.id.detail_code).text = code
+                findViewById<TextView>(R.id.detail_code_2).text = code
+                findViewById<TextView>(R.id.detail_version).text = version
 
                 //Feed relevant JSON to Recyclerview / CardRecyclerAdapter
 
                 val filenameSuffix = ".json"
                 val filename = code + filenameSuffix
 
-                findViewById<TextView>(R.id.detail_code).text = code
-
                 val content = DetailContent.getContentFromFile(filename, this)
                 val adapter = CardRecyclerAdapter(content, code)
 
                 linearLayoutManager = LinearLayoutManager(this)
                 detail_recyclerview.layoutManager = linearLayoutManager
-                detail_recyclerview.setNestedScrollingEnabled(false)
+                detail_recyclerview.isNestedScrollingEnabled = false
                 detail_recyclerview.adapter = adapter
 
             }
@@ -177,7 +191,7 @@ class Detail : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeLi
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         val downloadURL: String? = if(intent.data != null) {
-            getTitleFromCode(intent.data.toString().replace("com.mttrnd.qrh.detail://",""))[1]
+            getDetailsFromCode(intent.data.toString().replace("com.mttrnd.qrh.detail://",""))[1]
         } else {
             intent.getStringExtra("URL")
         }
@@ -283,9 +297,9 @@ class Detail : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeLi
         }
     }
 
-    fun getTitleFromCode(codePassed: String?): Array<String> {
+    fun getDetailsFromCode(codePassed: String?): Array<String> {
         val guideList = Guideline.getGuidelinesFromFile("guidelines.json", this)
         val position: Int = guideList.indexOfFirst { it.code == codePassed }
-        return arrayOf(guideList[position].title,guideList[position].url)
+        return arrayOf(guideList[position].title,guideList[position].url,guideList[position].version.toString())
     }
 }
