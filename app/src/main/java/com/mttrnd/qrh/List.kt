@@ -80,7 +80,7 @@ class List : AppCompatActivity() {
             }
             override fun onQueryTextChange(newText: String?): Boolean {
                 adapter.filter.filter(newText)
-                if(adapter.getItemCount() == 0) {
+                if(adapter.itemCount == 0) {
                     findViewById<TextView>(R.id.list_empty).visibility = View.VISIBLE
                 } else {
                     findViewById<TextView>(R.id.list_empty).visibility = View.GONE
