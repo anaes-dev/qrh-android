@@ -26,8 +26,8 @@ You may not use for commercial purposes.
 
 ## Download
 
-Please download Version 1 Release Candidate 1 from here:
-https://github.com/mttrnd/qrh/releases/tag/v1.0rc1  
+Please download latest version from releases:
+https://github.com/mttrnd/qrh/releases
 
 ## Technical
 
