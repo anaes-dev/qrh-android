@@ -13,7 +13,7 @@
     },{
       "type": 3,
       "main": "Immediate action",
-      "sub": "Stop any stimulus, check pulse, rhythm and blood pressure:<li>If no pulse OR <u>not</u> sinus bradycardia OR severe hypotension: use <b>Box A</b>.</li><li>If pulse present AND sinus bradycardia: use Box <b>B</b>.</li>",
+      "sub": "Stop any stimulus, check pulse, rhythm and blood pressure:<li>If no pulse OR <u>not</u> sinus bradycardia OR severe hypotension: use <b>Box A</b>.</li><li>If pulse present AND sinus bradycardia: use <b>Box B</b>.</li>",
       "step": "1"
     },
     {
