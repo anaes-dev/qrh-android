@@ -26,16 +26,22 @@ You may not use for commercial purposes.
 
 ## Download
 
-Please download latest version from releases:
+Available on Google Play:   
+<a href='https://play.google.com/store/apps/details?id=com.mttrnd.qrh&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' width="150px"/></a>
+
+Otherwise please download APK from releases:
 https://github.com/mttrnd/qrh/releases
 
 ## Technical
+*(For any updates, modifications or derivatives)*
 
 The guideline list is generated from /assets/guidelines.json. 
 
 Guidelines are stored as JSON objects in the assets folder.
 
-Each array contains 'type', 'main', 'sub' and 'step' keys.  
+Each array contains 'type', 'main', 'sub' and 'step' keys.
+
+These populate different styled cards for each guideline page.
 
 ### Card views
 
@@ -77,7 +83,7 @@ URLs beginning with http(s):// or www.
 - [x] Collapsing cards for boxes
 - [x] Section 0-4 (locations)
 - [X] 1st release candidate
-- [ ] 1st stable release
+- [X] 1st stable release
 - [ ] Streamline architecture
 - [ ] Tablet layout  
 
@@ -107,3 +113,8 @@ This application reproduces the August 2019 version of the QRH, adapted to fit t
 The QRH is updated from time to time. A version number is displayed next to each guideline in the list view, and at the bottom of each guideline when opened; these correspond with the Association of Anaesthetist guideline versioning. You must check that the guidelines you are using are up to date. The developer will endeavour to keep the application updated with any new QRH revision, but there will be a delay between release from the Association of Anaesthetists and release of an application update. If any guidelines contained within the application become superseded, please revert to using the latest version from the Association of Anaesthetists. Alternatively, the source code could be obtained from github.com/mttrnd/qrh and updated by the end-user. 
 
 This application allows you to set short reminders for locations of emergency equipment. Please do not use this function to store any personal, sensitive or patient-related data. No data is transmitted by this application itself, however, data stored by the application my be automatically backed up by the Android operating system (including transmission over the internet) or accessed by other applications. If you wish to clear any data stored with the application, please click the 'RESET DATA &amp; EXIT' button on the About page.
+
+  
+    
+    
+*Google Play and the Google Play logo are trademarks of Google LLC.*
