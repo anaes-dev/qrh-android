@@ -214,5 +214,7 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="action_settings">Settings</string>
+    <string name="title_guideline_list">Guidelines</string>
+    <string name="title_guideline_detail">Guideline Detail</string>
 
 </resources>
