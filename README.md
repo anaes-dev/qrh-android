@@ -3,7 +3,7 @@
 <img src="./readme/screenshot1b.png" width="240px"> | <img src="./readme/screenshot2b.png" width="240px"> | <img src="./readme/screenshot3b.png" width="240px">
 
 ## Features
-- Unofficial derivative of Association of Anaesthetists Quick Reference Handbook (QRH) www.anaesthetists.org/qrh
+- Unofficial derivative of the Association of Anaesthetists Quick Reference Handbook (QRH): www.anaesthetists.org/qrh (CC BY-NC-SA 4.0)
 - ***Not endorsed by the Association of Anaesthetists***
 - Rapidly searchable guideline list
 - Simple guideline layout echoing original handbook
