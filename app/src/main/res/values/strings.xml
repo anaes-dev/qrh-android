@@ -8,7 +8,7 @@
 
     <string name="updated">Updated July 2020</string>
     <string name="about_1">Unofficial adaptation of the Association of Anaesthetists Quick Reference Handbook (QRH) August 2019 version. www.anaesthetists.org/qrh</string>
-    <string name="about_2">Subject to Creative Commons license CC BY-NC-SA 4.0. You may distribute original version or adapt for yourself and distribute with acknowledgement of source. You may not use for commercial purposes.</string>
+    <string name="about_2">This material is a derivative of the \"Quick Reference Handbook\" ( www.anaesthetists.org/qrh ) by The Association of Anaesthetists ( www.anaesthetists.org ), used under Creative Commons license CC BY-NC-SA 4.0 ( www.creativecommons.org/licenses/by-nc-sa/4.0 ).\n\nSubject to Creative Commons license CC BY-NC-SA 4.0. You may distribute original version or adapt for yourself and distribute with acknowledgement of source. You may not use for commercial purposes.</string>
     <string name="about_3">Please report any bugs via the github page</string>
     <string name="about_4">The guidelines in this handbook are not intended to be standards of medical care. The ultimate judgement with regard to a particular clinical procedure or treatment plan must be made by the clinician in the light of the clinical data presented and the diagnostic and treatment options available.</string>
 
@@ -57,7 +57,7 @@
         Anaesthetists and release of an application update. If any guidelines contained within the application become superseded, please revert to using the latest
         version from the Association of Anaesthetists. Alternatively, the source code could be obtained from github.com/mttrnd/qrh and updated by the end-user.
         \n\nThis application allows you to set short reminders for locations of emergency equipment. Please do not use this function to store any personal, sensitive or
-        patient-related data. No data is transmitted by this application itself, however, data stored by the application my be automatically backed up by the Android
+        patient-related data. No data is transmitted by this application itself, however, data stored by the application may be automatically backed up by the Android
         operating system (including transmission over the internet) or accessed by other applications. If you wish to clear any data stored with the application,
         please click the \'RESET DATA &amp; EXIT\' button on the About page.
     </string>

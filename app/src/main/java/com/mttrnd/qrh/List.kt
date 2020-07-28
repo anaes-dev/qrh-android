@@ -66,7 +66,7 @@ class List : AppCompatActivity() {
 
 
         val guidelineList = Guideline.getGuidelinesFromFile("guidelines.json", this)
-        val adapter = ListRecyclerAdapter(guidelineList, { guideline : Guideline -> guidelineClicked(guideline) })
+        val adapter = ListRecyclerAdapter(guidelineList) { guideline : Guideline -> guidelineClicked(guideline) }
 
         linearLayoutManager = LinearLayoutManager(this)
         list_recyclerview.layoutManager = linearLayoutManager

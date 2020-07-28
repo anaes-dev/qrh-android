@@ -3,6 +3,7 @@ package com.mttrnd.qrh
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -38,6 +39,11 @@ class About : AppCompatActivity() {
             finishAffinity()
         }
 
+        //CC license link
+        imageViewCC.setOnClickListener{
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://www.creativecommons.org/licenses/by-nc-sa/4.0/")))
+        }
+
     }
 
     //Close activity on back / up navigation
@@ -45,5 +51,4 @@ class About : AppCompatActivity() {
         finish()
         return true
     }
-
 }
