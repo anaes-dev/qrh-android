@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Rect
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.view.ViewTreeObserver
@@ -14,7 +15,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.activity_about.*
 import kotlinx.android.synthetic.main.activity_splash.*
+import kotlinx.android.synthetic.main.activity_splash.imageViewCC
 import kotlin.system.exitProcess
 
 
@@ -61,7 +64,6 @@ class Splash : AppCompatActivity(), ViewTreeObserver.OnScrollChangedListener {
             }
 
             buttonAgreeInactive.setOnClickListener {
-
                 Snackbar.make(findViewById(android.R.id.content), "Please scroll and read before continuing.", Snackbar.LENGTH_SHORT)
                     .setBackgroundTint(ContextCompat.getColor(this, R.color.snackbarBackground))
                     .setAction("Dismiss") {
@@ -77,6 +79,12 @@ class Splash : AppCompatActivity(), ViewTreeObserver.OnScrollChangedListener {
                 startActivity(intent)
                 finish()
             }
+
+            //CC license link
+            imageViewCC.setOnClickListener{
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://www.creativecommons.org/licenses/by-nc-sa/4.0/")))
+            }
+
         }
     }
 
