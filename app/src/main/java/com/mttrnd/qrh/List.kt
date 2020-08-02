@@ -34,7 +34,7 @@ class List : AppCompatActivity() {
         if(isStartup) {
             val snack =
                 Snackbar
-                    .make(container, "Unofficial adaptation of Quick Reference Handbook\nNot endorsed by the Association of Anaesthetists\nTo provide information for healthcare professionals only\nNo guarantees of completeness, accuracy or performance\nShould not override your own knowledge and judgement", Snackbar.LENGTH_LONG)
+                    .make(container, "Unofficial adaptation of Quick Reference Handbook\nNot endorsed by the Association of Anaesthetists\nUntested and unregulated; not recommended for clinical use\nNo guarantees of completeness, accuracy or performance\nShould not override your own knowledge and judgement", Snackbar.LENGTH_LONG)
                     .setBackgroundTint(getColor(this, R.color.snackbarBackground))
                     .setDuration(8000)
                     .setAction(R.string.title_about) {

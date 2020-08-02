@@ -51,7 +51,7 @@
     {
       "type": 6,
       "main": "Box B: DRUG DOSES",
-      "sub": "<b>Bradycardia:</b><li>Atropine: 0.6-1.2 mg</li><li>Glycopyrrolate: 0.2-0.4 mg</li><p><b>Hypotension:</b><li>Metaraminol: 1-2 mg boluses repeated</li><li>Phenylephrine: 50-100 μg boluses repeated <small>or by infusion</small></li><li>Ephedrine: 6-12 mg boluses repeated up to max 30 mg <small>(tachyphylaxis limits further usefulness)</small></li>",
+      "sub": "<b>Bradycardia:</b><li>Atropine: 0.6-1.2 mg</li><li>Glycopyrrolate: 0.2-0.4 mg</li><p><b>Hypotension:</b><li>Metaraminol: 1-2 mg boluses repeated</li><li>PHENYLephrine: 50-100 μg boluses repeated <small>or by infusion</small></li><li>ePHEDrine: 6-12 mg boluses repeated up to max 30 mg <small>(tachyphylaxis limits further usefulness)</small></li>",
       "step": ""
     },
     {

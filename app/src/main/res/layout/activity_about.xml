@@ -80,6 +80,33 @@
             android:padding="8dp"
             android:text="@string/github" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_view_disclaimers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/disclaimers" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:contentDescription="@string/image"
+                app:srcCompat="@drawable/empty" />
+
+            <Button
+                android:id="@+id/btn_resetexit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/resetexit" />
+        </LinearLayout>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -103,7 +130,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="start"
                 android:clickable="true"
-                android:contentDescription="@string/image"
+                android:contentDescription="@string/CCBYNCSA"
                 android:focusable="auto"
                 android:padding="8dp"
                 app:srcCompat="@drawable/by_nc_sa" />
@@ -182,6 +209,37 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_weight="0"
+                android:background="@drawable/ic_baseline_arrow_forward_24"
+                android:contentDescription="@string/image"
+                android:tint="#000000"
+                app:srcCompat="@drawable/empty" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginBottom="16dp"
+                android:layout_weight="0"
+                android:text="@string/arrowhint" />
+
+        </LinearLayout>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -194,32 +252,6 @@
             android:padding="8dp"
             android:text="@string/about_3" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/btn_view_disclaimers"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/disclaimers" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:contentDescription="@string/image"
-                app:srcCompat="@drawable/empty" />
-
-            <Button
-                android:id="@+id/btn_resetexit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/resetexit" />
-        </LinearLayout>
     </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
