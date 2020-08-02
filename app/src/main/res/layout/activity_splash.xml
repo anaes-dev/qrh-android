@@ -162,7 +162,7 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="start"
                     android:clickable="true"
-                    android:contentDescription="@string/image"
+                    android:contentDescription="@string/CCBYNCSA"
                     android:focusable="auto"
                     android:padding="8dp"
                     app:srcCompat="@drawable/by_nc_sa" />
