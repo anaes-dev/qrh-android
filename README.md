@@ -78,15 +78,6 @@ Generated from 11 digit numbers beginning with 0
 #### Web links
 URLs beginning with http(s):// or www.  
   
-## Todo
-- [x] Populate data
-- [x] Collapsing cards for boxes
-- [x] Section 0-4 (locations)
-- [X] 1st release candidate
-- [X] 1st stable release
-- [ ] Streamline architecture
-- [ ] Tablet layout  
-
 ## Accompanying Guidance & Disclaimers
 
 ### 1. 
