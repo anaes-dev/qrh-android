@@ -11,6 +11,9 @@
 - Easily updatable through modification of JSON assets
 - [![CC BY-NC-SA 4.0][cc-by-nc-sa-shield]][cc-by-nc-sa] Released under same Creative Commons license as original work  
 
+Given that it has neither been professionally developed nor tested, this app is offered for evaluation, training and simulation purposes: not for clinical use.
+
+
 
 ## License
 This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0
