@@ -11,6 +11,9 @@
 - Easily updatable through modification of JSON assets
 - [![CC BY-NC-SA 4.0][cc-by-nc-sa-shield]][cc-by-nc-sa] Released under same Creative Commons license as original work  
 
+Given that it has neither been professionally developed nor tested, this app is offered for evaluation, training and simulation purposes: not for clinical use.
+
+
 
 ## License
 This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0
@@ -78,15 +81,6 @@ Generated from 11 digit numbers beginning with 0
 #### Web links
 URLs beginning with http(s):// or www.  
   
-## Todo
-- [x] Populate data
-- [x] Collapsing cards for boxes
-- [x] Section 0-4 (locations)
-- [X] 1st release candidate
-- [X] 1st stable release
-- [ ] Streamline architecture
-- [ ] Tablet layout  
-
 ## Accompanying Guidance & Disclaimers
 
 ### 1. 
@@ -99,22 +93,20 @@ This application is an unofficial adaptation of the Association of Anaesthetists
 The guidelines in this handbook are not intended to be standards of medical care. The ultimate judgement with regard to a particular clinical procedure or treatment plan must be made by the clinician in the light of the clinical data presented and the diagnostic and treatment options available.
 
 
-### 2. 
-This application is intended only for use by healthcare professionals practising in the United Kingdom who are already familiar with the QRH. At the time of release, this app would not be considered a medical device in the United Kingdom, insofar that it only provides reference information to help a healthcare professional use their knowledge to make a clinical decision. According to the Medicines and Healthcare products Regulatory Agency guidance "Medical device stand-alone software including apps" (Last updated 4th June 2020); software is unlikely to be a device if it just reproduces a paper document in digital format, provides information to follow the path of a procedure/treatment, or it has decision points but the healthcare professional decides which path to take.
+### 2.
+This application is intended for educational use only by healthcare professionals in the United Kingdom who are already familiar with the QRH. It may be used to support learning and rehearsal of emergency responses. <b>It has not been professionally developed nor tested therefore is not recommended for clinical use.</b> The developer accepts no responsibility for or liability arising from any decision to use in a clinical setting despite this warning. You should consider the advice of your employer, regulatory and professional bodies regarding the use of software applications, and always exercise professional judgement before relying on information from any source.
 
-Regulations may change with time. Active distribution by the developer will be ceased if this application subsequently becomes subject to regulatory approval. Due to the offline and open-source nature of the application, however, the developer cannot be held responsible for ongoing use and distribution of the application or its source code by other parties beyond this time. Please periodically check whether regulations have changed. 
+This application is <u>not</u> presented as a medical device in the United Kingdom. <b>It carries no certification markings, regulatory approvals or technical assessment appraisals.</b> According to the latest Medicines and Healthcare products Regulatory Agency guidance <i>\"Medical device stand-alone software including apps\"</i> (Last updated 4th June 2020) at the time of this release; software is unlikely to be a device if it just reproduces a paper document in digital format, provides reference information to follow the path of a procedure/treatment, or it has decision points but the healthcare professional decides which path to take (as they ultimately rely on their own knowledge). The developer believes that the application falls within this \'non medical function\' remit.
 
-For more information please see: https://www.gov.uk/government/publications/medical-devices-software-applications-apps
+Regulations may change with time. Distribution by the developer will be ceased if advised to do so or if this application subsequently becomes subject to regulatory approval. Please periodically check whether regulations have changed, and stop using this application if you are unsure about it\'s status. Due to the offline and open-source nature of the application, however, the developer cannot be held responsible for ongoing use and distribution of the application or its source code by other parties beyond such a time.
 
+For more information please see: https://www.gov.uk/government/publications/medical-devices-software-applications-apps</string>
 
 ### 3. 
-This application reproduces the August 2019 version of the QRH, adapted to fit the mobile application format. Content has largely been transcribed verbatim, except for minor formatting, punctuation and structure tweaks that do not meaningfully alter the guidelines, and the introduction of TALLman Lettering to improve the readability of certain words. The developer assumes no responsibility or liability for any errors or omissions in the content. The information is provided on an "as is" basis with no guarantees of completeness, accuracy, usefulness or timeliness. Likewise, the application is provided on an "as is" basis with no guarantees of usefulness, performance or reliability. The developer, original QRH authors, or anyone else connected in any way with the QRH or application, cannot be held responsible for your use of the information contained in or linked from this application.
+This application reproduces the August 2019 version of the QRH, adapted to fit the mobile application format. Content has largely been transcribed verbatim, except for minor formatting, punctuation and structure tweaks that do not meaningfully alter the guidelines, and the introduction of TALLman Lettering to improve the readability of certain words. The developer assumes no responsibility or liability for any errors or omissions in the content. The information is provided on an \"as is\" basis with no guarantees of completeness, accuracy, usefulness or timeliness. Drug indications and doses may be incorrect, and do not take into account individual circumstances such as comorbidities, interactions, renal and hepatic function. Likewise, the application is provided on an \"as is\" basis with no guarantees of usefulness, performance or reliability. The developer, original QRH authors, or anyone else connected in any way with the QRH or application, cannot be held responsible for your use of the information contained in or linked from this application. Links to external websites and telephone numbers are provided for convenience and informational purposes only; they do not constitute an endorsement and the developer is not responsible for any third-party content accessed through them.
 
-The QRH is updated from time to time. A version number is displayed next to each guideline in the list view, and at the bottom of each guideline when opened; these correspond with the Association of Anaesthetist guideline versioning. You must check that the guidelines you are using are up to date. The developer will endeavour to keep the application updated with any new QRH revision, but there will be a delay between release from the Association of Anaesthetists and release of an application update. If any guidelines contained within the application become superseded, please revert to using the latest version from the Association of Anaesthetists. Alternatively, the source code could be obtained from github.com/mttrnd/qrh and updated by the end-user. 
+The QRH is updated from time to time. A version number is displayed next to each guideline in the list view, and in the header and footer when opened; these correspond with the Association of Anaesthetists guideline versioning. You must check that the guidelines you are using are up to date. The developer will endeavour to keep the application updated with any new QRH revision, but there will be a delay between release from the Association of Anaesthetists and release of an application update. If any guidelines contained within the application become superseded, please revert to using the latest version from the Association of Anaesthetists. Alternatively, the source code could be obtained from github.com/mttrnd/qrh and updated by the end-user.
 
-This application allows you to set short reminders for locations of emergency equipment. Please do not use this function to store any personal, sensitive or patient-related data. No data is transmitted by this application itself, however, data stored by the application my be automatically backed up by the Android operating system (including transmission over the internet) or accessed by other applications. If you wish to clear any data stored with the application, please click the 'RESET DATA &amp; EXIT' button on the About page.
+This application does not collect, store or transmit any personal data. This application allows you to set short reminders for locations of emergency equipment; please do not misuse this function to enter any personal, sensitive or patient-related data. These reminders are held on your device, are not intentionally transmitted anywhere by the application and not accessible to or stored by the developer. However, any data associated with the application should be assumed to be insecure, may be automatically backed up by the Android operating system (including transmission over the internet) or accessed by other applications. If you wish to clear any reminders entered into the application, please click the \'RESET DATA &amp; EXIT\' button on the About page.</string>
 
-  
-    
-    
 *Google Play and the Google Play logo are trademarks of Google LLC.*
