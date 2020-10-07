@@ -23,7 +23,7 @@ import kotlin.system.exitProcess
 
 class Splash : AppCompatActivity(), ViewTreeObserver.OnScrollChangedListener {
 
-    private val PREFNAME = "com.mround.bwh.seenwarning"
+    private val PREFNAME = "com.mttrnd.qrh.seenwarning"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +49,8 @@ class Splash : AppCompatActivity(), ViewTreeObserver.OnScrollChangedListener {
             val verCode = BuildConfig.VERSION_NAME
             val verOutput = "Version $verCode"
             findViewById<TextView>(R.id.about_version).setText(verOutput)
+
+            //CC license link
 
             val scrollBounds = Rect()
             scrollViewSplash.getHitRect(scrollBounds)
@@ -93,12 +95,18 @@ class Splash : AppCompatActivity(), ViewTreeObserver.OnScrollChangedListener {
         val scrollBounds = Rect()
         scrollViewSplash.getHitRect(scrollBounds)
 
+        //Two methods to check if scrolled to bottom for redundancy (as one does not work reliably on tablet screen where all visible from start)
+
+        //If view item at bottom is visible on screen:
+
         if (scrolledToBottom.getLocalVisibleRect(scrollBounds)) {
             findViewById<Button>(R.id.button_agree_active).visibility = View.VISIBLE
             findViewById<Button>(R.id.button_agree_inactive).visibility = View.GONE
             button_agree_active.isClickable = true
             button_agree_inactive.isClickable = false
         }
+
+        //If cannot scroll vertically (i.e. at bottom):
 
         if (!scrollViewSplash.canScrollVertically(1)) {
             findViewById<Button>(R.id.button_agree_active).visibility = View.VISIBLE

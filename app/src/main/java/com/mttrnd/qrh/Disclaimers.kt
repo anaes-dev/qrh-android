@@ -10,6 +10,9 @@ class Disclaimers : AppCompatActivity() {
         setContentView(R.layout.activity_disclaimers)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
+
+        // Button listeners
+
         button_exit2.setOnClickListener {
             finishAffinity()
         }

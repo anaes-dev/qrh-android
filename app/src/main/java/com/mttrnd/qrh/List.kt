@@ -25,11 +25,14 @@ class List : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list)
 
+        // Get flags from splash activity
+
         val isStartup = intent.getBooleanExtra("STARTUP", false)
         val isFirstrun = intent.getBooleanExtra("FIRSTRUN", false)
         val rvScrollListener = findViewById<RecyclerView>(R.id.list_recyclerview)
 
 
+        // Check if fresh startup
 
         if(isStartup) {
             val snack =
@@ -47,6 +50,7 @@ class List : AppCompatActivity() {
             snack.show()
 
 
+            // Dismiss snackbar if list scrolled (otherwise will stay visible for 8 seconds)
 
             rvScrollListener.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -56,6 +60,8 @@ class List : AppCompatActivity() {
             })
         }
 
+        // Check if first run
+
         if(isFirstrun) {
             val snack =
                 Snackbar
@@ -64,6 +70,7 @@ class List : AppCompatActivity() {
             snack.show()
         }
 
+        // Pull guideline list from file and display in recyclerview
 
         val guidelineList = Guideline.getGuidelinesFromFile("guidelines.json", this)
         val adapter = ListRecyclerAdapter(guidelineList) { guideline : Guideline -> guidelineClicked(guideline) }
@@ -72,7 +79,7 @@ class List : AppCompatActivity() {
         list_recyclerview.layoutManager = linearLayoutManager
         list_recyclerview.adapter = adapter
 
-
+        // Search listener (+ adjust visibility of empty list message)
 
         list_searchview.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -105,6 +112,8 @@ class List : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
+
+    // Pass details of clicked guideline in activity intent
 
     private fun guidelineClicked(guideline : Guideline) {
         val showGuidelineIntent = Intent(this, Detail::class.java)
