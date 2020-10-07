@@ -12,6 +12,9 @@ class DetailContent(
     val sub: String,
     var collapsed: Boolean) {
 
+
+    // Load content from guideline file into ArrayList
+
     companion object {
 
         fun getContentFromFile(filename: String, context: Context): ArrayList<DetailContent> {
