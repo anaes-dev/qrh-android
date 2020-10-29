@@ -47,12 +47,12 @@
           android:background="@color/detailItemBlueARR"
           android:contentDescription="@string/arrow"
           android:src="@drawable/ic_arrow_left"
-          app:layout_constraintBottom_toBottomOf="@+id/detail_main"
+          app:layout_constraintBottom_toBottomOf="@+id/detail_head"
           app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintTop_toTopOf="@+id/detail_main" />
+          app:layout_constraintTop_toTopOf="@+id/detail_head" />
 
       <TextView
-          android:id="@+id/detail_main"
+          android:id="@+id/detail_head"
           style="@style/Widget.AppCompat.TextView.SpinnerItem"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
           tools:text="step 1" />
 
       <TextView
-          android:id="@+id/detail_sub"
+          android:id="@+id/detail_body"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:layout_marginStart="8dp"
@@ -72,8 +72,8 @@
           android:layout_marginTop="8dp"
           android:visibility="gone"
           app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toStartOf="@id/detail_main"
-          app:layout_constraintTop_toBottomOf="@+id/detail_main"
+          app:layout_constraintStart_toStartOf="@id/detail_head"
+          app:layout_constraintTop_toBottomOf="@+id/detail_head"
           tools:text="sub 1" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

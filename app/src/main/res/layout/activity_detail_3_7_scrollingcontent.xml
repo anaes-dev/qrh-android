@@ -34,121 +34,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="4dp"
-                    android:animationCache="true"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    android:hapticFeedbackEnabled="true"
-                    app:cardElevation="1dp"
-                    app:cardUseCompatPadding="true"
-                    app:contentPadding="16dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/fire1"
-                        android:textColor="@color/detailItemStandardTXT"
-                        android:textSize="15sp" />
-
-                </androidx.cardview.widget.CardView>
 
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="9dp"
-                    android:layout_marginLeft="9dp"
-                    android:layout_marginTop="8dp"
-                    android:background="#000000"
-                    android:padding="4dp"
-                    android:text="@string/fire2"
-                    android:textColor="#FFFFFF"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="4dp"
-                    android:animationCache="true"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    android:hapticFeedbackEnabled="true"
-                    app:cardElevation="1dp"
-                    app:cardUseCompatPadding="true"
-                    app:contentPadding="8dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:id="@+id/constraintLayout"
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent">
-
-                            <TextView
-                                android:id="@+id/fire_step"
-                                style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                                android:layout_width="28dp"
-                                android:layout_height="28dp"
-                                android:background="@drawable/step_circle"
-                                android:gravity="center"
-                                android:minLines="1"
-                                android:textAlignment="center"
-                                android:textColor="#FFFFFF"
-                                android:textStyle="bold"
-                                app:autoSizeMaxTextSize="16sp"
-                                app:autoSizeTextType="uniform"
-                                android:textSize="14sp"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-
-                        <TextView
-                            android:id="@+id/fire_main"
-                            style="@style/Widget.AppCompat.TextView.SpinnerItem"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="28dp"
-                            android:layout_marginLeft="28dp"
-                            android:layout_marginTop="6dp"
-                            android:textSize="15sp"
-                            android:textStyle="bold"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/constraintLayout" />
-
-                        <TextView
-                            android:id="@+id/fire_sub"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="6dp"
-                            android:layout_marginLeft="6dp"
-                            android:layout_marginTop="12dp"
-                            android:textColor="@color/detailItemStandardTXT"
-                            android:textSize="15sp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/fire_main" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
@@ -167,7 +54,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
-
 
                     <LinearLayout
                         android:layout_width="match_parent"

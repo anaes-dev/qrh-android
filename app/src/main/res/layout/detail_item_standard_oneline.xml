@@ -55,7 +55,7 @@
       </androidx.constraintlayout.widget.ConstraintLayout>
 
       <TextView
-          android:id="@+id/detail_main"
+          android:id="@+id/detail_body"
           style="@style/Widget.AppCompat.TextView.SpinnerItem"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
@@ -69,7 +69,7 @@
           tools:text="step 1" />
 
       <TextView
-          android:id="@+id/detail_sub"
+          android:id="@+id/detail_head"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:visibility="gone"

@@ -8,8 +8,8 @@ import org.json.JSONObject
 class DetailContent(
     val type: Int,
     val step: String,
-    val main: String,
-    val sub: String,
+    val head: String,
+    val body: String,
     var collapsed: Boolean) {
 
 
@@ -29,8 +29,8 @@ class DetailContent(
                     DetailContent(
                         contentCards.getJSONObject(it).getInt("type"),
                         contentCards.getJSONObject(it).getString("step"),
-                        contentCards.getJSONObject(it).getString("main"),
-                        contentCards.getJSONObject(it).getString("sub"),
+                        contentCards.getJSONObject(it).getString("head"),
+                        contentCards.getJSONObject(it).getString("body"),
                         collapsed = true
                     )
                 }

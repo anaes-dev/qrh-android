@@ -104,20 +104,6 @@ class Detail : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeLi
                 findViewById<TextView>(R.id.detail_code).text = code
                 findViewById<TextView>(R.id.detail_version).text = version
 
-                findViewById<TextView>(R.id.fire_main).text = getString(R.string.fire3)
-                findViewById<TextView>(R.id.fire_step).text = "1"
-
-                findViewById<TextView>(R.id.fire_sub).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    Html.fromHtml(getString(R.string.fire4)).trim()
-                } else {
-                    Html.fromHtml(getString(R.string.fire4), null,
-                        Html.TagHandler { opening, tag, output, xmlReader ->
-                            if (tag == "br" && opening) output.append("\n")
-                            if (tag == "p" && opening) output.append("\n\n")
-                            if (tag == "li" && opening) output.append("\n\n• ")
-                        }).trim()
-                }
-
                 val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
                 setupSharedPreferences()
 
