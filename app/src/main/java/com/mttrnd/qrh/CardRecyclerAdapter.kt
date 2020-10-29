@@ -28,30 +28,30 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>, val codePass
     class ViewHolder1(itemView: View) : RecyclerView.ViewHolder(itemView), UpdateViewHolder {
         override fun bindViews(detailContent: DetailContent) {
 
-            itemView.findViewById<TextView>(R.id.detail_main).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                Html.fromHtml(detailContent.main).trim()
+            itemView.findViewById<TextView>(R.id.detail_head).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Html.fromHtml(detailContent.head).trim()
             } else {
-                Html.fromHtml(detailContent.main, null,
+                Html.fromHtml(detailContent.head, null,
                     Html.TagHandler { opening, tag, output, xmlReader ->
                         if (tag == "br" && opening) output.append("\n")
                         if (tag == "p" && opening) output.append("\n\n")
-                        if (tag == "li" && opening) output.append("\n\n• ")
+                        if (tag == "li" && opening) output.append("\n\n•&nbsp;")
                     }).trim()
             }
 
-            itemView.findViewById<TextView>(R.id.detail_sub).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                Html.fromHtml(detailContent.sub).trim()
+            itemView.findViewById<TextView>(R.id.detail_body).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Html.fromHtml(detailContent.body).trim()
             } else {
-                Html.fromHtml(detailContent.sub, null,
+                Html.fromHtml(detailContent.body, null,
                     Html.TagHandler { opening, tag, output, xmlReader ->
                         if (tag == "br" && opening) output.append("\n")
                         if (tag == "p" && opening) output.append("\n\n")
-                        if (tag == "li" && opening) output.append("\n\n• ")
+                        if (tag == "li" && opening) output.append("\n\n•&nbsp;")
                 }).trim()
             }
 
-            linkifyFunction(itemView.findViewById(R.id.detail_sub))
-            linkifyFunction(itemView.findViewById(R.id.detail_main))
+            linkifyFunction(itemView.findViewById(R.id.detail_body))
+            linkifyFunction(itemView.findViewById(R.id.detail_head))
 
             itemView.findViewById<TextView>(R.id.detail_step).setText(detailContent.step).toString()
         }
@@ -61,31 +61,31 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>, val codePass
     class ViewHolder2(itemView: View) : RecyclerView.ViewHolder(itemView), UpdateViewHolder {
         override fun bindViews(detailContent: DetailContent) {
 
-            itemView.findViewById<TextView>(R.id.detail_main).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                Html.fromHtml(detailContent.main).trim()
+            itemView.findViewById<TextView>(R.id.detail_head).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Html.fromHtml(detailContent.head).trim()
             } else {
-                Html.fromHtml(detailContent.main, null,
+                Html.fromHtml(detailContent.head, null,
                     Html.TagHandler { opening, tag, output, xmlReader ->
                         if (tag == "br" && opening) output.append("\n")
                         if (tag == "p" && opening) output.append("\n\n")
-                        if (tag == "li" && opening) output.append("\n\n•")
+                        if (tag == "li" && opening) output.append("\n\n•&nbsp;")
                     }).trim()
             }
 
-            itemView.findViewById<TextView>(R.id.detail_sub).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                Html.fromHtml(detailContent.sub).trim()
+            itemView.findViewById<TextView>(R.id.detail_body).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Html.fromHtml(detailContent.body).trim()
             } else {
-                Html.fromHtml(detailContent.sub, null,
+                Html.fromHtml(detailContent.body, null,
                     Html.TagHandler { opening, tag, output, xmlReader ->
                         if (tag == "br" && opening) output.append("\n")
                         if (tag == "p" && opening) output.append("\n\n")
-                        if (tag == "li" && opening) output.append("\n\n•")
+                        if (tag == "li" && opening) output.append("\n\n•&nbsp;")
                     }).trim()
             }
 
-            linkifyFunction(itemView.findViewById(R.id.detail_sub))
+            linkifyFunction(itemView.findViewById(R.id.detail_body))
 
-            val subCard = itemView.findViewById<TextView>(R.id.detail_sub)
+            val subCard = itemView.findViewById<TextView>(R.id.detail_body)
             val subArrow = itemView.findViewById<ImageView>(R.id.detail_arrow)
 
             if(detailContent.collapsed) {
@@ -103,10 +103,11 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>, val codePass
     class ViewHolder3(itemView: View) : RecyclerView.ViewHolder(itemView), UpdateViewHolder {
         override fun bindViews(detailContent: DetailContent) {
             val detailImage = itemView.findViewById<ImageView>(R.id.detail_image)
-            itemView.findViewById<TextView>(R.id.detail_caption).setText(detailContent.sub).toString()
+            val imagePath = detailContent.body
+            itemView.findViewById<TextView>(R.id.detail_caption).setText(detailContent.head).toString()
             Glide
                 .with(itemView)
-                .load(Uri.parse(detailContent.main))
+                .load(Uri.parse("file:///android_asset/$imagePath"))
                 .into(detailImage)
         }
     }
@@ -114,7 +115,14 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>, val codePass
     //ViewHolder4 = single text item
     class ViewHolder4(itemView: View) : RecyclerView.ViewHolder(itemView), UpdateViewHolder {
         override fun bindViews(detailContent: DetailContent) {
-            itemView.findViewById<TextView>(R.id.detail_text).setText((Html.fromHtml(detailContent.main)).trim())
+            itemView.findViewById<TextView>(R.id.detail_text).text = (Html.fromHtml(detailContent.body)).trim()
+        }
+    }
+
+    //ViewHolder5 = end disclaimer card
+    class ViewHolder5(itemView: View) : RecyclerView.ViewHolder(itemView), UpdateViewHolder {
+        override fun bindViews(detailContent: DetailContent) {
+            itemView.findViewById<TextView>(R.id.detail_text).text = (Html.fromHtml(detailContent.head)).trim()
         }
     }
 
@@ -152,7 +160,7 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>, val codePass
             VIEW_NINE -> ViewHolder2(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_purple, parent, false))
             VIEW_TEN -> ViewHolder3(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_image, parent, false))
             VIEW_ELEVEN -> ViewHolder4(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_version, parent, false))
-            VIEW_TWELVE -> ViewHolder4(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_end, parent, false))
+            VIEW_TWELVE -> ViewHolder5(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_end, parent, false))
             else ->  ViewHolder1(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_standard, parent, false))
         }
     }
