@@ -35,8 +35,8 @@ class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, priv
                 Html.fromHtml(detailContent.head, null,
                     Html.TagHandler { opening, tag, output, xmlReader ->
                         if (tag == "br" && opening) output.append("\n")
-                        if (tag == "p" && opening) output.append("\n\n")
-                        if (tag == "li" && opening) output.append("\n\n•&nbsp;")
+                        if (tag == "p" && opening) output.append("\n")
+                        if (tag == "li" && opening) output.append("\n\n• ")
                     }).trim()
             }
 
@@ -46,8 +46,8 @@ class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, priv
                 Html.fromHtml(detailContent.body, null,
                     Html.TagHandler { opening, tag, output, xmlReader ->
                         if (tag == "br" && opening) output.append("\n")
-                        if (tag == "p" && opening) output.append("\n\n")
-                        if (tag == "li" && opening) output.append("\n\n•&nbsp;")
+                        if (tag == "p" && opening) output.append("\n")
+                        if (tag == "li" && opening) output.append("\n\n• ")
                 }).trim()
             }
 
@@ -75,10 +75,10 @@ class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, priv
                 Html.fromHtml(detailContent.head).trim()
             } else {
                 Html.fromHtml(detailContent.head, null,
-                    Html.TagHandler { opening, tag, output, xmlReader ->
+                    Html.TagHandler { opening, tag, output, _ ->
                         if (tag == "br" && opening) output.append("\n")
-                        if (tag == "p" && opening) output.append("\n\n")
-                        if (tag == "li" && opening) output.append("\n\n•&nbsp;")
+                        if (tag == "p" && opening) output.append("\n")
+                        if (tag == "li" && opening) output.append("\n\n• ")
                     }).trim()
             }
 
@@ -86,10 +86,10 @@ class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, priv
                 Html.fromHtml(detailContent.body).trim()
             } else {
                 Html.fromHtml(detailContent.body, null,
-                    Html.TagHandler { opening, tag, output, xmlReader ->
+                    Html.TagHandler { opening, tag, output, _ ->
                         if (tag == "br" && opening) output.append("\n")
-                        if (tag == "p" && opening) output.append("\n\n")
-                        if (tag == "li" && opening) output.append("\n\n•&nbsp;")
+                        if (tag == "p" && opening) output.append("\n")
+                        if (tag == "li" && opening) output.append("\n\n• ")
                     }).trim()
             }
 
