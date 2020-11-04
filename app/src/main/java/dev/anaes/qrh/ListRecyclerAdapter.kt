@@ -1,4 +1,4 @@
-package com.mttrnd.qrh
+package dev.anaes.qrh
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -31,7 +31,10 @@ class ListRecyclerAdapter(var dataSource: ArrayList<Guideline>, val clickListene
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GuidelineHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return GuidelineHolder(inflater,parent)
+        return GuidelineHolder(
+            inflater,
+            parent
+        )
     }
 
     override fun getItemCount(): Int {

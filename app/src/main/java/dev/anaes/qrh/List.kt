@@ -1,4 +1,4 @@
-package com.mttrnd.qrh
+package dev.anaes.qrh
 
 import android.content.Intent
 import android.os.Bundle
@@ -37,15 +37,15 @@ class List : AppCompatActivity() {
         if(isStartup) {
             val snack =
                 Snackbar
-                    .make(container, "Unofficial adaptation of Quick Reference Handbook\nNot endorsed by the Association of Anaesthetists\nUntested and unregulated; not recommended for clinical use\nNo guarantees of completeness, accuracy or performance\nShould not override your own knowledge and judgement", Snackbar.LENGTH_LONG)
+                    .make(container, "Open source adaptation of Quick Reference Handbook\nNo guarantees of completeness, accuracy or performance\nShould not override your own knowledge and judgement", Snackbar.LENGTH_LONG)
                     .setBackgroundTint(getColor(this, R.color.snackbarBackground))
                     .setDuration(8000)
                     .setAction(R.string.title_about) {
                         this.startActivity(Intent(this,About::class.java))
                     }
-            val snackbarView: View = snack.getView()
+            val snackbarView: View = snack.view
             val snackTextView = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text) as TextView
-            snackTextView.maxLines = 5
+            snackTextView.maxLines = 3
             snackTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12F)
             snack.show()
 
@@ -72,8 +72,15 @@ class List : AppCompatActivity() {
 
         // Pull guideline list from file and display in recyclerview
 
-        val guidelineList = Guideline.getGuidelinesFromFile("guidelines.json", this)
-        val adapter = ListRecyclerAdapter(guidelineList) { guideline : Guideline -> guidelineClicked(guideline) }
+        val guidelineList =
+            Guideline.getGuidelinesFromFile(
+                "guidelines.json",
+                this
+            )
+        val adapter =
+            ListRecyclerAdapter(guidelineList) { guideline: Guideline ->
+                guidelineClicked(guideline)
+            }
 
         linearLayoutManager = LinearLayoutManager(this)
         list_recyclerview.layoutManager = linearLayoutManager

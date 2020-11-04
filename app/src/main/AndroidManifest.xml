@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.mttrnd.qrh">
+    package="dev.anaes.qrh">
 
     <application
         android:allowBackup="false"
@@ -13,13 +13,9 @@
         <activity android:name=".Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Settings"
-            android:label="@string/title_settings" />
         <activity
             android:name=".List"
             android:configChanges="orientation|screenSize"
@@ -34,7 +30,7 @@
 
                 <action android:name="android.intent.action.VIEW" />
 
-                <data android:scheme="com.mttrnd.qrh.detail" />
+                <data android:scheme="dev.anaes.qrh.detail" />
             </intent-filter>
         </activity>
         <activity

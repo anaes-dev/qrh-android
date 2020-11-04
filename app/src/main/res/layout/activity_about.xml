@@ -99,12 +99,6 @@
                 android:contentDescription="@string/image"
                 app:srcCompat="@drawable/empty" />
 
-            <Button
-                android:id="@+id/btn_resetexit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/resetexit" />
         </LinearLayout>
 
         <TextView
@@ -179,35 +173,7 @@
                 android:text="@string/iconhint" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
 
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="4dp"
-                android:layout_weight="0"
-                android:background="@drawable/ic_settings_dark"
-                android:contentDescription="@string/image"
-                android:tint="#000000"
-                app:srcCompat="@drawable/empty"
-                android:layout_marginEnd="4dp"
-                android:layout_marginStart="8dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginRight="4dp"
-                android:layout_marginBottom="16dp"
-                android:layout_weight="0"
-                android:text="@string/settinghint" />
-
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -1,4 +1,4 @@
-package com.mttrnd.qrh
+package dev.anaes.qrh
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
