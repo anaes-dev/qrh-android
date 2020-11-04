@@ -1,4 +1,4 @@
-package com.mttrnd.qrh
+package dev.anaes.qrh
 
 import android.net.Uri
 import android.os.Build
@@ -16,7 +16,7 @@ import java.util.regex.Pattern
 
 
 @Suppress("DEPRECATION")
-class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>, val codePassed: String?) :
+class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, private val codePassed: String?) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
@@ -25,7 +25,8 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>, val codePass
     }
 
     //ViewHolder1 = all three text fields
-    class ViewHolder1(itemView: View) : RecyclerView.ViewHolder(itemView), UpdateViewHolder {
+    class ViewHolder1(itemView: View) : RecyclerView.ViewHolder(itemView),
+        UpdateViewHolder {
         override fun bindViews(detailContent: DetailContent) {
 
             itemView.findViewById<TextView>(R.id.detail_head).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -50,15 +51,24 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>, val codePass
                 }).trim()
             }
 
-            linkifyFunction(itemView.findViewById(R.id.detail_body))
-            linkifyFunction(itemView.findViewById(R.id.detail_head))
+            linkifyFunction(
+                itemView.findViewById(
+                    R.id.detail_body
+                )
+            )
+            linkifyFunction(
+                itemView.findViewById(
+                    R.id.detail_head
+                )
+            )
 
             itemView.findViewById<TextView>(R.id.detail_step).setText(detailContent.step).toString()
         }
     }
 
     //ViewHolder2 = collapsible boxes
-    class ViewHolder2(itemView: View) : RecyclerView.ViewHolder(itemView), UpdateViewHolder {
+    class ViewHolder2(itemView: View) : RecyclerView.ViewHolder(itemView),
+        UpdateViewHolder {
         override fun bindViews(detailContent: DetailContent) {
 
             itemView.findViewById<TextView>(R.id.detail_head).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -83,7 +93,11 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>, val codePass
                     }).trim()
             }
 
-            linkifyFunction(itemView.findViewById(R.id.detail_body))
+            linkifyFunction(
+                itemView.findViewById(
+                    R.id.detail_body
+                )
+            )
 
             val subCard = itemView.findViewById<TextView>(R.id.detail_body)
             val subArrow = itemView.findViewById<ImageView>(R.id.detail_arrow)
@@ -100,7 +114,8 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>, val codePass
     }
 
     //ViewHolder3 = images with glide (put path in 'main' in JSON)
-    class ViewHolder3(itemView: View) : RecyclerView.ViewHolder(itemView), UpdateViewHolder {
+    class ViewHolder3(itemView: View) : RecyclerView.ViewHolder(itemView),
+        UpdateViewHolder {
         override fun bindViews(detailContent: DetailContent) {
             val detailImage = itemView.findViewById<ImageView>(R.id.detail_image)
             val imagePath = detailContent.body
@@ -113,14 +128,16 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>, val codePass
     }
 
     //ViewHolder4 = single text item
-    class ViewHolder4(itemView: View) : RecyclerView.ViewHolder(itemView), UpdateViewHolder {
+    class ViewHolder4(itemView: View) : RecyclerView.ViewHolder(itemView),
+        UpdateViewHolder {
         override fun bindViews(detailContent: DetailContent) {
             itemView.findViewById<TextView>(R.id.detail_text).text = (Html.fromHtml(detailContent.body)).trim()
         }
     }
 
     //ViewHolder5 = end disclaimer card
-    class ViewHolder5(itemView: View) : RecyclerView.ViewHolder(itemView), UpdateViewHolder {
+    class ViewHolder5(itemView: View) : RecyclerView.ViewHolder(itemView),
+        UpdateViewHolder {
         override fun bindViews(detailContent: DetailContent) {
             itemView.findViewById<TextView>(R.id.detail_text).text = (Html.fromHtml(detailContent.head)).trim()
         }
@@ -149,19 +166,58 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>, val codePass
     //Inflate item layout according to view type
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            VIEW_ONE -> ViewHolder1(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_preamble, parent, false))
-            VIEW_TWO -> ViewHolder4(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_start, parent, false))
-            VIEW_THREE -> ViewHolder1(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_standard, parent, false))
-            VIEW_FOUR -> ViewHolder1(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_standard_oneline, parent, false))
-            VIEW_FIVE -> ViewHolder2(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_orange, parent, false))
-            VIEW_SIX -> ViewHolder2(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_blue, parent, false))
-            VIEW_SEVEN -> ViewHolder2(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_green, parent, false))
-            VIEW_EIGHT -> ViewHolder2(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_black, parent, false))
-            VIEW_NINE -> ViewHolder2(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_purple, parent, false))
-            VIEW_TEN -> ViewHolder3(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_image, parent, false))
-            VIEW_ELEVEN -> ViewHolder4(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_version, parent, false))
-            VIEW_TWELVE -> ViewHolder5(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_end, parent, false))
-            else ->  ViewHolder1(LayoutInflater.from(parent.context).inflate(R.layout.detail_item_standard, parent, false))
+            VIEW_ONE -> ViewHolder1(
+                LayoutInflater.from(parent.context)
+                    .inflate(R.layout.detail_item_preamble, parent, false)
+            )
+            VIEW_TWO -> ViewHolder4(
+                LayoutInflater.from(parent.context)
+                    .inflate(R.layout.detail_item_start, parent, false)
+            )
+            VIEW_THREE -> ViewHolder1(
+                LayoutInflater.from(parent.context)
+                    .inflate(R.layout.detail_item_standard, parent, false)
+            )
+            VIEW_FOUR -> ViewHolder1(
+                LayoutInflater.from(parent.context)
+                    .inflate(R.layout.detail_item_standard_oneline, parent, false)
+            )
+            VIEW_FIVE -> ViewHolder2(
+                LayoutInflater.from(parent.context)
+                    .inflate(R.layout.detail_item_orange, parent, false)
+            )
+            VIEW_SIX -> ViewHolder2(
+                LayoutInflater.from(parent.context)
+                    .inflate(R.layout.detail_item_blue, parent, false)
+            )
+            VIEW_SEVEN -> ViewHolder2(
+                LayoutInflater.from(parent.context)
+                    .inflate(R.layout.detail_item_green, parent, false)
+            )
+            VIEW_EIGHT -> ViewHolder2(
+                LayoutInflater.from(parent.context)
+                    .inflate(R.layout.detail_item_black, parent, false)
+            )
+            VIEW_NINE -> ViewHolder2(
+                LayoutInflater.from(parent.context)
+                    .inflate(R.layout.detail_item_purple, parent, false)
+            )
+            VIEW_TEN -> ViewHolder3(
+                LayoutInflater.from(parent.context)
+                    .inflate(R.layout.detail_item_image, parent, false)
+            )
+            VIEW_ELEVEN -> ViewHolder4(
+                LayoutInflater.from(parent.context)
+                    .inflate(R.layout.detail_item_version, parent, false)
+            )
+            VIEW_TWELVE -> ViewHolder5(
+                LayoutInflater.from(parent.context).inflate(R.layout.detail_item_end, parent, false)
+            )
+            else -> ViewHolder1(
+                LayoutInflater.from(
+                    parent.context
+                ).inflate(R.layout.detail_item_standard, parent, false)
+            )
         }
     }
 
@@ -230,7 +286,7 @@ class CardRecyclerAdapter(var dataSource: ArrayList<DetailContent>, val codePass
 
             val patternGuideline = Pattern.compile("[(]?[→][\\s]?[1-4][-][0-9]{1,2}[)]?")
 
-            val linkGuideline = "com.mttrnd.qrh.Detail://"
+            val linkGuideline = "dev.anaes.qrh.detail://"
 
             val transformFilter =
                 TransformFilter { match, url ->

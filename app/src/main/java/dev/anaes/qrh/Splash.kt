@@ -1,4 +1,4 @@
-package com.mttrnd.qrh
+package dev.anaes.qrh
 
 import android.content.Context
 import android.content.Intent
@@ -11,11 +11,9 @@ import android.view.ViewTreeObserver
 import android.widget.Button
 import android.widget.ScrollView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_about.*
 import kotlinx.android.synthetic.main.activity_splash.*
 import kotlinx.android.synthetic.main.activity_splash.imageViewCC
 import kotlin.system.exitProcess
@@ -23,7 +21,7 @@ import kotlin.system.exitProcess
 
 class Splash : AppCompatActivity(), ViewTreeObserver.OnScrollChangedListener {
 
-    private val PREFNAME = "com.mttrnd.qrh.seenwarning"
+    private val PREFNAME = "dev.anaes.qrh.seenwarning"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

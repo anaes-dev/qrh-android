@@ -1,4 +1,4 @@
-package com.mttrnd.qrh
+package dev.anaes.qrh
 
 import android.content.Context
 import org.json.JSONException
@@ -21,7 +21,11 @@ class DetailContent(
             val contentData = ArrayList<DetailContent>()
 
             try {
-                val jsonString = loadJsonFromAsset(filename, context)
+                val jsonString =
+                    loadJsonFromAsset(
+                        filename,
+                        context
+                    )
                 val json = JSONObject(jsonString)
                 val contentCards = json.getJSONArray("DetailContent")
 
