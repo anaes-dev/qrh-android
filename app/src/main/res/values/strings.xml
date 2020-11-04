@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">QRH</string>
+    <string name="app_name">QRH (Old)</string>
     <string name="long_name">Quick Reference Handbook</string>
     <string name="title_about">About</string>
     <string name="github"><u>github.com/mttrnd/qrh_android</u></string>
