@@ -70,6 +70,7 @@ class ListRecyclerAdapter(var dataSource: ArrayList<Guideline>, val clickListene
                     }
 
                     guidelineFilterList = resultList
+
                 }
                 val filterResults = FilterResults()
                 filterResults.values = guidelineFilterList
