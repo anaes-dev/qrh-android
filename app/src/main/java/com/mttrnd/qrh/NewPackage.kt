@@ -16,7 +16,7 @@ class NewPackage : AppCompatActivity() {
 
         //CC license link
         GooglePlay.setOnClickListener{
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=dev.anaes.qrh/")))
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=dev.anaes.qrh")))
         }
 
         buttonOld.setOnClickListener {
