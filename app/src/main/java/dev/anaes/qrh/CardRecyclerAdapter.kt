@@ -1,6 +1,5 @@
 package dev.anaes.qrh
 
-import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.text.Html
@@ -12,11 +11,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
-import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import java.security.AccessController.getContext
 import java.util.regex.Pattern
 
 
@@ -40,7 +36,7 @@ class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, priv
                 Html.fromHtml(detailContent.head, null,
                     Html.TagHandler { opening, tag, output, xmlReader ->
                         if (tag == "br" && opening) output.append("\n")
-                        if (tag == "p" && opening) output.append("\n\n")
+                        if (tag == "p" && opening) output.append("\n")
                         if (tag == "li" && opening) output.append("\n\n• ")
                     }).trim()
             }
@@ -51,7 +47,7 @@ class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, priv
                 Html.fromHtml(detailContent.body, null,
                     Html.TagHandler { opening, tag, output, xmlReader ->
                         if (tag == "br" && opening) output.append("\n")
-                        if (tag == "p" && opening) output.append("\n\n")
+                        if (tag == "p" && opening) output.append("\n")
                         if (tag == "li" && opening) output.append("\n\n• ")
                 }).trim()
             }
@@ -108,9 +104,9 @@ class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, priv
                 Html.fromHtml(detailContent.head).trim()
             } else {
                 Html.fromHtml(detailContent.head, null,
-                    Html.TagHandler { opening, tag, output, xmlReader ->
+                    Html.TagHandler { opening, tag, output, _ ->
                         if (tag == "br" && opening) output.append("\n")
-                        if (tag == "p" && opening) output.append("\n\n")
+                        if (tag == "p" && opening) output.append("\n")
                         if (tag == "li" && opening) output.append("\n\n• ")
                     }).trim()
             }
@@ -119,9 +115,9 @@ class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, priv
                 Html.fromHtml(detailContent.body).trim()
             } else {
                 Html.fromHtml(detailContent.body, null,
-                    Html.TagHandler { opening, tag, output, xmlReader ->
+                    Html.TagHandler { opening, tag, output, _ ->
                         if (tag == "br" && opening) output.append("\n")
-                        if (tag == "p" && opening) output.append("\n\n")
+                        if (tag == "p" && opening) output.append("\n")
                         if (tag == "li" && opening) output.append("\n\n• ")
                     }).trim()
             }
