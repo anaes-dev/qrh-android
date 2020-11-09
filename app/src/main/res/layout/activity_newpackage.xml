@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:autoLink="web"
                 android:padding="8dp"
-                android:text="To future-proof the project, it has been necessary to migrate the app to a new package name. To ensure that you continue to receive updates, please download the app from the new Google Play listing linked below:" />
+                android:text="To future-proof the project, it has been necessary to migrate the app to a new package name. Unfortunately, it is not possible to move users automatically. To ensure that you continue to receive updates, please download the app from the new Google Play listing linked below:" />
 
             <ImageView
                 android:id="@+id/GooglePlay"
@@ -78,6 +78,11 @@
                 android:textSize="12sp" />
 
             <TextView
+                android:id="@+id/textView8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
                 android:id="@+id/textView6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -86,23 +91,18 @@
                 android:text='The name of this obsolete form of the app will change to "QRH (Old)" to make it identifiable for uninstallation.' />
 
             <TextView
-                android:id="@+id/textView8"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <TextView
                 android:id="@+id/textView9"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="This message will display on each start of this app version. It is possible to close this message using the button below, however please note that content may become out-of-date." />
+                android:text="This message will display on each start. It is possible to close this message using the button below, however, please note that no further updates will be provided and content may become out-of-date." />
 
             <TextView
                 android:id="@+id/textView10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="Thank you for being an early-adopter of the app, and we hope not to require a transition like this again." />
+                android:text="Thank you for being an early adopter of the app. A manual transition such as this should not be required again. Future updates will be seamlessly provided through the new Google Play listing. " />
 
             <TextView
                 android:id="@+id/textView11"
