@@ -1,5 +1,6 @@
 package dev.anaes.qrh
 
+import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.text.Html
@@ -34,7 +35,7 @@ class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, priv
                 Html.fromHtml(detailContent.head).trim()
             } else {
                 Html.fromHtml(detailContent.head, null,
-                    Html.TagHandler { opening, tag, output, xmlReader ->
+                    Html.TagHandler { opening, tag, output, _ ->
                         if (tag == "br" && opening) output.append("\n")
                         if (tag == "p" && opening) output.append("\n")
                         if (tag == "li" && opening) output.append("\n\n• ")
@@ -45,7 +46,7 @@ class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, priv
                 Html.fromHtml(detailContent.body).trim()
             } else {
                 Html.fromHtml(detailContent.body, null,
-                    Html.TagHandler { opening, tag, output, xmlReader ->
+                    Html.TagHandler { opening, tag, output, _ ->
                         if (tag == "br" && opening) output.append("\n")
                         if (tag == "p" && opening) output.append("\n")
                         if (tag == "li" && opening) output.append("\n\n• ")
