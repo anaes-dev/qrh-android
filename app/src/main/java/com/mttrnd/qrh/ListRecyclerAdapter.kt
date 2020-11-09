@@ -1,4 +1,4 @@
-package dev.anaes.qrh
+package com.mttrnd.qrh
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

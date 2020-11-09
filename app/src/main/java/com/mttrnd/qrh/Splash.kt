@@ -1,4 +1,4 @@
-package dev.anaes.qrh
+package com.mttrnd.qrh
 
 import android.content.Context
 import android.content.Intent
@@ -21,7 +21,7 @@ import kotlin.system.exitProcess
 
 class Splash : AppCompatActivity(), ViewTreeObserver.OnScrollChangedListener {
 
-    private val PREFNAME = "dev.anaes.qrh.seenwarning"
+    private val PREFNAME = "com.mttrnd.qrh.seenwarning"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

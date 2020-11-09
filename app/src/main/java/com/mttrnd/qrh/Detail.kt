@@ -1,4 +1,4 @@
-package dev.anaes.qrh
+package com.mttrnd.qrh
 
 import android.content.Intent
 import android.net.Uri
@@ -21,7 +21,7 @@ class Detail : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val data = intent.data
 
-        val code: String? = data?.toString()?.replace("dev.anaes.qrh.detail://","") ?: intent.getStringExtra("CODE")
+        val code: String? = data?.toString()?.replace("com.mttrnd.qrh.detail://","") ?: intent.getStringExtra("CODE")
 
         val title: String? = if(data != null) {
             getDetailsFromCode(code)[0]
@@ -74,7 +74,7 @@ class Detail : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val downloadURL: String? = if(intent.data != null) {
-            getDetailsFromCode(intent.data.toString().replace("dev.anaes.qrh.detail://",""))[1]
+            getDetailsFromCode(intent.data.toString().replace("com.mttrnd.qrh.detail://",""))[1]
         } else {
             intent.getStringExtra("URL")
         }

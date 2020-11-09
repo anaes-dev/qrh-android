@@ -1,4 +1,4 @@
-package dev.anaes.qrh
+package com.mttrnd.qrh
 
 import android.net.Uri
 import android.os.Build
@@ -286,7 +286,7 @@ class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, priv
 
             val patternGuideline = Pattern.compile("[(]?[→][\\s]?[1-4][-][0-9]{1,2}[)]?")
 
-            val linkGuideline = "dev.anaes.qrh.detail://"
+            val linkGuideline = "com.mttrnd.qrh.detail://"
 
             val transformFilter =
                 TransformFilter { match, url ->

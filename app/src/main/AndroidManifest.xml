@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="dev.anaes.qrh">
+    package="com.mttrnd.qrh">
 
     <application
         android:allowBackup="false"
@@ -10,39 +10,39 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".NewPackage">
+        <activity android:name="com.mttrnd.qrh.NewPackage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
         </activity>
-        <activity android:name=".Splash">
+        <activity android:name="com.mttrnd.qrh.Splash">
 
         </activity>
         <activity
-            android:name=".List"
+            android:name="com.mttrnd.qrh.List"
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name" />
         <activity
-            android:name=".Detail"
+            android:name="com.mttrnd.qrh.Detail"
             android:configChanges="orientation|screenSize"
-            android:parentActivityName=".List"
+            android:parentActivityName="com.mttrnd.qrh.List"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <action android:name="android.intent.action.VIEW" />
 
-                <data android:scheme="dev.anaes.qrh.detail" />
+                <data android:scheme="com.mttrnd.qrh.detail" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".About"
-            android:parentActivityName=".List" />
+            android:name="com.mttrnd.qrh.About"
+            android:parentActivityName="com.mttrnd.qrh.List" />
         <activity
-            android:name=".Disclaimers"
-            android:parentActivityName=".About" />
+            android:name="com.mttrnd.qrh.Disclaimers"
+            android:parentActivityName="com.mttrnd.qrh.About" />
     </application>
 
 </manifest>

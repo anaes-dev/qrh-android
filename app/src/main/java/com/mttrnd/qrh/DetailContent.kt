@@ -1,4 +1,4 @@
-package dev.anaes.qrh
+package com.mttrnd.qrh
 
 import android.content.Context
 import org.json.JSONException
