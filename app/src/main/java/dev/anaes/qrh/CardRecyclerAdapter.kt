@@ -1,5 +1,6 @@
 package dev.anaes.qrh
 
+import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.text.Html
@@ -10,8 +11,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import java.security.AccessController.getContext
 import java.util.regex.Pattern
 
 
@@ -36,7 +41,7 @@ class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, priv
                     Html.TagHandler { opening, tag, output, xmlReader ->
                         if (tag == "br" && opening) output.append("\n")
                         if (tag == "p" && opening) output.append("\n\n")
-                        if (tag == "li" && opening) output.append("\n\n•&nbsp;")
+                        if (tag == "li" && opening) output.append("\n\n• ")
                     }).trim()
             }
 
@@ -47,7 +52,7 @@ class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, priv
                     Html.TagHandler { opening, tag, output, xmlReader ->
                         if (tag == "br" && opening) output.append("\n")
                         if (tag == "p" && opening) output.append("\n\n")
-                        if (tag == "li" && opening) output.append("\n\n•&nbsp;")
+                        if (tag == "li" && opening) output.append("\n\n• ")
                 }).trim()
             }
 
@@ -71,6 +76,34 @@ class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, priv
         UpdateViewHolder {
         override fun bindViews(detailContent: DetailContent) {
 
+            when (detailContent.type) {
+                5 -> {
+                    itemView.findViewById<CardView>(R.id.detail_card).setCardBackgroundColor(Color.parseColor("#FBE9E7"))
+                    itemView.findViewById<TextView>(R.id.detail_head).setTextColor(Color.parseColor("#E64A19"))
+                    itemView.findViewById<ImageView>(R.id.detail_arrow).setBackgroundColor(Color.parseColor("#FFCCBC"))
+                }
+                6 -> {
+                    itemView.findViewById<CardView>(R.id.detail_card).setCardBackgroundColor(Color.parseColor("#E1F5FE"))
+                    itemView.findViewById<TextView>(R.id.detail_head).setTextColor(Color.parseColor("#1976D2"))
+                    itemView.findViewById<ImageView>(R.id.detail_arrow).setBackgroundColor(Color.parseColor("#BBDEFB"))
+                }
+                7 -> {
+                    itemView.findViewById<CardView>(R.id.detail_card).setCardBackgroundColor(Color.parseColor("#E8F5E9"))
+                    itemView.findViewById<TextView>(R.id.detail_head).setTextColor(Color.parseColor("#388E3C"))
+                    itemView.findViewById<ImageView>(R.id.detail_arrow).setBackgroundColor(Color.parseColor("#C8E6C9"))
+                }
+                8 -> {
+                    itemView.findViewById<CardView>(R.id.detail_card).setCardBackgroundColor(Color.parseColor("#EDEDED"))
+                    itemView.findViewById<TextView>(R.id.detail_head).setTextColor(Color.parseColor("#000000"))
+                    itemView.findViewById<ImageView>(R.id.detail_arrow).setBackgroundColor(Color.parseColor("#D1D1D1"))
+                }
+                9 -> {
+                    itemView.findViewById<CardView>(R.id.detail_card).setCardBackgroundColor(Color.parseColor("#EDE7F6"))
+                    itemView.findViewById<TextView>(R.id.detail_head).setTextColor(Color.parseColor("#7B1FA2"))
+                    itemView.findViewById<ImageView>(R.id.detail_arrow).setBackgroundColor(Color.parseColor("#D1C4E9"))
+                }
+            }
+
             itemView.findViewById<TextView>(R.id.detail_head).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 Html.fromHtml(detailContent.head).trim()
             } else {
@@ -78,7 +111,7 @@ class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, priv
                     Html.TagHandler { opening, tag, output, xmlReader ->
                         if (tag == "br" && opening) output.append("\n")
                         if (tag == "p" && opening) output.append("\n\n")
-                        if (tag == "li" && opening) output.append("\n\n•&nbsp;")
+                        if (tag == "li" && opening) output.append("\n\n• ")
                     }).trim()
             }
 
@@ -89,7 +122,7 @@ class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, priv
                     Html.TagHandler { opening, tag, output, xmlReader ->
                         if (tag == "br" && opening) output.append("\n")
                         if (tag == "p" && opening) output.append("\n\n")
-                        if (tag == "li" && opening) output.append("\n\n•&nbsp;")
+                        if (tag == "li" && opening) output.append("\n\n• ")
                     }).trim()
             }
 
@@ -104,10 +137,10 @@ class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, priv
 
             if(detailContent.collapsed) {
                 subCard.visibility = View.GONE
-                subArrow.setImageResource(R.drawable.ic_arrow_left)
+                subArrow.setImageResource(R.drawable.ic_arrow_down)
             } else {
                 subCard.visibility = View.VISIBLE
-                subArrow.setImageResource(R.drawable.ic_arrow_down)
+                subArrow.setImageResource(R.drawable.ic_arrow_up)
             }
 
         }
@@ -182,25 +215,8 @@ class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, priv
                 LayoutInflater.from(parent.context)
                     .inflate(R.layout.detail_item_standard_oneline, parent, false)
             )
-            VIEW_FIVE -> ViewHolder2(
-                LayoutInflater.from(parent.context)
-                    .inflate(R.layout.detail_item_orange, parent, false)
-            )
-            VIEW_SIX -> ViewHolder2(
-                LayoutInflater.from(parent.context)
-                    .inflate(R.layout.detail_item_blue, parent, false)
-            )
-            VIEW_SEVEN -> ViewHolder2(
-                LayoutInflater.from(parent.context)
-                    .inflate(R.layout.detail_item_green, parent, false)
-            )
-            VIEW_EIGHT -> ViewHolder2(
-                LayoutInflater.from(parent.context)
-                    .inflate(R.layout.detail_item_black, parent, false)
-            )
-            VIEW_NINE -> ViewHolder2(
-                LayoutInflater.from(parent.context)
-                    .inflate(R.layout.detail_item_purple, parent, false)
+            VIEW_FIVE, VIEW_SIX, VIEW_SEVEN, VIEW_EIGHT, VIEW_NINE -> ViewHolder2(
+                LayoutInflater.from(parent.context).inflate(R.layout.detail_item, parent, false)
             )
             VIEW_TEN -> ViewHolder3(
                 LayoutInflater.from(parent.context)

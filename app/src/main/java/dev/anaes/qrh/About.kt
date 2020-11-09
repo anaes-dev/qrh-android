@@ -30,7 +30,6 @@ class About : AppCompatActivity() {
         imageViewCC.setOnClickListener{
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://www.creativecommons.org/licenses/by-nc-sa/4.0/")))
         }
-
     }
 
     //Close activity on back / up navigation
