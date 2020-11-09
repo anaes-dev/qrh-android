@@ -56,14 +56,14 @@
                 android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:autoLink="web"
                 android:padding="8dp"
-                android:text="To future-proof the project, it has been necessary to migrate the app to a new package name. Unfortunately, it is not possible to move users automatically. To ensure that you continue to receive updates, please download the app from the new Google Play listing linked below:" />
+                android:text="To future-proof the project, it has been necessary to migrate the app to a new package name. Unfortunately, it is not possible to move users automatically. To ensure that you continue to receive updates, please download the app from the new Google Play listing linked below:"
+                android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/GooglePlay"
                 android:layout_width="200dp"
-                android:layout_height="100dp"
+                android:layout_height="80dp"
                 android:layout_marginLeft="10dp"
                 app:srcCompat="@drawable/en_badge_web_generic" />
 
@@ -86,7 +86,6 @@
                 android:id="@+id/textView6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:autoLink="web"
                 android:padding="8dp"
                 android:text='The name of this obsolete form of the app will change to "QRH (Old)" to make it identifiable for uninstallation.' />
 
@@ -95,7 +94,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="This message will display on each start. It is possible to close this message using the button below, however, please note that no further updates will be provided and content may become out-of-date." />
+                android:text="This message will display on each start. It is possible to close this message and continue using the old app via the button below, however, please note that no further updates will be provided and content may become out-of-date." />
 
             <TextView
                 android:id="@+id/textView10"
