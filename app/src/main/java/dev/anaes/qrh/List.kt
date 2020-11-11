@@ -20,6 +20,12 @@ class List : AppCompatActivity() {
 
     private lateinit var linearLayoutManager: LinearLayoutManager
 
+    companion object {
+        var breadcrumbList: ArrayList<String> = ArrayList()
+        var breadcrumbCount: Int = 0
+        var breadcrumbHash: ArrayList<String> = ArrayList()
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -102,6 +108,8 @@ class List : AppCompatActivity() {
                 return false
             }
         })
+
+        breadcrumbCount = 0
 
     }
 

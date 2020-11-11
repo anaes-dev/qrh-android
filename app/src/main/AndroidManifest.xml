@@ -27,9 +27,7 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
-
                 <action android:name="android.intent.action.VIEW" />
-
                 <data android:scheme="dev.anaes.qrh.detail" />
             </intent-filter>
         </activity>

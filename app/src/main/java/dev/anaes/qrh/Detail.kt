@@ -1,12 +1,15 @@
 package dev.anaes.qrh
 
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import kotlinx.android.synthetic.main.activity_detail_scrollingcontent.*
@@ -19,6 +22,15 @@ class Detail : AppCompatActivity() {
     @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if(List.breadcrumbCount > 9) {
+            val text = "Too many guidelines open"
+            val duration = Toast.LENGTH_LONG
+            val toast = Toast.makeText(applicationContext, text, duration)
+            toast.show()
+            finish()
+        }
+
         val data = intent.data
 
         val code: String? = data?.toString()?.replace("dev.anaes.qrh.detail://","") ?: intent.getStringExtra("CODE")
@@ -46,6 +58,28 @@ class Detail : AppCompatActivity() {
         findViewById<TextView>(R.id.detail_code).text = code
         findViewById<TextView>(R.id.detail_code_2).text = code
         findViewById<TextView>(R.id.detail_version).text = version
+
+
+        List.breadcrumbHash.add(this.hashCode().toString())
+        List.breadcrumbList.add(code.toString())
+        List.breadcrumbCount++
+
+        val breadcrumbString = StringBuilder()
+        for (bc in List.breadcrumbList) {
+            breadcrumbString.append(" > ")
+            breadcrumbString.append(bc)
+        }
+
+        findViewById<TextView>(R.id.detail_breadcrumb).text = breadcrumbString
+        findViewById<ConstraintLayout>(R.id.detail_home).setOnClickListener {
+            List.breadcrumbCount == 0
+            List.breadcrumbList.clear()
+            Intent(this, List::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+            }.also { startActivity(it) }
+            finish()
+        }
 
         //Feed relevant JSON to Recyclerview / CardRecyclerAdapter
 
@@ -89,6 +123,8 @@ class Detail : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
+        List.breadcrumbList.removeAt(List.breadcrumbList.lastIndex)
+        List.breadcrumbCount--
         finish()
         return true
     }
