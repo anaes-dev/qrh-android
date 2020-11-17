@@ -1,15 +1,24 @@
 package dev.anaes.qrh
 
+import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
+import android.view.ContextThemeWrapper
+import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
+import androidx.core.view.setPadding
+import androidx.navigation.NavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import kotlinx.android.synthetic.main.activity_detail_scrollingcontent.*
@@ -61,24 +70,46 @@ class Detail : AppCompatActivity() {
 
 
         List.breadcrumbHash.add(this.hashCode().toString())
-        List.breadcrumbList.add(code.toString())
+        List.breadcrumbList.add(title.toString())
         List.breadcrumbCount++
 
-        val breadcrumbString = StringBuilder()
-        for (bc in List.breadcrumbList) {
-            breadcrumbString.append(" > ")
-            breadcrumbString.append(bc)
-        }
+        val bcStack = findViewById<LinearLayout>(R.id.detail_stack)
 
-        findViewById<TextView>(R.id.detail_breadcrumb).text = breadcrumbString
-        findViewById<ConstraintLayout>(R.id.detail_home).setOnClickListener {
-            List.breadcrumbCount == 0
-            List.breadcrumbList.clear()
-            Intent(this, List::class.java).apply {
-                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
-            }.also { startActivity(it) }
-            finish()
+        if(List.breadcrumbCount > 1) {
+            findViewById<HorizontalScrollView>(R.id.detail_scroll).isVisible = true
+
+            for (bc in List.breadcrumbList) {
+                val chevron = ImageView(this)
+                chevron.setImageResource(R.drawable.ic_chevron_right)
+                chevron.maxHeight = 12
+                chevron.maxWidth = 12
+                bcStack.addView(chevron)
+
+                val button = Button(
+                    ContextThemeWrapper(
+                        this,
+                        R.style.Widget_AppCompat_Button_Borderless_Colored
+                    ), null, R.style.Widget_AppCompat_Button_Borderless_Colored
+                )
+                button.textSize = 12F
+                button.isAllCaps = false
+                button.text = bc
+                button.setOnClickListener {
+                    Log.d("test", bc)
+                }
+                bcStack.addView(button)
+
+            }
+            findViewById<Button>(R.id.detail_home).setOnClickListener {
+                List.breadcrumbCount == 0
+                List.breadcrumbList.clear()
+                Intent(this, List::class.java).apply {
+                    addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                }.also { startActivity(it) }
+                finish()
+            }
+
         }
 
         //Feed relevant JSON to Recyclerview / CardRecyclerAdapter
