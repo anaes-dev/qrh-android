@@ -12,6 +12,7 @@ import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import dev.anaes.qrh.Guideline
 import dev.anaes.qrh.ListRecyclerAdapter
+import dev.anaes.qrh.Main
 import dev.anaes.qrh.R
 import kotlinx.android.synthetic.main.activity_list.*
 
@@ -22,23 +23,20 @@ class ListFragment : Fragment() {
 
     private val navController by lazy { findNavController() }
 
-    companion object {
-        fun newInstance() = ListFragment()
-        var breadcrumbList: ArrayList<String> = ArrayList()
-        var breadcrumbCount: Int = 0
-        var breadcrumbHash: ArrayList<String> = ArrayList()
-    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        setHasOptionsMenu(true)
+        setHasOptionsMenu(true)
+        Main.breadcrumbCount = 0
+        Main.breadcrumbIsActive = false
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-//        activity?.findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout)?.title = "QRH"
+        activity?.findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout)?.title = "QRH"
         return inflater.inflate(R.layout.fragment_list, container, false)
     }
 
@@ -100,6 +98,12 @@ class ListFragment : Fragment() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Main.breadcrumbCount = 0
+        Main.breadcrumbIsActive = false
     }
 
 

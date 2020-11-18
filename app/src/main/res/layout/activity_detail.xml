@@ -71,5 +71,4 @@
 
     <include layout="@layout/activity_detail_scrollingcontent" />
 
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
