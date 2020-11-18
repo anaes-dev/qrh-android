@@ -21,7 +21,7 @@
         </activity>
 
         <activity
-            android:name=".About" />
+            android:name=".Splash" />
     </application>
 
 </manifest>

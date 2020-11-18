@@ -1,4 +1,4 @@
-package dev.anaes.qrh.ui.main
+package dev.anaes.qrh
 
 import android.content.Intent
 import android.net.Uri
@@ -16,12 +16,12 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
-import dev.anaes.qrh.*
 import kotlinx.android.synthetic.main.activity_detail_scrollingcontent.*
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 interface PushDetail {
-    fun navToDetail(code: String)
+    fun navToDetail(code: String, title: String, url: String, version: String)
 }
 
 class DetailFragment : Fragment(), PushDetail {
@@ -33,8 +33,6 @@ class DetailFragment : Fragment(), PushDetail {
     private lateinit var linearLayoutManager: LinearLayoutManager
 
     var code: String? = String()
-
-    private var getDetails: Array<String> = arrayOf()
     var title: String? = String()
     var url: String? = String()
     var version: String? = String()
@@ -43,11 +41,9 @@ class DetailFragment : Fragment(), PushDetail {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         code = args.code
-
-        getDetails = getDetailsFromCode(code)
-        title = getDetails[0]
-        url = getDetails[1]
-        version = "v. "+ getDetails[2]
+        title = args.title
+        url = args.url
+        version = "v. " + args.version
 
         activity?.findViewById<AppBarLayout>(R.id.app_bar)?.setExpanded(true)
         activity?.findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout)?.title = title
@@ -90,7 +86,9 @@ class DetailFragment : Fragment(), PushDetail {
             )
             val adapter =
                 CardRecyclerAdapter(content, code) { code: String ->
-                    navToDetail(code)
+                    activity?.progress_circular?.visibility = View.VISIBLE
+                    val fetchDetails: Array<String> = getDetailsFromCode(code)
+                    navToDetail(code, fetchDetails[0], fetchDetails[1], fetchDetails[2])
                 }
             linearLayoutManager = LinearLayoutManager(context)
             detail_recyclerview.layoutManager = linearLayoutManager
@@ -123,6 +121,7 @@ class DetailFragment : Fragment(), PushDetail {
                 button.text = bc
                 button.tag = bci
                 button.setOnClickListener {
+                    activity?.progress_circular?.visibility = View.VISIBLE
                     (activity as PopDetail).popToDetail(button.tag as Int)
                 }
                 bcStack.addView(button)
@@ -139,6 +138,7 @@ class DetailFragment : Fragment(), PushDetail {
 
         (view.parent as? ViewGroup)?.doOnPreDraw {
             startPostponedEnterTransition()
+            activity?.progress_circular?.visibility = View.GONE
         }
 
     }
@@ -156,8 +156,9 @@ class DetailFragment : Fragment(), PushDetail {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-    override fun navToDetail(code: String) {
-        val action = DetailFragmentDirections.LoadNewDetail(code)
+    override fun navToDetail(code: String, title: String, url: String, version: String) {
+        val action = DetailFragmentDirections.LoadNewDetail(code, title, url, version)
+        activity?.progress_circular?.visibility = View.VISIBLE
         navController.navigate(action)
     }
 
