@@ -29,6 +29,7 @@ class ListFragment : Fragment() {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
         Main.breadcrumbCount = 0
+        Main.breadcrumbList.clear()
         Main.breadcrumbIsActive = false
     }
 
@@ -103,6 +104,7 @@ class ListFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         Main.breadcrumbCount = 0
+        Main.breadcrumbList.clear()
         Main.breadcrumbIsActive = false
     }
 
