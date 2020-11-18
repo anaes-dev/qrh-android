@@ -95,22 +95,12 @@ class Splash : AppCompatActivity(), ViewTreeObserver.OnScrollChangedListener {
 
         //Two methods to check if scrolled to bottom for redundancy (as one does not work reliably on tablet screen where all visible from start)
 
-        //If view item at bottom is visible on screen:
-
-        if (scrolledToBottom.getLocalVisibleRect(scrollBounds)) {
+        if (scrolledToBottom.getLocalVisibleRect(scrollBounds) || !scrollViewSplash.canScrollVertically(1)) {
             findViewById<Button>(R.id.button_agree_active).visibility = View.VISIBLE
             findViewById<Button>(R.id.button_agree_inactive).visibility = View.GONE
             button_agree_active.isClickable = true
             button_agree_inactive.isClickable = false
         }
 
-        //If cannot scroll vertically (i.e. at bottom):
-
-        if (!scrollViewSplash.canScrollVertically(1)) {
-            findViewById<Button>(R.id.button_agree_active).visibility = View.VISIBLE
-            findViewById<Button>(R.id.button_agree_inactive).visibility = View.GONE
-            button_agree_active.isClickable = true
-            button_agree_inactive.isClickable = false
-        }
     }
 }

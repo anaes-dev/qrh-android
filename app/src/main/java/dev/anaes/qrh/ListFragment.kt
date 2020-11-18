@@ -1,20 +1,18 @@
-package dev.anaes.qrh.ui.main
+package dev.anaes.qrh
 
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.SearchView
 import android.widget.TextView
-import androidx.navigation.findNavController
+import androidx.core.view.doOnPreDraw
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
-import dev.anaes.qrh.Guideline
-import dev.anaes.qrh.ListRecyclerAdapter
-import dev.anaes.qrh.Main
-import dev.anaes.qrh.R
+import dev.anaes.qrh.ListFragmentDirections
 import kotlinx.android.synthetic.main.activity_list.*
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class ListFragment : Fragment() {
@@ -43,6 +41,8 @@ class ListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        postponeEnterTransition()
+
 
         val rvScrollListener = R.id.list_recyclerview
 
@@ -78,11 +78,21 @@ class ListFragment : Fragment() {
                 return false
             }
         })
+
+        (view.parent as? ViewGroup)?.doOnPreDraw {
+            startPostponedEnterTransition()
+            activity?.progress_circular?.visibility = View.GONE
+        }
     }
 
     private fun guidelineClicked(guideline : Guideline) {
-        val code = guideline.code
-        val action = ListFragmentDirections.LoadDetail(code)
+        val action = ListFragmentDirections.LoadDetail(
+            guideline.code,
+            guideline.title,
+            guideline.url,
+            guideline.version.toString()
+        )
+        activity?.progress_circular?.visibility = View.VISIBLE
         navController.navigate(action)
     }
 

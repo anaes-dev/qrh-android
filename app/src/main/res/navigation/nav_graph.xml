@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/listFragment">
+    app:startDestination="@id/firstrunFragment">
 
     <fragment
         android:id="@+id/listFragment"
-        android:name="dev.anaes.qrh.ui.main.ListFragment"
+        android:name="dev.anaes.qrh.ListFragment"
         android:label="QRH"
         tools:layout="@layout/fragment_list">
         <action
@@ -19,12 +19,16 @@
             app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/LoadAbout"
-            app:destination="@id/about" />
+            app:destination="@id/aboutFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
     </fragment>
 
     <fragment
         android:id="@+id/detailFragment"
-        android:name="dev.anaes.qrh.ui.main.DetailFragment"
+        android:name="dev.anaes.qrh.DetailFragment"
         tools:layout="@layout/fragment_detail">
         <argument
             android:name="code"
@@ -37,22 +41,46 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"  />
         <action
-            android:id="@+id/detailFrag"
-            app:destination="@id/test" />
-        <action
             android:id="@+id/PopHome"
             app:destination="@id/listFragment"
             app:popUpTo="@id/listFragment"
             app:popUpToInclusive="false" />
+        <argument
+            android:name="title"
+            app:argType="string" />
+        <argument
+            android:name="url"
+            app:argType="string" />
+        <argument
+            android:name="version"
+            app:argType="string" />
     </fragment>
-    <activity
-        android:id="@+id/about"
-        android:name="dev.anaes.qrh.About"
-        tools:layout="@layout/activity_about" />
     <fragment
-        android:id="@+id/test"
-        android:name="dev.anaes.qrh.test"
-        android:label="fragment_test"
-        tools:layout="@layout/fragment_test" />
+        android:id="@+id/aboutFragment"
+        android:name="dev.anaes.qrh.AboutFragment"
+        android:label="About"
+        tools:layout="@layout/fragment_about" >
+        <action
+            android:id="@+id/LoadDisclaimers"
+            app:destination="@id/disclaimersFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
+    </fragment>
+    <fragment
+        android:id="@+id/disclaimersFragment"
+        android:name="dev.anaes.qrh.DisclaimersFragment"
+        android:label="Disclaimers"
+        tools:layout="@layout/fragment_disclaimers" />
+    <fragment
+        android:id="@+id/firstrunFragment"
+        android:name="dev.anaes.qrh.FirstrunFragment"
+        android:label="fragment_firstrun"
+        tools:layout="@layout/fragment_firstrun" >
+        <action
+            android:id="@+id/loadList"
+            app:destination="@id/listFragment" />
+    </fragment>
 
 </navigation>

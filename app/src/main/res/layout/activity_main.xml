@@ -20,15 +20,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
-            app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:layout_collapseMode="parallax"
-            app:expandedTitleTextAppearance="@style/TextAppearance.Title.Expanded"
             app:collapsedTitleTextAppearance="@style/TextAppearance.Title.Collapsed"
-            app:toolbarId="@+id/toolbar"
-            app:maxLines="2"
+            app:contentInsetEnd="0dp"
+            app:contentScrim="?attr/colorPrimary"
             app:expandedTitleMarginEnd="0dp"
-            app:contentInsetEnd="0dp">
+            app:expandedTitleTextAppearance="@style/TextAppearance.Title.Expanded"
+            app:layout_collapseMode="parallax"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:maxLines="2"
+            app:toolbarId="@+id/toolbar">
 
 
             <TextView
@@ -63,12 +63,26 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                app:contentInsetStartWithNavigation="0dp"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:contentInsetStartWithNavigation="0dp"
 
-                />
+                >
+
+
+                <ProgressBar
+                    android:id="@+id/progress_circular"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end"
+                    android:alpha="0.5"
+                    android:indeterminateTint="#ffffff" />
+            </androidx.appcompat.widget.Toolbar>
+
+
         </com.google.android.material.appbar.CollapsingToolbarLayout>
+
     </com.google.android.material.appbar.AppBarLayout>
 
     <include layout="@layout/content_main" />
