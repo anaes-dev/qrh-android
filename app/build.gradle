@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: "androidx.navigation.safeargs"
 
 android {
     compileSdkVersion 30
@@ -45,5 +46,6 @@ dependencies {
     implementation 'androidx.preference:preference:1.1.1'
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
+
 }

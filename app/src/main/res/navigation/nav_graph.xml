@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/listFragment">
+
+    <fragment
+        android:id="@+id/listFragment"
+        android:name="dev.anaes.qrh.ui.main.ListFragment"
+        android:label="QRH"
+        tools:layout="@layout/fragment_list">
+        <action
+            android:id="@+id/LoadDetail"
+            app:destination="@id/detailFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/LoadAbout"
+            app:destination="@id/about" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="dev.anaes.qrh.ui.main.DetailFragment"
+        tools:layout="@layout/fragment_detail">
+        <argument
+            android:name="code"
+            app:argType="string" />
+        <action
+            android:id="@+id/LoadNewDetail"
+            app:destination="@id/detailFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <activity
+        android:id="@+id/about"
+        android:name="dev.anaes.qrh.About"
+        tools:layout="@layout/activity_about" />
+
+</navigation>

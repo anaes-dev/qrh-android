@@ -13,7 +13,7 @@ class Guideline(
 
     companion object {
 
-        fun getGuidelinesFromFile(filename: String, context: Context): ArrayList<Guideline> {
+        fun getGuidelinesFromFile(filename: String, context: Context?): ArrayList<Guideline> {
             val guidelineList = ArrayList<Guideline>()
 
             try {
@@ -40,16 +40,15 @@ class Guideline(
             return guidelineList
         }
 
-        private fun loadJsonFromAsset(filename: String, context: Context): String? {
+        private fun loadJsonFromAsset(filename: String, context: Context?): String? {
             var json: String? = null
-
             try {
-                val inputStream = context.assets.open(filename)
-                val size = inputStream.available()
-                val buffer = ByteArray(size)
-                inputStream.read(buffer)
-                inputStream.close()
-                json = String(buffer, Charsets.UTF_8)
+                val inputStream = context?.assets?.open(filename)
+                val size = inputStream?.available()
+                val buffer = size?.let { ByteArray(it) }
+                inputStream?.read(buffer)
+                inputStream?.close()
+                json = buffer?.let { String(it, Charsets.UTF_8) }
             } catch (ex: java.io.IOException) {
                 ex.printStackTrace()
                 return null

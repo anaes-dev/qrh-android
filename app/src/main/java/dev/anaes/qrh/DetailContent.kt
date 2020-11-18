@@ -17,7 +17,7 @@ class DetailContent(
 
     companion object {
 
-        fun getContentFromFile(filename: String, context: Context): ArrayList<DetailContent> {
+        fun getContentFromFile(filename: String, context: Context?): ArrayList<DetailContent> {
             val contentData = ArrayList<DetailContent>()
 
             try {
@@ -45,16 +45,16 @@ class DetailContent(
             return contentData
         }
 
-        private fun loadJsonFromAsset(filename: String, context: Context): String? {
+        private fun loadJsonFromAsset(filename: String, context: Context?): String? {
             var json: String? = null
 
             try {
-                val inputStream = context.assets.open(filename)
-                val size = inputStream.available()
-                val buffer = ByteArray(size)
-                inputStream.read(buffer)
-                inputStream.close()
-                json = String(buffer, Charsets.UTF_8)
+                val inputStream = context?.assets?.open(filename)
+                val size = inputStream?.available()
+                val buffer = size?.let { ByteArray(it) }
+                inputStream?.read(buffer)
+                inputStream?.close()
+                json = buffer?.let { String(it, Charsets.UTF_8) }
             } catch (ex: java.io.IOException) {
                 ex.printStackTrace()
                 return null
