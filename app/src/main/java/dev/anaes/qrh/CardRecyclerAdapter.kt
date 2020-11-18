@@ -4,13 +4,19 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.text.Html
+import android.text.Layout
+import android.text.Spannable
+import android.text.method.LinkMovementMethod
+import android.text.style.URLSpan
 import android.text.util.Linkify
 import android.text.util.Linkify.TransformFilter
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -18,18 +24,17 @@ import java.util.regex.Pattern
 
 
 @Suppress("DEPRECATION")
-class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, private val codePassed: String?) :
+class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, private val codePassed: String?, val linkListener: (String) -> Unit) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-
     interface UpdateViewHolder {
-        fun bindViews(detailContent: DetailContent)
+        fun bindViews(detailContent: DetailContent, linkListener: (String) -> Unit)
     }
 
     //ViewHolder1 = all three text fields
     class ViewHolder1(itemView: View) : RecyclerView.ViewHolder(itemView),
         UpdateViewHolder {
-        override fun bindViews(detailContent: DetailContent) {
+        override fun bindViews(detailContent: DetailContent, linkListener: (String) -> Unit) {
 
             itemView.findViewById<TextView>(R.id.detail_head).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 Html.fromHtml(detailContent.head).trim()
@@ -58,6 +63,7 @@ class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, priv
                     R.id.detail_body
                 )
             )
+
             linkifyFunction(
                 itemView.findViewById(
                     R.id.detail_head
@@ -71,7 +77,7 @@ class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, priv
     //ViewHolder2 = collapsible boxes
     class ViewHolder2(itemView: View) : RecyclerView.ViewHolder(itemView),
         UpdateViewHolder {
-        override fun bindViews(detailContent: DetailContent) {
+        override fun bindViews(detailContent: DetailContent, linkListener: (String) -> Unit) {
 
             when (detailContent.type) {
                 5 -> {
@@ -123,11 +129,21 @@ class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, priv
                     }).trim()
             }
 
+
             linkifyFunction(
                 itemView.findViewById(
                     R.id.detail_body
                 )
             )
+
+            val tv = itemView.findViewById<TextView>(R.id.detail_body)
+
+            tv.movementMethod = object : TextViewLinkHandler() {
+                override fun onLinkClick(url: String?) {
+                    val codeNew = url.toString().removePrefix("qrh://")
+                    linkListener(codeNew)
+                }
+            }
 
             val subCard = itemView.findViewById<TextView>(R.id.detail_body)
             val subArrow = itemView.findViewById<ImageView>(R.id.detail_arrow)
@@ -146,7 +162,7 @@ class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, priv
     //ViewHolder3 = images with glide (put path in 'main' in JSON)
     class ViewHolder3(itemView: View) : RecyclerView.ViewHolder(itemView),
         UpdateViewHolder {
-        override fun bindViews(detailContent: DetailContent) {
+        override fun bindViews(detailContent: DetailContent, linkListener: (String) -> Unit) {
             val detailImage = itemView.findViewById<ImageView>(R.id.detail_image)
             val imagePath = detailContent.body
             itemView.findViewById<TextView>(R.id.detail_caption).setText(detailContent.head).toString()
@@ -160,7 +176,7 @@ class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, priv
     //ViewHolder4 = single text item
     class ViewHolder4(itemView: View) : RecyclerView.ViewHolder(itemView),
         UpdateViewHolder {
-        override fun bindViews(detailContent: DetailContent) {
+        override fun bindViews(detailContent: DetailContent, linkListener: (String) -> Unit) {
             itemView.findViewById<TextView>(R.id.detail_text).text = (Html.fromHtml(detailContent.body)).trim()
         }
     }
@@ -168,7 +184,7 @@ class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, priv
     //ViewHolder5 = end disclaimer card
     class ViewHolder5(itemView: View) : RecyclerView.ViewHolder(itemView),
         UpdateViewHolder {
-        override fun bindViews(detailContent: DetailContent) {
+        override fun bindViews(detailContent: DetailContent, linkListener: (String) -> Unit) {
             itemView.findViewById<TextView>(R.id.detail_text).text = (Html.fromHtml(detailContent.head)).trim()
         }
     }
@@ -258,7 +274,7 @@ class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, priv
             detailContent.collapsed = false
         }
 
-        (holder as UpdateViewHolder).bindViews(detailContent)
+        (holder as UpdateViewHolder).bindViews(detailContent, linkListener)
     }
 
 
@@ -299,7 +315,7 @@ class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, priv
 
             val patternGuideline = Pattern.compile("[(]?[→][\\s]?[1-4][-][0-9]{1,2}[)]?")
 
-            val linkGuideline = "dev.anaes.qrh.detail://"
+            val linkGuideline = "qrh://"
 
             val transformFilter =
                 TransformFilter { match, url ->
@@ -317,6 +333,35 @@ class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, priv
 }
 
 
+abstract class TextViewLinkHandler : LinkMovementMethod() {
+    override fun onTouchEvent(
+        widget: TextView,
+        buffer: Spannable,
+        event: MotionEvent
+    ): Boolean {
+        if (event.action != MotionEvent.ACTION_UP) return super.onTouchEvent(
+            widget,
+            buffer,
+            event
+        )
+        var x = event.x.toInt()
+        var y = event.y.toInt()
+        x -= widget.totalPaddingLeft
+        y -= widget.totalPaddingTop
+        x += widget.scrollX
+        y += widget.scrollY
+        val layout: Layout = widget.layout
+        val line: Int = layout.getLineForVertical(y)
+        val off: Int = layout.getOffsetForHorizontal(line, x.toFloat())
+        val link = buffer.getSpans(off, off, URLSpan::class.java)
+        if (link.isNotEmpty()) {
+            onLinkClick(link[0].url)
+        }
+        return true
+    }
 
+    abstract fun onLinkClick(url: String?)
+
+}
 
 

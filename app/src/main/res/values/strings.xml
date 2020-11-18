@@ -45,8 +45,10 @@
     <string name="location_helpp">Ramping mattress for obese</string>
     <string name="location_muster">Muster points for evacuation</string>
     <string name="location_cooled">Cooled fluids</string>
-    <string name="location_ice">Nearest ice machine</string>    <string name="location_sugammadex">Sugammadex</string>
-    <string name="location_firealarm">Fire alarm</string>  <string name="location_fireext">Fire extinguisher</string>
+    <string name="location_ice">Nearest ice machine</string>
+    <string name="location_sugammadex">Sugammadex</string>
+    <string name="location_firealarm">Fire alarm</string>
+    <string name="location_fireext">Fire extinguisher</string>
 
     <string name="location_equipmentbox">EQUIPMENT LOCATIONS</string>
     <string name="location_settingshint">Please enter locations (top-right)</string>
@@ -79,5 +81,7 @@
     <string name="action_settings">Settings</string>
     <string name="title_guideline_list">Guidelines</string>
     <string name="title_guideline_detail">Guideline Detail</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

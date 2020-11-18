@@ -1,24 +1,15 @@
 package dev.anaes.qrh
 
-import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.ContextThemeWrapper
-import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import androidx.core.view.setPadding
-import androidx.navigation.NavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import kotlinx.android.synthetic.main.activity_detail_scrollingcontent.*
@@ -121,8 +112,10 @@ class Detail : AppCompatActivity() {
             filename,
             this
         )
-        val adapter = CardRecyclerAdapter(content, code)
-
+        val adapter =
+            CardRecyclerAdapter(content, code) { code: String ->
+                Log.d("test","test")
+            }
         linearLayoutManager = LinearLayoutManager(this)
         detail_recyclerview.layoutManager = linearLayoutManager
         detail_recyclerview.isNestedScrollingEnabled = false
