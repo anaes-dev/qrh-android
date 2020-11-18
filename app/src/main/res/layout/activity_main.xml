@@ -2,16 +2,76 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/coordinatorLayout"
+    android:id="@+id/main_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Main" >
+    android:fitsSystemWindows="true"
+    tools:context=".Main">
 
-    <fragment
-        android:id="@+id/nav_host_fragment"
-        android:name="androidx.navigation.fragment.NavHostFragment"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:defaultNavHost="true"
-        app:navGraph="@navigation/nav_graph" />
+        android:layout_height="160dp"
+        android:fitsSystemWindows="true"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/toolbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:contentScrim="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:layout_collapseMode="parallax"
+            app:expandedTitleTextAppearance="@style/TextAppearance.Title.Expanded"
+            app:collapsedTitleTextAppearance="@style/TextAppearance.Title.Collapsed"
+            app:toolbarId="@+id/toolbar"
+            app:maxLines="2"
+            app:expandedTitleMarginEnd="0dp"
+            app:contentInsetEnd="0dp">
+
+
+            <TextView
+                android:id="@+id/detail_code"
+                android:layout_width="wrap_content"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_gravity="start|top"
+                android:layout_marginStart="56dp"
+                android:layout_marginLeft="56dp"
+                android:alpha=".75"
+                android:fontFamily="sans-serif-black"
+                android:gravity="start|center_vertical"
+                android:includeFontPadding="false"
+                android:padding="0dp"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                app:layout_collapseMode="parallax"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/detail_version"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+                app:layout_collapseMode="parallax" />
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/AppTheme.PopupOverlay"
+                app:contentInsetStartWithNavigation="0dp"
+
+                />
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <include layout="@layout/content_main" />
+
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -13,10 +13,10 @@
         <action
             android:id="@+id/LoadDetail"
             app:destination="@id/detailFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/LoadAbout"
             app:destination="@id/about" />
@@ -32,14 +32,27 @@
         <action
             android:id="@+id/LoadNewDetail"
             app:destination="@id/detailFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"  />
+        <action
+            android:id="@+id/detailFrag"
+            app:destination="@id/test" />
+        <action
+            android:id="@+id/PopHome"
+            app:destination="@id/listFragment"
+            app:popUpTo="@id/listFragment"
+            app:popUpToInclusive="false" />
     </fragment>
     <activity
         android:id="@+id/about"
         android:name="dev.anaes.qrh.About"
         tools:layout="@layout/activity_about" />
+    <fragment
+        android:id="@+id/test"
+        android:name="dev.anaes.qrh.test"
+        android:label="fragment_test"
+        tools:layout="@layout/fragment_test" />
 
 </navigation>
