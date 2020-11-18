@@ -1,5 +1,7 @@
 package dev.anaes.qrh.ui.main
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -30,20 +32,22 @@ class DetailFragment : Fragment(), PushDetail {
 
     private lateinit var linearLayoutManager: LinearLayoutManager
 
+    var code: String? = String()
+
     private var getDetails: Array<String> = arrayOf()
     var title: String? = String()
+    var url: String? = String()
     var version: String? = String()
-    var code: String? = String()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         code = args.code
+
         getDetails = getDetailsFromCode(code)
         title = getDetails[0]
-        version = getDetails[2]
-
-
+        url = getDetails[1]
+        version = "v. "+ getDetails[2]
 
         activity?.findViewById<AppBarLayout>(R.id.app_bar)?.setExpanded(true)
         activity?.findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout)?.title = title
@@ -133,7 +137,6 @@ class DetailFragment : Fragment(), PushDetail {
 
         }
 
-
         (view.parent as? ViewGroup)?.doOnPreDraw {
             startPostponedEnterTransition()
         }
@@ -161,8 +164,7 @@ class DetailFragment : Fragment(), PushDetail {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.navigation_download -> {
-                val action = DetailFragmentDirections.detailFrag()
-                findNavController().navigate(action)
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
                 return true
             }
             else -> super.onOptionsItemSelected(item)
