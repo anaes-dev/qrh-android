@@ -17,30 +17,26 @@ import kotlinx.android.synthetic.main.fragment_about.imageViewCC
 
 class DisclaimersFragment : Fragment() {
 
-    private val vm: MainViewModel by activityViewModels()
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        vm.breadcrumbIsActive = false
-        activity?.progress_circular?.visibility = View.GONE
-        activity?.findViewById<AppBarLayout>(R.id.app_bar)?.setExpanded(false)
-        activity?.findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout)?.title = "Disclaimers"
-    }
+    private val title = "Disclaimers"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        (activity as MainInt).progressShow(false)
         return inflater.inflate(R.layout.fragment_disclaimers, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        (activity as MainInt).progressShow(false)
+        (activity as MainInt).updateBar(title, "", "", false)
     }
 
     override fun onResume() {
         super.onResume()
-        vm.breadcrumbIsActive = false
-        activity?.progress_circular?.visibility = View.GONE
-        activity?.findViewById<AppBarLayout>(R.id.app_bar)?.setExpanded(false)
-        activity?.findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout)?.title = "Disclaimers"
+        (activity as MainInt).progressShow(false)
+        (activity as MainInt).updateBar(title, "", "", false)
     }
 
 

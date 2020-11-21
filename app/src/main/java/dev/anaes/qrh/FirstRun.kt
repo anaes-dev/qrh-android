@@ -14,20 +14,18 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_splash.*
+import kotlinx.android.synthetic.main.activity_firstrun.*
 import kotlin.system.exitProcess
 
 
 class FirstRun : AppCompatActivity(), ViewTreeObserver.OnScrollChangedListener {
-
-    private val PREFNAME = "dev.anaes.qrh.seenwarning"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val sharedPref: SharedPreferences = getSharedPreferences("dev.anaes.qrh", Context.MODE_PRIVATE)
         val editor = sharedPref.edit()
 
-            setContentView(R.layout.activity_splash)
+            setContentView(R.layout.activity_firstrun)
 
             val buttonExit = findViewById<Button>(R.id.button_exit)
             val buttonAgreeInactive = findViewById<Button>(R.id.button_agree_inactive)
@@ -45,8 +43,8 @@ class FirstRun : AppCompatActivity(), ViewTreeObserver.OnScrollChangedListener {
             val scrollBounds = Rect()
             scrollViewSplash.getHitRect(scrollBounds)
             if (scrolledToBottom.getLocalVisibleRect(scrollBounds)) {
-                findViewById<Button>(R.id.button_agree_active).visibility = View.VISIBLE
-                findViewById<Button>(R.id.button_agree_inactive).visibility = View.GONE
+                buttonAgreeActive.visibility = View.VISIBLE
+                buttonAgreeInactive.visibility = View.GONE
                 buttonAgreeActive.isClickable = true
                 buttonAgreeInactive.isClickable = false
             }
