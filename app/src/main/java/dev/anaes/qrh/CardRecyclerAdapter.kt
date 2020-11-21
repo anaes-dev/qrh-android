@@ -1,5 +1,6 @@
 package dev.anaes.qrh
 
+import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Build
@@ -16,15 +17,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import java.util.regex.Pattern
 
 
 @Suppress("DEPRECATION")
-class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, private val codePassed: String?, val linkListener: (String) -> Unit) :
+class CardRecyclerAdapter(
+    private var dataSource: ArrayList<DetailContent>,
+    private val codePassed: String?,
+    val linkListener: (String) -> Unit
+) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     interface UpdateViewHolder {
@@ -55,7 +60,7 @@ class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, priv
                         if (tag == "br" && opening) output.append("\n")
                         if (tag == "p" && opening) output.append("\n")
                         if (tag == "li" && opening) output.append("\n\n• ")
-                }).trim()
+                    }).trim()
             }
 
             linkifyFunction(
@@ -70,6 +75,15 @@ class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, priv
                 )
             )
 
+            val tv = itemView.findViewById<TextView>(R.id.detail_body)
+
+            tv.movementMethod = object : TextViewLinkHandler() {
+                override fun onLinkClick(url: String?) {
+                    linkListener(url.toString())
+                }
+            }
+
+
             itemView.findViewById<TextView>(R.id.detail_step).setText(detailContent.step).toString()
         }
     }
@@ -81,29 +95,89 @@ class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, priv
 
             when (detailContent.type) {
                 5 -> {
-                    itemView.findViewById<CardView>(R.id.detail_card).setCardBackgroundColor(Color.parseColor("#FBE9E7"))
-                    itemView.findViewById<TextView>(R.id.detail_head).setTextColor(Color.parseColor("#E64A19"))
-                    itemView.findViewById<ImageView>(R.id.detail_arrow).setBackgroundColor(Color.parseColor("#FFCCBC"))
+                    itemView.findViewById<CardView>(R.id.detail_card).setCardBackgroundColor(
+                        Color.parseColor(
+                            "#FBE9E7"
+                        )
+                    )
+                    itemView.findViewById<TextView>(R.id.detail_head).setTextColor(
+                        Color.parseColor(
+                            "#E64A19"
+                        )
+                    )
+                    itemView.findViewById<ImageView>(R.id.detail_arrow).setBackgroundColor(
+                        Color.parseColor(
+                            "#FFCCBC"
+                        )
+                    )
                 }
                 6 -> {
-                    itemView.findViewById<CardView>(R.id.detail_card).setCardBackgroundColor(Color.parseColor("#E1F5FE"))
-                    itemView.findViewById<TextView>(R.id.detail_head).setTextColor(Color.parseColor("#1976D2"))
-                    itemView.findViewById<ImageView>(R.id.detail_arrow).setBackgroundColor(Color.parseColor("#BBDEFB"))
+                    itemView.findViewById<CardView>(R.id.detail_card).setCardBackgroundColor(
+                        Color.parseColor(
+                            "#E1F5FE"
+                        )
+                    )
+                    itemView.findViewById<TextView>(R.id.detail_head).setTextColor(
+                        Color.parseColor(
+                            "#1976D2"
+                        )
+                    )
+                    itemView.findViewById<ImageView>(R.id.detail_arrow).setBackgroundColor(
+                        Color.parseColor(
+                            "#BBDEFB"
+                        )
+                    )
                 }
                 7 -> {
-                    itemView.findViewById<CardView>(R.id.detail_card).setCardBackgroundColor(Color.parseColor("#E8F5E9"))
-                    itemView.findViewById<TextView>(R.id.detail_head).setTextColor(Color.parseColor("#388E3C"))
-                    itemView.findViewById<ImageView>(R.id.detail_arrow).setBackgroundColor(Color.parseColor("#C8E6C9"))
+                    itemView.findViewById<CardView>(R.id.detail_card).setCardBackgroundColor(
+                        Color.parseColor(
+                            "#E8F5E9"
+                        )
+                    )
+                    itemView.findViewById<TextView>(R.id.detail_head).setTextColor(
+                        Color.parseColor(
+                            "#388E3C"
+                        )
+                    )
+                    itemView.findViewById<ImageView>(R.id.detail_arrow).setBackgroundColor(
+                        Color.parseColor(
+                            "#C8E6C9"
+                        )
+                    )
                 }
                 8 -> {
-                    itemView.findViewById<CardView>(R.id.detail_card).setCardBackgroundColor(Color.parseColor("#EDEDED"))
-                    itemView.findViewById<TextView>(R.id.detail_head).setTextColor(Color.parseColor("#000000"))
-                    itemView.findViewById<ImageView>(R.id.detail_arrow).setBackgroundColor(Color.parseColor("#D1D1D1"))
+                    itemView.findViewById<CardView>(R.id.detail_card).setCardBackgroundColor(
+                        Color.parseColor(
+                            "#EDEDED"
+                        )
+                    )
+                    itemView.findViewById<TextView>(R.id.detail_head).setTextColor(
+                        Color.parseColor(
+                            "#000000"
+                        )
+                    )
+                    itemView.findViewById<ImageView>(R.id.detail_arrow).setBackgroundColor(
+                        Color.parseColor(
+                            "#D1D1D1"
+                        )
+                    )
                 }
                 9 -> {
-                    itemView.findViewById<CardView>(R.id.detail_card).setCardBackgroundColor(Color.parseColor("#EDE7F6"))
-                    itemView.findViewById<TextView>(R.id.detail_head).setTextColor(Color.parseColor("#7B1FA2"))
-                    itemView.findViewById<ImageView>(R.id.detail_arrow).setBackgroundColor(Color.parseColor("#D1C4E9"))
+                    itemView.findViewById<CardView>(R.id.detail_card).setCardBackgroundColor(
+                        Color.parseColor(
+                            "#EDE7F6"
+                        )
+                    )
+                    itemView.findViewById<TextView>(R.id.detail_head).setTextColor(
+                        Color.parseColor(
+                            "#7B1FA2"
+                        )
+                    )
+                    itemView.findViewById<ImageView>(R.id.detail_arrow).setBackgroundColor(
+                        Color.parseColor(
+                            "#D1C4E9"
+                        )
+                    )
                 }
             }
 
@@ -140,8 +214,7 @@ class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, priv
 
             tv.movementMethod = object : TextViewLinkHandler() {
                 override fun onLinkClick(url: String?) {
-                    val codeNew = url.toString().removePrefix("qrh://")
-                    linkListener(codeNew)
+                    linkListener(url.toString())
                 }
             }
 
@@ -311,7 +384,7 @@ class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, priv
                 Pattern.CASE_INSENSITIVE or Pattern.MULTILINE or Pattern.DOTALL
             )
 
-            val patternPhone = Pattern.compile ("[0][0-9]{10}")
+            val patternPhone = Pattern.compile("[0][0-9]{10}")
 
             val patternGuideline = Pattern.compile("[(]?[→][\\s]?[1-4][-][0-9]{1,2}[)]?")
 
@@ -319,7 +392,10 @@ class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, priv
 
             val transformFilter =
                 TransformFilter { match, url ->
-                    url.toString().replace("→ ", "").replace("→","").replace(")","").replace("(","")
+                    url.toString().replace("→ ", "").replace("→", "").replace(")", "").replace(
+                        "(",
+                        ""
+                    )
                 }
 
             Linkify.addLinks(textView, patternURL, "http://")

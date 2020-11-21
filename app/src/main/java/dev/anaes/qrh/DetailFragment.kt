@@ -11,6 +11,8 @@ import android.widget.TextView
 import androidx.core.view.doOnPreDraw
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,9 +30,14 @@ class DetailFragment : Fragment(), PushDetail {
 
     private val navController by lazy { findNavController() }
 
+    private val fm by lazy { supportFragmentManager.findFragmentById(R.id.nav_host_fragment)?.childFragmentManager }
+
     private val args: DetailFragmentArgs by navArgs()
 
     private lateinit var linearLayoutManager: LinearLayoutManager
+
+    private val vm: MainViewModel by activityViewModels()
+
 
     var code: String? = String()
     var title: String? = String()
@@ -40,6 +47,7 @@ class DetailFragment : Fragment(), PushDetail {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         code = args.code
         title = args.title
         url = args.url
@@ -48,9 +56,9 @@ class DetailFragment : Fragment(), PushDetail {
         activity?.findViewById<AppBarLayout>(R.id.app_bar)?.setExpanded(true)
         activity?.findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout)?.title = title
 
-        Main.breadcrumbList.add(title.toString())
-        Main.breadcrumbCount++
-        Main.breadcrumbIsActive = true
+        vm.breadcrumbList.add(title.toString())
+        vm.breadcrumbCount++
+        vm.breadcrumbIsActive = true
     }
 
     override fun onCreateView(
@@ -69,9 +77,7 @@ class DetailFragment : Fragment(), PushDetail {
 
         activity.let { it ->
             if (it != null) {
-                it.findViewById<TextView>(R.id.detail_code).text = code
-                it.findViewById<TextView>(R.id.detail_code_2).text = code
-                it.findViewById<TextView>(R.id.detail_version).text = version
+                (activity as MainInt).appBarCode(code.toString(), version.toString())
             }
         }
 
@@ -85,11 +91,17 @@ class DetailFragment : Fragment(), PushDetail {
                 safeContext
             )
             val adapter =
-                CardRecyclerAdapter(content, code) { code: String ->
-                    activity?.progress_circular?.visibility = View.VISIBLE
-                    val fetchDetails: Array<String> = getDetailsFromCode(code)
-                    navToDetail(code, fetchDetails[0], fetchDetails[1], fetchDetails[2])
+                CardRecyclerAdapter(content, code) { url: String ->
+                    if(url.startsWith("qrh://")) {
+                        val codeNew = url.removePrefix("qrh://")
+                        activity?.progress_circular?.visibility = View.VISIBLE
+                        val fetchDetails: Array<String> = getDetailsFromCode(codeNew)
+                        navToDetail(codeNew, fetchDetails[0], fetchDetails[1], fetchDetails[2])
+                    } else {
+                        (activity as MainInt).openURL(url)
+                    }
                 }
+
             linearLayoutManager = LinearLayoutManager(context)
             detail_recyclerview.layoutManager = linearLayoutManager
             detail_recyclerview.isNestedScrollingEnabled = false
@@ -100,14 +112,14 @@ class DetailFragment : Fragment(), PushDetail {
 
         val bcStack = detail_stack
 
-        if(Main.breadcrumbCount > 1) {
+        if(vm.breadcrumbCount > 1) {
             detail_scroll.isVisible = true
 
-            var bci: Int = Main.breadcrumbCount
+            var bci: Int = vm.breadcrumbCount
             bci--
 
 
-            for (bc in Main.breadcrumbList) {
+            for (bc in vm.breadcrumbList) {
                 Log.d("loop", bci.toString())
                 val chevron = ImageView(context)
                 chevron.setImageResource(R.drawable.ic_chevron_right)
@@ -122,14 +134,15 @@ class DetailFragment : Fragment(), PushDetail {
                 button.tag = bci
                 button.setOnClickListener {
                     activity?.progress_circular?.visibility = View.VISIBLE
-                    (activity as PopDetail).popToDetail(button.tag as Int)
+                    (activity as MainInt).popToDetail(button.tag as Int)
                 }
                 bcStack.addView(button)
                 bci--
             }
+
             detail_home.setOnClickListener {
-                Main.breadcrumbCount == 0
-                Main.breadcrumbList.clear()
+                vm.breadcrumbCount == 0
+                vm.breadcrumbList.clear()
                 val action = DetailFragmentDirections.PopHome()
                 findNavController().navigate(action)
             }
@@ -145,7 +158,7 @@ class DetailFragment : Fragment(), PushDetail {
 
     override fun onResume() {
         super.onResume()
-        Main.breadcrumbIsActive = true
+        vm.breadcrumbIsActive = true
         activity?.findViewById<AppBarLayout>(R.id.app_bar)?.setExpanded(true)
         activity?.findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout)?.title = title
     }

@@ -4,18 +4,19 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentSender.SendIntentException
 import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.view.View
+import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.FragmentManager
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.transition.Fade
-import androidx.transition.Transition
-import androidx.transition.TransitionManager
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.snackbar.Snackbar
@@ -26,19 +27,26 @@ import com.google.android.play.core.install.InstallStateUpdatedListener
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlin.Lazy as Lazy1
 
 
-interface PopDetail {
+interface MainInt {
     fun popToDetail(num: Int)
+    fun appBarCode(code: String, version: String)
+    fun openURL(url: String)
 }
 
-class Main : AppCompatActivity(), PopDetail {
+class Main : AppCompatActivity(), MainInt {
 
     private val prefName = "dev.anaes.qrh.seenwarning"
 
     private lateinit var appUpdateManager: AppUpdateManager
 
+    private val vm: MainViewModel by viewModels()
+
+    private val nc: NavController by lazy { findNavController(R.id.nav_host_fragment) }
+
+    private val fm by lazy { supportFragmentManager.findFragmentById(R.id.nav_host_fragment)?.childFragmentManager }
 
     override fun onStart() {
         super.onStart()
@@ -100,55 +108,92 @@ class Main : AppCompatActivity(), PopDetail {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val sharedPref: SharedPreferences = getSharedPreferences(prefName, Context.MODE_PRIVATE)
-        seenWarning = sharedPref.getBoolean(prefName, false)
 
         setContentView(R.layout.activity_main)
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
 
-        val appBar: AppBarLayout = findViewById(R.id.app_bar)
-        val toolbarLayout: CollapsingToolbarLayout = findViewById(R.id.toolbar_layout)
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        val sharedPref: SharedPreferences = getSharedPreferences(prefName, Context.MODE_PRIVATE)
+            seenWarning = sharedPref.getBoolean(prefName, false)
 
-        setSupportActionBar(toolbar)
 
-        val appBarConfiguration = AppBarConfiguration(navController.graph)
+            val navHostFragment =
+                supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+            val navController = navHostFragment.navController
 
-        setupActionBarWithNavController(navController, appBarConfiguration)
 
-        if(seenWarning) {
-            navController.navigate(R.id.loadList)
-        }
+            val appBar: AppBarLayout = findViewById(R.id.app_bar)
+            val toolbarLayout: CollapsingToolbarLayout = findViewById(R.id.toolbar_layout)
+            val toolbar: Toolbar = findViewById(R.id.toolbar)
+
+            setSupportActionBar(toolbar)
+
+            val appBarConfiguration = AppBarConfiguration(navController.graph)
+
+            setupActionBarWithNavController(navController, appBarConfiguration)
+
+            if (seenWarning) {
+                navController.navigate(R.id.loadList)
+            }
 
     }
 
 
     override fun onSupportNavigateUp(): Boolean {
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
 
-        if(breadcrumbIsActive) {
-            breadcrumbCount--
-            breadcrumbList.removeLast()
+        if(vm.breadcrumbIsActive) {
+            vm.breadcrumbCount--
+            if(vm.breadcrumbList.isNotEmpty()) {
+                vm.breadcrumbList.removeLast()
+            }
+        }
+        this.findNavController(R.id.nav_host_fragment).navigateUp()
+        return true
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+
+        val count = fm?.fragments
+
+
+        for(fragment in count) {
+
+
         }
 
-        findNavController(R.id.nav_host_fragment).navigateUp()
-        return true
+    }
+
+    override fun onSaveInstanceState(savedInstanceState: Bundle) {
+        super.onSaveInstanceState(savedInstanceState)
+        savedInstanceState.putBundle("nav_state", this.findNavController(R.id.nav_host_fragment).saveState())
+    }
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        this.findNavController(R.id.nav_host_fragment).restoreState(savedInstanceState.getBundle("nav_state"))
     }
 
     override fun popToDetail(num: Int) {
         var x = num
-        Log.d("test", num.toString())
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
         while (x > 0) {
             navController.popBackStack()
-            breadcrumbCount--
-            breadcrumbList.removeLast()
+            vm.breadcrumbCount--
+            if(vm.breadcrumbList.isNotEmpty()) {
+                vm.breadcrumbList.removeLast()
+            }
             x--
         }
+    }
+
+    override fun appBarCode(code: String, version: String) {
+        findViewById<TextView>(R.id.detail_code).text = code
+        findViewById<TextView>(R.id.detail_code_2).text = code
+        findViewById<TextView>(R.id.detail_version).text = version
+    }
+
+    override fun openURL(url: String) {
+        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
     }
 
 
@@ -167,9 +212,6 @@ class Main : AppCompatActivity(), PopDetail {
 
 
     companion object {
-        var breadcrumbList: ArrayList<String> = ArrayList()
-        var breadcrumbCount: Int = 0
-        var breadcrumbIsActive: Boolean = false
         var seenWarning: Boolean = false
     }
 
