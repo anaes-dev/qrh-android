@@ -40,11 +40,6 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"  />
-        <action
-            android:id="@+id/PopHome"
-            app:destination="@id/listFragment"
-            app:popUpTo="@id/listFragment"
-            app:popUpToInclusive="false" />
         <argument
             android:name="title"
             app:argType="string" />

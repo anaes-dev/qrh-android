@@ -28,9 +28,7 @@ import java.util.regex.Pattern
 class CardRecyclerAdapter(
     private var dataSource: ArrayList<DetailContent>,
     private val codePassed: String?,
-    val linkListener: (String) -> Unit
-) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private val linkListener: (String) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     interface UpdateViewHolder {
         fun bindViews(detailContent: DetailContent, linkListener: (String) -> Unit)
@@ -41,7 +39,7 @@ class CardRecyclerAdapter(
         UpdateViewHolder {
         override fun bindViews(detailContent: DetailContent, linkListener: (String) -> Unit) {
 
-            itemView.findViewById<TextView>(R.id.detail_head).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            this.itemView.findViewById<TextView>(R.id.detail_head).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 Html.fromHtml(detailContent.head).trim()
             } else {
                 Html.fromHtml(detailContent.head, null,
@@ -52,7 +50,7 @@ class CardRecyclerAdapter(
                     }).trim()
             }
 
-            itemView.findViewById<TextView>(R.id.detail_body).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            this.itemView.findViewById<TextView>(R.id.detail_body).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 Html.fromHtml(detailContent.body).trim()
             } else {
                 Html.fromHtml(detailContent.body, null,
@@ -181,7 +179,7 @@ class CardRecyclerAdapter(
                 }
             }
 
-            itemView.findViewById<TextView>(R.id.detail_head).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            this.itemView.findViewById<TextView>(R.id.detail_head).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 Html.fromHtml(detailContent.head).trim()
             } else {
                 Html.fromHtml(detailContent.head, null,
@@ -192,7 +190,7 @@ class CardRecyclerAdapter(
                     }).trim()
             }
 
-            itemView.findViewById<TextView>(R.id.detail_body).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            this.itemView.findViewById<TextView>(R.id.detail_body).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 Html.fromHtml(detailContent.body).trim()
             } else {
                 Html.fromHtml(detailContent.body, null,
@@ -391,7 +389,7 @@ class CardRecyclerAdapter(
             val linkGuideline = "qrh://"
 
             val transformFilter =
-                TransformFilter { match, url ->
+                TransformFilter { _, url ->
                     url.toString().replace("→ ", "").replace("→", "").replace(")", "").replace(
                         "(",
                         ""

@@ -17,25 +17,20 @@ import kotlinx.android.synthetic.main.fragment_about.imageViewCC
 
 class AboutFragment : Fragment() {
 
-    private val vm: MainViewModel by activityViewModels()
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        vm.breadcrumbIsActive = false
-        activity?.findViewById<AppBarLayout>(R.id.app_bar)?.setExpanded(false)
-        activity?.findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout)?.title = "About"
-    }
+    private val title = "About"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        (activity as MainInt).progressShow(false)
         return inflater.inflate(R.layout.fragment_about, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as MainInt).progressShow(false)
+        (activity as MainInt).updateBar(title, "", "", false)
 
         val verCode = BuildConfig.VERSION_NAME
         val verOutput = "Version $verCode"
@@ -50,11 +45,9 @@ class AboutFragment : Fragment() {
         }
     }
 
-
     override fun onResume() {
         super.onResume()
-        vm.breadcrumbIsActive = false
+        (activity as MainInt).progressShow(false)
+        (activity as MainInt).updateBar(title, "", "", false)
     }
-
-
 }
