@@ -21,7 +21,7 @@
         </activity>
 
         <activity
-            android:name=".Splash" />
+            android:name=".FirstRun" />
     </application>
 
 </manifest>

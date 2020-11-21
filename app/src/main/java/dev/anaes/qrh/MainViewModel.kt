@@ -1,5 +1,7 @@
 package dev.anaes.qrh
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class MainViewModel : ViewModel() {
@@ -8,4 +10,9 @@ class MainViewModel : ViewModel() {
     var breadcrumbIsActive: Boolean = false
     var seenWarning: Boolean = false
     var menuItem: Int = R.id.detail_code
+
+    var currentTitle: String = String()
+
+    var breadcrumbTitles: MutableMap<Int, String> = HashMap()
+
 }
