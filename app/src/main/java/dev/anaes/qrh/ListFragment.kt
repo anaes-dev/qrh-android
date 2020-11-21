@@ -15,6 +15,7 @@ import com.google.android.material.appbar.CollapsingToolbarLayout
 import dev.anaes.qrh.ListFragmentDirections
 import kotlinx.android.synthetic.main.activity_list.*
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_detail.*
 
 
 class ListFragment : Fragment() {
@@ -29,19 +30,13 @@ class ListFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
         setHasOptionsMenu(true)
-        vm.breadcrumbCount = 0
-        vm.breadcrumbList.clear()
-        vm.breadcrumbIsActive = false
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        activity?.findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout)?.title = "QRH"
         return inflater.inflate(R.layout.fragment_list, container, false)
     }
 
@@ -49,6 +44,7 @@ class ListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         postponeEnterTransition()
 
+        (activity as MainInt).updateBar("QRH", "", "", false)
 
         val rvScrollListener = R.id.list_recyclerview
 
@@ -66,8 +62,6 @@ class ListFragment : Fragment() {
         linearLayoutManager = LinearLayoutManager(context)
         list_recyclerview.layoutManager = linearLayoutManager
         list_recyclerview.adapter = adapter
-
-        activity?.findViewById<AppBarLayout>(R.id.app_bar)?.setExpanded(false)
         list_recyclerview.isNestedScrollingEnabled = false
 
         list_searchview.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -119,7 +113,7 @@ class ListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        vm.breadcrumbIsActive = false
+        (activity as MainInt).updateBar("QRH", "", "", false)
     }
 
 

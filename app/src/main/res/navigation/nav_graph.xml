@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/firstrunFragment">
+    app:startDestination="@id/listFragment">
 
     <fragment
         android:id="@+id/listFragment"
@@ -73,16 +73,5 @@
         android:name="dev.anaes.qrh.DisclaimersFragment"
         android:label="Disclaimers"
         tools:layout="@layout/fragment_disclaimers" />
-    <fragment
-        android:id="@+id/firstrunFragment"
-        android:name="dev.anaes.qrh.FirstrunFragment"
-        android:label="fragment_firstrun"
-        tools:layout="@layout/fragment_firstrun" >
-        <action
-            android:id="@+id/loadList"
-            app:destination="@id/listFragment"
-            app:popUpTo="@id/listFragment"
-            app:popUpToInclusive="false" />
-    </fragment>
 
 </navigation>

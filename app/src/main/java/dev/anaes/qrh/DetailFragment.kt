@@ -7,20 +7,16 @@ import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.TextView
+import android.widget.ProgressBar
 import androidx.core.view.doOnPreDraw
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.appbar.CollapsingToolbarLayout
-import kotlinx.android.synthetic.main.activity_detail_scrollingcontent.*
-import kotlinx.android.synthetic.main.activity_main.*
-
+import kotlinx.android.synthetic.main.fragment_detail.*
 
 interface PushDetail {
     fun navToDetail(code: String, title: String, url: String, version: String)
@@ -30,14 +26,11 @@ class DetailFragment : Fragment(), PushDetail {
 
     private val navController by lazy { findNavController() }
 
-    private val fm by lazy { supportFragmentManager.findFragmentById(R.id.nav_host_fragment)?.childFragmentManager }
-
     private val args: DetailFragmentArgs by navArgs()
 
     private lateinit var linearLayoutManager: LinearLayoutManager
 
     private val vm: MainViewModel by activityViewModels()
-
 
     var code: String? = String()
     var title: String? = String()
@@ -47,25 +40,27 @@ class DetailFragment : Fragment(), PushDetail {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         code = args.code
         title = args.title
         url = args.url
         version = "v. " + args.version
 
-        activity?.findViewById<AppBarLayout>(R.id.app_bar)?.setExpanded(true)
-        activity?.findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout)?.title = title
+        vm.currentTitle = title as String
 
-        vm.breadcrumbList.add(title.toString())
-        vm.breadcrumbCount++
-        vm.breadcrumbIsActive = true
+        setHasOptionsMenu(true)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as MainInt).updateBar(title.toString(), code.toString(), version.toString(), true)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        setHasOptionsMenu(true)
+        val fragmentHash: Int = parentFragmentManager.getBackStackEntryAt((parentFragmentManager.backStackEntryCount)-1).hashCode()
+        vm.breadcrumbTitles[fragmentHash] = args.title
         return inflater.inflate(R.layout.fragment_detail, container, false)
     }
 
@@ -74,12 +69,9 @@ class DetailFragment : Fragment(), PushDetail {
         super.onViewCreated(view, savedInstanceState)
         postponeEnterTransition()
 
-
-        activity.let { it ->
-            if (it != null) {
-                (activity as MainInt).appBarCode(code.toString(), version.toString())
-            }
-        }
+        (activity as MainInt).updateBar(title.toString(), code.toString(), version.toString(), true)
+        detail_code_2.text = code.toString()
+        activity?.findViewById<AppBarLayout>(R.id.app_bar)?.setExpanded(true)
 
 
         val filenameSuffix = ".json"
@@ -94,7 +86,7 @@ class DetailFragment : Fragment(), PushDetail {
                 CardRecyclerAdapter(content, code) { url: String ->
                     if(url.startsWith("qrh://")) {
                         val codeNew = url.removePrefix("qrh://")
-                        activity?.progress_circular?.visibility = View.VISIBLE
+                        activity?.findViewById<ProgressBar>(R.id.progress_circular)?.visibility = View.VISIBLE
                         val fetchDetails: Array<String> = getDetailsFromCode(codeNew)
                         navToDetail(codeNew, fetchDetails[0], fetchDetails[1], fetchDetails[2])
                     } else {
@@ -112,15 +104,24 @@ class DetailFragment : Fragment(), PushDetail {
 
         val bcStack = detail_stack
 
-        if(vm.breadcrumbCount > 1) {
+
+
+        if(parentFragmentManager.backStackEntryCount > 1) {
             detail_scroll.isVisible = true
 
-            var bci: Int = vm.breadcrumbCount
+
+            detail_home.setOnClickListener {
+                (activity as MainInt).popToDetail(parentFragmentManager.backStackEntryCount)
+            }
+
+
+            var bci: Int = parentFragmentManager.backStackEntryCount
             bci--
 
+            var bi: Int = 0
 
-            for (bc in vm.breadcrumbList) {
-                Log.d("loop", bci.toString())
+            while (bi >= 0) {
+
                 val chevron = ImageView(context)
                 chevron.setImageResource(R.drawable.ic_chevron_right)
                 chevron.maxHeight = 12
@@ -130,39 +131,32 @@ class DetailFragment : Fragment(), PushDetail {
                 val button = Button(context, null, android.R.attr.buttonBarButtonStyle)
                 button.textSize = 12F
                 button.isAllCaps = false
-                button.text = bc
+
+
+                val hash = parentFragmentManager.getBackStackEntryAt(bci).hashCode()
+
+                button.text = vm.breadcrumbTitles[hash]
+
                 button.tag = bci
-                button.setOnClickListener {
-                    activity?.progress_circular?.visibility = View.VISIBLE
-                    (activity as MainInt).popToDetail(button.tag as Int)
+                if (bci > 0) {
+                    button.setOnClickListener {
+                        activity?.findViewById<ProgressBar>(R.id.progress_circular)?.visibility =
+                            View.VISIBLE
+                        (activity as MainInt).popToDetail(button.tag as Int)
+                    }
+
                 }
                 bcStack.addView(button)
                 bci--
             }
-
-            detail_home.setOnClickListener {
-                vm.breadcrumbCount == 0
-                vm.breadcrumbList.clear()
-                val action = DetailFragmentDirections.PopHome()
-                findNavController().navigate(action)
-            }
-
         }
 
         (view.parent as? ViewGroup)?.doOnPreDraw {
             startPostponedEnterTransition()
-            activity?.progress_circular?.visibility = View.GONE
+            activity?.findViewById<ProgressBar>(R.id.progress_circular)?.visibility = View.GONE
         }
 
     }
-
-    override fun onResume() {
-        super.onResume()
-        vm.breadcrumbIsActive = true
-        activity?.findViewById<AppBarLayout>(R.id.app_bar)?.setExpanded(true)
-        activity?.findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout)?.title = title
-    }
-
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_detail, menu)
@@ -171,7 +165,7 @@ class DetailFragment : Fragment(), PushDetail {
 
     override fun navToDetail(code: String, title: String, url: String, version: String) {
         val action = DetailFragmentDirections.LoadNewDetail(code, title, url, version)
-        activity?.progress_circular?.visibility = View.VISIBLE
+        activity?.findViewById<ProgressBar>(R.id.progress_circular)?.visibility = View.VISIBLE
         navController.navigate(action)
     }
 
@@ -184,7 +178,6 @@ class DetailFragment : Fragment(), PushDetail {
             else -> super.onOptionsItemSelected(item)
         }
     }
-
 
     private fun getDetailsFromCode(codePassed: String?): Array<String> {
         this.context?.let { safeContext ->
