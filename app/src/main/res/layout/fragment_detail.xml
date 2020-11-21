@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:scrollbars="vertical"
+app:layout_behavior="@string/appbar_scrolling_view_behavior"
+tools:context=".DetailFragment">
+
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <HorizontalScrollView
+        android:id="@+id/detail_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fadeScrollbars="true"
+        android:scrollbarSize="2dp"
+        android:scrollbarThumbHorizontal="?attr/colorButtonNormal"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/detail_recyclerview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/detail_stack"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:dividerPadding="0dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/detail_home"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:height="42dp"
+                android:drawableStart="@drawable/ic_home"
+                android:drawableLeft="@drawable/ic_home"
+                android:minWidth="0dp"
+                android:minHeight="42dp"
+                android:singleLine="true"
+                android:text="Home"
+                android:textAllCaps="false"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/grad_left"
+        android:layout_width="24dp"
+        android:layout_height="0dp"
+        android:foreground="@drawable/grad_left"
+        android:foregroundGravity="fill"
+        app:layout_constraintBottom_toBottomOf="@+id/detail_scroll"
+        app:layout_constraintStart_toStartOf="@+id/detail_scroll"
+        app:layout_constraintTop_toTopOf="@+id/detail_scroll">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/grad_right"
+        android:layout_width="24dp"
+        android:layout_height="0dp"
+        android:foreground="@drawable/grad_right"
+        android:foregroundGravity="fill"
+        app:layout_constraintBottom_toBottomOf="@+id/detail_scroll"
+        app:layout_constraintEnd_toEndOf="@+id/detail_scroll"
+        app:layout_constraintTop_toTopOf="@+id/detail_scroll">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/detail_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:isScrollContainer="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detail_scroll" />
+
+    <TextView
+        android:id="@+id/detail_code_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:alpha=".1"
+        android:fontFamily="sans-serif-black"
+        android:letterSpacing="-0.05"
+        android:text=""
+        android:textSize="96sp"
+        android:textStyle="bold"
+        android:translationY="-16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/detail_recyclerview" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

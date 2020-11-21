@@ -4,9 +4,14 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.text.Html
+import android.text.Layout
+import android.text.Spannable
+import android.text.method.LinkMovementMethod
+import android.text.style.URLSpan
 import android.text.util.Linkify
 import android.text.util.Linkify.TransformFilter
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -18,20 +23,21 @@ import java.util.regex.Pattern
 
 
 @Suppress("DEPRECATION")
-class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, private val codePassed: String?) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
+class CardRecyclerAdapter(
+    private var dataSource: ArrayList<DetailContent>,
+    private val codePassed: String?,
+    private val linkListener: (String) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     interface UpdateViewHolder {
-        fun bindViews(detailContent: DetailContent)
+        fun bindViews(detailContent: DetailContent, linkListener: (String) -> Unit)
     }
 
     //ViewHolder1 = all three text fields
     class ViewHolder1(itemView: View) : RecyclerView.ViewHolder(itemView),
         UpdateViewHolder {
-        override fun bindViews(detailContent: DetailContent) {
+        override fun bindViews(detailContent: DetailContent, linkListener: (String) -> Unit) {
 
-            itemView.findViewById<TextView>(R.id.detail_head).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            this.itemView.findViewById<TextView>(R.id.detail_head).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 Html.fromHtml(detailContent.head).trim()
             } else {
                 Html.fromHtml(detailContent.head, null,
@@ -42,7 +48,7 @@ class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, priv
                     }).trim()
             }
 
-            itemView.findViewById<TextView>(R.id.detail_body).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            this.itemView.findViewById<TextView>(R.id.detail_body).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 Html.fromHtml(detailContent.body).trim()
             } else {
                 Html.fromHtml(detailContent.body, null,
@@ -50,7 +56,7 @@ class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, priv
                         if (tag == "br" && opening) output.append("\n")
                         if (tag == "p" && opening) output.append("\n")
                         if (tag == "li" && opening) output.append("\n\n• ")
-                }).trim()
+                    }).trim()
             }
 
             linkifyFunction(
@@ -58,11 +64,21 @@ class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, priv
                     R.id.detail_body
                 )
             )
+
             linkifyFunction(
                 itemView.findViewById(
                     R.id.detail_head
                 )
             )
+
+            val tv = itemView.findViewById<TextView>(R.id.detail_body)
+
+            tv.movementMethod = object : TextViewLinkHandler() {
+                override fun onLinkClick(url: String?) {
+                    linkListener(url.toString())
+                }
+            }
+
 
             itemView.findViewById<TextView>(R.id.detail_step).setText(detailContent.step).toString()
         }
@@ -71,37 +87,97 @@ class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, priv
     //ViewHolder2 = collapsible boxes
     class ViewHolder2(itemView: View) : RecyclerView.ViewHolder(itemView),
         UpdateViewHolder {
-        override fun bindViews(detailContent: DetailContent) {
+        override fun bindViews(detailContent: DetailContent, linkListener: (String) -> Unit) {
 
             when (detailContent.type) {
                 5 -> {
-                    itemView.findViewById<CardView>(R.id.detail_card).setCardBackgroundColor(Color.parseColor("#FBE9E7"))
-                    itemView.findViewById<TextView>(R.id.detail_head).setTextColor(Color.parseColor("#E64A19"))
-                    itemView.findViewById<ImageView>(R.id.detail_arrow).setBackgroundColor(Color.parseColor("#FFCCBC"))
+                    itemView.findViewById<CardView>(R.id.detail_card).setCardBackgroundColor(
+                        Color.parseColor(
+                            "#FBE9E7"
+                        )
+                    )
+                    itemView.findViewById<TextView>(R.id.detail_head).setTextColor(
+                        Color.parseColor(
+                            "#E64A19"
+                        )
+                    )
+                    itemView.findViewById<ImageView>(R.id.detail_arrow).setBackgroundColor(
+                        Color.parseColor(
+                            "#FFCCBC"
+                        )
+                    )
                 }
                 6 -> {
-                    itemView.findViewById<CardView>(R.id.detail_card).setCardBackgroundColor(Color.parseColor("#E1F5FE"))
-                    itemView.findViewById<TextView>(R.id.detail_head).setTextColor(Color.parseColor("#1976D2"))
-                    itemView.findViewById<ImageView>(R.id.detail_arrow).setBackgroundColor(Color.parseColor("#BBDEFB"))
+                    itemView.findViewById<CardView>(R.id.detail_card).setCardBackgroundColor(
+                        Color.parseColor(
+                            "#E1F5FE"
+                        )
+                    )
+                    itemView.findViewById<TextView>(R.id.detail_head).setTextColor(
+                        Color.parseColor(
+                            "#1976D2"
+                        )
+                    )
+                    itemView.findViewById<ImageView>(R.id.detail_arrow).setBackgroundColor(
+                        Color.parseColor(
+                            "#BBDEFB"
+                        )
+                    )
                 }
                 7 -> {
-                    itemView.findViewById<CardView>(R.id.detail_card).setCardBackgroundColor(Color.parseColor("#E8F5E9"))
-                    itemView.findViewById<TextView>(R.id.detail_head).setTextColor(Color.parseColor("#388E3C"))
-                    itemView.findViewById<ImageView>(R.id.detail_arrow).setBackgroundColor(Color.parseColor("#C8E6C9"))
+                    itemView.findViewById<CardView>(R.id.detail_card).setCardBackgroundColor(
+                        Color.parseColor(
+                            "#E8F5E9"
+                        )
+                    )
+                    itemView.findViewById<TextView>(R.id.detail_head).setTextColor(
+                        Color.parseColor(
+                            "#388E3C"
+                        )
+                    )
+                    itemView.findViewById<ImageView>(R.id.detail_arrow).setBackgroundColor(
+                        Color.parseColor(
+                            "#C8E6C9"
+                        )
+                    )
                 }
                 8 -> {
-                    itemView.findViewById<CardView>(R.id.detail_card).setCardBackgroundColor(Color.parseColor("#EDEDED"))
-                    itemView.findViewById<TextView>(R.id.detail_head).setTextColor(Color.parseColor("#000000"))
-                    itemView.findViewById<ImageView>(R.id.detail_arrow).setBackgroundColor(Color.parseColor("#D1D1D1"))
+                    itemView.findViewById<CardView>(R.id.detail_card).setCardBackgroundColor(
+                        Color.parseColor(
+                            "#EDEDED"
+                        )
+                    )
+                    itemView.findViewById<TextView>(R.id.detail_head).setTextColor(
+                        Color.parseColor(
+                            "#000000"
+                        )
+                    )
+                    itemView.findViewById<ImageView>(R.id.detail_arrow).setBackgroundColor(
+                        Color.parseColor(
+                            "#D1D1D1"
+                        )
+                    )
                 }
                 9 -> {
-                    itemView.findViewById<CardView>(R.id.detail_card).setCardBackgroundColor(Color.parseColor("#EDE7F6"))
-                    itemView.findViewById<TextView>(R.id.detail_head).setTextColor(Color.parseColor("#7B1FA2"))
-                    itemView.findViewById<ImageView>(R.id.detail_arrow).setBackgroundColor(Color.parseColor("#D1C4E9"))
+                    itemView.findViewById<CardView>(R.id.detail_card).setCardBackgroundColor(
+                        Color.parseColor(
+                            "#EDE7F6"
+                        )
+                    )
+                    itemView.findViewById<TextView>(R.id.detail_head).setTextColor(
+                        Color.parseColor(
+                            "#7B1FA2"
+                        )
+                    )
+                    itemView.findViewById<ImageView>(R.id.detail_arrow).setBackgroundColor(
+                        Color.parseColor(
+                            "#D1C4E9"
+                        )
+                    )
                 }
             }
 
-            itemView.findViewById<TextView>(R.id.detail_head).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            this.itemView.findViewById<TextView>(R.id.detail_head).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 Html.fromHtml(detailContent.head).trim()
             } else {
                 Html.fromHtml(detailContent.head, null,
@@ -112,7 +188,7 @@ class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, priv
                     }).trim()
             }
 
-            itemView.findViewById<TextView>(R.id.detail_body).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            this.itemView.findViewById<TextView>(R.id.detail_body).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 Html.fromHtml(detailContent.body).trim()
             } else {
                 Html.fromHtml(detailContent.body, null,
@@ -123,11 +199,20 @@ class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, priv
                     }).trim()
             }
 
+
             linkifyFunction(
                 itemView.findViewById(
                     R.id.detail_body
                 )
             )
+
+            val tv = itemView.findViewById<TextView>(R.id.detail_body)
+
+            tv.movementMethod = object : TextViewLinkHandler() {
+                override fun onLinkClick(url: String?) {
+                    linkListener(url.toString())
+                }
+            }
 
             val subCard = itemView.findViewById<TextView>(R.id.detail_body)
             val subArrow = itemView.findViewById<ImageView>(R.id.detail_arrow)
@@ -146,7 +231,7 @@ class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, priv
     //ViewHolder3 = images with glide (put path in 'main' in JSON)
     class ViewHolder3(itemView: View) : RecyclerView.ViewHolder(itemView),
         UpdateViewHolder {
-        override fun bindViews(detailContent: DetailContent) {
+        override fun bindViews(detailContent: DetailContent, linkListener: (String) -> Unit) {
             val detailImage = itemView.findViewById<ImageView>(R.id.detail_image)
             val imagePath = detailContent.body
             itemView.findViewById<TextView>(R.id.detail_caption).setText(detailContent.head).toString()
@@ -160,7 +245,7 @@ class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, priv
     //ViewHolder4 = single text item
     class ViewHolder4(itemView: View) : RecyclerView.ViewHolder(itemView),
         UpdateViewHolder {
-        override fun bindViews(detailContent: DetailContent) {
+        override fun bindViews(detailContent: DetailContent, linkListener: (String) -> Unit) {
             itemView.findViewById<TextView>(R.id.detail_text).text = (Html.fromHtml(detailContent.body)).trim()
         }
     }
@@ -168,7 +253,7 @@ class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, priv
     //ViewHolder5 = end disclaimer card
     class ViewHolder5(itemView: View) : RecyclerView.ViewHolder(itemView),
         UpdateViewHolder {
-        override fun bindViews(detailContent: DetailContent) {
+        override fun bindViews(detailContent: DetailContent, linkListener: (String) -> Unit) {
             itemView.findViewById<TextView>(R.id.detail_text).text = (Html.fromHtml(detailContent.head)).trim()
         }
     }
@@ -258,7 +343,7 @@ class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, priv
             detailContent.collapsed = false
         }
 
-        (holder as UpdateViewHolder).bindViews(detailContent)
+        (holder as UpdateViewHolder).bindViews(detailContent, linkListener)
     }
 
 
@@ -295,15 +380,18 @@ class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, priv
                 Pattern.CASE_INSENSITIVE or Pattern.MULTILINE or Pattern.DOTALL
             )
 
-            val patternPhone = Pattern.compile ("[0][0-9]{10}")
+            val patternPhone = Pattern.compile("[0][0-9]{10}")
 
             val patternGuideline = Pattern.compile("[(]?[→][\\s]?[1-4][-][0-9]{1,2}[)]?")
 
-            val linkGuideline = "dev.anaes.qrh.detail://"
+            val linkGuideline = "qrh://"
 
             val transformFilter =
-                TransformFilter { match, url ->
-                    url.toString().replace("→ ", "").replace("→","").replace(")","").replace("(","")
+                TransformFilter { _, url ->
+                    url.toString().replace("→ ", "").replace("→", "").replace(")", "").replace(
+                        "(",
+                        ""
+                    )
                 }
 
             Linkify.addLinks(textView, patternURL, "http://")
@@ -317,6 +405,35 @@ class CardRecyclerAdapter(private var dataSource: ArrayList<DetailContent>, priv
 }
 
 
+abstract class TextViewLinkHandler : LinkMovementMethod() {
+    override fun onTouchEvent(
+        widget: TextView,
+        buffer: Spannable,
+        event: MotionEvent
+    ): Boolean {
+        if (event.action != MotionEvent.ACTION_UP) return super.onTouchEvent(
+            widget,
+            buffer,
+            event
+        )
+        var x = event.x.toInt()
+        var y = event.y.toInt()
+        x -= widget.totalPaddingLeft
+        y -= widget.totalPaddingTop
+        x += widget.scrollX
+        y += widget.scrollY
+        val layout: Layout = widget.layout
+        val line: Int = layout.getLineForVertical(y)
+        val off: Int = layout.getOffsetForHorizontal(line, x.toFloat())
+        val link = buffer.getSpans(off, off, URLSpan::class.java)
+        if (link.isNotEmpty()) {
+            onLinkClick(link[0].url)
+        }
+        return true
+    }
 
+    abstract fun onLinkClick(url: String?)
+
+}
 
 
