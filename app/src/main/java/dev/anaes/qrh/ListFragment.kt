@@ -2,6 +2,7 @@ package dev.anaes.qrh
 
 
 import android.os.Bundle
+import android.util.Log
 import android.util.TypedValue
 import android.view.*
 import android.widget.SearchView
@@ -59,19 +60,33 @@ class ListFragment : Fragment() {
         list_recyclerview.adapter = adapter
         list_recyclerview.isNestedScrollingEnabled = false
 
+        var alreadyAnimated: Boolean = false
+
+        adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+            override fun onChanged() {
+                super.onChanged()
+                if (adapter.itemCount == 0) {
+                    if(!alreadyAnimated) {
+                        alreadyAnimated = true
+                        list_empty.alpha = 0F
+                        list_empty.visibility = View.VISIBLE
+                        list_empty.animate().alpha(1F).duration = 300
+                    }
+                } else {
+                    list_empty.visibility = View.GONE
+                    alreadyAnimated = false
+                }
+            }
+        })
+
         list_searchview.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
 
-            override fun onQueryTextChange(newText: String?): Boolean {
+            override fun onQueryTextChange(newText: String): Boolean {
                 adapter.filter.filter(newText)
-                if (adapter.itemCount == 0) {
-                    view.findViewById<TextView>(R.id.list_empty)?.visibility = View.VISIBLE
-                } else {
-                    view.findViewById<TextView>(R.id.list_empty)?.visibility = View.GONE
-                }
-                return false
+                return true
             }
         })
 
