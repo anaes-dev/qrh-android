@@ -6,11 +6,9 @@ import android.content.IntentSender.SendIntentException
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -40,8 +38,6 @@ interface MainInt {
 class Main : AppCompatActivity(), MainInt {
 
     private lateinit var appUpdateManager: AppUpdateManager
-
-    private val vm: MainViewModel by viewModels()
 
     override fun onStart() {
         super.onStart()

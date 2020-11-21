@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ListRecyclerAdapter(var dataSource: ArrayList<Guideline>, val clickListener: (Guideline) -> Unit) :
+class ListRecyclerAdapter(var dataSource: ArrayList<Guideline>, private val clickListener: (Guideline) -> Unit) :
     RecyclerView.Adapter<ListRecyclerAdapter.GuidelineHolder>(), Filterable {
 
     var guidelineFilterList = ArrayList<Guideline>()
@@ -57,8 +57,8 @@ class ListRecyclerAdapter(var dataSource: ArrayList<Guideline>, val clickListene
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val charSearch = constraint.toString()
-                if (charSearch.isEmpty()) {
-                    guidelineFilterList = dataSource
+                guidelineFilterList = if (charSearch.isEmpty()) {
+                    dataSource
                 } else {
                     val resultList = ArrayList<Guideline>()
                     val charSearch = charSearch.toLowerCase(Locale.ROOT)
@@ -68,16 +68,14 @@ class ListRecyclerAdapter(var dataSource: ArrayList<Guideline>, val clickListene
                             resultList.add(item)
                         }
                     }
-
-                    guidelineFilterList = resultList
-
+                    resultList
                 }
                 val filterResults = FilterResults()
                 filterResults.values = guidelineFilterList
                 return filterResults
             }
 
-            @Suppress("UNCHECKED_CAST")
+
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
                 guidelineFilterList = results?.values as ArrayList<Guideline>
                 notifyDataSetChanged()

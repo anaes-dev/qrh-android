@@ -4,8 +4,6 @@ package dev.anaes.qrh
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.*
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import android.widget.SearchView
 import android.widget.TextView
 import androidx.core.content.ContextCompat.getColor
