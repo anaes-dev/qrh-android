@@ -4,8 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentSender.SendIntentException
 import android.content.SharedPreferences
+import android.icu.util.TimeZone
 import android.net.Uri
 import android.os.Bundle
+import android.os.SystemClock
+import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -26,6 +29,7 @@ import com.google.android.play.core.install.InstallStateUpdatedListener
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
+import java.security.Timestamp
 
 
 interface MainInt {
@@ -39,31 +43,6 @@ class Main : AppCompatActivity(), MainInt {
 
     private lateinit var appUpdateManager: AppUpdateManager
 
-    override fun onStart() {
-        super.onStart()
-
-        val sharedPref: SharedPreferences = getSharedPreferences("dev.anaes.qrh", Context.MODE_PRIVATE)
-        if (!sharedPref.getBoolean("seenwarning", false)) {
-            startActivity(Intent(this, FirstRun::class.java))
-            finish()
-        }
-
-        appUpdateManager = AppUpdateManagerFactory.create(this)
-        appUpdateManager.registerListener(installStateUpdatedListener)
-        appUpdateManager.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
-            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
-                && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)
-            ) {
-                try {
-                    appUpdateManager.startUpdateFlowForResult(appUpdateInfo,AppUpdateType.FLEXIBLE,this,101325)
-                } catch (e: SendIntentException) {
-                    e.printStackTrace()
-                }
-            } else if (appUpdateInfo.installStatus() == InstallStatus.DOWNLOADED) {
-                popCompleteUpdate()
-            }
-        }
-    }
 
     private var installStateUpdatedListener: InstallStateUpdatedListener =
         object : InstallStateUpdatedListener {
@@ -82,7 +61,7 @@ class Main : AppCompatActivity(), MainInt {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 101325) {
+        if (requestCode == 10133) {
             if (resultCode != RESULT_OK) {
                 popFailedUpdate()
             }
@@ -92,19 +71,57 @@ class Main : AppCompatActivity(), MainInt {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_main)
+        val sharedPref: SharedPreferences = getSharedPreferences("dev.anaes.qrh", Context.MODE_PRIVATE)
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
-        val appBarConfiguration = AppBarConfiguration(navController.graph)
-        setupActionBarWithNavController(navController, appBarConfiguration)
+        if (!sharedPref.getBoolean("seen_warning", false)) {
+            startActivity(Intent(this, FirstRun::class.java))
+            finish()
+        } else {
+
+            setContentView(R.layout.activity_main)
+
+            val navHostFragment =
+                supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+            val navController = navHostFragment.navController
+            val toolbar: Toolbar = findViewById(R.id.toolbar)
+            setSupportActionBar(toolbar)
+            val appBarConfiguration = AppBarConfiguration(navController.graph)
+            setupActionBarWithNavController(navController, appBarConfiguration)
 
 //            val appBar: AppBarLayout = findViewById(R.id.app_bar)
 //            val toolbarLayout: CollapsingToolbarLayout = findViewById(R.id.toolbar_layout)
 
+            val currentTime = System.currentTimeMillis()
+            val lastCheckedTime = sharedPref.getLong("update_checked", 0)
 
+            if ((currentTime - lastCheckedTime) > 1000) {
+                appUpdateManager = AppUpdateManagerFactory.create(this)
+                appUpdateManager.registerListener(installStateUpdatedListener)
+
+                appUpdateManager.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
+                    if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+                        && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)
+                    ) {
+                        try {
+                            appUpdateManager.startUpdateFlowForResult(
+                                appUpdateInfo,
+                                AppUpdateType.FLEXIBLE,
+                                this,
+                                10133
+                            )
+                        } catch (e: SendIntentException) {
+                            e.printStackTrace()
+                        }
+                    } else if (appUpdateInfo.installStatus() == InstallStatus.DOWNLOADED) {
+                        popCompleteUpdate()
+                    }
+                }
+                sharedPref.edit()
+                    .putLong("update_checked", System.currentTimeMillis())
+                    .apply()
+            }
+
+        }
     }
 
 

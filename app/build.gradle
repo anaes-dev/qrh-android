@@ -11,8 +11,8 @@ android {
         applicationId "dev.anaes.qrh"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 16
-        versionName "1.5"
+        versionCode 19
+        versionName "1.53"
     }
 
     buildTypes {
