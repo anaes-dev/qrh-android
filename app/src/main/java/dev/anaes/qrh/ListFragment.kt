@@ -26,8 +26,6 @@ class ListFragment : Fragment() {
 
     private val vm: MainViewModel by activityViewModels()
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -97,7 +95,7 @@ class ListFragment : Fragment() {
     }
 
    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-    inflater.inflate(R.menu.menu_list, menu)
+        inflater.inflate(R.menu.menu_list, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
