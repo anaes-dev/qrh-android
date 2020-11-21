@@ -107,18 +107,6 @@ class Main : AppCompatActivity(), MainInt {
 //            val appBar: AppBarLayout = findViewById(R.id.app_bar)
 //            val toolbarLayout: CollapsingToolbarLayout = findViewById(R.id.toolbar_layout)
 
-        fm.addOnBackStackChangedListener {
-            if(fm.backStackEntryCount < vm.breadcrumbCount) {
-                Log.d("Going:", "BACK")
-                vm.breadcrumbCount = fm.backStackEntryCount
-
-            } else if(fm.backStackEntryCount > vm.breadcrumbCount) {
-                Log.d("Going:", "FORWARD")
-                vm.breadcrumbCount = fm.backStackEntryCount
-            } else {
-                Log.d("Going:", "NOWHERE")
-            }
-        }
 
     }
 
@@ -143,9 +131,6 @@ class Main : AppCompatActivity(), MainInt {
         val navController = navHostFragment.navController
         while (x > 0) {
             navController.popBackStack()
-            if(vm.breadcrumbList.isNotEmpty()) {
-                vm.breadcrumbList.removeLast()
-            }
             x--
         }
     }

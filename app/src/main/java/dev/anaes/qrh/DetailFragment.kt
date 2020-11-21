@@ -45,8 +45,8 @@ class DetailFragment : Fragment(), PushDetail {
         url = args.url
         version = "v. " + args.version
 
-        vm.currentTitle = title as String
-
+        val fragmentHash: Int = parentFragmentManager.backStackEntryCount
+        vm.breadcrumbTitles[fragmentHash] = args.title
         setHasOptionsMenu(true)
     }
 
@@ -59,8 +59,6 @@ class DetailFragment : Fragment(), PushDetail {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val fragmentHash: Int = parentFragmentManager.getBackStackEntryAt((parentFragmentManager.backStackEntryCount)-1).hashCode()
-        vm.breadcrumbTitles[fragmentHash] = args.title
         return inflater.inflate(R.layout.fragment_detail, container, false)
     }
 
@@ -120,7 +118,7 @@ class DetailFragment : Fragment(), PushDetail {
 
             var bi: Int = 0
 
-            while (bi >= 0) {
+            while (bi < parentFragmentManager.backStackEntryCount) {
 
                 val chevron = ImageView(context)
                 chevron.setImageResource(R.drawable.ic_chevron_right)
@@ -133,9 +131,10 @@ class DetailFragment : Fragment(), PushDetail {
                 button.isAllCaps = false
 
 
-                val hash = parentFragmentManager.getBackStackEntryAt(bci).hashCode()
+                val hash = parentFragmentManager.getBackStackEntryAt(bi).id.hashCode()
+                Log.d("Hash:", hash.toString())
 
-                button.text = vm.breadcrumbTitles[hash]
+                button.text = vm.breadcrumbTitles[bi + 1]
 
                 button.tag = bci
                 if (bci > 0) {
@@ -148,14 +147,16 @@ class DetailFragment : Fragment(), PushDetail {
                 }
                 bcStack.addView(button)
                 bci--
+                bi++
             }
+
         }
 
         (view.parent as? ViewGroup)?.doOnPreDraw {
             startPostponedEnterTransition()
             activity?.findViewById<ProgressBar>(R.id.progress_circular)?.visibility = View.GONE
+            detail_scroll.scrollTo(detail_scroll.right, 0)
         }
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
