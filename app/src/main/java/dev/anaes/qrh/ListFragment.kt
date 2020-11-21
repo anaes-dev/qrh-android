@@ -88,7 +88,11 @@ class ListFragment : Fragment() {
                 Snackbar
                     .make(
                         container,
-                        "Open source adaptation of Quick Reference Handbook\nNo guarantees of completeness, accuracy or performance\nShould not override your own knowledge and judgement",
+                                "Unofficial adaptation of Quick Reference Handbook\n" +
+                                "Not endorsed by the Association of Anaesthetists\n" +
+                                "Untested and unregulated; not recommended for clinical use\n" +
+                                "No guarantees of completeness, accuracy or performance\n" +
+                                "Should not override your own knowledge and judgement",
                         Snackbar.LENGTH_LONG
                     )
                     .setDuration(8000)
@@ -99,7 +103,7 @@ class ListFragment : Fragment() {
 
             val snackView: View = snack.view
             val snackTextView = snackView.findViewById(R.id.snackbar_text) as TextView
-            snackTextView.maxLines = 3
+            snackTextView.maxLines = 5
             snackTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12F)
             snack.show()
 
