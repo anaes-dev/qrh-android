@@ -7,6 +7,8 @@ import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -32,6 +34,7 @@ interface MainInt {
     fun popToDetail(num: Int)
     fun updateBar(title: String, code: String, version: String, expanded: Boolean)
     fun openURL(url: String)
+    fun progressShow(show: Boolean)
 }
 
 class Main : AppCompatActivity(), MainInt {
@@ -39,8 +42,6 @@ class Main : AppCompatActivity(), MainInt {
     private lateinit var appUpdateManager: AppUpdateManager
 
     private val vm: MainViewModel by viewModels()
-
-    private val fm by lazy { supportFragmentManager.findFragmentById(R.id.nav_host_fragment)!!.childFragmentManager }
 
     override fun onStart() {
         super.onStart()
@@ -112,17 +113,27 @@ class Main : AppCompatActivity(), MainInt {
 
 
     override fun onSupportNavigateUp(): Boolean {
-        this.findNavController(R.id.nav_host_fragment).navigateUp()
+        if(findNavController(R.id.nav_host_fragment).currentDestination.toString().contains("DetailFragment")) {
+            progressShow(true)
+        }
+        findNavController(R.id.nav_host_fragment).navigateUp()
         return true
+    }
+
+    override fun onBackPressed() {
+        if(findNavController(R.id.nav_host_fragment).currentDestination.toString().contains("DetailFragment")) {
+            progressShow(true)
+        }
+        super.onBackPressed()
     }
 
     override fun onSaveInstanceState(savedInstanceState: Bundle) {
         super.onSaveInstanceState(savedInstanceState)
-        savedInstanceState.putBundle("nav_state", this.findNavController(R.id.nav_host_fragment).saveState())
+        savedInstanceState.putBundle("nav_state", findNavController(R.id.nav_host_fragment).saveState())
     }
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        this.findNavController(R.id.nav_host_fragment).restoreState(savedInstanceState.getBundle("nav_state"))
+        findNavController(R.id.nav_host_fragment).restoreState(savedInstanceState.getBundle("nav_state"))
     }
 
     override fun popToDetail(num: Int) {
@@ -146,6 +157,13 @@ class Main : AppCompatActivity(), MainInt {
         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
     }
 
+    override fun progressShow(show: Boolean) {
+        if (show) {
+            findViewById<ProgressBar>(R.id.progress_circular).visibility = View.VISIBLE
+        } else {
+            findViewById<ProgressBar>(R.id.progress_circular).visibility = View.GONE
+        }
+    }
 
     private fun popCompleteUpdate() {
         val snackbar = Snackbar.make(

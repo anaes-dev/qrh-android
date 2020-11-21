@@ -79,7 +79,7 @@ class ListFragment : Fragment() {
 
         (view.parent as? ViewGroup)?.doOnPreDraw {
             startPostponedEnterTransition()
-            activity?.progress_circular?.visibility = View.GONE
+            (activity as MainInt).progressShow(false)
         }
     }
 
@@ -90,7 +90,7 @@ class ListFragment : Fragment() {
             guideline.url,
             guideline.version.toString()
         )
-        activity?.progress_circular?.visibility = View.VISIBLE
+        (activity as MainInt).progressShow(true)
         navController.navigate(action)
     }
 

@@ -45,13 +45,13 @@ class DetailFragment : Fragment(), PushDetail {
         url = args.url
         version = "v. " + args.version
 
-        val fragmentHash: Int = parentFragmentManager.backStackEntryCount
-        vm.breadcrumbTitles[fragmentHash] = args.title
         setHasOptionsMenu(true)
     }
 
     override fun onResume() {
         super.onResume()
+        val bcEntry: Int = parentFragmentManager.backStackEntryCount
+        vm.breadcrumbTitles[bcEntry] = args.title
         (activity as MainInt).updateBar(title.toString(), code.toString(), version.toString(), true)
     }
 
@@ -67,6 +67,8 @@ class DetailFragment : Fragment(), PushDetail {
         super.onViewCreated(view, savedInstanceState)
         postponeEnterTransition()
 
+        val bcEntry: Int = parentFragmentManager.backStackEntryCount
+        vm.breadcrumbTitles[bcEntry] = args.title
         (activity as MainInt).updateBar(title.toString(), code.toString(), version.toString(), true)
         detail_code_2.text = code.toString()
         activity?.findViewById<AppBarLayout>(R.id.app_bar)?.setExpanded(true)
@@ -84,7 +86,7 @@ class DetailFragment : Fragment(), PushDetail {
                 CardRecyclerAdapter(content, code) { url: String ->
                     if(url.startsWith("qrh://")) {
                         val codeNew = url.removePrefix("qrh://")
-                        activity?.findViewById<ProgressBar>(R.id.progress_circular)?.visibility = View.VISIBLE
+                        (activity as MainInt).progressShow(true)
                         val fetchDetails: Array<String> = getDetailsFromCode(codeNew)
                         navToDetail(codeNew, fetchDetails[0], fetchDetails[1], fetchDetails[2])
                     } else {
@@ -96,16 +98,15 @@ class DetailFragment : Fragment(), PushDetail {
             detail_recyclerview.layoutManager = linearLayoutManager
             detail_recyclerview.isNestedScrollingEnabled = false
             detail_recyclerview.adapter = adapter
-        } ?: run {
-            Error("Internal Error")
         }
 
-        val bcStack = detail_stack
 
 
 
         if(parentFragmentManager.backStackEntryCount > 1) {
             detail_scroll.isVisible = true
+
+            val bcStack = detail_stack
 
 
             detail_home.setOnClickListener {
@@ -113,12 +114,10 @@ class DetailFragment : Fragment(), PushDetail {
             }
 
 
-            var bci: Int = parentFragmentManager.backStackEntryCount
-            bci--
+            var bci: Int = 0
+            var bcd: Int = parentFragmentManager.backStackEntryCount - 1
 
-            var bi: Int = 0
-
-            while (bi < parentFragmentManager.backStackEntryCount) {
+            while (bci < parentFragmentManager.backStackEntryCount) {
 
                 val chevron = ImageView(context)
                 chevron.setImageResource(R.drawable.ic_chevron_right)
@@ -130,31 +129,26 @@ class DetailFragment : Fragment(), PushDetail {
                 button.textSize = 12F
                 button.isAllCaps = false
 
+                button.text = vm.breadcrumbTitles[bci + 1]
 
-                val hash = parentFragmentManager.getBackStackEntryAt(bi).id.hashCode()
-                Log.d("Hash:", hash.toString())
-
-                button.text = vm.breadcrumbTitles[bi + 1]
-
-                button.tag = bci
-                if (bci > 0) {
+                button.tag = bcd
+                if (bcd > 0) {
                     button.setOnClickListener {
-                        activity?.findViewById<ProgressBar>(R.id.progress_circular)?.visibility =
-                            View.VISIBLE
+                        (activity as MainInt).progressShow(true)
                         (activity as MainInt).popToDetail(button.tag as Int)
                     }
 
                 }
                 bcStack.addView(button)
-                bci--
-                bi++
+                bci++
+                bcd--
             }
 
         }
 
         (view.parent as? ViewGroup)?.doOnPreDraw {
             startPostponedEnterTransition()
-            activity?.findViewById<ProgressBar>(R.id.progress_circular)?.visibility = View.GONE
+            (activity as MainInt).progressShow(false)
             detail_scroll.scrollTo(detail_scroll.right, 0)
         }
     }
@@ -166,7 +160,7 @@ class DetailFragment : Fragment(), PushDetail {
 
     override fun navToDetail(code: String, title: String, url: String, version: String) {
         val action = DetailFragmentDirections.LoadNewDetail(code, title, url, version)
-        activity?.findViewById<ProgressBar>(R.id.progress_circular)?.visibility = View.VISIBLE
+        (activity as MainInt).progressShow(true)
         navController.navigate(action)
     }
 
