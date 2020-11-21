@@ -14,47 +14,37 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_splash.*
-import kotlinx.android.synthetic.main.activity_splash.imageViewCC
+import kotlinx.android.synthetic.main.activity_firstrun.*
 import kotlin.system.exitProcess
 
 
-class Splash : AppCompatActivity(), ViewTreeObserver.OnScrollChangedListener {
-
-    private val PREFNAME = "dev.anaes.qrh.seenwarning"
+class FirstRun : AppCompatActivity(), ViewTreeObserver.OnScrollChangedListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val sharedPref: SharedPreferences = getSharedPreferences(PREFNAME, Context.MODE_PRIVATE)
-        val seenWarning: Boolean? = sharedPref.getBoolean(PREFNAME, false)
+        val sharedPref: SharedPreferences = getSharedPreferences("dev.anaes.qrh", Context.MODE_PRIVATE)
         val editor = sharedPref.edit()
 
-        if(seenWarning == true) {
-            val intent = Intent(this, List::class.java)
-            intent.putExtra("STARTUP", true)
-            startActivity(intent)
-            finish()
-        } else {
-            setContentView(R.layout.activity_splash)
+            setContentView(R.layout.activity_firstrun)
 
             val buttonExit = findViewById<Button>(R.id.button_exit)
             val buttonAgreeInactive = findViewById<Button>(R.id.button_agree_inactive)
             val buttonAgreeActive = findViewById<Button>(R.id.button_agree_active)
             val scrollViewSplash = findViewById<ScrollView>(R.id.splash_scroll)
 
-            scrollViewSplash.getViewTreeObserver().addOnScrollChangedListener(this)
+            scrollViewSplash.viewTreeObserver.addOnScrollChangedListener(this)
 
             val verCode = BuildConfig.VERSION_NAME
             val verOutput = "Version $verCode"
-            findViewById<TextView>(R.id.about_version).setText(verOutput)
+            findViewById<TextView>(R.id.about_version).text = verOutput
 
             //CC license link
 
             val scrollBounds = Rect()
             scrollViewSplash.getHitRect(scrollBounds)
             if (scrolledToBottom.getLocalVisibleRect(scrollBounds)) {
-                findViewById<Button>(R.id.button_agree_active).visibility = View.VISIBLE
-                findViewById<Button>(R.id.button_agree_inactive).visibility = View.GONE
+                buttonAgreeActive.visibility = View.VISIBLE
+                buttonAgreeInactive.visibility = View.GONE
                 buttonAgreeActive.isClickable = true
                 buttonAgreeInactive.isClickable = false
             }
@@ -72,11 +62,9 @@ class Splash : AppCompatActivity(), ViewTreeObserver.OnScrollChangedListener {
             }
 
             buttonAgreeActive.setOnClickListener {
-                editor.putBoolean(PREFNAME, true)
+                editor.putBoolean("seenwarning", true)
                 editor.apply()
-                val intent = Intent(this, List::class.java)
-                intent.putExtra("FIRSTRUN", true)
-                startActivity(intent)
+                startActivity(Intent(this, Main::class.java))
                 finish()
             }
 
@@ -86,7 +74,7 @@ class Splash : AppCompatActivity(), ViewTreeObserver.OnScrollChangedListener {
             }
 
         }
-    }
+
 
     override fun onScrollChanged() {
         val scrollViewSplash: ScrollView = findViewById(R.id.splash_scroll)
@@ -95,18 +83,7 @@ class Splash : AppCompatActivity(), ViewTreeObserver.OnScrollChangedListener {
 
         //Two methods to check if scrolled to bottom for redundancy (as one does not work reliably on tablet screen where all visible from start)
 
-        //If view item at bottom is visible on screen:
-
-        if (scrolledToBottom.getLocalVisibleRect(scrollBounds)) {
-            findViewById<Button>(R.id.button_agree_active).visibility = View.VISIBLE
-            findViewById<Button>(R.id.button_agree_inactive).visibility = View.GONE
-            button_agree_active.isClickable = true
-            button_agree_inactive.isClickable = false
-        }
-
-        //If cannot scroll vertically (i.e. at bottom):
-
-        if (!scrollViewSplash.canScrollVertically(1)) {
+        if (scrolledToBottom.getLocalVisibleRect(scrollBounds) || !scrollViewSplash.canScrollVertically(1)) {
             findViewById<Button>(R.id.button_agree_active).visibility = View.VISIBLE
             findViewById<Button>(R.id.button_agree_inactive).visibility = View.GONE
             button_agree_active.isClickable = true

@@ -46,20 +46,35 @@
           android:layout_marginRight="2dp"
           android:contentDescription="@string/arrow"
           android:src="@drawable/ic_arrow_down"
-          app:layout_constraintBottom_toBottomOf="@+id/detail_head"
+          app:layout_constraintBottom_toBottomOf="@+id/detail_head_container"
           app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintTop_toTopOf="@+id/detail_head" />
+          app:layout_constraintTop_toTopOf="@+id/detail_head_container" />
 
-      <TextView
-          android:id="@+id/detail_head"
-          style="@style/Widget.AppCompat.TextView.SpinnerItem"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:textStyle="bold"
+      <androidx.constraintlayout.widget.ConstraintLayout
+          android:id="@+id/detail_head_container"
+          android:layout_width="match_parent"
+          android:layout_height="0dp"
+          android:layout_marginEnd="24dp"
+          android:layout_marginRight="24dp"
+          android:minHeight="40dp"
           app:layout_constraintEnd_toStartOf="@+id/detail_arrow"
           app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toTopOf="parent"
-          tools:text="step 1" />
+          app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/detail_head"
+            style="@style/Widget.AppCompat.TextView.SpinnerItem"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="start|center_vertical"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="step 1" />
+      </androidx.constraintlayout.widget.ConstraintLayout>
+
 
       <TextView
           android:id="@+id/detail_body"
@@ -70,8 +85,8 @@
           android:layout_marginTop="8dp"
           android:visibility="gone"
           app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toStartOf="@id/detail_head"
-          app:layout_constraintTop_toBottomOf="@+id/detail_head"
+          app:layout_constraintStart_toStartOf="@id/detail_head_container"
+          app:layout_constraintTop_toBottomOf="@+id/detail_head_container"
           tools:text="sub 1" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

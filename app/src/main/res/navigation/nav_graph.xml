@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/listFragment">
+
+    <fragment
+        android:id="@+id/listFragment"
+        android:name="dev.anaes.qrh.ListFragment"
+        android:label="QRH"
+        tools:layout="@layout/fragment_list">
+        <action
+            android:id="@+id/LoadDetail"
+            app:destination="@id/detailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/LoadAbout"
+            app:destination="@id/aboutFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="dev.anaes.qrh.DetailFragment"
+        tools:layout="@layout/fragment_detail">
+        <argument
+            android:name="code"
+            app:argType="string" />
+        <action
+            android:id="@+id/LoadNewDetail"
+            app:destination="@id/detailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"  />
+        <argument
+            android:name="title"
+            app:argType="string" />
+        <argument
+            android:name="url"
+            app:argType="string" />
+        <argument
+            android:name="version"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="dev.anaes.qrh.AboutFragment"
+        android:label="About"
+        tools:layout="@layout/fragment_about" >
+        <action
+            android:id="@+id/LoadDisclaimers"
+            app:destination="@id/disclaimersFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
+    </fragment>
+    <fragment
+        android:id="@+id/disclaimersFragment"
+        android:name="dev.anaes.qrh.DisclaimersFragment"
+        android:label="Disclaimers"
+        tools:layout="@layout/fragment_disclaimers" />
+
+</navigation>
