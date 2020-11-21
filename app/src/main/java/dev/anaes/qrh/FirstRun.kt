@@ -62,7 +62,7 @@ class FirstRun : AppCompatActivity(), ViewTreeObserver.OnScrollChangedListener {
             }
 
             buttonAgreeActive.setOnClickListener {
-                editor.putBoolean("seenwarning", true)
+                editor.putBoolean("seen_warning", true)
                 editor.apply()
                 startActivity(Intent(this, Main::class.java))
                 finish()
