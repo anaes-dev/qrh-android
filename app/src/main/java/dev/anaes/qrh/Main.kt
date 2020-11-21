@@ -94,7 +94,7 @@ class Main : AppCompatActivity(), MainInt {
             val currentTime = System.currentTimeMillis()
             val lastCheckedTime = sharedPref.getLong("update_checked", 0)
 
-            if ((currentTime - lastCheckedTime) > 1000) {
+            if ((currentTime - lastCheckedTime) > 600000) {
                 appUpdateManager = AppUpdateManagerFactory.create(this)
                 appUpdateManager.registerListener(installStateUpdatedListener)
 
@@ -179,24 +179,24 @@ class Main : AppCompatActivity(), MainInt {
     }
 
     private fun popCompleteUpdate() {
-        val snackbar = Snackbar.make(
+        val snack = Snackbar.make(
             findViewById(R.id.main_container),
-            "Update download complete",
+            "Update ready to install",
             Snackbar.LENGTH_INDEFINITE
         )
-        snackbar.setAction("Install") {
+        snack.setAction("Install") {
             appUpdateManager.completeUpdate()
         }
-        snackbar.show()
+        snack.show()
     }
 
     private fun popFailedUpdate() {
-        val snackbar = Snackbar.make(
+        val snack = Snackbar.make(
             findViewById(R.id.main_container),
             "Update failed, please update via Google Play",
             Snackbar.LENGTH_LONG
         )
-        snackbar.show()
+        snack.show()
     }
 
 }
