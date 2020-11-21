@@ -80,7 +80,9 @@
         tools:layout="@layout/fragment_firstrun" >
         <action
             android:id="@+id/loadList"
-            app:destination="@id/listFragment" />
+            app:destination="@id/listFragment"
+            app:popUpTo="@id/listFragment"
+            app:popUpToInclusive="false" />
     </fragment>
 
 </navigation>

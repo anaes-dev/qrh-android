@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
@@ -16,9 +17,12 @@ import kotlinx.android.synthetic.main.fragment_about.imageViewCC
 
 class AboutFragment : Fragment() {
 
+    private val vm: MainViewModel by activityViewModels()
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Main.breadcrumbIsActive = false
+        vm.breadcrumbIsActive = false
         activity?.findViewById<AppBarLayout>(R.id.app_bar)?.setExpanded(false)
         activity?.findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout)?.title = "About"
     }
@@ -49,7 +53,7 @@ class AboutFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        Main.breadcrumbIsActive = false
+        vm.breadcrumbIsActive = false
     }
 
 

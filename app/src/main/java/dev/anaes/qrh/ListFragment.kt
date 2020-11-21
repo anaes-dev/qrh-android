@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.widget.SearchView
 import android.widget.TextView
 import androidx.core.view.doOnPreDraw
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.appbar.AppBarLayout
@@ -21,14 +23,18 @@ class ListFragment : Fragment() {
 
     private val navController by lazy { findNavController() }
 
+    private val vm: MainViewModel by activityViewModels()
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
         setHasOptionsMenu(true)
-        Main.breadcrumbCount = 0
-        Main.breadcrumbList.clear()
-        Main.breadcrumbIsActive = false
+        vm.breadcrumbCount = 0
+        vm.breadcrumbList.clear()
+        vm.breadcrumbIsActive = false
     }
 
     override fun onCreateView(
@@ -113,9 +119,7 @@ class ListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        Main.breadcrumbCount = 0
-        Main.breadcrumbList.clear()
-        Main.breadcrumbIsActive = false
+        vm.breadcrumbIsActive = false
     }
 
 

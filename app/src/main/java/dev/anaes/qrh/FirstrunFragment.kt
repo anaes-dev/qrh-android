@@ -1,5 +1,6 @@
 package dev.anaes.qrh
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Rect
 import android.net.Uri
@@ -9,8 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
-import android.widget.Button
-import androidx.core.content.ContextCompat
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
@@ -22,10 +22,12 @@ import kotlin.system.exitProcess
 class FirstrunFragment : Fragment(), ViewTreeObserver.OnScrollChangedListener {
 
     private val prefName = "dev.anaes.qrh.seenwarning"
+    private val vm: MainViewModel by activityViewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Main.breadcrumbIsActive = false
+        vm.breadcrumbIsActive = false
         activity?.progress_circular?.visibility = View.GONE
         activity?.findViewById<AppBarLayout>(R.id.app_bar)?.setExpanded(false)
         activity?.findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout)?.title = "QRH"
@@ -39,6 +41,7 @@ class FirstrunFragment : Fragment(), ViewTreeObserver.OnScrollChangedListener {
         return inflater.inflate(R.layout.fragment_firstrun, container, false)
     }
 
+    @SuppressLint("ResourceType")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -71,7 +74,7 @@ class FirstrunFragment : Fragment(), ViewTreeObserver.OnScrollChangedListener {
 
     override fun onResume() {
         super.onResume()
-        Main.breadcrumbIsActive = false
+        vm.breadcrumbIsActive = false
         activity?.progress_circular?.visibility = View.GONE
         activity?.findViewById<AppBarLayout>(R.id.app_bar)?.setExpanded(false)
         activity?.findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout)?.title = "QRH"
