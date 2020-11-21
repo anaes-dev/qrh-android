@@ -22,7 +22,6 @@
             android:layout_width="wrap_content"
             android:layout_height="36dp"
             android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
             android:background="@drawable/button_border"
             android:text="@string/exit"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -37,7 +36,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
             android:clickable="false"
             android:text="@string/agree_amp_continue"
@@ -50,7 +48,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
             android:clickable="false"
             android:text="@string/agree_amp_continue"
             android:visibility="visible"
@@ -69,7 +66,7 @@
         android:fadeScrollbars="false"
         android:scrollbarSize="8dp"
         android:scrollbarStyle="insideOverlay"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
+        app:layout_constraintBottom_toTopOf="@+id/button_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -163,7 +160,7 @@
                     android:layout_gravity="start"
                     android:clickable="true"
                     android:contentDescription="@string/CCBYNCSA"
-                    android:focusable="auto"
+                    android:focusable="true"
                     android:padding="8dp"
                     app:srcCompat="@drawable/by_nc_sa" />
 

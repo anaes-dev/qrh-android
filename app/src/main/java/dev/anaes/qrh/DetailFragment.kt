@@ -3,11 +3,9 @@ package dev.anaes.qrh
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.ProgressBar
 import androidx.core.view.doOnPreDraw
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -114,7 +112,7 @@ class DetailFragment : Fragment(), PushDetail {
             }
 
 
-            var bci: Int = 0
+            var bci = 0
             var bcd: Int = parentFragmentManager.backStackEntryCount - 1
 
             while (bci < parentFragmentManager.backStackEntryCount) {

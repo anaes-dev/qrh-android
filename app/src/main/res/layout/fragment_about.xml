@@ -122,7 +122,7 @@
                     android:layout_gravity="start"
                     android:clickable="true"
                     android:contentDescription="@string/CCBYNCSA"
-                    android:focusable="auto"
+                    android:focusable="true"
                     android:padding="8dp"
                     app:srcCompat="@drawable/by_nc_sa" />
 
@@ -154,7 +154,7 @@
                     android:layout_weight="0"
                     android:background="@drawable/ic_download_dark"
                     android:contentDescription="@string/image"
-                    android:tint="#000000"
+                    app:tint="#000000"
                     app:srcCompat="@drawable/empty"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="4dp" />
@@ -188,7 +188,7 @@
                     android:layout_weight="0"
                     android:background="@drawable/ic_baseline_arrow_forward_24"
                     android:contentDescription="@string/image"
-                    android:tint="#000000"
+                    app:tint="#000000"
                     app:srcCompat="@drawable/empty" />
 
                 <TextView
