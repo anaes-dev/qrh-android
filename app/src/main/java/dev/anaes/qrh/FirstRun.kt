@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Rect
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.ViewTreeObserver
@@ -15,6 +16,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_firstrun.*
+import kotlinx.android.synthetic.main.activity_firstrun.android_old
+import kotlinx.android.synthetic.main.activity_firstrun.imageViewCC
 import kotlin.system.exitProcess
 
 
@@ -38,6 +41,9 @@ class FirstRun : AppCompatActivity(), ViewTreeObserver.OnScrollChangedListener {
             val verOutput = "Version $verCode"
             findViewById<TextView>(R.id.about_version).text = verOutput
 
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+                android_old.visibility = View.VISIBLE
+            }
             //CC license link
 
             val scrollBounds = Rect()
