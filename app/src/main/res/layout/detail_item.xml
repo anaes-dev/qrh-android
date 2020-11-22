@@ -16,7 +16,6 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_marginStart="32dp"
-      android:layout_marginLeft="32dp"
       android:foreground="?android:attr/selectableItemBackground"
       android:hapticFeedbackEnabled="true"
       app:cardCornerRadius="6dp"
@@ -32,10 +31,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="0dp"
-        android:paddingLeft="0dp"
         android:paddingTop="6dp"
         android:paddingEnd="4dp"
-        android:paddingRight="4dp"
         android:paddingBottom="5dp">
 
       <ImageView
@@ -43,7 +40,6 @@
           android:layout_width="20dp"
           android:layout_height="20dp"
           android:layout_marginEnd="2dp"
-          android:layout_marginRight="2dp"
           android:contentDescription="@string/arrow"
           android:src="@drawable/ic_arrow_down"
           app:layout_constraintBottom_toBottomOf="@+id/detail_head_container"
@@ -55,7 +51,6 @@
           android:layout_width="match_parent"
           android:layout_height="0dp"
           android:layout_marginEnd="24dp"
-          android:layout_marginRight="24dp"
           android:minHeight="40dp"
           app:layout_constraintEnd_toStartOf="@+id/detail_arrow"
           app:layout_constraintStart_toStartOf="parent"
@@ -81,7 +76,6 @@
           android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:layout_marginStart="8dp"
-          android:layout_marginLeft="8dp"
           android:layout_marginTop="8dp"
           android:visibility="gone"
           app:layout_constraintEnd_toEndOf="parent"

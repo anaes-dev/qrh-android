@@ -1,5 +1,6 @@
 package dev.anaes.qrh
 
+import android.R.attr
 import android.graphics.Color
 import android.net.Uri
 import android.os.Build
@@ -22,10 +23,12 @@ import com.bumptech.glide.Glide
 import org.xml.sax.XMLReader
 import java.util.regex.Pattern
 
+
 class CardRecyclerAdapter(
     private var dataSource: ArrayList<DetailContent>,
     private val codePassed: String?,
-    private val linkListener: (String) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private val linkListener: (String) -> Unit
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     class Bullet
 
     interface UpdateViewHolder {
@@ -288,7 +291,10 @@ class CardRecyclerAdapter(
 
             val transformFilter =
                 TransformFilter { _, url ->
-                    url.toString().replace("→ ", "").replace("→", "").replace(")", "").replace("(","")
+                    url.toString().replace("→ ", "").replace("→", "").replace(")", "").replace(
+                        "(",
+                        ""
+                    )
                 }
 
             Linkify.addLinks(textView, patternURL, "http://")
@@ -301,49 +307,38 @@ class CardRecyclerAdapter(
 
         @Suppress("DEPRECATION")
         fun htmlProcess(text: String, view: View) : CharSequence {
-            val parseHtml = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY).trim()
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                val parseSpans = SpannableStringBuilder(Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY).trim())
+                val bulletSpans = parseSpans.getSpans(0, parseSpans.length, BulletSpan::class.java)
+                bulletSpans.forEach {
+                    val start = parseSpans.getSpanStart(it)
+                    val end = parseSpans.getSpanEnd(it)
+                    parseSpans.removeSpan(it)
+                    parseSpans.setSpan(
+                        ImprovedBullet(bulletRadius = dip(2.5, view), gapWidth = dip(7.5, view)),
+                        start,
+                        end,
+                        Spanned.SPAN_INCLUSIVE_EXCLUSIVE
+                    )
+                }
+                return parseSpans
             } else {
-                Html.fromHtml(text, null,
-                    { opening: Boolean, tag: String, output: Editable, _: XMLReader ->
-                        if (tag == "li" && opening) {
-                            output.setSpan(Bullet(), output.length, output.length, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
-                        }
-                        if (tag == "li" && !opening) {
-                            output.append("\n\n")
-                            val lastMark = output.getSpans(0, output.length, Bullet::class.java).lastOrNull()
-                            lastMark?.let {
-                                val start = output.getSpanStart(it)
-                                output.removeSpan(it)
-                                if (start < output.length) {
-                                    output.setSpan(BulletSpan(), start, output.length, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
-                                }
-                            }
-                        }
+                return Html.fromHtml(text, null,
+                    { opening, tag, output, _ ->
+                        if (tag == "br" && opening) output.append("\n")
+                        if (tag == "p" && opening) output.append("\n")
+                        if (tag == "li" && opening) output.append("\n\n• ")
                     }).trim()
             }
-
-            val parseSpans = SpannableStringBuilder(parseHtml)
-
-            val bulletSpans = parseSpans.getSpans(0, parseSpans.length, BulletSpan::class.java)
-
-            bulletSpans.forEach {
-                val start = parseSpans.getSpanStart(it)
-                val end = parseSpans.getSpanEnd(it)
-                parseSpans.removeSpan(it)
-                parseSpans.setSpan(
-                    ImprovedBullet(bulletRadius = dip(2.5, view), gapWidth = dip(7.5, view)),
-                    start,
-                    end,
-                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE
-                )
-            }
-
-            return parseSpans
         }
 
         private fun dip(dp: Double, view: View): Int {
-            return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp.toFloat(), view.resources.displayMetrics).toInt()
+            return TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                dp.toFloat(),
+                view.resources.displayMetrics
+            ).toInt()
         }
     }
 }

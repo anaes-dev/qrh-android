@@ -72,7 +72,6 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:id="@+id/splash_contents"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -90,7 +89,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="0"
                     android:contentDescription="@string/image"
-                    app:srcCompat="@drawable/ic_launcher_round" />
+                    app:srcCompat="@mipmap/ic_launcher_round" />
 
                 <TextView
                     style="@style/TextAppearance.AppCompat.Headline"
@@ -128,7 +127,6 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/textView4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autoLink="web"
@@ -136,7 +134,6 @@
                 android:text="@string/github" />
 
             <TextView
-                android:id="@+id/textView5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="8dp" />
@@ -170,7 +167,8 @@
                     android:autoLink="web"
                     android:padding="8dp"
                     android:text="@string/about_2"
-                    android:textSize="10sp" />
+                    android:textSize="10sp"
+                    tools:ignore="SmallSp" />
 
             </LinearLayout>
 

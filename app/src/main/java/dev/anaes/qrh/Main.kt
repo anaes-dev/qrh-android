@@ -4,15 +4,14 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentSender.SendIntentException
 import android.content.SharedPreferences
-import android.icu.util.TimeZone
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
-import android.os.SystemClock
-import android.util.Log
 import android.view.View
+import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
 import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.findNavController
@@ -29,11 +28,16 @@ import com.google.android.play.core.install.InstallStateUpdatedListener
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
-import java.security.Timestamp
 
 interface MainInt {
     fun popToDetail(num: Int)
-    fun updateBar(title: String, code: String, version: String, expanded: Boolean)
+    fun updateBar(
+        title: String,
+        code: String,
+        version: String,
+        expanded: Boolean,
+        hideKeyboard: Boolean
+    )
     fun openURL(url: String)
     fun progressShow(show: Boolean)
 }
@@ -45,7 +49,10 @@ class Main : AppCompatActivity(), MainInt {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val sharedPref: SharedPreferences = getSharedPreferences("dev.anaes.qrh", Context.MODE_PRIVATE)
+        val sharedPref: SharedPreferences = getSharedPreferences(
+            "dev.anaes.qrh",
+            Context.MODE_PRIVATE
+        )
 
         if (!sharedPref.getBoolean("seen_warning", false)) {
             startActivity(Intent(this, FirstRun::class.java))
@@ -138,7 +145,10 @@ class Main : AppCompatActivity(), MainInt {
 
     override fun onSaveInstanceState(savedInstanceState: Bundle) {
         super.onSaveInstanceState(savedInstanceState)
-        savedInstanceState.putBundle("nav_state", findNavController(R.id.nav_host_fragment).saveState())
+        savedInstanceState.putBundle(
+            "nav_state",
+            findNavController(R.id.nav_host_fragment).saveState()
+        )
     }
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
@@ -157,11 +167,21 @@ class Main : AppCompatActivity(), MainInt {
         }
     }
 
-    override fun updateBar(title: String, code: String, version: String, expanded: Boolean) {
+    override fun updateBar(
+        title: String,
+        code: String,
+        version: String,
+        expanded: Boolean,
+        hideKeyboard: Boolean
+    ) {
         findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout).title = title
         findViewById<TextView>(R.id.detail_code).text = code
         findViewById<TextView>(R.id.detail_version).text = version
         findViewById<AppBarLayout>(R.id.app_bar).setExpanded(expanded)
+
+        if(hideKeyboard && Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+            window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
+        }
     }
 
     override fun openURL(url: String) {
