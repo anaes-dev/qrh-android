@@ -41,11 +41,10 @@ tools:context=".DetailFragment">
                 android:layout_height="wrap_content"
                 android:height="42dp"
                 android:drawableStart="@drawable/ic_home"
-                android:drawableLeft="@drawable/ic_home"
                 android:minWidth="0dp"
                 android:minHeight="42dp"
                 android:singleLine="true"
-                android:text="Home"
+                android:text="@string/title_home"
                 android:textAllCaps="false"
                 android:textSize="12sp" />
 
@@ -53,26 +52,26 @@ tools:context=".DetailFragment">
     </HorizontalScrollView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/grad_left"
         android:layout_width="24dp"
         android:layout_height="0dp"
         android:foreground="@drawable/grad_left"
         android:foregroundGravity="fill"
         app:layout_constraintBottom_toBottomOf="@+id/detail_scroll"
         app:layout_constraintStart_toStartOf="@+id/detail_scroll"
-        app:layout_constraintTop_toTopOf="@+id/detail_scroll">
+        app:layout_constraintTop_toTopOf="@+id/detail_scroll"
+        tools:ignore="UnusedAttribute">
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/grad_right"
         android:layout_width="24dp"
         android:layout_height="0dp"
         android:foreground="@drawable/grad_right"
         android:foregroundGravity="fill"
         app:layout_constraintBottom_toBottomOf="@+id/detail_scroll"
         app:layout_constraintEnd_toEndOf="@+id/detail_scroll"
-        app:layout_constraintTop_toTopOf="@+id/detail_scroll">
+        app:layout_constraintTop_toTopOf="@+id/detail_scroll"
+        tools:ignore="UnusedAttribute">
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -92,7 +91,6 @@ tools:context=".DetailFragment">
         android:layout_height="wrap_content"
         android:layout_gravity="top|end"
         android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:alpha=".1"
         android:fontFamily="sans-serif-black"
         android:letterSpacing="-0.05"

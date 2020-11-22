@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import android.widget.TextView
-import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.RecyclerView
 import java.util.*
 import kotlin.collections.ArrayList
@@ -50,8 +49,8 @@ class ListRecyclerAdapter(  var dataSource: ArrayList<Guideline>,
         holder.mTitleView.text = guideline.title
         holder.mCodeView.text= guideline.code
 
-        val guidelineVersion = guideline.version.toString()
-        holder.mVersionView.text = "v.$guidelineVersion"
+        val guidelineVersion = "v." + guideline.version.toString()
+        holder.mVersionView.text = guidelineVersion
 
         holder.bind(guidelineFilterList[position], clickListener)
         }

@@ -21,13 +21,13 @@ class DisclaimersFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as MainInt).progressShow(false)
-        (activity as MainInt).updateBar(title, "", "", false)
+        (activity as MainInt).updateBar("QRH", "", "", expanded = false, hideKeyboard = true)
     }
 
     override fun onResume() {
         super.onResume()
         (activity as MainInt).progressShow(false)
-        (activity as MainInt).updateBar(title, "", "", false)
+        (activity as MainInt).updateBar("QRH", "", "", expanded = false, hideKeyboard = true)
     }
 
 

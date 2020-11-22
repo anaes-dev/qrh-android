@@ -75,7 +75,7 @@
     {
       "type": 9,
       "head": "Box B: TRANSFUSION GOALS",
-      "body": "<ul><li>Maintain Hb > 80 g.l⁻¹</li><li>Maintain platelet count > 75x10⁹.l⁻¹</li><li>Maintain PT and APTT <1.5 x mean control (FFP)</li><li>Maintain fibrinogen >1.0 g.l⁻¹ (cryoprecipitate)</li><li>Avoid DIC (maintain blood pressure, treat/prevent acidosis, avoid hypothermia, treat hypocalcaemia and hyperkalaemia)</li></ul>",
+      "body": "<ul><li>Maintain Hb &gt; 80 g.l⁻¹</li><li>Maintain platelet count > 75x10⁹.l⁻¹</li><li>Maintain PT and APTT <1.5 x mean control (FFP)</li><li>Maintain fibrinogen >1.0 g.l⁻¹ (cryoprecipitate)</li><li>Avoid DIC (maintain blood pressure, treat/prevent acidosis, avoid hypothermia, treat hypocalcaemia and hyperkalaemia)</li></ul>",
       "step": ""
     },
     {
@@ -87,7 +87,7 @@
     {
       "type": 6,
       "head": "Box C: DRUG DOSES",
-      "body": "<p><b>CALCIUM:</b> (use either the chloride or gluconate)</p><ul><li>Adult: 10 ml of 10% calcium chloride intraVENOUS</li><li>Adult: 20 ml of 10% calcium gluconate intraVENOUS</li><li>Child: 0.2 ml.kg⁻¹ of 10% calcium chloride intraVENOUS</li><li>Child: 0.5 ml.kg⁻¹ of 10% calcium gluconate intraVENOUS </li></ul><p><b>TRANEXAMIC ACID:</b></p><ul><li>Child: 15 mg.kg⁻¹ intraVENOUS bolus then 2 mg.kg⁻¹.h⁻¹ until bleeding stops</li><li>Adult: 1 g intraVENOUS bolus, then:<br><small>Obstetric haemorrhage, repeat dose 30 mins later</small><br><small>Non-obstetric haemorrhage, 1 g intraVENOUS infusion over next 8 h</small></li></ul>",
+      "body": "<p><b>CALCIUM:</b> (use either the chloride or gluconate)</p><ul><li>Adult: 10 ml of 10% calcium chloride intraVENOUS</li><li>Adult: 20 ml of 10% calcium gluconate intraVENOUS</li><li>Child: 0.2 ml.kg⁻¹ of 10% calcium chloride intraVENOUS</li><li>Child: 0.5 ml.kg⁻¹ of 10% calcium gluconate intraVENOUS </li></ul><p><b>TRANEXAMIC ACID:</b></p><ul><li>Child: 15 mg.kg⁻¹ intraVENOUS bolus then 2 mg.kg⁻¹.h⁻¹ until bleeding stops</li><li>Adult: 1 g intraVENOUS bolus, then:<p><small>Obstetric haemorrhage, repeat dose 30 mins later</small></p><p><small>Non-obstetric haemorrhage, 1 g intraVENOUS infusion over next 8 h</small></p></li></ul>",
       "step": ""
     },
     {

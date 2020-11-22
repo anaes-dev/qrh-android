@@ -2,7 +2,6 @@ package dev.anaes.qrh
 
 
 import android.os.Bundle
-import android.util.Log
 import android.util.TypedValue
 import android.view.*
 import android.widget.SearchView
@@ -42,7 +41,7 @@ class ListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         postponeEnterTransition()
 
-        (activity as MainInt).updateBar("QRH", "", "", false)
+        (activity as MainInt).updateBar("QRH", "", "", expanded = false, hideKeyboard = true)
 
         val guidelineList =
             Guideline.getGuidelinesFromFile(
@@ -52,6 +51,7 @@ class ListFragment : Fragment() {
 
         val adapter =
             ListRecyclerAdapter(guidelineList) { guideline: Guideline ->
+                list_searchview.clearFocus()
                 guidelineClicked(guideline)
             }
 
@@ -60,7 +60,7 @@ class ListFragment : Fragment() {
         list_recyclerview.adapter = adapter
         list_recyclerview.isNestedScrollingEnabled = false
 
-        var alreadyAnimated: Boolean = false
+        var alreadyAnimated = false
 
         adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
             override fun onChanged() {
@@ -130,6 +130,7 @@ class ListFragment : Fragment() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
                     if (dy > 2) {
+                        list_searchview.clearFocus()
                         if (!isDismissing) {
                             isDismissing = true
                             snackView.animate().alpha(0F).setDuration(600)
@@ -170,7 +171,7 @@ class ListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        (activity as MainInt).updateBar("QRH", "", "", false)
+        (activity as MainInt).updateBar("QRH", "", "", expanded = false, hideKeyboard = true)
     }
 
 

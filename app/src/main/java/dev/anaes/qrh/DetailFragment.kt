@@ -51,7 +51,10 @@ class DetailFragment : Fragment(), PushDetail {
         super.onResume()
         val bcEntry: Int = parentFragmentManager.backStackEntryCount
         vm.breadcrumbTitles[bcEntry] = args.title
-        (activity as MainInt).updateBar(title.toString(), code.toString(), version.toString(), true)
+        (activity as MainInt).updateBar(title.toString(), code.toString(), version.toString(),
+            expanded = true,
+            hideKeyboard = true
+        )
     }
 
     override fun onCreateView(
@@ -68,7 +71,10 @@ class DetailFragment : Fragment(), PushDetail {
 
         val bcEntry: Int = parentFragmentManager.backStackEntryCount
         vm.breadcrumbTitles[bcEntry] = args.title
-        (activity as MainInt).updateBar(title.toString(), code.toString(), version.toString(), true)
+        (activity as MainInt).updateBar(title.toString(), code.toString(), version.toString(),
+            expanded = true,
+            hideKeyboard = true
+        )
         detail_code_2.text = code.toString()
         activity?.findViewById<AppBarLayout>(R.id.app_bar)?.setExpanded(true)
 

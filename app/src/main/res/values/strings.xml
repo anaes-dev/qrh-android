@@ -2,6 +2,8 @@
     <string name="app_name">QRH</string>
     <string name="long_name">Quick Reference Handbook</string>
     <string name="title_about">About</string>
+    <string name="title_home">Home</string>
+    <string name="title_download">Download</string>
     <string name="github"><u>github.com/anaes-dev/qrh-android</u></string>
     <string name="app_type">Android</string>
 
@@ -26,62 +28,18 @@
     <string name="version_hint">Adapted from QRH section </string>
     <string name="emptySearch">No results</string>
 
-    <string name="locations_header">Locations</string>
-    <string name="locations_additional">Additional locations</string>
 
-    <string name="location_arrest">Cardiac arrest trolley</string>
-    <string name="location_pacing">Pacing defibrillator</string>
-    <string name="location_airway">Airway rescue trolley</string>
-    <string name="location_mh">Dantrolene / malignant hyperthermia kit</string>
-    <string name="location_la">Lipid rescue / local anaesthetic toxicity kit</string>
-    <string name="location_anaphylaxis">Anaphylaxis kit</string>
-    <string name="location_rapid">Rapid infusor for i.v. fluid</string>
-    <string name="location_salvage">Cell salvage equipment</string>
-    <string name="location_ultrasound">Ultrasound machine</string>
-    <string name="location_videoscope">Videolaryngoscope</string>
-    <string name="location_cric">Cricothyrotomy kit</string>
-    <string name="location_jet">Jet ventilator</string>
-    <string name="location_scope">Flexible intubating scope</string>
-    <string name="location_helpp">Ramping mattress for obese</string>
-    <string name="location_muster">Muster points for evacuation</string>
-    <string name="location_cooled">Cooled fluids</string>
-    <string name="location_ice">Nearest ice machine</string>
-    <string name="location_sugammadex">Sugammadex</string>
-    <string name="location_firealarm">Fire alarm</string>
-    <string name="location_fireext">Fire extinguisher</string>
-
-    <string name="location_equipmentbox">EQUIPMENT LOCATIONS</string>
-    <string name="location_settingshint">Please enter locations (top-right)</string>
-
-    <string name="location_additional_1a">Additional 1 name</string>
-    <string name="location_additional_1b">Additional 1 content</string>
-    <string name="location_additional_2a">Additional 2 name</string>
-    <string name="location_additional_2b">Additional 2 content</string>
-    <string name="location_additional_3a">Additional 3 name</string>
-    <string name="location_additional_3b">Additional 3 content</string>
-
-
-    <string name="fire1">Evidence of fire (smoke, heat, odour, flash, flame) on patient or drapes, or in patient’s airway</string>
-    <string name="fire2">START</string>
-    <string name="fire3">Call for help and inform theatre team</string>
-    <string name="fire4">&lt;li&gt;Activate fire alarm&lt;li&gt;Dial hospital fire emergency number and report location and nature of fire&lt;li&gt;Bring CO2 fire extinguisher into theatre</string>
     <string name="exit">Exit</string>
     <string name="agree_amp_continue"><![CDATA[Agree & Continue]]></string>
 
     <string name="disclaimers">View disclaimers</string>
-    <string name="resetexit">Reset data &amp; exit</string>
     <string name="iconhint">Click this icon at the top\-right of each guideline to access the original PDF file from the Association of Anaesthetists website.</string>
-    <string name="settinghint">Click this icon at the top\-right of pages 0\-4 and 3\-7 to edit location reminders.</string>
     <string name="arrowhint">Click highlighted links to jump to related guidelines.</string>
     <string name="_1">1</string>
     <string name="_2">2</string>
     <string name="_3">3</string>
     <string name="_4">4</string>
     <string name="_5">5</string>
-    <string name="action_settings">Settings</string>
-    <string name="title_guideline_list">Guidelines</string>
-    <string name="title_guideline_detail">Guideline Detail</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
