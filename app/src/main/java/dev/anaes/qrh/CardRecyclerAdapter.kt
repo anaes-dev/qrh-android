@@ -1,6 +1,5 @@
 package dev.anaes.qrh
 
-import android.R.attr
 import android.graphics.Color
 import android.net.Uri
 import android.os.Build
@@ -20,7 +19,6 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import org.xml.sax.XMLReader
 import java.util.regex.Pattern
 
 
@@ -29,7 +27,6 @@ class CardRecyclerAdapter(
     private val codePassed: String?,
     private val linkListener: (String) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    class Bullet
 
     interface UpdateViewHolder {
         fun bindViews(detailContent: DetailContent, linkListener: (String) -> Unit)
