@@ -8,6 +8,8 @@ import android.text.Layout
 import android.text.Spanned
 import android.text.style.LeadingMarginSpan
 
+/* Borrowed from David Bilík, https://github.com/davidbilik/bullet-span-sample */
+
 class ImprovedBullet(
     private val bulletRadius: Int = STANDARD_BULLET_RADIUS,
     private val gapWidth: Int = STANDARD_GAP_WIDTH,

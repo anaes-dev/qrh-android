@@ -19,12 +19,14 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import org.xml.sax.XMLReader
 import java.util.regex.Pattern
 
 class CardRecyclerAdapter(
     private var dataSource: ArrayList<DetailContent>,
     private val codePassed: String?,
     private val linkListener: (String) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    class Bullet
 
     interface UpdateViewHolder {
         fun bindViews(detailContent: DetailContent, linkListener: (String) -> Unit)
@@ -35,32 +37,24 @@ class CardRecyclerAdapter(
         UpdateViewHolder {
         override fun bindViews(detailContent: DetailContent, linkListener: (String) -> Unit) {
 
-            this.itemView.findViewById<TextView>(R.id.detail_head).text = htmlProcess(detailContent.head, itemView)
+            val headerTxt = itemView.findViewById<TextView>(R.id.detail_head)
+            val bodyTxt = itemView.findViewById<TextView>(R.id.detail_body)
 
-            this.itemView.findViewById<TextView>(R.id.detail_body).text = htmlProcess(detailContent.body, itemView)
+            headerTxt.text = htmlProcess(detailContent.head, itemView)
 
-            linkifyFunction(
-                itemView.findViewById(
-                    R.id.detail_body
-                )
-            )
+            bodyTxt.text = htmlProcess(detailContent.body, itemView)
 
-            linkifyFunction(
-                itemView.findViewById(
-                    R.id.detail_head
-                )
-            )
+            linkifyFunction(headerTxt)
 
-            val tv = itemView.findViewById<TextView>(R.id.detail_body)
+            linkifyFunction(bodyTxt)
 
-            tv.movementMethod = object : TextViewLinkHandler() {
+            bodyTxt.movementMethod = object : TextViewLinkHandler() {
                 override fun onLinkClick(url: String?) {
                     linkListener(url.toString())
                 }
             }
 
-
-            itemView.findViewById<TextView>(R.id.detail_step).setText(detailContent.step).toString()
+            itemView.findViewById<TextView>(R.id.detail_step).text = detailContent.step
         }
     }
 
@@ -69,120 +63,55 @@ class CardRecyclerAdapter(
         UpdateViewHolder {
         override fun bindViews(detailContent: DetailContent, linkListener: (String) -> Unit) {
 
+            val cardBody = itemView.findViewById<CardView>(R.id.detail_card)
+            val headerTxt = itemView.findViewById<TextView>(R.id.detail_head)
+            val bodyTxt = itemView.findViewById<TextView>(R.id.detail_body)
+            val subArrow = itemView.findViewById<ImageView>(R.id.detail_arrow)
+
             when (detailContent.type) {
                 5 -> {
-                    itemView.findViewById<CardView>(R.id.detail_card).setCardBackgroundColor(
-                        Color.parseColor(
-                            "#FBE9E7"
-                        )
-                    )
-                    itemView.findViewById<TextView>(R.id.detail_head).setTextColor(
-                        Color.parseColor(
-                            "#E64A19"
-                        )
-                    )
-                    itemView.findViewById<ImageView>(R.id.detail_arrow).setBackgroundColor(
-                        Color.parseColor(
-                            "#FFCCBC"
-                        )
-                    )
+                    cardBody.setCardBackgroundColor(Color.parseColor("#FBE9E7"))
+                    headerTxt.setTextColor(Color.parseColor("#E64A19"))
+                    subArrow.setBackgroundColor(Color.parseColor("#FFCCBC"))
                 }
                 6 -> {
-                    itemView.findViewById<CardView>(R.id.detail_card).setCardBackgroundColor(
-                        Color.parseColor(
-                            "#E1F5FE"
-                        )
-                    )
-                    itemView.findViewById<TextView>(R.id.detail_head).setTextColor(
-                        Color.parseColor(
-                            "#1976D2"
-                        )
-                    )
-                    itemView.findViewById<ImageView>(R.id.detail_arrow).setBackgroundColor(
-                        Color.parseColor(
-                            "#BBDEFB"
-                        )
-                    )
+                    cardBody.setCardBackgroundColor(Color.parseColor("#E1F5FE"))
+                    headerTxt.setTextColor(Color.parseColor("#1976D2"))
+                    subArrow.setBackgroundColor(Color.parseColor("#BBDEFB"))
                 }
                 7 -> {
-                    itemView.findViewById<CardView>(R.id.detail_card).setCardBackgroundColor(
-                        Color.parseColor(
-                            "#E8F5E9"
-                        )
-                    )
-                    itemView.findViewById<TextView>(R.id.detail_head).setTextColor(
-                        Color.parseColor(
-                            "#388E3C"
-                        )
-                    )
-                    itemView.findViewById<ImageView>(R.id.detail_arrow).setBackgroundColor(
-                        Color.parseColor(
-                            "#C8E6C9"
-                        )
-                    )
+                    cardBody.setCardBackgroundColor(Color.parseColor("#E8F5E9"))
+                    headerTxt.setTextColor(Color.parseColor("#388E3C"))
+                    subArrow.setBackgroundColor(Color.parseColor("#C8E6C9"))
                 }
                 8 -> {
-                    itemView.findViewById<CardView>(R.id.detail_card).setCardBackgroundColor(
-                        Color.parseColor(
-                            "#EDEDED"
-                        )
-                    )
-                    itemView.findViewById<TextView>(R.id.detail_head).setTextColor(
-                        Color.parseColor(
-                            "#000000"
-                        )
-                    )
-                    itemView.findViewById<ImageView>(R.id.detail_arrow).setBackgroundColor(
-                        Color.parseColor(
-                            "#D1D1D1"
-                        )
-                    )
+                    cardBody.setCardBackgroundColor(Color.parseColor("#EDEDED"))
+                    headerTxt.setTextColor(Color.parseColor("#000000"))
+                    subArrow.setBackgroundColor(Color.parseColor("#D1D1D1"))
                 }
                 9 -> {
-                    itemView.findViewById<CardView>(R.id.detail_card).setCardBackgroundColor(
-                        Color.parseColor(
-                            "#EDE7F6"
-                        )
-                    )
-                    itemView.findViewById<TextView>(R.id.detail_head).setTextColor(
-                        Color.parseColor(
-                            "#7B1FA2"
-                        )
-                    )
-                    itemView.findViewById<ImageView>(R.id.detail_arrow).setBackgroundColor(
-                        Color.parseColor(
-                            "#D1C4E9"
-                        )
-                    )
+                    cardBody.setCardBackgroundColor(Color.parseColor("#EDE7F6"))
+                    headerTxt.setTextColor(Color.parseColor("#7B1FA2"))
+                    subArrow.setBackgroundColor(Color.parseColor("#D1C4E9"))
                 }
             }
 
-            this.itemView.findViewById<TextView>(R.id.detail_head).text = htmlProcess(detailContent.head, itemView)
+            headerTxt.text = htmlProcess(detailContent.head, itemView)
+            bodyTxt.text = htmlProcess(detailContent.body, itemView)
 
-            this.itemView.findViewById<TextView>(R.id.detail_body).text = htmlProcess(detailContent.body, itemView)
+            linkifyFunction(bodyTxt)
 
-            linkifyFunction(
-                itemView.findViewById(
-                    R.id.detail_body
-                )
-            )
-
-            val tv = itemView.findViewById<TextView>(R.id.detail_body)
-
-            tv.movementMethod = object : TextViewLinkHandler() {
+            bodyTxt.movementMethod = object : TextViewLinkHandler() {
                 override fun onLinkClick(url: String?) {
                     linkListener(url.toString())
                 }
             }
 
-            val subCard = itemView.findViewById<TextView>(R.id.detail_body)
-            val subArrow = itemView.findViewById<ImageView>(R.id.detail_arrow)
-
             if(detailContent.collapsed) {
-                subCard.visibility = View.GONE
+                bodyTxt.visibility = View.GONE
                 subArrow.setImageResource(R.drawable.ic_arrow_down)
             } else {
-                subCard.visibility = View.VISIBLE
+                bodyTxt.visibility = View.VISIBLE
                 subArrow.setImageResource(R.drawable.ic_arrow_up)
             }
 
@@ -207,7 +136,12 @@ class CardRecyclerAdapter(
     class ViewHolder4(itemView: View) : RecyclerView.ViewHolder(itemView),
         UpdateViewHolder {
         override fun bindViews(detailContent: DetailContent, linkListener: (String) -> Unit) {
-            itemView.findViewById<TextView>(R.id.detail_text).text = (Html.fromHtml(detailContent.body)).trim()
+            itemView.findViewById<TextView>(R.id.detail_text).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Html.fromHtml(detailContent.body, Html.FROM_HTML_MODE_LEGACY).trim()
+            } else {
+                @Suppress("DEPRECATION")
+                Html.fromHtml(detailContent.body).trim()
+            }
         }
     }
 
@@ -215,7 +149,12 @@ class CardRecyclerAdapter(
     class ViewHolder5(itemView: View) : RecyclerView.ViewHolder(itemView),
         UpdateViewHolder {
         override fun bindViews(detailContent: DetailContent, linkListener: (String) -> Unit) {
-            itemView.findViewById<TextView>(R.id.detail_text).text = (Html.fromHtml(detailContent.head)).trim()
+            itemView.findViewById<TextView>(R.id.detail_text).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Html.fromHtml(detailContent.head, Html.FROM_HTML_MODE_LEGACY).trim()
+            } else {
+                @Suppress("DEPRECATION")
+                Html.fromHtml(detailContent.head).trim()
+            }
         }
     }
 
@@ -349,10 +288,7 @@ class CardRecyclerAdapter(
 
             val transformFilter =
                 TransformFilter { _, url ->
-                    url.toString().replace("→ ", "").replace("→", "").replace(")", "").replace(
-                        "(",
-                        ""
-                    )
+                    url.toString().replace("→ ", "").replace("→", "").replace(")", "").replace("(","")
                 }
 
             Linkify.addLinks(textView, patternURL, "http://")
@@ -360,7 +296,8 @@ class CardRecyclerAdapter(
             Linkify.addLinks(textView, patternGuideline, linkGuideline, null, transformFilter)
         }
 
-        class Bullet
+
+
 
         @Suppress("DEPRECATION")
         fun htmlProcess(text: String, view: View) : CharSequence {
@@ -368,7 +305,7 @@ class CardRecyclerAdapter(
                 Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY).trim()
             } else {
                 Html.fromHtml(text, null,
-                    { opening, tag, output, _ ->
+                    { opening: Boolean, tag: String, output: Editable, _: XMLReader ->
                         if (tag == "li" && opening) {
                             output.setSpan(Bullet(), output.length, output.length, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
                         }
@@ -378,7 +315,7 @@ class CardRecyclerAdapter(
                             lastMark?.let {
                                 val start = output.getSpanStart(it)
                                 output.removeSpan(it)
-                                if (start<output.length) {
+                                if (start < output.length) {
                                     output.setSpan(BulletSpan(), start, output.length, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
                                 }
                             }
@@ -395,7 +332,7 @@ class CardRecyclerAdapter(
                 val end = parseSpans.getSpanEnd(it)
                 parseSpans.removeSpan(it)
                 parseSpans.setSpan(
-                    ImprovedBullet(bulletRadius = dip(3, view), gapWidth = dip(8, view)),
+                    ImprovedBullet(bulletRadius = dip(2.5, view), gapWidth = dip(7.5, view)),
                     start,
                     end,
                     Spanned.SPAN_INCLUSIVE_EXCLUSIVE
@@ -405,7 +342,7 @@ class CardRecyclerAdapter(
             return parseSpans
         }
 
-        private fun dip(dp: Int, view: View): Int {
+        private fun dip(dp: Double, view: View): Int {
             return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp.toFloat(), view.resources.displayMetrics).toInt()
         }
     }
@@ -440,7 +377,6 @@ abstract class TextViewLinkHandler : LinkMovementMethod() {
     }
 
     abstract fun onLinkClick(url: String?)
-
 }
 
 

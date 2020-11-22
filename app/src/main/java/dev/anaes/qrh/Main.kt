@@ -31,7 +31,6 @@ import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
 import java.security.Timestamp
 
-
 interface MainInt {
     fun popToDetail(num: Int)
     fun updateBar(title: String, code: String, version: String, expanded: Boolean)
@@ -42,31 +41,6 @@ interface MainInt {
 class Main : AppCompatActivity(), MainInt {
 
     private lateinit var appUpdateManager: AppUpdateManager
-
-
-    private var installStateUpdatedListener: InstallStateUpdatedListener =
-        object : InstallStateUpdatedListener {
-            override fun onStateUpdate(state: InstallState) {
-                when {
-                    state.installStatus() == InstallStatus.DOWNLOADED -> {
-                        popCompleteUpdate()
-                    }
-                    state.installStatus() == InstallStatus.INSTALLED -> {
-                        appUpdateManager.unregisterListener(this)
-                    }
-                }
-            }
-        }
-
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 10133) {
-            if (resultCode != RESULT_OK) {
-                popFailedUpdate()
-            }
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,9 +61,6 @@ class Main : AppCompatActivity(), MainInt {
             setSupportActionBar(toolbar)
             val appBarConfiguration = AppBarConfiguration(navController.graph)
             setupActionBarWithNavController(navController, appBarConfiguration)
-
-//            val appBar: AppBarLayout = findViewById(R.id.app_bar)
-//            val toolbarLayout: CollapsingToolbarLayout = findViewById(R.id.toolbar_layout)
 
             val currentTime = System.currentTimeMillis()
             val lastCheckedTime = sharedPref.getLong("update_checked", 0)
@@ -140,6 +111,31 @@ class Main : AppCompatActivity(), MainInt {
         super.onBackPressed()
     }
 
+
+    private var installStateUpdatedListener: InstallStateUpdatedListener =
+        object : InstallStateUpdatedListener {
+            override fun onStateUpdate(state: InstallState) {
+                when {
+                    state.installStatus() == InstallStatus.DOWNLOADED -> {
+                        popCompleteUpdate()
+                    }
+                    state.installStatus() == InstallStatus.INSTALLED -> {
+                        appUpdateManager.unregisterListener(this)
+                    }
+                }
+            }
+        }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 10133) {
+            if (resultCode != RESULT_OK) {
+                popFailedUpdate()
+            }
+        }
+    }
+
+
     override fun onSaveInstanceState(savedInstanceState: Bundle) {
         super.onSaveInstanceState(savedInstanceState)
         savedInstanceState.putBundle("nav_state", findNavController(R.id.nav_host_fragment).saveState())
@@ -148,6 +144,8 @@ class Main : AppCompatActivity(), MainInt {
         super.onRestoreInstanceState(savedInstanceState)
         findNavController(R.id.nav_host_fragment).restoreState(savedInstanceState.getBundle("nav_state"))
     }
+
+
 
     override fun popToDetail(num: Int) {
         var x = num
@@ -171,10 +169,17 @@ class Main : AppCompatActivity(), MainInt {
     }
 
     override fun progressShow(show: Boolean) {
+        val indicator = findViewById<ProgressBar>(R.id.progress_circular)
         if (show) {
-            findViewById<ProgressBar>(R.id.progress_circular).visibility = View.VISIBLE
+            indicator.visibility = View.VISIBLE
         } else {
-            findViewById<ProgressBar>(R.id.progress_circular).visibility = View.GONE
+            indicator.animate()
+                .setDuration(100)
+                .alpha(0F)
+                .withEndAction {
+                    indicator.visibility = View.GONE
+                    indicator.alpha = 0.5F
+                }
         }
     }
 

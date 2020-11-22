@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.appbar.AppBarLayout
 import kotlinx.android.synthetic.main.fragment_detail.*
 
+
 interface PushDetail {
     fun navToDetail(code: String, title: String, url: String, version: String)
 }
@@ -111,9 +112,15 @@ class DetailFragment : Fragment(), PushDetail {
                 (activity as MainInt).popToDetail(parentFragmentManager.backStackEntryCount)
             }
 
-
             var bci = 0
             var bcd: Int = parentFragmentManager.backStackEntryCount - 1
+
+            val color = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                context?.getColor(R.color.colorAccent)
+            } else {
+                @Suppress("DEPRECATION")
+                resources.getColor(R.color.colorAccent)
+            }
 
             while (bci < parentFragmentManager.backStackEntryCount) {
 
@@ -124,9 +131,10 @@ class DetailFragment : Fragment(), PushDetail {
                 bcStack.addView(chevron)
 
                 val button = Button(context, null, android.R.attr.buttonBarButtonStyle)
+
                 button.textSize = 12F
                 button.isAllCaps = false
-
+                color?.let { button.setTextColor(it) }
                 button.text = vm.breadcrumbTitles[bci + 1]
 
                 button.tag = bcd
