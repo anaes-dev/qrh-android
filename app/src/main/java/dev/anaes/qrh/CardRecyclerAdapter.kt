@@ -3,13 +3,13 @@ package dev.anaes.qrh
 import android.graphics.Color
 import android.net.Uri
 import android.os.Build
-import android.text.Html
-import android.text.Layout
-import android.text.Spannable
+import android.text.*
 import android.text.method.LinkMovementMethod
+import android.text.style.BulletSpan
 import android.text.style.URLSpan
 import android.text.util.Linkify
 import android.text.util.Linkify.TransformFilter
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -21,8 +21,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import java.util.regex.Pattern
 
-
-@Suppress("DEPRECATION")
 class CardRecyclerAdapter(
     private var dataSource: ArrayList<DetailContent>,
     private val codePassed: String?,
@@ -37,27 +35,9 @@ class CardRecyclerAdapter(
         UpdateViewHolder {
         override fun bindViews(detailContent: DetailContent, linkListener: (String) -> Unit) {
 
-            this.itemView.findViewById<TextView>(R.id.detail_head).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                Html.fromHtml(detailContent.head).trim()
-            } else {
-                Html.fromHtml(detailContent.head, null,
-                    Html.TagHandler { opening, tag, output, _ ->
-                        if (tag == "br" && opening) output.append("\n")
-                        if (tag == "p" && opening) output.append("\n")
-                        if (tag == "li" && opening) output.append("\n\n• ")
-                    }).trim()
-            }
+            this.itemView.findViewById<TextView>(R.id.detail_head).text = htmlProcess(detailContent.head, itemView)
 
-            this.itemView.findViewById<TextView>(R.id.detail_body).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                Html.fromHtml(detailContent.body).trim()
-            } else {
-                Html.fromHtml(detailContent.body, null,
-                    Html.TagHandler { opening, tag, output, _ ->
-                        if (tag == "br" && opening) output.append("\n")
-                        if (tag == "p" && opening) output.append("\n")
-                        if (tag == "li" && opening) output.append("\n\n• ")
-                    }).trim()
-            }
+            this.itemView.findViewById<TextView>(R.id.detail_body).text = htmlProcess(detailContent.body, itemView)
 
             linkifyFunction(
                 itemView.findViewById(
@@ -177,28 +157,9 @@ class CardRecyclerAdapter(
                 }
             }
 
-            this.itemView.findViewById<TextView>(R.id.detail_head).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                Html.fromHtml(detailContent.head).trim()
-            } else {
-                Html.fromHtml(detailContent.head, null,
-                    Html.TagHandler { opening, tag, output, _ ->
-                        if (tag == "br" && opening) output.append("\n")
-                        if (tag == "p" && opening) output.append("\n")
-                        if (tag == "li" && opening) output.append("\n\n• ")
-                    }).trim()
-            }
+            this.itemView.findViewById<TextView>(R.id.detail_head).text = htmlProcess(detailContent.head, itemView)
 
-            this.itemView.findViewById<TextView>(R.id.detail_body).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                Html.fromHtml(detailContent.body).trim()
-            } else {
-                Html.fromHtml(detailContent.body, null,
-                    Html.TagHandler { opening, tag, output, _ ->
-                        if (tag == "br" && opening) output.append("\n")
-                        if (tag == "p" && opening) output.append("\n")
-                        if (tag == "li" && opening) output.append("\n\n• ")
-                    }).trim()
-            }
-
+            this.itemView.findViewById<TextView>(R.id.detail_body).text = htmlProcess(detailContent.body, itemView)
 
             linkifyFunction(
                 itemView.findViewById(
@@ -399,9 +360,55 @@ class CardRecyclerAdapter(
             Linkify.addLinks(textView, patternGuideline, linkGuideline, null, transformFilter)
         }
 
+        class Bullet
+
+        @Suppress("DEPRECATION")
+        fun htmlProcess(text: String, view: View) : CharSequence {
+            val parseHtml = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY).trim()
+            } else {
+                Html.fromHtml(text, null,
+                    { opening, tag, output, _ ->
+                        if (tag == "li" && opening) {
+                            output.setSpan(Bullet(), output.length, output.length, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
+                        }
+                        if (tag == "li" && !opening) {
+                            output.append("\n\n")
+                            val lastMark = output.getSpans(0, output.length, Bullet::class.java).lastOrNull()
+                            lastMark?.let {
+                                val start = output.getSpanStart(it)
+                                output.removeSpan(it)
+                                if (start<output.length) {
+                                    output.setSpan(BulletSpan(), start, output.length, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
+                                }
+                            }
+                        }
+                    }).trim()
+            }
+
+            val parseSpans = SpannableStringBuilder(parseHtml)
+
+            val bulletSpans = parseSpans.getSpans(0, parseSpans.length, BulletSpan::class.java)
+
+            bulletSpans.forEach {
+                val start = parseSpans.getSpanStart(it)
+                val end = parseSpans.getSpanEnd(it)
+                parseSpans.removeSpan(it)
+                parseSpans.setSpan(
+                    ImprovedBullet(bulletRadius = dip(3, view), gapWidth = dip(8, view)),
+                    start,
+                    end,
+                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE
+                )
+            }
+
+            return parseSpans
+        }
+
+        private fun dip(dp: Int, view: View): Int {
+            return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp.toFloat(), view.resources.displayMetrics).toInt()
+        }
     }
-
-
 }
 
 
