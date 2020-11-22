@@ -28,6 +28,7 @@
     <string name="version_hint">Adapted from QRH section </string>
     <string name="emptySearch">No results</string>
 
+    <string name="old_android"><b>This app displays best on Android Nougat or later.</b>\n\nYou may continue to use on older versions, however certain formatting (particularly bulleted lists) may not display optimally.</string>
 
     <string name="exit">Exit</string>
     <string name="agree_amp_continue"><![CDATA[Agree & Continue]]></string>
