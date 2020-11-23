@@ -3,7 +3,6 @@ package dev.anaes.qrh
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.TypedValue
 import android.view.*
 import android.widget.Button
 import android.widget.ImageView

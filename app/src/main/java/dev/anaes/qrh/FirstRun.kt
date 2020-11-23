@@ -58,8 +58,8 @@ class FirstRun : AppCompatActivity(), ViewTreeObserver.OnScrollChangedListener {
 
             if(intent.getBooleanExtra("isUpdate", false)) {
                 android_updated.visibility = View.VISIBLE
-                android_disclaimerfirst.visibility = View.GONE
-                android_disclaimerupdate.visibility = View.VISIBLE
+                android_disclaimerFirst.visibility = View.GONE
+                android_disclaimerUpdate.visibility = View.VISIBLE
             }
 
             //

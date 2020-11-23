@@ -32,7 +32,7 @@
 
             <include
                 android:id="@+id/android_old"
-                layout="@layout/qrh_oldversion"
+                layout="@layout/qrh_old"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone" />

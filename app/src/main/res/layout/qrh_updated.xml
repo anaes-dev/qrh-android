@@ -26,17 +26,18 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/icon_tick"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginStart="8dp"
-                app:layout_constraintBottom_toBottomOf="@+id/textView5"
+                android:contentDescription="@string/label_tick"
+                app:layout_constraintBottom_toBottomOf="@+id/updated_text"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/textView5"
+                app:layout_constraintTop_toTopOf="@+id/updated_text"
                 app:srcCompat="@drawable/ic_baseline_check_circle_24" />
 
             <TextView
-                android:id="@+id/textView5"
+                android:id="@+id/updated_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -47,7 +48,7 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintStart_toEndOf="@+id/icon_tick"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
