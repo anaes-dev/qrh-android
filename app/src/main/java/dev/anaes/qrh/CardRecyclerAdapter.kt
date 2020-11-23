@@ -49,6 +49,11 @@ class CardRecyclerAdapter(
 
             linkifyFunction(bodyTxt)
 
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                bodyTxt.lineHeight =
+                    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 16F,itemView.resources.displayMetrics).toInt()
+            }
+
             bodyTxt.movementMethod = object : TextViewLinkHandler() {
                 override fun onLinkClick(url: String?) {
                     linkListener(url.toString())
@@ -68,6 +73,10 @@ class CardRecyclerAdapter(
             val headerTxt = itemView.findViewById<TextView>(R.id.detail_head)
             val bodyTxt = itemView.findViewById<TextView>(R.id.detail_body)
             val subArrow = itemView.findViewById<ImageView>(R.id.detail_arrow)
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                bodyTxt.lineHeight = 48
+            }
 
 
             when (detailContent.type) {
