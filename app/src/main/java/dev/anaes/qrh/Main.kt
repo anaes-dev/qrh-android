@@ -48,6 +48,11 @@ class Main : AppCompatActivity(), MainInt {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val oldSharedPref: SharedPreferences = getSharedPreferences(
+            "com.mttrnd.qrh.seenwarning",
+            Context.MODE_PRIVATE
+        )
+
         val sharedPref: SharedPreferences = getSharedPreferences(
             "dev.anaes.qrh",
             Context.MODE_PRIVATE
@@ -55,7 +60,11 @@ class Main : AppCompatActivity(), MainInt {
 
         if (sharedPref.getInt("version",0) < BuildConfig.VERSION_CODE) {
             if (!sharedPref.getBoolean("seen_warning", false)) {
-                startActivity(Intent(this, FirstRun::class.java).putExtra("isUpdate", false))
+                if (oldSharedPref.getBoolean("com.mttrnd.qrh.seenwarning", false)) {
+                    startActivity(Intent(this, FirstRun::class.java).putExtra("isUpdate", true))
+                } else {
+                    startActivity(Intent(this, FirstRun::class.java).putExtra("isUpdate", false))
+                }
             } else {
                 startActivity(Intent(this, FirstRun::class.java).putExtra("isUpdate", true))
             }
