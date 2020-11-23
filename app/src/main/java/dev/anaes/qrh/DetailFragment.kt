@@ -3,6 +3,7 @@ package dev.anaes.qrh
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.*
 import android.widget.Button
 import android.widget.ImageView
@@ -75,7 +76,21 @@ class DetailFragment : Fragment(), PushDetail {
             expanded = true,
             hideKeyboard = true
         )
+
+
         detail_code_2.text = code.toString()
+
+        when(code) {
+            "3-2" -> {
+                detail_code_2.textSize = 60F
+                detail_code_2.translationY = -20F
+            }
+            "3-3", "3-7", "3-11" -> {
+                detail_code_2.textSize = 72F
+                detail_code_2.translationY = -32F
+            }
+        }
+
         activity?.findViewById<AppBarLayout>(R.id.app_bar)?.setExpanded(true)
 
 

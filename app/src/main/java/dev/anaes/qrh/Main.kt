@@ -53,10 +53,15 @@ class Main : AppCompatActivity(), MainInt {
             Context.MODE_PRIVATE
         )
 
-        if (!sharedPref.getBoolean("seen_warning", false)) {
-            startActivity(Intent(this, FirstRun::class.java))
+        if (sharedPref.getInt("version",0) < BuildConfig.VERSION_CODE) {
+            if (!sharedPref.getBoolean("seen_warning", false)) {
+                startActivity(Intent(this, FirstRun::class.java).putExtra("isUpdate", false))
+            } else {
+                startActivity(Intent(this, FirstRun::class.java).putExtra("isUpdate", true))
+            }
             finish()
-        } else {
+        }
+
 
             setContentView(R.layout.activity_main)
 
@@ -99,7 +104,7 @@ class Main : AppCompatActivity(), MainInt {
             }
 
         }
-    }
+
 
 
     override fun onSupportNavigateUp(): Boolean {

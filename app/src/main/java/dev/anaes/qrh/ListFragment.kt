@@ -102,7 +102,7 @@ class ListFragment : Fragment() {
             val snack =
                 Snackbar
                     .make(
-                        container,
+                        view,
                                 "Unofficial adaptation of Quick Reference Handbook\n" +
                                 "Not endorsed by the Association of Anaesthetists\n" +
                                 "Untested and unregulated; not recommended for clinical use\n" +

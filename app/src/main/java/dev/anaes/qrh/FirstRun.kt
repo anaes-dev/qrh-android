@@ -10,16 +10,14 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewTreeObserver
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.ScrollView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_firstrun.*
-import kotlinx.android.synthetic.main.activity_firstrun.android_old
-import kotlinx.android.synthetic.main.activity_firstrun.imageViewCC
 import kotlin.system.exitProcess
-
 
 class FirstRun : AppCompatActivity(), ViewTreeObserver.OnScrollChangedListener {
 
@@ -44,7 +42,8 @@ class FirstRun : AppCompatActivity(), ViewTreeObserver.OnScrollChangedListener {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
                 android_old.visibility = View.VISIBLE
             }
-            //CC license link
+
+            // Change button configuration on scroll to bottom
 
             val scrollBounds = Rect()
             scrollViewSplash.getHitRect(scrollBounds)
@@ -54,6 +53,16 @@ class FirstRun : AppCompatActivity(), ViewTreeObserver.OnScrollChangedListener {
                 buttonAgreeActive.isClickable = true
                 buttonAgreeInactive.isClickable = false
             }
+
+            // Change layout if update rather than fresh install
+
+            if(intent.getBooleanExtra("isUpdate", false)) {
+                android_updated.visibility = View.VISIBLE
+                android_disclaimerfirst.visibility = View.GONE
+                android_disclaimerupdate.visibility = View.VISIBLE
+            }
+
+            //
 
             buttonExit.setOnClickListener {
                 exitProcess(1)
@@ -69,13 +78,14 @@ class FirstRun : AppCompatActivity(), ViewTreeObserver.OnScrollChangedListener {
 
             buttonAgreeActive.setOnClickListener {
                 editor.putBoolean("seen_warning", true)
+                editor.putInt("version", BuildConfig.VERSION_CODE)
                 editor.apply()
                 startActivity(Intent(this, Main::class.java))
                 finish()
             }
 
             //CC license link
-            imageViewCC.setOnClickListener{
+            findViewById<ImageView>(R.id.imageViewCC).setOnClickListener{
                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://www.creativecommons.org/licenses/by-nc-sa/4.0/")))
             }
 

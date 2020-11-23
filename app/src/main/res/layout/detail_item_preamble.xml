@@ -16,6 +16,7 @@
       android:animationCache="true"
       android:foreground="?android:attr/selectableItemBackground"
       android:hapticFeedbackEnabled="true"
+      app:cardCornerRadius="2dp"
       app:cardElevation="1dp"
       app:cardUseCompatPadding="true"
       app:contentPadding="16dp"
@@ -39,8 +40,8 @@
     <TextView
         android:id="@+id/detail_body"
         android:layout_width="wrap_content"
-        android:linksClickable="true"
         android:layout_height="wrap_content"
+        android:linksClickable="true"
         android:textColor="@color/detailItemStandardTXT"
         android:textSize="15sp"
         tools:text="step 1" />

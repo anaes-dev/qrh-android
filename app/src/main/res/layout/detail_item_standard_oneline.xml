@@ -16,6 +16,7 @@
       android:animationCache="true"
       android:foreground="?android:attr/selectableItemBackground"
       android:hapticFeedbackEnabled="true"
+      app:cardCornerRadius="2dp"
       app:cardElevation="1dp"
       app:cardUseCompatPadding="true"
       app:contentPadding="8dp"
