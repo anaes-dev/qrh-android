@@ -15,6 +15,7 @@
     <string name="CCBYNCSA">Creative Commons License CC BY-NC-SA 4.0</string>
 
     <string name="splash_1">As this is your first launch, please read and consider all of the following:</string>
+    <string name="splash_1b">Please check for any changes to the disclaimers with this update:</string>
     <string name="splash_2a">This application is an unofficial open-source adaptation of the Association of Anaesthetists Quick Reference Handbook (QRH); a collection of guidelines for unexpected or uncommon anaesthesia-related emergencies. As per the original accompanying guidance:</string>
     <string name="splash_2b">\"The QRH is not a substitute for learning and practising clinical skills. Nor is it a substitute for being familiar with more detailed guidelines and algorithms, such as those for managing cardiac arrest or difficult airway.\n\nIt\'s essential that clinicians learn about these and practice their implementation elsewhere. For example, it\'s expected that in using the QRH guideline for managing cardiac arrest, clinicians will already have underlying knowledge of conditions causing cardiac arrest and will be competent in providing advanced life support.\n\nThe QRH is also not intended to be used as a rule book every single time one of the guideline situations is encountered. For instance, most ordinary occasions of hypotension will have a simple cause and will respond to obvious remedies. The hypotension guideline becomes useful if the situation is out of the  ordinary or becomes unremitting. Conversely, for the more immediate and uncommon problems, such as cardiac arrest in theatre, the guideline should be used from the outset to help avoid missing out useful steps in resolving the situation.\"</string>
     <string name="splash_3">This application is intended for use only by healthcare professionals in the United Kingdom who are already familiar with the QRH. It is intended to complement and improve access to, but not replace, the original QRH. <b>This application has not been professionally developed nor tested. You must evaluate the application and its content, and exercise your own discretionary judgement about its appropriate use.</b> The developer accepts no responsibility for or liability arising from any decision to use in a clinical setting. You should consider the advice of your employer, regulatory and professional bodies regarding the use of software applications, and always exercise professional judgement before relying on information from any source.\n\nThis application is <u>not</u> presented as a medical device in the United Kingdom. <b>It carries no certification markings, regulatory approvals or technical assessment appraisals.</b> According to the latest Medicines and Healthcare products Regulatory Agency guidance <i>\"Medical device stand-alone software including apps\"</i> (4th June 2020) at the time of this release; software is unlikely to be a device if it just reproduces a paper document in digital format, provides reference information to follow the path of a procedure/treatment, or it has decision points but the healthcare professional decides which path to take (as they ultimately rely on their own knowledge).\n\nRegulations may change with time. Distribution by the developer will be ceased if advised to do so or if this application subsequently becomes subject to regulatory approval. Please periodically check whether regulations have changed, and stop using this application if you are unsure about its status. Due to the offline and open-source nature of the application, however, the developer cannot be held responsible for ongoing use and distribution of the application or its source code by other parties beyond such a time.\n\nFor more information please see: https://www.gov.uk/government/publications/medical-devices-software-applications-apps</string>
@@ -28,12 +29,14 @@
     <string name="version_hint">Adapted from QRH section </string>
     <string name="emptySearch">No results</string>
 
-    <string name="old_android"><b>This app displays best on Android Nougat or later.</b>\n\nYou may continue to use on older versions, however certain formatting (particularly bulleted lists) may not display optimally.</string>
+    <string name="old_android"><b>This app displays best on Android Nougat or later.</b>\n\nYou may continue to use on older Android versions, however certain formatting (particularly bulleted lists) may not display optimally.</string>
+    <string name="app_update">Updated to latest version.</string>
 
     <string name="exit">Exit</string>
-    <string name="agree_amp_continue"><![CDATA[Agree & Continue]]></string>
+    <string name="agree_amp_continue">Agree &amp; Continue</string>
 
     <string name="disclaimers">View disclaimers</string>
+    <string name="privacy">View privacy policy</string>
     <string name="iconhint">Click this icon at the top\-right of each guideline to access the original PDF file from the Association of Anaesthetists website.</string>
     <string name="arrowhint">Click highlighted links to jump to related guidelines.</string>
     <string name="_1">1</string>
@@ -41,6 +44,4 @@
     <string name="_3">3</string>
     <string name="_4">4</string>
     <string name="_5">5</string>
-    <!-- TODO: Remove or change this placeholder text -->
-
 </resources>

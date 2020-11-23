@@ -6,7 +6,7 @@
 
     <color name="detailItemStandardTXT">#555555</color>
 
-<!--    <color name="detailItemOrangeBG">#FBE9E7</color>-->
+    <color name="detailItemOrangeBG">#FBE9E7</color>
 <!--    <color name="detailItemOrangeARR">#FFCCBC</color>-->
 <!--    <color name="detailItemOrangeTXT">#E64A19</color>-->
 
@@ -14,7 +14,7 @@
 <!--    <color name="detailItemBlueARR">#BBDEFB</color>-->
 <!--    <color name="detailItemBlueTXT">#1976D2</color>-->
 
-<!--    <color name="detailItemGreenBG">#E8F5E9</color>-->
+        <color name="detailItemGreenBG">#E8F5E9</color>
 <!--    <color name="detailItemGreenARR">#C8E6C9</color>-->
 <!--    <color name="detailItemGreenTXT">#388E3C</color>-->
 

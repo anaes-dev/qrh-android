@@ -15,6 +15,7 @@
       android:animationCache="true"
       android:foreground="?android:attr/selectableItemBackground"
       android:hapticFeedbackEnabled="true"
+      app:cardCornerRadius="2dp"
       app:cardElevation="1dp"
       app:cardUseCompatPadding="true"
       app:contentPadding="16dp"
@@ -25,12 +26,11 @@
 
     <TextView
         android:id="@+id/detail_caption"
+        style="@style/Widget.AppCompat.TextView.SpinnerItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/Widget.AppCompat.TextView.SpinnerItem"
         android:textColor="@color/detailItemBlackTXT"
-        android:textStyle="bold"
-        />
+        android:textStyle="bold" />
 
     <ImageView
         android:id="@+id/detail_image"
