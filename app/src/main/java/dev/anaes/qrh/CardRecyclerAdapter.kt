@@ -17,6 +17,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import java.util.regex.Pattern
@@ -68,31 +69,32 @@ class CardRecyclerAdapter(
             val bodyTxt = itemView.findViewById<TextView>(R.id.detail_body)
             val subArrow = itemView.findViewById<ImageView>(R.id.detail_arrow)
 
+
             when (detailContent.type) {
                 5 -> {
-                    cardBody.setCardBackgroundColor(Color.parseColor("#FBE9E7"))
-                    headerTxt.setTextColor(Color.parseColor("#E64A19"))
-                    subArrow.setBackgroundColor(Color.parseColor("#FFCCBC"))
+                    cardBody.setCardBackgroundColor(ContextCompat.getColor(itemView.context, R.color.detailItemOrangeBG))
+                    headerTxt.setTextColor(ContextCompat.getColor(itemView.context, R.color.detailItemOrangeTXT))
+                    subArrow.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.detailItemOrangeARR))
                 }
                 6 -> {
-                    cardBody.setCardBackgroundColor(Color.parseColor("#E1F5FE"))
-                    headerTxt.setTextColor(Color.parseColor("#1976D2"))
-                    subArrow.setBackgroundColor(Color.parseColor("#BBDEFB"))
+                    cardBody.setCardBackgroundColor(ContextCompat.getColor(itemView.context, R.color.detailItemBlueBG))
+                    headerTxt.setTextColor(ContextCompat.getColor(itemView.context, R.color.detailItemBlueTXT))
+                    subArrow.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.detailItemBlueARR))
                 }
                 7 -> {
-                    cardBody.setCardBackgroundColor(Color.parseColor("#E8F5E9"))
-                    headerTxt.setTextColor(Color.parseColor("#388E3C"))
-                    subArrow.setBackgroundColor(Color.parseColor("#C8E6C9"))
+                    cardBody.setCardBackgroundColor(ContextCompat.getColor(itemView.context, R.color.detailItemGreenBG))
+                    headerTxt.setTextColor(ContextCompat.getColor(itemView.context, R.color.detailItemGreenTXT))
+                    subArrow.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.detailItemGreenARR))
                 }
                 8 -> {
-                    cardBody.setCardBackgroundColor(Color.parseColor("#EDEDED"))
-                    headerTxt.setTextColor(Color.parseColor("#000000"))
-                    subArrow.setBackgroundColor(Color.parseColor("#D1D1D1"))
+                    cardBody.setCardBackgroundColor(ContextCompat.getColor(itemView.context, R.color.detailItemBlackBG))
+                    headerTxt.setTextColor(ContextCompat.getColor(itemView.context, R.color.detailItemBlackTXT))
+                    subArrow.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.detailItemBlackARR))
                 }
                 9 -> {
-                    cardBody.setCardBackgroundColor(Color.parseColor("#EDE7F6"))
-                    headerTxt.setTextColor(Color.parseColor("#7B1FA2"))
-                    subArrow.setBackgroundColor(Color.parseColor("#D1C4E9"))
+                    cardBody.setCardBackgroundColor(ContextCompat.getColor(itemView.context, R.color.detailItemPurpleBG))
+                    headerTxt.setTextColor(ContextCompat.getColor(itemView.context, R.color.detailItemPurpleTXT))
+                    subArrow.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.detailItemPurpleARR))
                 }
             }
 
