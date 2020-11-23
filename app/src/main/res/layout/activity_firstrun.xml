@@ -84,7 +84,7 @@
 
             <include
                 android:id="@+id/android_old"
-                layout="@layout/qrh_oldversion"
+                layout="@layout/qrh_old"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone" />
@@ -102,7 +102,7 @@
                 android:layout_height="wrap_content" />
 
             <TextView
-                android:id="@+id/android_disclaimerfirst"
+                android:id="@+id/android_disclaimerFirst"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="16dp"
@@ -110,7 +110,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
             <TextView
-                android:id="@+id/android_disclaimerupdate"
+                android:id="@+id/android_disclaimerUpdate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="16dp"
