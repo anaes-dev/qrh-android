@@ -2,19 +2,25 @@ package dev.anaes.qrh
 
 
 import android.os.Bundle
+import android.os.Handler
+import android.util.Log
 import android.util.TypedValue
 import android.view.*
 import android.widget.SearchView
 import android.widget.TextView
 import androidx.core.content.ContextCompat.getColor
+import androidx.core.os.HandlerCompat
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_list.*
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 class ListFragment : Fragment() {
@@ -120,7 +126,11 @@ class ListFragment : Fragment() {
             val snackTextView = snackView.findViewById(R.id.snackbar_text) as TextView
             snackTextView.maxLines = 5
             snackTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12F)
-            snack.show()
+
+            lifecycleScope.launch {
+                delay(100)
+                snack.show()
+            }
 
             // Dismiss snackbar if list scrolled (otherwise will stay visible for 8 seconds)
 

@@ -50,7 +50,6 @@
                 android:id="@+id/list_recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?android:attr/colorBackground"
                 android:scrollbarDefaultDelayBeforeFade="1500"
                 android:scrollbarFadeDuration="500"
                 android:scrollbars="vertical"
