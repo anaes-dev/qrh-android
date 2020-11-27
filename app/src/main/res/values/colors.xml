@@ -26,5 +26,8 @@
     <color name="detailItemPurpleARR">#D1C4E9</color>
     <color name="detailItemPurpleTXT">#512DA8</color>
 
+    <color name="detailItemRedBG">#FFCDD2</color>
+    <color name="detailItemRedTXT">#FF2828</color>
+
     <color name="snackbarBackground">#BF000000</color>
 </resources>

@@ -11,7 +11,7 @@
   <androidx.cardview.widget.CardView
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      app:cardBackgroundColor="#FFCDD2"
+      app:cardBackgroundColor="@color/detailItemRedBG"
       app:cardCornerRadius="8dp"
       app:cardElevation="5dp"
       app:cardUseCompatPadding="true"
@@ -24,7 +24,7 @@
         android:id="@+id/detail_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#C62828"
+        android:textColor="@color/detailItemRedTXT"
         android:textStyle="bold" />
   </androidx.cardview.widget.CardView>
 
