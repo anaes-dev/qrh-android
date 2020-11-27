@@ -8,7 +8,7 @@
 
     <color name="detailItemOrangeBG">#312420</color>
     <color name="detailItemOrangeARR">#57281A</color>
-    <color name="detailItemOrangeTXT">#FF8A65</color>
+    <color name="detailItemOrangeTXT">#FFCCBC</color>
 
     <color name="detailItemBlueBG">#20282F</color>
     <color name="detailItemBlueARR">#1A3651</color>
@@ -24,7 +24,7 @@
 
     <color name="detailItemPurpleBG">#25222C</color>
     <color name="detailItemPurpleARR">#2B2045</color>
-    <color name="detailItemPurpleTXT">#9575CD</color>
+    <color name="detailItemPurpleTXT">#B39DDB</color>
 
     <color name="detailItemRedBG">#322423</color>
     <color name="detailItemRedTXT">#E57373</color>
