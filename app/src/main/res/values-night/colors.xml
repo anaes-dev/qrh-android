@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#F44336</color>
+    <color name="colorPrimaryDark">#F44336</color>
+    <color name="colorAccent">#0096FF</color>
+
+    <color name="detailItemStandardTXT">#555555</color>
+
+    <color name="detailItemOrangeBG">#312420</color>
+    <color name="detailItemOrangeARR">#57281A</color>
+    <color name="detailItemOrangeTXT">#FF8A65</color>
+
+    <color name="detailItemBlueBG">#20282F</color>
+    <color name="detailItemBlueARR">#1A3651</color>
+    <color name="detailItemBlueTXT">#64B5F6</color>
+
+    <color name="detailItemGreenBG">#232A23</color>
+    <color name="detailItemGreenARR">#233D24</color>
+    <color name="detailItemGreenTXT">#81C784</color>
+
+    <color name="detailItemBlackBG">#212121</color>
+    <color name="detailItemBlackARR">#222222</color>
+    <color name="detailItemBlackTXT">#EEEEEE</color>
+
+    <color name="detailItemPurpleBG">#25222C</color>
+    <color name="detailItemPurpleARR">#2B2045</color>
+    <color name="detailItemPurpleTXT">#9575CD</color>
+
+    <color name="detailItemRedBG">#322423</color>
+    <color name="detailItemRedTXT">#E57373</color>
+
+    <color name="snackbarBackground">#BF000000</color>
+</resources>

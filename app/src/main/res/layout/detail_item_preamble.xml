@@ -42,7 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:linksClickable="true"
-        android:textColor="@color/detailItemStandardTXT"
+        android:textColor="?android:attr/textColorPrimary"
         android:textSize="15sp"
         tools:text="step 1" />
 

@@ -10,14 +10,14 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/background_light">
+        android:background="?android:attr/colorBackground">
 
 
         <SearchView
             android:id="@+id/list_searchview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#FFFFFF"
+            android:background="?android:attr/colorBackground"
             android:iconifiedByDefault="false"
             android:queryHint="Search..."
             app:layout_constraintEnd_toEndOf="parent"
@@ -50,6 +50,7 @@
                 android:id="@+id/list_recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="?android:attr/colorBackground"
                 android:scrollbarDefaultDelayBeforeFade="1500"
                 android:scrollbarFadeDuration="500"
                 android:scrollbars="vertical"

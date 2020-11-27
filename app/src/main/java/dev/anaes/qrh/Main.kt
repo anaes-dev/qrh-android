@@ -11,8 +11,11 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -39,11 +42,15 @@ interface MainInt {
     )
     fun openURL(url: String)
     fun progressShow(show: Boolean)
+    fun setDarkModeDisabled(disabled: Boolean)
+    fun recreateActivity()
 }
 
 class Main : AppCompatActivity(), MainInt {
 
     private lateinit var appUpdateManager: AppUpdateManager
+
+    private val vm: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,6 +76,14 @@ class Main : AppCompatActivity(), MainInt {
                 startActivity(Intent(this, FirstRun::class.java).putExtra("isUpdate", true))
             }
             finish()
+        }
+
+        if (sharedPref.getBoolean("night_disabled", false)) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            vm.isDarkDisabled = true
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+            vm.isDarkDisabled = false
         }
 
 
@@ -236,5 +251,27 @@ class Main : AppCompatActivity(), MainInt {
         )
         snack.show()
     }
+
+    override fun setDarkModeDisabled(disabled: Boolean) {
+        val sharedPref: SharedPreferences = getSharedPreferences(
+            "dev.anaes.qrh",
+            Context.MODE_PRIVATE
+        )
+
+        if(disabled) {
+            sharedPref.edit()
+                .putBoolean("night_disabled", true)
+                .apply()
+        } else {
+            sharedPref.edit()
+                .putBoolean("night_disabled", false)
+                .apply()
+        }
+    }
+
+    override fun recreateActivity() {
+        recreate()
+    }
+
 
 }
