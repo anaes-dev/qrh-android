@@ -14,8 +14,6 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:animationCache="true"
-      android:foreground="?android:attr/selectableItemBackground"
-      android:hapticFeedbackEnabled="true"
       app:cardCornerRadius="2dp"
       app:cardElevation="1dp"
       app:cardUseCompatPadding="true"
@@ -29,31 +27,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-      <androidx.constraintlayout.widget.ConstraintLayout
-          android:id="@+id/constraintLayout"
+      <TextView
+          android:id="@+id/detail_step"
+          style="@style/Widget.AppCompat.TextView.SpinnerItem"
           android:layout_width="28dp"
           android:layout_height="28dp"
+          android:background="@drawable/step_circle"
+          android:gravity="center"
+          android:includeFontPadding="false"
+          android:maxLines="1"
+          android:paddingStart="2dp"
+          android:paddingEnd="2dp"
+          android:textAlignment="center"
+          android:textColor="?android:attr/colorForegroundInverse"
+          android:textStyle="bold"
+          app:autoSizeMaxTextSize="16sp"
+          app:autoSizeMinTextSize="8sp"
+          app:autoSizeTextType="uniform"
           app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/detail_step"
-            style="@style/Widget.AppCompat.TextView.SpinnerItem"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:background="@drawable/step_circle"
-            android:gravity="center"
-            android:maxLines="1"
-            android:textAlignment="center"
-            android:textColor="?android:attr/colorForegroundInverse"
-            android:textStyle="bold"
-            app:autoSizeMaxTextSize="16sp"
-            app:autoSizeTextType="uniform"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-      </androidx.constraintlayout.widget.ConstraintLayout>
+          app:layout_constraintTop_toTopOf="parent" />
 
       <TextView
           android:id="@+id/detail_body"
@@ -66,7 +58,7 @@
           android:textSize="15sp"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toTopOf="@+id/constraintLayout"
+          app:layout_constraintTop_toTopOf="@+id/detail_step"
           tools:text="step 1" />
 
       <TextView

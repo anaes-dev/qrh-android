@@ -44,6 +44,7 @@
                 android:layout_height="wrap_content" />
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/android_dark"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -59,16 +60,49 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <Switch
+                    <ImageView
+                        android:id="@+id/dark_logo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/disable_dark_mode"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_baseline_tonality" />
+
+                    <TextView
+                        android:id="@+id/dark_title"
+                        style="@style/TextAppearance.AppCompat.Medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/dark_theme"
+                        app:layout_constraintBottom_toBottomOf="@+id/dark_logo"
+                        app:layout_constraintStart_toEndOf="@+id/dark_logo"
+                        app:layout_constraintTop_toTopOf="@+id/dark_logo" />
+
+                    <TextView
+                        android:id="@+id/dark_explanation"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="start"
+                        android:text="@string/dark_explanation"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/dark_logo" />
+
+                    <androidx.appcompat.widget.SwitchCompat
                         android:id="@+id/darkDisableSwitch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:switchPadding="8dp"
-                        android:text="Disable dark mode"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/disable_dark_mode"
+                        android:textColor="?android:attr/textColorSecondary"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@+id/dark_explanation"
+                        app:switchPadding="8dp" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.cardview.widget.CardView>
