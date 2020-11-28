@@ -1,6 +1,5 @@
 package dev.anaes.qrh
 
-import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.text.*

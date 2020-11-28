@@ -4,8 +4,6 @@
     <color name="colorPrimaryDark">#B71C1C</color>
     <color name="colorAccent">#4FC3F7</color>
 
-    <color name="detailItemStandardTXT">#555555</color>
-
     <color name="detailItemOrangeBG">#312420</color>
     <color name="detailItemOrangeARR">#57281A</color>
     <color name="detailItemOrangeTXT">#FFCCBC</color>
