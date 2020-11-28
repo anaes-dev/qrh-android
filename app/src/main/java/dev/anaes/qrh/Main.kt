@@ -15,7 +15,8 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
-import androidx.fragment.app.activityViewModels
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -30,6 +31,9 @@ import com.google.android.play.core.install.InstallStateUpdatedListener
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+
 
 interface MainInt {
     fun popToDetail(num: Int)
@@ -65,7 +69,7 @@ class Main : AppCompatActivity(), MainInt {
             Context.MODE_PRIVATE
         )
 
-        if (sharedPref.getInt("version",0) < BuildConfig.VERSION_CODE) {
+        if (sharedPref.getInt("version", 0) < BuildConfig.VERSION_CODE) {
             if (!sharedPref.getBoolean("seen_warning", false)) {
                 if (oldSharedPref.getBoolean("com.mttrnd.qrh.seenwarning", false)) {
                     startActivity(Intent(this, FirstRun::class.java).putExtra("isUpdate", true))
@@ -86,53 +90,64 @@ class Main : AppCompatActivity(), MainInt {
             vm.isDarkDisabled = false
         }
 
+        setContentView(R.layout.activity_main)
 
-            setContentView(R.layout.activity_main)
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        val appBarConfiguration = AppBarConfiguration(navController.graph)
+        setupActionBarWithNavController(navController, appBarConfiguration)
 
-            val navHostFragment =
-                supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-            val navController = navHostFragment.navController
-            val toolbar: Toolbar = findViewById(R.id.toolbar)
-            setSupportActionBar(toolbar)
-            val appBarConfiguration = AppBarConfiguration(navController.graph)
-            setupActionBarWithNavController(navController, appBarConfiguration)
-
-            val currentTime = System.currentTimeMillis()
-            val lastCheckedTime = sharedPref.getLong("update_checked", 0)
-
-            if ((currentTime - lastCheckedTime) > 600000) {
-                appUpdateManager = AppUpdateManagerFactory.create(this)
-                appUpdateManager.registerListener(installStateUpdatedListener)
-
-                appUpdateManager.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
-                    if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
-                        && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)
-                    ) {
-                        try {
-                            appUpdateManager.startUpdateFlowForResult(
-                                appUpdateInfo,
-                                AppUpdateType.FLEXIBLE,
-                                this,
-                                10133
-                            )
-                        } catch (e: SendIntentException) {
-                            e.printStackTrace()
-                        }
-                    } else if (appUpdateInfo.installStatus() == InstallStatus.DOWNLOADED) {
-                        popCompleteUpdate()
-                    }
-                }
-                sharedPref.edit()
-                    .putLong("update_checked", System.currentTimeMillis())
-                    .apply()
+        val appBar = this.findViewById<AppBarLayout>(R.id.app_bar)
+        val params = appBar.layoutParams as CoordinatorLayout.LayoutParams
+        if (params.behavior == null)
+            params.behavior = AppBarLayout.Behavior()
+        val behaviour = params.behavior as AppBarLayout.Behavior
+        behaviour.setDragCallback(object : AppBarLayout.Behavior.DragCallback() {
+            override fun canDrag(appBarLayout: AppBarLayout): Boolean {
+                return false
             }
+        })
 
+        val currentTime = System.currentTimeMillis()
+        val lastCheckedTime = sharedPref.getLong("update_checked", 0)
+
+        if ((currentTime - lastCheckedTime) > 600000) {
+            appUpdateManager = AppUpdateManagerFactory.create(this)
+            appUpdateManager.registerListener(installStateUpdatedListener)
+
+            appUpdateManager.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
+                if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+                    && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)
+                ) {
+                    try {
+                        appUpdateManager.startUpdateFlowForResult(
+                            appUpdateInfo,
+                            AppUpdateType.FLEXIBLE,
+                            this,
+                            10133
+                        )
+                    } catch (e: SendIntentException) {
+                        e.printStackTrace()
+                    }
+                } else if (appUpdateInfo.installStatus() == InstallStatus.DOWNLOADED) {
+                    popCompleteUpdate()
+                }
+            }
+            sharedPref.edit()
+                .putLong("update_checked", System.currentTimeMillis())
+                .apply()
         }
 
+    }
 
 
     override fun onSupportNavigateUp(): Boolean {
-        if(findNavController(R.id.nav_host_fragment).currentDestination.toString().contains("DetailFragment")) {
+        if (findNavController(R.id.nav_host_fragment).currentDestination.toString()
+                .contains("DetailFragment")
+        ) {
             progressShow(true)
         }
         findNavController(R.id.nav_host_fragment).navigateUp()
@@ -140,7 +155,9 @@ class Main : AppCompatActivity(), MainInt {
     }
 
     override fun onBackPressed() {
-        if(findNavController(R.id.nav_host_fragment).currentDestination.toString().contains("DetailFragment")) {
+        if (findNavController(R.id.nav_host_fragment).currentDestination.toString()
+                .contains("DetailFragment")
+        ) {
             progressShow(true)
         }
         super.onBackPressed()
@@ -178,16 +195,17 @@ class Main : AppCompatActivity(), MainInt {
             findNavController(R.id.nav_host_fragment).saveState()
         )
     }
+
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         findNavController(R.id.nav_host_fragment).restoreState(savedInstanceState.getBundle("nav_state"))
     }
 
 
-
     override fun popToDetail(num: Int) {
         var x = num
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
         while (x > 0) {
             navController.popBackStack()
@@ -207,7 +225,7 @@ class Main : AppCompatActivity(), MainInt {
         findViewById<TextView>(R.id.detail_version).text = version
         findViewById<AppBarLayout>(R.id.app_bar).setExpanded(expanded)
 
-        if(hideKeyboard && Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+        if (hideKeyboard && Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
             window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
         }
     }
@@ -258,7 +276,7 @@ class Main : AppCompatActivity(), MainInt {
             Context.MODE_PRIVATE
         )
 
-        if(disabled) {
+        if (disabled) {
             sharedPref.edit()
                 .putBoolean("night_disabled", true)
                 .apply()
@@ -270,8 +288,11 @@ class Main : AppCompatActivity(), MainInt {
     }
 
     override fun recreateActivity() {
-        recreate()
+        startActivity(Intent(this, LoadingActivity::class.java))
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+        lifecycleScope.launch {
+            delay(400)
+            recreate()
+        }
     }
-
-
 }

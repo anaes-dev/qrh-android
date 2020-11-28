@@ -83,5 +83,32 @@
 
     <include layout="@layout/content_main" />
 
+    <RelativeLayout
+        android:id="@+id/loading_animation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#D32F2F"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:alpha="0.5"
+            android:indeterminateTint="#FFFFFF"
+            android:progressBackgroundTint="#FFFFFF"
+            android:visibility="visible" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:paddingTop="80dp"
+            android:text="@string/loading"
+            android:textColor="@android:color/white" />
+    </RelativeLayout>
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

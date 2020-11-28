@@ -37,12 +37,18 @@ class AboutFragment : Fragment() {
         (activity as MainInt).updateBar(title, "", "", expanded = false, hideKeyboard = true)
 
 
+
+
         val verCode = BuildConfig.VERSION_NAME
         val verOutput = "Version $verCode"
         view.findViewById<TextView>(R.id.about_version).text = verOutput
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
             android_old.visibility = View.VISIBLE
+        }
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+            android_dark.visibility = View.GONE
         }
 
         btn_view_disclaimers.setOnClickListener {
@@ -67,8 +73,8 @@ class AboutFragment : Fragment() {
 
         darkDisableSwitch.setOnCheckedChangeListener { _, _ ->
             if (darkDisableSwitch.isChecked) {
-                    vm.isDarkDisabled = true
-                    (activity as MainInt).setDarkModeDisabled(true)
+                vm.isDarkDisabled = true
+                (activity as MainInt).setDarkModeDisabled(true)
                 (activity as MainInt).recreateActivity()
             } else {
                 vm.isDarkDisabled = false
