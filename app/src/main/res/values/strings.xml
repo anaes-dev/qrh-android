@@ -46,7 +46,7 @@
     <string name="_5">5</string>
     <string name="label_warning">Warning</string>
     <string name="label_tick">Green tick</string>
-    <string name="loading">Loading...</string>
+    <string name="loading">Loading…</string>
 
     <string name="disable_dark_mode">Disable automatic theme</string>
     <string name="dark_theme">Dark theme</string>

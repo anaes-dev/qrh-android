@@ -2,19 +2,15 @@ package dev.anaes.qrh
 
 
 import android.os.Bundle
-import android.os.Handler
-import android.util.Log
 import android.util.TypedValue
 import android.view.*
 import android.widget.SearchView
 import android.widget.TextView
 import androidx.core.content.ContextCompat.getColor
-import androidx.core.os.HandlerCompat
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
