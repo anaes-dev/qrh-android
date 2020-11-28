@@ -1,6 +1,8 @@
 # Quick Reference Handbook (QRH)
 
-<img src="./readme/screenshot1b.png" width="240px"> | <img src="./readme/screenshot2b.png" width="240px"> | <img src="./readme/screenshot3b.png" width="240px">
+<img src="./readme/screenshot1c.png" width="240px"> | <img src="./readme/screenshot2c.png" width="240px"> | <img src="./readme/screenshot3c.png" width="240px">
+
+<img src="./readme/screenshot4c.png" width="240px"> | <img src="./readme/screenshot5c.png" width="240px"> | <img src="./readme/screenshot6c.png" width="240px">
 
 ## Features
 - Unofficial derivative of the Association of Anaesthetists Quick Reference Handbook (QRH): www.anaesthetists.org/qrh (CC BY-NC-SA 4.0)
