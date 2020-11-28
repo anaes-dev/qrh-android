@@ -1,13 +1,16 @@
 # Quick Reference Handbook (QRH)
 
-<img src="./readme/screenshot1b.png" width="240px"> | <img src="./readme/screenshot2b.png" width="240px"> | <img src="./readme/screenshot3b.png" width="240px">
+<img src="./readme/screenshot1c.png" width="240px"> | <img src="./readme/screenshot2c.png" width="240px"> | <img src="./readme/screenshot3c.png" width="240px">
+
+<img src="./readme/screenshot4c.png" width="240px"> | <img src="./readme/screenshot5c.png" width="240px"> | <img src="./readme/screenshot6c.png" width="240px">
 
 ## Features
 - Unofficial derivative of the Association of Anaesthetists Quick Reference Handbook (QRH): www.anaesthetists.org/qrh (CC BY-NC-SA 4.0)
 - ***Not endorsed by the Association of Anaesthetists***
 - Rapidly searchable guideline list
 - Simple guideline layout echoing original handbook
-- Clickable links between guidelines
+- Clickable links between guidelines with breadcrumbs
+- Supports dark theme (Android Q and later)
 - Easily updatable through modification of JSON assets
 - [![CC BY-NC-SA 4.0][cc-by-nc-sa-shield]][cc-by-nc-sa] Released under same Creative Commons license as original work  
 
