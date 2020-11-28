@@ -10,6 +10,7 @@
 - Rapidly searchable guideline list
 - Simple guideline layout echoing original handbook
 - Clickable links between guidelines
+- Supports dark theme (Android Q and later)
 - Easily updatable through modification of JSON assets
 - [![CC BY-NC-SA 4.0][cc-by-nc-sa-shield]][cc-by-nc-sa] Released under same Creative Commons license as original work  
 
