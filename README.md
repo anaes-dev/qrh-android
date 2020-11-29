@@ -13,7 +13,7 @@
 - Supports dark theme (Android Q and later)
 - Easily updatable through modification of JSON assets
 - [![CC BY-NC-SA 4.0][cc-by-nc-sa-shield]][cc-by-nc-sa] Released under same Creative Commons license as original work  
-- iOS version available at <a href="github.com/anaes-dev/qrh-ios">github.com/anaes-dev/qrh-ios</a>
+- iOS version available at <a href="http://github.com/anaes-dev/qrh-ios">github.com/anaes-dev/qrh-ios</a>
 
 This application has been neither professionally developed nor tested. It carries no certification markings, regulatory approvals or technical assessment appraisals. Please read full guidance and disclaimers on first launch.
 
@@ -37,7 +37,7 @@ Available on Google Play:
 
 Otherwise please build from source or download APK from releases:
 
-<a href="github.com/anaes-dev/qrh-android/releases">github.com/anaes-dev/qrh-android/releases</a>
+<a href="http://github.com/anaes-dev/qrh-android/releases">github.com/anaes-dev/qrh-android/releases</a>
 
 ## Technical
 *(For any updates, modifications or derivatives)*
