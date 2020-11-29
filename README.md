@@ -13,7 +13,7 @@
 - Supports dark theme (Android Q and later)
 - Easily updatable through modification of JSON assets
 - [![CC BY-NC-SA 4.0][cc-by-nc-sa-shield]][cc-by-nc-sa] Released under same Creative Commons license as original work  
-- iOS version available at github.com/anaes-dev/qrh-ios
+- iOS version available at <a href="github.com/anaes-dev/qrh-ios">github.com/anaes-dev/qrh-ios</a>
 
 This application has been neither professionally developed nor tested. It carries no certification markings, regulatory approvals or technical assessment appraisals. Please read full guidance and disclaimers on first launch.
 
@@ -36,7 +36,8 @@ Available on Google Play:
 <a href='https://play.google.com/store/apps/details?id=com.mttrnd.qrh&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' width="240px"/></a>
 
 Otherwise please build from source or download APK from releases:
-github.com/anaes-dev/qrh-android/releases
+
+<a href="github.com/anaes-dev/qrh-android/releases">github.com/anaes-dev/qrh-android/releases</a>
 
 ## Technical
 *(For any updates, modifications or derivatives)*
@@ -45,25 +46,25 @@ The guideline list is generated from /assets/guidelines.json.
 
 Guidelines are stored as JSON objects in the assets folder.
 
-Each array contains 'type', 'main', 'sub' and 'step' keys.
+Each array contains 'type', 'head', 'body' and 'step' keys.
 
 These populate different styled cards for each guideline page.
 
 ### Card views
 
 Type integer value determines the appearance of the generated card:
-1. Introductory text (main only)
-2. START text (main only)
-3. Guideline step with bold heading and separate content (main, sub and step)
-4. Guideline step with single text field (main and step)
-5. Orange expanding box (main and sub)
-6. Blue expanding box (main and sub)
-7. Green expanding box (main and sub)
-8. Black expanding box (main and sub)
-9. Purple expanding box (main and sub)
-10. Image (path/URL in main, caption in sub)
-11. Version text (main only)
-12. Red disclaimer card (main only)  
+1. Introductory text (body only)
+2. START text (body only)
+3. Guideline step with bold heading and separate content (head, body and step)
+4. Guideline step with single text field (body and step)
+5. Orange expanding box (head and body)
+6. Blue expanding box (head and body)
+7. Green expanding box (head and body)
+8. Black expanding box (head and body)
+9. Purple expanding box (head and body)
+10. Image (caption in head, path/URL in body)
+11. Version text (body only)
+12. Red disclaimer card (head only)  
 
 ### Card contents
 
