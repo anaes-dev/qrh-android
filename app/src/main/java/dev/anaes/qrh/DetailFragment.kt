@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Button
 import android.widget.ImageView
+import androidx.core.content.ContextCompat
 import androidx.core.view.doOnPreDraw
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -119,18 +120,10 @@ class DetailFragment : Fragment(), PushDetail {
             detail_recyclerview.adapter = adapter
         }
 
-
-
-
         if(parentFragmentManager.backStackEntryCount > 1) {
             detail_scroll.isVisible = true
 
             val bcStack = detail_stack
-
-
-            detail_home.setOnClickListener {
-                (activity as MainInt).popToDetail(parentFragmentManager.backStackEntryCount)
-            }
 
             var bci = 0
             var bcd: Int = parentFragmentManager.backStackEntryCount - 1
@@ -141,6 +134,20 @@ class DetailFragment : Fragment(), PushDetail {
                 @Suppress("DEPRECATION")
                 resources.getColor(R.color.colorAccent)
             }
+
+
+            val bcHomeButton = Button(context, null, android.R.attr.buttonBarButtonStyle)
+            bcHomeButton.textSize = 12F
+            bcHomeButton.isAllCaps = false
+            color?.let { bcHomeButton.setTextColor(it) }
+            bcHomeButton.text = getString(R.string.title_home)
+            val drawable = context?.let { ContextCompat.getDrawable(it, R.drawable.ic_home) }
+            bcHomeButton.setCompoundDrawablesWithIntrinsicBounds(drawable,null,null,null)
+            bcHomeButton.setOnClickListener {
+                (activity as MainInt).popToDetail(parentFragmentManager.backStackEntryCount)
+            }
+            bcStack.addView(bcHomeButton)
+
 
             while (bci < parentFragmentManager.backStackEntryCount) {
 
