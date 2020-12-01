@@ -8,12 +8,10 @@
     android:paddingStart="4dp"
     android:paddingEnd="4dp">
 
-  <androidx.cardview.widget.CardView
+  <com.google.android.material.card.MaterialCardView
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       app:cardBackgroundColor="@color/detailItemRedBG"
-      app:cardCornerRadius="8dp"
-      app:cardElevation="5dp"
       app:cardUseCompatPadding="true"
       app:contentPadding="8dp"
       app:layout_constraintEnd_toEndOf="parent"
@@ -26,7 +24,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/detailItemRedTXT"
         android:textStyle="bold" />
-  </androidx.cardview.widget.CardView>
+  </com.google.android.material.card.MaterialCardView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

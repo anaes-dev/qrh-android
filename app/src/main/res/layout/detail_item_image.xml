@@ -9,7 +9,7 @@
     android:paddingTop="4dp"
     android:paddingEnd="4dp">
 
-  <androidx.cardview.widget.CardView
+  <com.google.android.material.card.MaterialCardView
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:animationCache="true"
@@ -38,6 +38,6 @@
         android:contentDescription="@string/image"
         app:srcCompat="@android:drawable/stat_notify_sync" />
 
-  </androidx.cardview.widget.CardView>
+  </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

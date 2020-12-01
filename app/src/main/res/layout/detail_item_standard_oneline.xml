@@ -10,11 +10,10 @@
     android:paddingTop="4dp"
     android:paddingEnd="4dp">
 
-  <androidx.cardview.widget.CardView
+  <com.google.android.material.card.MaterialCardView
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:animationCache="true"
-      app:cardCornerRadius="4dp"
       app:cardUseCompatPadding="true"
       app:contentPadding="8dp"
       app:layout_constraintBottom_toBottomOf="parent"
@@ -70,6 +69,6 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-  </androidx.cardview.widget.CardView>
+  </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

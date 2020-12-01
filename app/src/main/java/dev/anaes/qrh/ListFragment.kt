@@ -6,6 +6,7 @@ import android.util.TypedValue
 import android.view.*
 import android.widget.SearchView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getColor
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
@@ -115,9 +116,8 @@ class ListFragment : Fragment() {
                     )
                     .setDuration(8000)
                     .setBackgroundTint(getColor(safeContext, R.color.snackbarBackground))
-                    .setAction(R.string.title_about) {
-                        findNavController().navigate(R.id.LoadAbout)
-                    }
+                    .setTextColor(getColor(safeContext, R.color.snackbarText))
+
 
             val snackView: View = snack.view
             val snackTextView = snackView.findViewById(R.id.snackbar_text) as TextView
@@ -141,7 +141,10 @@ class ListFragment : Fragment() {
                         if (!isDismissing) {
                             isDismissing = true
                             snackView.animate().alpha(0F).setDuration(600)
-                                .withEndAction { snack.dismiss() }
+                                .withEndAction {
+                                    snack.view.visibility = View.GONE
+                                    snack.dismiss()
+                                }
                         }
                     }
                 }

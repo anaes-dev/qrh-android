@@ -10,13 +10,12 @@
     android:paddingTop="4dp"
     android:paddingEnd="4dp">
 
-  <androidx.cardview.widget.CardView
+  <com.google.android.material.card.MaterialCardView
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:animationCache="true"
-      app:cardCornerRadius="4dp"
       app:cardUseCompatPadding="true"
-      app:contentPadding="16dp"
+      app:contentPadding="12dp"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
@@ -43,6 +42,6 @@
         android:textSize="15sp"
         tools:text="step 1" />
 
-  </androidx.cardview.widget.CardView>
+  </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
