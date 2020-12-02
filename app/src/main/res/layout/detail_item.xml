@@ -16,7 +16,6 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_marginStart="32dp"
-      android:foreground="?android:attr/selectableItemBackground"
       android:hapticFeedbackEnabled="true"
       app:cardCornerRadius="6dp"
       app:cardElevation="4dp"
@@ -33,7 +32,7 @@
         android:paddingStart="0dp"
         android:paddingTop="6dp"
         android:paddingEnd="4dp"
-        android:paddingBottom="5dp">
+        android:paddingBottom="8dp">
 
       <ImageView
           android:id="@+id/detail_arrow"
@@ -58,9 +57,10 @@
 
         <TextView
             android:id="@+id/detail_head"
-            style="@style/Widget.AppCompat.TextView.SpinnerItem"
+            style="@style/TextAppearance.MaterialComponents.Subtitle1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:gravity="start|center_vertical"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -73,10 +73,10 @@
 
       <TextView
           android:id="@+id/detail_body"
+          style="@style/TextAppearance.MaterialComponents.Body2"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:layout_marginStart="8dp"
-          android:layout_marginTop="8dp"
           android:textColor="?android:attr/textColorPrimary"
           android:visibility="gone"
           app:layout_constraintEnd_toEndOf="parent"

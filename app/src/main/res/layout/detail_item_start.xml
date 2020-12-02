@@ -11,6 +11,7 @@
 
   <TextView
       android:id="@+id/detail_text"
+      style="@android:style/TextAppearance.Material.Subhead"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginStart="4dp"

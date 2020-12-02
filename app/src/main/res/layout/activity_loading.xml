@@ -31,11 +31,11 @@
 
     <TextView
         android:id="@+id/loading_text"
+        style="@style/TextAppearance.MaterialComponents.Headline6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/loading"
         android:textColor="#FFFFFF"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/loading_progress"
         app:layout_constraintStart_toStartOf="@+id/loading_progress"
         app:layout_constraintTop_toBottomOf="@+id/loading_progress" />

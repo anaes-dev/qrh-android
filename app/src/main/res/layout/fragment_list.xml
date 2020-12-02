@@ -19,6 +19,7 @@
             android:layout_height="wrap_content"
             android:background="?android:attr/colorBackground"
             android:iconifiedByDefault="false"
+            android:inputType="text"
             android:queryHint="Search..."
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -36,6 +37,7 @@
 
             <TextView
                 android:id="@+id/list_empty"
+                style="@style/TextAppearance.MaterialComponents.Tooltip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
