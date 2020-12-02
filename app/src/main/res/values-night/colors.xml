@@ -34,5 +34,9 @@
     <color name="snackbarBackground">#CCFFFFFF</color>
     <color name="snackbarText">#000000</color>
 
-    <color name="launchButtonsBG">#1a1a1a</color>
+    <color name="launchButtonsTxtDisabled">#dddddd</color>
+    <color name="launchButtonsTxtEnabled">#ffffff</color>
+    <color name="launchButtonsBgExit">#383838</color>
+    <color name="launchButtonsBgDisabled">#414141</color>
+    <color name="launchButtonsBgEnabled">#F44336</color>
 </resources>

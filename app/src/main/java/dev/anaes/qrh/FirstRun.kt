@@ -23,7 +23,10 @@ class FirstRun : AppCompatActivity(), ViewTreeObserver.OnScrollChangedListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val sharedPref: SharedPreferences = getSharedPreferences("dev.anaes.qrh", Context.MODE_PRIVATE)
+        val sharedPref: SharedPreferences = getSharedPreferences(
+            "dev.anaes.qrh",
+            Context.MODE_PRIVATE
+        )
         val editor = sharedPref.edit()
 
             setContentView(R.layout.activity_firstrun)
@@ -69,11 +72,22 @@ class FirstRun : AppCompatActivity(), ViewTreeObserver.OnScrollChangedListener {
             }
 
             buttonAgreeInactive.setOnClickListener {
-                Snackbar.make(findViewById(android.R.id.content), "Please scroll and read before continuing.", Snackbar.LENGTH_SHORT)
-                    .setBackgroundTint(ContextCompat.getColor(this, R.color.snackbarBackground))
-                    .setAction("Dismiss") {
-                    }
-                    .show()
+                val snack = Snackbar.make(
+                    findViewById(this),
+                    "Please scroll and read before continuing.",
+                    Snackbar.LENGTH_SHORT
+                )
+                snack.view.setPadding(32, 32, 32, 32)
+                snack.setBackgroundTint(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.snackbarBackground
+                    )
+                )
+                snack.setAction("Dismiss") {
+                }
+                snack.anchorView = splash_scroll
+                snack.show()
             }
 
             buttonAgreeActive.setOnClickListener {
@@ -86,7 +100,12 @@ class FirstRun : AppCompatActivity(), ViewTreeObserver.OnScrollChangedListener {
 
             //CC license link
             findViewById<ImageView>(R.id.imageViewCC).setOnClickListener{
-                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://www.creativecommons.org/licenses/by-nc-sa/4.0/")))
+                startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("https://www.creativecommons.org/licenses/by-nc-sa/4.0/")
+                    )
+                )
             }
 
         }
@@ -99,7 +118,9 @@ class FirstRun : AppCompatActivity(), ViewTreeObserver.OnScrollChangedListener {
 
         //Two methods to check if scrolled to bottom for redundancy (as one does not work reliably on tablet screen where all visible from start)
 
-        if (scrolledToBottom.getLocalVisibleRect(scrollBounds) || !scrollViewSplash.canScrollVertically(1)) {
+        if (scrolledToBottom.getLocalVisibleRect(scrollBounds) || !scrollViewSplash.canScrollVertically(
+                1
+            )) {
             findViewById<Button>(R.id.button_agree_active).visibility = View.VISIBLE
             findViewById<Button>(R.id.button_agree_inactive).visibility = View.GONE
             button_agree_active.isClickable = true

@@ -26,7 +26,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".FirstRun" />
+        <activity android:name=".FirstRun"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>
