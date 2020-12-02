@@ -33,9 +33,6 @@ class AboutFragment : Fragment() {
         (activity as MainInt).progressShow(false)
         (activity as MainInt).updateBar(title, "", "", expanded = false, hideKeyboard = true)
 
-
-
-
         val verCode = BuildConfig.VERSION_NAME
         val verOutput = "Version $verCode"
         view.findViewById<TextView>(R.id.about_version).text = verOutput
