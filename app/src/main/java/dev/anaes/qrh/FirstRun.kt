@@ -73,7 +73,7 @@ class FirstRun : AppCompatActivity(), ViewTreeObserver.OnScrollChangedListener {
 
             buttonAgreeInactive.setOnClickListener {
                 val snack = Snackbar.make(
-                    findViewById(this),
+                    splash_scroll,
                     "Please scroll and read before continuing.",
                     Snackbar.LENGTH_SHORT
                 )
