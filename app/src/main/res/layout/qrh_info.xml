@@ -9,11 +9,13 @@
 
     <TextView
         android:id="@+id/textView"
+        style="@style/TextAppearance.MaterialComponents.Body2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:autoLink="web"
         android:padding="8dp"
-        android:text="@string/about_1" />
+        android:text="@string/about_1"
+        android:textColor="?android:attr/textColorSecondary" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,11 +34,13 @@
             app:srcCompat="@drawable/by_nc_sa" />
 
         <TextView
+            style="@android:style/TextAppearance.Material.Small"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autoLink="web"
             android:padding="8dp"
             android:text="@string/about_2"
+            android:textColor="?android:attr/textColorSecondary"
             android:textSize="10sp"
             tools:ignore="SmallSp" />
 

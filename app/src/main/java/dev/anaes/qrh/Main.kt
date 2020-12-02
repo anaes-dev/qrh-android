@@ -34,7 +34,6 @@ import com.google.android.play.core.install.model.UpdateAvailability
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-
 interface MainInt {
     fun popToDetail(num: Int)
     fun updateBar(

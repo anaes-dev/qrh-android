@@ -50,7 +50,7 @@ class CardRecyclerAdapter(
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                 bodyTxt.lineHeight =
-                    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 16F,itemView.resources.displayMetrics).toInt()
+                    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 18F,itemView.resources.displayMetrics).toInt()
             }
 
             bodyTxt.movementMethod = object : TextViewLinkHandler() {
@@ -73,8 +73,10 @@ class CardRecyclerAdapter(
             val bodyTxt = itemView.findViewById<TextView>(R.id.detail_body)
             val subArrow = itemView.findViewById<ImageView>(R.id.detail_arrow)
 
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                bodyTxt.lineHeight = 48
+                bodyTxt.lineHeight =
+                    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 18F,itemView.resources.displayMetrics).toInt()
             }
 
 
@@ -323,7 +325,7 @@ class CardRecyclerAdapter(
                     val end = parseSpans.getSpanEnd(it)
                     parseSpans.removeSpan(it)
                     parseSpans.setSpan(
-                        ImprovedBullet(bulletRadius = dip(2.5, view), gapWidth = dip(7.5, view)),
+                        ImprovedBullet(bulletRadius = dip(2.0, view), gapWidth = dip(7.5, view)),
                         start,
                         end,
                         Spanned.SPAN_INCLUSIVE_EXCLUSIVE

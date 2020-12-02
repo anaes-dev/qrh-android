@@ -47,15 +47,13 @@
 
       <TextView
           android:id="@+id/detail_body"
-          style="@style/Widget.AppCompat.TextView.SpinnerItem"
+          style="@style/TextAppearance.MaterialComponents.Body2"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
-          android:layout_marginStart="28dp"
+          android:layout_marginStart="8dp"
           android:layout_marginTop="6dp"
-          android:textColor="?android:attr/textColorPrimary"
-          android:textSize="15sp"
           app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintStart_toEndOf="@id/detail_step"
           app:layout_constraintTop_toTopOf="@+id/detail_step"
           tools:text="step 1" />
 

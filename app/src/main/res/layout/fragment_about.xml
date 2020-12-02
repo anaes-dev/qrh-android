@@ -43,7 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/android_dark"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -71,27 +71,30 @@
 
                     <TextView
                         android:id="@+id/dark_title"
-                        style="@style/TextAppearance.AppCompat.Medium"
+                        style="@style/TextAppearance.MaterialComponents.Subtitle1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:text="@string/dark_theme"
+                        android:textColor="?android:attr/textColorSecondary"
                         app:layout_constraintBottom_toBottomOf="@+id/dark_logo"
                         app:layout_constraintStart_toEndOf="@+id/dark_logo"
                         app:layout_constraintTop_toTopOf="@+id/dark_logo" />
 
                     <TextView
                         android:id="@+id/dark_explanation"
+                        style="@style/TextAppearance.MaterialComponents.Body2"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:gravity="start"
                         android:text="@string/dark_explanation"
+                        android:textColor="?android:attr/textColorSecondary"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/dark_logo" />
 
-                    <androidx.appcompat.widget.SwitchCompat
+                    <com.google.android.material.switchmaterial.SwitchMaterial
                         android:id="@+id/darkDisableSwitch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -101,11 +104,12 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/dark_explanation"
-                        app:switchPadding="8dp" />
+                        app:switchPadding="8dp"
+                        app:switchTextAppearance="@style/TextAppearance.MaterialComponents.Body2" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -113,20 +117,20 @@
                 android:orientation="horizontal"
                 android:padding="16sp">
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_view_privacy"
-                    style="@style/Widget.AppCompat.Button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp"
                     android:layout_weight="1"
                     android:text="@string/privacy"
                     android:textColor="@android:color/white" />
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_view_disclaimers"
-                    style="@style/Widget.AppCompat.Button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
                     android:layout_weight="1"
                     android:text="@string/disclaimers"
                     android:textColor="@android:color/white" />
@@ -149,12 +153,14 @@
                     app:tint="#000000" />
 
                 <TextView
+                    style="@style/TextAppearance.MaterialComponents.Body2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:layout_marginTop="4dp"
                     android:layout_weight="1"
-                    android:text="@string/iconhint" />
+                    android:text="@string/iconhint"
+                    android:textColor="?android:attr/textColorSecondary" />
             </LinearLayout>
 
 
@@ -175,21 +181,25 @@
                     app:tint="#000000" />
 
                 <TextView
+                    style="@style/TextAppearance.MaterialComponents.Body2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:layout_marginTop="4dp"
                     android:layout_weight="1"
-                    android:text="@string/arrowhint" />
+                    android:text="@string/arrowhint"
+                    android:textColor="?android:attr/textColorSecondary" />
 
             </LinearLayout>
 
             <TextView
+                style="@style/TextAppearance.MaterialComponents.Body2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autoLink="email"
                 android:padding="16dp"
-                android:text="@string/about_3" />
+                android:text="@string/about_3"
+                android:textColor="?android:attr/textColorSecondary" />
 
         </LinearLayout>
     </ScrollView>

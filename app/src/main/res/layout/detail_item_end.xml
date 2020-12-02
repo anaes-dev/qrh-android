@@ -20,6 +20,7 @@
 
     <TextView
         android:id="@+id/detail_text"
+        style="@style/TextAppearance.MaterialComponents.Body2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/detailItemRedTXT"
