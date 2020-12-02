@@ -11,8 +11,6 @@ class LoadingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_loading)
 
-
-
         lifecycleScope.launch {
             delay(1000)
             finish()
