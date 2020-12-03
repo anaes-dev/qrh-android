@@ -7,12 +7,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import kotlinx.android.synthetic.main.fragment_about.*
-import kotlinx.android.synthetic.main.qrh_info.*
+import dev.anaes.qrh.databinding.FragmentAboutBinding
 
 class AboutFragment : Fragment() {
 
@@ -20,12 +18,18 @@ class AboutFragment : Fragment() {
 
     private val vm: MainViewModel by activityViewModels()
 
+    private var _binding: FragmentAboutBinding? = null
+
+    private val binding get() = _binding!!
+
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         (activity as MainInt).progressShow(false)
-        return inflater.inflate(R.layout.fragment_about, container, false)
+        _binding = FragmentAboutBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -35,38 +39,37 @@ class AboutFragment : Fragment() {
 
         val verCode = BuildConfig.VERSION_NAME
         val verOutput = "Version $verCode"
-        view.findViewById<TextView>(R.id.about_version).text = verOutput
+        binding.qrhHeader.aboutVersion.text = verOutput
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-            android_old.visibility = View.VISIBLE
+            binding.androidOld.androidOldCard.visibility = View.VISIBLE
         }
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
-            android_dark.visibility = View.GONE
+            binding.androidDark.visibility = View.GONE
         }
 
-        btn_view_disclaimers.setOnClickListener {
+        binding.btnViewDisclaimers.setOnClickListener {
             findNavController().navigate(R.id.LoadDisclaimers)
         }
 
-
-        btn_view_privacy.setOnClickListener {
+        binding.btnViewPrivacy.setOnClickListener {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("http://anaes.dev/privacy")))
         }
 
-        imageViewCC.setOnClickListener{
+        binding.qrhInfo.imageViewCC.setOnClickListener{
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://www.creativecommons.org/licenses/by-nc-sa/4.0/")))
         }
 
 
         if (vm.isDarkDisabled) {
-            darkDisableSwitch.isChecked = true
+            binding.darkDisableSwitch.isChecked = true
         } else if (!vm.isDarkDisabled) {
-            darkDisableSwitch.isChecked = false
+            binding.darkDisableSwitch.isChecked = false
         }
 
-        darkDisableSwitch.setOnCheckedChangeListener { _, _ ->
-            if (darkDisableSwitch.isChecked) {
+        binding.darkDisableSwitch.setOnCheckedChangeListener { _, _ ->
+            if (binding.darkDisableSwitch.isChecked) {
                 vm.isDarkDisabled = true
                 (activity as MainInt).setDarkModeDisabled(true)
                 (activity as MainInt).recreateActivity()

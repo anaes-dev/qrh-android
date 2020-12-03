@@ -9,17 +9,16 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.ViewTreeObserver
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.ScrollView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_firstrun.*
+import dev.anaes.qrh.databinding.ActivityFirstrunBinding
 import kotlin.system.exitProcess
 
 class FirstRun : AppCompatActivity(), ViewTreeObserver.OnScrollChangedListener {
+
+    private lateinit var binding: ActivityFirstrunBinding
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,103 +27,98 @@ class FirstRun : AppCompatActivity(), ViewTreeObserver.OnScrollChangedListener {
             Context.MODE_PRIVATE
         )
         val editor = sharedPref.edit()
+        binding = ActivityFirstrunBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
-            setContentView(R.layout.activity_firstrun)
+        binding.splashScroll.viewTreeObserver.addOnScrollChangedListener(this)
 
-            val buttonExit = findViewById<Button>(R.id.button_exit)
-            val buttonAgreeInactive = findViewById<Button>(R.id.button_agree_inactive)
-            val buttonAgreeActive = findViewById<Button>(R.id.button_agree_active)
-            val scrollViewSplash = findViewById<ScrollView>(R.id.splash_scroll)
+        val verCode = BuildConfig.VERSION_NAME
+        val verOutput = "Version $verCode"
+        binding.qrhHeader.aboutVersion.text = verOutput
 
-            scrollViewSplash.viewTreeObserver.addOnScrollChangedListener(this)
-
-            val verCode = BuildConfig.VERSION_NAME
-            val verOutput = "Version $verCode"
-            findViewById<TextView>(R.id.about_version).text = verOutput
-
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-                android_old.visibility = View.VISIBLE
-            }
-
-            // Change button configuration on scroll to bottom
-
-            val scrollBounds = Rect()
-            scrollViewSplash.getHitRect(scrollBounds)
-            if (scrolledToBottom.getLocalVisibleRect(scrollBounds)) {
-                buttonAgreeActive.visibility = View.VISIBLE
-                buttonAgreeInactive.visibility = View.GONE
-                buttonAgreeActive.isClickable = true
-                buttonAgreeInactive.isClickable = false
-            }
-
-            // Change layout if update rather than fresh install
-
-            if(intent.getBooleanExtra("isUpdate", false)) {
-                android_updated.visibility = View.VISIBLE
-                android_disclaimerFirst.visibility = View.GONE
-                android_disclaimerUpdate.visibility = View.VISIBLE
-            }
-
-            //
-
-            buttonExit.setOnClickListener {
-                exitProcess(1)
-            }
-
-            buttonAgreeInactive.setOnClickListener {
-                val snack = Snackbar.make(
-                    splash_scroll,
-                    "Please scroll and read before continuing.",
-                    Snackbar.LENGTH_SHORT
-                )
-                snack.view.setPadding(32, 32, 32, 32)
-                snack.setBackgroundTint(
-                    ContextCompat.getColor(
-                        this,
-                        R.color.snackbarBackground
-                    )
-                )
-                snack.setAction("Dismiss") {
-                }
-                snack.anchorView = splash_scroll
-                snack.show()
-            }
-
-            buttonAgreeActive.setOnClickListener {
-                editor.putBoolean("seen_warning", true)
-                editor.putInt("version", BuildConfig.VERSION_CODE)
-                editor.apply()
-                startActivity(Intent(this, Main::class.java))
-                finish()
-            }
-
-            //CC license link
-            findViewById<ImageView>(R.id.imageViewCC).setOnClickListener{
-                startActivity(
-                    Intent(
-                        Intent.ACTION_VIEW,
-                        Uri.parse("https://www.creativecommons.org/licenses/by-nc-sa/4.0/")
-                    )
-                )
-            }
-
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+            binding.androidOld.androidOldCard.visibility = View.VISIBLE
         }
+
+        // Change button configuration on scroll to bottom
+
+        val scrollBounds = Rect()
+        binding.splashScroll.getHitRect(scrollBounds)
+        if (binding.scrolledToBottom.getLocalVisibleRect(scrollBounds)) {
+            binding.buttonAgreeActive.visibility = View.VISIBLE
+            binding.buttonAgreeInactive.visibility = View.GONE
+            binding.buttonAgreeActive.isClickable = true
+            binding.buttonAgreeInactive.isClickable = false
+        }
+
+        // Change layout if update rather than fresh install
+
+        if(intent.getBooleanExtra("isUpdate", false)) {
+            binding.androidUpdated.androidUpdatedCard.visibility = View.VISIBLE
+            binding.androidDisclaimerFirst.visibility = View.GONE
+            binding.androidDisclaimerUpdate.visibility = View.VISIBLE
+        }
+
+        //
+
+        binding.buttonExit.setOnClickListener {
+            exitProcess(1)
+        }
+
+        binding.buttonAgreeInactive.setOnClickListener {
+            val snack = Snackbar.make(
+                binding.splashScroll,
+                "Please scroll and read before continuing.",
+                Snackbar.LENGTH_SHORT
+            )
+            snack.view.setPadding(32, 32, 32, 32)
+            snack.setBackgroundTint(
+                ContextCompat.getColor(
+                    this,
+                    R.color.snackbarBackground
+                )
+            )
+            snack.setAction("Dismiss") {
+            }
+            snack.anchorView = binding.splashScroll
+            snack.show()
+        }
+
+        binding.buttonAgreeActive.setOnClickListener {
+            editor.putBoolean("seen_warning", true)
+            editor.putInt("version", BuildConfig.VERSION_CODE)
+            editor.apply()
+            startActivity(Intent(this, Main::class.java))
+            finish()
+        }
+
+        //CC license link
+        binding.qrhInfo.imageViewCC.setOnClickListener{
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://www.creativecommons.org/licenses/by-nc-sa/4.0/")
+                )
+            )
+        }
+
+    }
 
 
     override fun onScrollChanged() {
-        val scrollViewSplash: ScrollView = findViewById(R.id.splash_scroll)
         val scrollBounds = Rect()
-        scrollViewSplash.getHitRect(scrollBounds)
+        binding.splashScroll.getHitRect(scrollBounds)
 
         //Two methods to check if scrolled to bottom for redundancy (as one does not work reliably on tablet screen where all visible from start)
 
-        if (scrolledToBottom.getLocalVisibleRect(scrollBounds) || !scrollViewSplash.canScrollVertically(
+        if (binding.scrolledToBottom.getLocalVisibleRect(scrollBounds) || !binding.splashScroll.canScrollVertically(
                 1
             )) {
-            findViewById<Button>(R.id.button_agree_active).visibility = View.VISIBLE
-            findViewById<Button>(R.id.button_agree_inactive).visibility = View.GONE
-            button_agree_active.isClickable = true
-            button_agree_inactive.isClickable = false
+            binding.buttonAgreeActive.visibility = View.VISIBLE
+            binding.buttonAgreeInactive.visibility = View.GONE
+            binding.buttonAgreeActive.isClickable = true
+            binding.buttonAgreeInactive.isClickable = false
         }
     }
 }

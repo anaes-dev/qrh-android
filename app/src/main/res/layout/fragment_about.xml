@@ -25,13 +25,14 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <include
+                android:id="@+id/qrhHeader"
                 layout="@layout/qrh_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
 
             <include
-                android:id="@+id/android_old"
+                android:id="@+id/androidOld"
                 layout="@layout/qrh_old"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -39,12 +40,13 @@
 
 
             <include
+                android:id="@+id/qrhInfo"
                 layout="@layout/qrh_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/android_dark"
+                android:id="@+id/androidDark"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -121,7 +123,7 @@
                     android:id="@+id/btn_view_privacy"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"
                     android:layout_weight="1"
                     android:text="@string/privacy"
                     android:textColor="@android:color/white" />
@@ -130,7 +132,7 @@
                     android:id="@+id/btn_view_disclaimers"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
                     android:layout_weight="1"
                     android:text="@string/disclaimers"
                     android:textColor="@android:color/white" />

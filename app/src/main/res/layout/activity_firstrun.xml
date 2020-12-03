@@ -8,7 +8,7 @@
     tools:ignore="inefficientWeight">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/button_layout"
+        android:id="@+id/buttonLayout"
         android:layout_width="match_parent"
         android:layout_height="64dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -31,7 +31,7 @@
 
 
                 <Button
-                    android:id="@+id/button_exit"
+                    android:id="@+id/buttonExit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -39,13 +39,13 @@
                     android:text="@string/exit"
                     android:textColor="@color/launchButtonsTxtDisabled"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/button_agree_active"
+                    app:layout_constraintEnd_toStartOf="@+id/buttonAgreeActive"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
-                    android:id="@+id/button_agree_active"
+                    android:id="@+id/buttonAgreeActive"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
@@ -59,7 +59,7 @@
                     app:layout_constraintEnd_toEndOf="parent" />
 
                 <Button
-                    android:id="@+id/button_agree_inactive"
+                    android:id="@+id/buttonAgreeInactive"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
@@ -71,7 +71,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toEndOf="@+id/button_exit"
+                    app:layout_constraintStart_toEndOf="@+id/buttonExit"
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -81,13 +81,13 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ScrollView
-        android:id="@+id/splash_scroll"
+        android:id="@+id/splashScroll"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fadeScrollbars="false"
         android:scrollbarSize="8dp"
         android:scrollbarStyle="insideOverlay"
-        app:layout_constraintBottom_toTopOf="@+id/button_layout"
+        app:layout_constraintBottom_toTopOf="@+id/buttonLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -99,31 +99,33 @@
 
 
             <include
+                android:id="@+id/qrhHeader"
                 layout="@layout/qrh_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
             <include
-                android:id="@+id/android_old"
+                android:id="@+id/androidOld"
                 layout="@layout/qrh_old"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone" />
 
             <include
-                android:id="@+id/android_updated"
+                android:id="@+id/androidUpdated"
                 layout="@layout/qrh_updated"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone" />
 
             <include
+                android:id="@+id/qrhInfo"
                 layout="@layout/qrh_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
             <TextView
-                android:id="@+id/android_disclaimerFirst"
+                android:id="@+id/androidDisclaimerFirst"
                 style="@style/TextAppearance.MaterialComponents.Body1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -132,7 +134,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
             <TextView
-                android:id="@+id/android_disclaimerUpdate"
+                android:id="@+id/androidDisclaimerUpdate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="16dp"
@@ -141,6 +143,7 @@
                 android:visibility="gone" />
 
             <include
+                android:id="@+id/qrhDisclaimers"
                 layout="@layout/qrh_disclaimers"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
