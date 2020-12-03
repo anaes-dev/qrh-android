@@ -16,7 +16,7 @@
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent">
 
-  <androidx.constraintlayout.widget.ConstraintLayout
+  <RelativeLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content">
 
@@ -24,6 +24,8 @@
         android:id="@+id/detail_step"
         android:layout_width="28dp"
         android:layout_height="28dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:background="@drawable/step_circle"
         android:gravity="center"
         android:maxLines="1"
@@ -34,21 +36,19 @@
         android:textStyle="bold"
         app:autoSizeMaxTextSize="16sp"
         app:autoSizeMinTextSize="8sp"
-        app:autoSizeTextType="uniform"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:autoSizeTextType="uniform" />
 
     <TextView
         android:id="@+id/detail_head"
         style="@style/TextAppearance.MaterialComponents.Subtitle1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/detail_step"
+        android:layout_alignParentEnd="true"
         android:layout_marginStart="8dp"
-        android:textStyle="bold"
+        android:layout_toEndOf="@id/detail_step"
         android:includeFontPadding="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/detail_step"
-        app:layout_constraintBaseline_toBaselineOf="@id/detail_step"
+        android:textStyle="bold"
         tools:text="step 1" />
 
     <TextView
@@ -56,13 +56,13 @@
         style="@style/TextAppearance.MaterialComponents.Body2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_below="@id/detail_head"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
         android:layout_marginStart="6dp"
         android:layout_marginTop="16dp"
         android:textColor="?android:attr/textColorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/detail_head"
         tools:text="sub 1" />
-  </androidx.constraintlayout.widget.ConstraintLayout>
+  </RelativeLayout>
 
 </com.google.android.material.card.MaterialCardView>

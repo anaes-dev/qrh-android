@@ -5,6 +5,7 @@
     android:id="@+id/detailScroll"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:scrollbarStyle="insideInset"
     android:scrollbars="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".DetailFragment">
@@ -12,8 +13,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:focusableInTouchMode="true"
-        android:focusable="true">
+        android:focusable="true"
+        android:focusableInTouchMode="true">
 
         <HorizontalScrollView
             android:id="@+id/breadCrumbScroll"
@@ -29,7 +30,9 @@
                 android:layout_height="wrap_content"
                 android:dividerPadding="0dp"
                 android:gravity="center"
-                android:orientation="horizontal" />
+                android:orientation="horizontal"
+                android:paddingStart="0dp"
+                android:paddingEnd="8dp" />
         </HorizontalScrollView>
 
         <View
@@ -65,16 +68,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@id/detailRecyclerView"
-            android:layout_alignParentTop="false"
-            android:layout_alignParentEnd="true"
+            android:layout_alignEnd="@id/detailRecyclerView"
             android:layout_marginEnd="8dp"
             android:alpha=".1"
-            android:fontFamily="sans-serif-black"
+            android:fontFamily="sans-serif"
+            android:includeFontPadding="false"
             android:letterSpacing="-0.05"
-            android:text=""
             android:textSize="96sp"
             android:textStyle="bold"
-            android:translationY="-16dp" />
+            android:translationY="-8dp" />
 
     </RelativeLayout>
 
