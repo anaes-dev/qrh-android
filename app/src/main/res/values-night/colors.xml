@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#252525</color>
-    <color name="colorPrimaryDark">#252525</color>
+    <color name="colorPrimary">#272727</color>
+    <color name="colorPrimaryDark">#272727</color>
     <color name="colorAccent">#4FC3F7</color>
     <color name="windowBackground">#121212</color>
 
@@ -33,6 +33,8 @@
 
     <color name="snackbarBackground">#D9FFFFFF</color>
     <color name="snackbarText">#000000</color>
+
+    <color name="searchBackground">#1e1e1e</color>
 
     <color name="launchButtonsTxtDisabled">#dddddd</color>
     <color name="launchButtonsTxtEnabled">#ffffff</color>

@@ -8,6 +8,7 @@ import android.text.style.BulletSpan
 import android.text.style.URLSpan
 import android.text.util.Linkify
 import android.text.util.Linkify.TransformFilter
+import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -333,10 +334,10 @@ class CardRecyclerAdapter(
                 }
                 return parseSpans
             } else {
-                return Html.fromHtml(text, null,
+                val paraStrippedText = text.replace("<p>","<br /><br />").replace("</p>","")
+                return Html.fromHtml(paraStrippedText, null,
                     { opening, tag, output, _ ->
                         if (tag == "br" && opening) output.append("\n")
-                        if (tag == "p" && opening) output.append("\n")
                         if (tag == "li" && opening) output.append("\n\n• ")
                     }).trim()
             }
