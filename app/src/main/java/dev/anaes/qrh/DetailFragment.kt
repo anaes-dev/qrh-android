@@ -6,13 +6,16 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.doOnPreDraw
+import androidx.core.view.setPadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.button.MaterialButton
 import dev.anaes.qrh.databinding.FragmentDetailBinding
 
 interface PushDetail {
@@ -116,28 +119,23 @@ class DetailFragment : Fragment(), PushDetail {
             binding.detailRecyclerView.layoutManager = linearLayoutManager
             binding.detailRecyclerView.isNestedScrollingEnabled = false
             binding.detailRecyclerView.adapter = adapter
-        }
+
 
         if(parentFragmentManager.backStackEntryCount > 1) {
 
             var bci = 0
             var bcd: Int = parentFragmentManager.backStackEntryCount - 1
 
-            val color = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                context?.getColor(R.color.colorAccent)
-            } else {
-                @Suppress("DEPRECATION")
-                resources.getColor(R.color.colorAccent)
-            }
+            val color = ContextCompat.getColor(safeContext, R.color.colorAccent)
 
-
-            val bcHomeButton = Button(context, null, android.R.attr.buttonBarButtonStyle)
+            val bcHomeButton = MaterialButton(safeContext, null, R.attr.borderlessButtonStyle)
             bcHomeButton.textSize = 12F
             bcHomeButton.isAllCaps = false
-            color?.let { bcHomeButton.setTextColor(it) }
+            bcHomeButton.letterSpacing = 0F
+            bcHomeButton.setTextColor(color)
             bcHomeButton.text = getString(R.string.title_home)
-            val drawable = context?.let { ContextCompat.getDrawable(it, R.drawable.ic_home) }
-            bcHomeButton.setCompoundDrawablesWithIntrinsicBounds(drawable,null,null,null)
+
+            bcHomeButton.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(safeContext, R.drawable.ic_home),null,null,null)
             bcHomeButton.setOnClickListener {
                 (activity as MainInt).popToDetail(parentFragmentManager.backStackEntryCount)
             }
@@ -152,11 +150,12 @@ class DetailFragment : Fragment(), PushDetail {
                 chevron.maxWidth = 12
                 binding.breadCrumbStack.addView(chevron)
 
-                val button = Button(context, null, android.R.attr.buttonBarButtonStyle)
+                val button = MaterialButton(safeContext, null, R.attr.borderlessButtonStyle)
 
                 button.textSize = 12F
                 button.isAllCaps = false
-                color?.let { button.setTextColor(it) }
+                button.letterSpacing = 0F
+                button.setTextColor(color)
                 button.text = vm.breadcrumbTitles[bci + 1]
 
                 button.tag = bcd
@@ -171,7 +170,7 @@ class DetailFragment : Fragment(), PushDetail {
                 bci++
                 bcd--
             }
-
+        }
         }
 
         (view.parent as? ViewGroup)?.doOnPreDraw {
