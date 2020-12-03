@@ -6,16 +6,14 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Button
 import android.widget.ImageView
+import androidx.core.content.ContextCompat
 import androidx.core.view.doOnPreDraw
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.appbar.AppBarLayout
-import kotlinx.android.synthetic.main.fragment_detail.*
-
+import dev.anaes.qrh.databinding.FragmentDetailBinding
 
 interface PushDetail {
     fun navToDetail(code: String, title: String, url: String, version: String)
@@ -36,6 +34,10 @@ class DetailFragment : Fragment(), PushDetail {
     var url: String? = String()
     var version: String? = String()
 
+    private var _binding: FragmentDetailBinding? = null
+
+    private val binding get() = _binding!!
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +45,6 @@ class DetailFragment : Fragment(), PushDetail {
         title = args.title
         url = args.url
         version = "v. " + args.version
-
         setHasOptionsMenu(true)
     }
 
@@ -58,10 +59,12 @@ class DetailFragment : Fragment(), PushDetail {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_detail, container, false)
+    ): View {
+        _binding = FragmentDetailBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
 
@@ -76,22 +79,18 @@ class DetailFragment : Fragment(), PushDetail {
             hideKeyboard = true
         )
 
-
-        detail_code_2.text = code.toString()
+        binding.detailCode2.text = code.toString()
 
         when(code) {
             "3-2" -> {
-                detail_code_2.textSize = 60F
-                detail_code_2.translationY = -20F
+                binding.detailCode2.textSize = 60F
+                binding.detailCode2.translationY = -20F
             }
             "3-3", "3-7", "3-11" -> {
-                detail_code_2.textSize = 72F
-                detail_code_2.translationY = -32F
+                binding.detailCode2.textSize = 72F
+                binding.detailCode2.translationY = -32F
             }
         }
-
-        activity?.findViewById<AppBarLayout>(R.id.app_bar)?.setExpanded(true)
-
 
         val filenameSuffix = ".json"
         val filename = code + filenameSuffix
@@ -114,23 +113,12 @@ class DetailFragment : Fragment(), PushDetail {
                 }
 
             linearLayoutManager = LinearLayoutManager(context)
-            detail_recyclerview.layoutManager = linearLayoutManager
-            detail_recyclerview.isNestedScrollingEnabled = false
-            detail_recyclerview.adapter = adapter
+            binding.detailRecyclerView.layoutManager = linearLayoutManager
+            binding.detailRecyclerView.isNestedScrollingEnabled = false
+            binding.detailRecyclerView.adapter = adapter
         }
 
-
-
-
         if(parentFragmentManager.backStackEntryCount > 1) {
-            detail_scroll.isVisible = true
-
-            val bcStack = detail_stack
-
-
-            detail_home.setOnClickListener {
-                (activity as MainInt).popToDetail(parentFragmentManager.backStackEntryCount)
-            }
 
             var bci = 0
             var bcd: Int = parentFragmentManager.backStackEntryCount - 1
@@ -142,13 +130,27 @@ class DetailFragment : Fragment(), PushDetail {
                 resources.getColor(R.color.colorAccent)
             }
 
+
+            val bcHomeButton = Button(context, null, android.R.attr.buttonBarButtonStyle)
+            bcHomeButton.textSize = 12F
+            bcHomeButton.isAllCaps = false
+            color?.let { bcHomeButton.setTextColor(it) }
+            bcHomeButton.text = getString(R.string.title_home)
+            val drawable = context?.let { ContextCompat.getDrawable(it, R.drawable.ic_home) }
+            bcHomeButton.setCompoundDrawablesWithIntrinsicBounds(drawable,null,null,null)
+            bcHomeButton.setOnClickListener {
+                (activity as MainInt).popToDetail(parentFragmentManager.backStackEntryCount)
+            }
+            binding.breadCrumbStack.addView(bcHomeButton)
+
+
             while (bci < parentFragmentManager.backStackEntryCount) {
 
                 val chevron = ImageView(context)
                 chevron.setImageResource(R.drawable.ic_chevron_right)
                 chevron.maxHeight = 12
                 chevron.maxWidth = 12
-                bcStack.addView(chevron)
+                binding.breadCrumbStack.addView(chevron)
 
                 val button = Button(context, null, android.R.attr.buttonBarButtonStyle)
 
@@ -165,7 +167,7 @@ class DetailFragment : Fragment(), PushDetail {
                     }
 
                 }
-                bcStack.addView(button)
+                binding.breadCrumbStack.addView(button)
                 bci++
                 bcd--
             }
@@ -175,7 +177,7 @@ class DetailFragment : Fragment(), PushDetail {
         (view.parent as? ViewGroup)?.doOnPreDraw {
             startPostponedEnterTransition()
             (activity as MainInt).progressShow(false)
-            detail_scroll.scrollTo(detail_scroll.right, 0)
+            binding.breadCrumbScroll.scrollTo(binding.breadCrumbScroll.right, 0)
         }
     }
 

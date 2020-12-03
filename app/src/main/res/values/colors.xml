@@ -3,18 +3,22 @@
     <color name="colorPrimary">#F44336</color>
     <color name="colorPrimaryDark">#F44336</color>
     <color name="colorAccent">#0096FF</color>
+    <color name="windowBackground">#fafafa</color>
+
+    <color name="titleTextColorCollapsed">#ffffff</color>
+    <color name="titleTextColorExpanded">#ffffff</color>
 
     <color name="detailItemOrangeBG">#FBE9E7</color>
     <color name="detailItemOrangeARR">#FFCCBC</color>
-    <color name="detailItemOrangeTXT">#E64A19</color>
+    <color name="detailItemOrangeTXT">#BF360C</color>
 
     <color name="detailItemBlueBG">#E3F2FD</color>
     <color name="detailItemBlueARR">#BBDEFB</color>
-    <color name="detailItemBlueTXT">#1976D2</color>
+    <color name="detailItemBlueTXT">#1565C0</color>
 
     <color name="detailItemGreenBG">#E8F5E9</color>
     <color name="detailItemGreenARR">#C8E6C9</color>
-    <color name="detailItemGreenTXT">#388E3C</color>
+    <color name="detailItemGreenTXT">#2E7D32</color>
 
     <color name="detailItemBlackBG">#EDEDED</color>
     <color name="detailItemBlackARR">#D1D1D1</color>
@@ -25,7 +29,16 @@
     <color name="detailItemPurpleTXT">#512DA8</color>
 
     <color name="detailItemRedBG">#FFCDD2</color>
-    <color name="detailItemRedTXT">#FF2828</color>
+    <color name="detailItemRedTXT">#B71C1C</color>
 
-    <color name="snackbarBackground">#BF000000</color>
+    <color name="searchBackground">#fafafa</color>
+
+    <color name="snackbarBackground">#D9000000</color>
+    <color name="snackbarText">#ffffff</color>
+
+    <color name="launchButtonsTxtDisabled">#555555</color>
+    <color name="launchButtonsTxtEnabled">#ffffff</color>
+    <color name="launchButtonsBgExit">#eeeeee</color>
+    <color name="launchButtonsBgDisabled">#dddddd</color>
+    <color name="launchButtonsBgEnabled">#F44336</color>
 </resources>

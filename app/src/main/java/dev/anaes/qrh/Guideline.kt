@@ -1,8 +1,11 @@
 package dev.anaes.qrh
 
 import android.content.Context
+import android.content.res.AssetManager
+import android.net.Uri
 import org.json.JSONException
 import org.json.JSONObject
+import java.io.FileInputStream
 
 
 class Guideline(
@@ -13,7 +16,7 @@ class Guideline(
 
     companion object {
 
-        fun getGuidelinesFromFile(filename: String, context: Context?): ArrayList<Guideline> {
+        fun getGuidelinesFromFile(filename: String, context: Context): ArrayList<Guideline> {
             val guidelineList = ArrayList<Guideline>()
 
             try {
@@ -22,7 +25,7 @@ class Guideline(
                         filename,
                         context
                     )
-                val json = JSONObject(jsonString)
+                val json = JSONObject(jsonString as String)
                 val guidelines = json.getJSONArray("guidelines")
 
                 (0 until guidelines.length()).mapTo(guidelineList) {
@@ -40,15 +43,15 @@ class Guideline(
             return guidelineList
         }
 
-        private fun loadJsonFromAsset(filename: String, context: Context?): String? {
-            var json: String? = null
+        private fun loadJsonFromAsset(filename: String, context: Context): String? {
+            var json: String
             try {
-                val inputStream = context?.assets?.open(filename)
-                val size = inputStream?.available()
-                val buffer = size?.let { ByteArray(it) }
-                inputStream?.read(buffer)
-                inputStream?.close()
-                json = buffer?.let { String(it, Charsets.UTF_8) }
+                val inputStream = context.assets.open(filename)
+                val size = inputStream.available()
+                val buffer = ByteArray(size)
+                inputStream.read(buffer)
+                inputStream.close()
+                json = String(buffer, Charsets.UTF_8)
             } catch (ex: java.io.IOException) {
                 ex.printStackTrace()
                 return null
