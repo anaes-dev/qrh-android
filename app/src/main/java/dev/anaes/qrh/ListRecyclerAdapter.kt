@@ -59,13 +59,12 @@ class ListRecyclerAdapter(  var dataSource: ArrayList<Guideline>,
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
-                val charSearch = constraint.toString()
-                guidelineFilterList = if (charSearch.isEmpty()) {
+                var charSearch = constraint.toString()
+                    guidelineFilterList = if (charSearch.isEmpty()) {
                     dataSource
                 } else {
                     val resultList = ArrayList<Guideline>()
-                    val charSearch = charSearch.toLowerCase(Locale.ROOT)
-
+                    charSearch = charSearch.toLowerCase(Locale.ROOT)
                     for (item in dataSource) {
                         if ((item.code.toLowerCase(Locale.ROOT)+(item.title.toLowerCase(Locale.ROOT))).contains(charSearch.toLowerCase(Locale.ROOT))) {
                             resultList.add(item)

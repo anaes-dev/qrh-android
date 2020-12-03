@@ -38,7 +38,8 @@ class ListFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentListBinding.inflate(inflater, container, false)
@@ -49,7 +50,7 @@ class ListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         postponeEnterTransition()
 
-        val snack = Snackbar.make(binding.listRecyclerView,getString(R.string.snackLaunch),Snackbar.LENGTH_LONG)
+        val snack = Snackbar.make(view,getString(R.string.snackLaunch),Snackbar.LENGTH_LONG)
 
         (activity as MainInt).updateBar("QRH", "", "", expanded = false, hideKeyboard = true)
 
@@ -155,7 +156,10 @@ class ListFragment : Fragment() {
                     })
                 }
             }
+
+
         }
+
 
     private fun guidelineClicked(guideline: Guideline) {
         val action = ListFragmentDirections.LoadDetail(

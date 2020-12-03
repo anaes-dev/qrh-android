@@ -26,7 +26,7 @@ class DetailContent(
                         filename,
                         context
                     )
-                val json = JSONObject(jsonString)
+                val json = JSONObject(jsonString as String)
                 val contentCards = json.getJSONArray("DetailContent")
 
                 (0 until contentCards.length()).mapTo(contentData) {
@@ -46,7 +46,7 @@ class DetailContent(
         }
 
         private fun loadJsonFromAsset(filename: String, context: Context): String? {
-            var json: String? = null
+            var json: String
 
             try {
                 val inputStream = context.assets.open(filename)

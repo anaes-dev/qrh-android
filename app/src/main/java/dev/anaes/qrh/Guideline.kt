@@ -25,7 +25,7 @@ class Guideline(
                         filename,
                         context
                     )
-                val json = JSONObject(jsonString)
+                val json = JSONObject(jsonString as String)
                 val guidelines = json.getJSONArray("guidelines")
 
                 (0 until guidelines.length()).mapTo(guidelineList) {
@@ -44,14 +44,14 @@ class Guideline(
         }
 
         private fun loadJsonFromAsset(filename: String, context: Context): String? {
-            var json: String? = null
+            var json: String
             try {
-                val inputStream = context.assets.open("guidelines.json")
-                val size = inputStream?.available()
-                val buffer = size?.let { ByteArray(it) }
-                inputStream?.read(buffer)
-                inputStream?.close()
-                json = buffer?.let { String(it, Charsets.UTF_8) }
+                val inputStream = context.assets.open(filename)
+                val size = inputStream.available()
+                val buffer = ByteArray(size)
+                inputStream.read(buffer)
+                inputStream.close()
+                json = String(buffer, Charsets.UTF_8)
             } catch (ex: java.io.IOException) {
                 ex.printStackTrace()
                 return null

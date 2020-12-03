@@ -10,7 +10,7 @@ android {
         applicationId "dev.anaes.qrh"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 25
+        versionCode 27
         versionName "2.00"
     }
 

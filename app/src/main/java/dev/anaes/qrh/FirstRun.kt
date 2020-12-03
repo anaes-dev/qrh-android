@@ -8,14 +8,15 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.view.ViewTreeObserver
+import android.view.ViewTreeObserver.OnScrollChangedListener
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import dev.anaes.qrh.databinding.ActivityFirstrunBinding
 import kotlin.system.exitProcess
 
-class FirstRun : AppCompatActivity(), ViewTreeObserver.OnScrollChangedListener {
+
+class FirstRun : AppCompatActivity(), OnScrollChangedListener {
 
     private lateinit var binding: ActivityFirstrunBinding
 
@@ -66,13 +67,14 @@ class FirstRun : AppCompatActivity(), ViewTreeObserver.OnScrollChangedListener {
             exitProcess(1)
         }
 
+
+        val snack = Snackbar.make(
+            view,
+            "Please scroll and read first.",
+            Snackbar.LENGTH_SHORT
+        )
+
         binding.buttonAgreeInactive.setOnClickListener {
-            val snack = Snackbar.make(
-                binding.splashScroll,
-                "Please scroll and read before continuing.",
-                Snackbar.LENGTH_SHORT
-            )
-            snack.view.setPadding(32, 32, 32, 32)
             snack.setBackgroundTint(
                 ContextCompat.getColor(
                     this,
@@ -80,8 +82,9 @@ class FirstRun : AppCompatActivity(), ViewTreeObserver.OnScrollChangedListener {
                 )
             )
             snack.setAction("Dismiss") {
+                snack.dismiss()
             }
-            snack.anchorView = binding.splashScroll
+            snack.anchorView = binding.buttonLayout
             snack.show()
         }
 
@@ -103,8 +106,12 @@ class FirstRun : AppCompatActivity(), ViewTreeObserver.OnScrollChangedListener {
             )
         }
 
-    }
+        binding.splashScroll.viewTreeObserver.addOnScrollChangedListener {
+            snack.dismiss()
+        }
 
+
+    }
 
     override fun onScrollChanged() {
         val scrollBounds = Rect()
