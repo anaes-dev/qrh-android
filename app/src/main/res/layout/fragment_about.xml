@@ -28,7 +28,8 @@
                 android:id="@+id/qrhHeader"
                 layout="@layout/qrh_header"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp" />
 
 
             <include
@@ -36,6 +37,7 @@
                 layout="@layout/qrh_old"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
                 android:visibility="gone" />
 
 

@@ -1,8 +1,11 @@
 package dev.anaes.qrh
 
 import android.content.Context
+import android.content.res.AssetManager
+import android.net.Uri
 import org.json.JSONException
 import org.json.JSONObject
+import java.io.FileInputStream
 
 
 class Guideline(
@@ -13,7 +16,7 @@ class Guideline(
 
     companion object {
 
-        fun getGuidelinesFromFile(filename: String, context: Context?): ArrayList<Guideline> {
+        fun getGuidelinesFromFile(filename: String, context: Context): ArrayList<Guideline> {
             val guidelineList = ArrayList<Guideline>()
 
             try {
@@ -40,10 +43,10 @@ class Guideline(
             return guidelineList
         }
 
-        private fun loadJsonFromAsset(filename: String, context: Context?): String? {
+        private fun loadJsonFromAsset(filename: String, context: Context): String? {
             var json: String? = null
             try {
-                val inputStream = context?.assets?.open(filename)
+                val inputStream = context.assets.open("guidelines.json")
                 val size = inputStream?.available()
                 val buffer = size?.let { ByteArray(it) }
                 inputStream?.read(buffer)

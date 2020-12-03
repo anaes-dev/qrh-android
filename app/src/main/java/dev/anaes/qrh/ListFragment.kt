@@ -18,7 +18,6 @@ import dev.anaes.qrh.databinding.FragmentListBinding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-
 class ListFragment : Fragment() {
 
     private lateinit var linearLayoutManager: LinearLayoutManager
@@ -30,6 +29,8 @@ class ListFragment : Fragment() {
     private var _binding: FragmentListBinding? = null
 
     private val binding get() = _binding!!
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,113 +49,113 @@ class ListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         postponeEnterTransition()
 
+        val snack = Snackbar.make(binding.listRecyclerView,getString(R.string.snackLaunch),Snackbar.LENGTH_LONG)
+
         (activity as MainInt).updateBar("QRH", "", "", expanded = false, hideKeyboard = true)
 
-        val guidelineList =
-            Guideline.getGuidelinesFromFile(
-                "guidelines.json",
-                context
-            )
+        this.context?.let { safeContext ->
 
-        val adapter =
-            ListRecyclerAdapter(guidelineList) { guideline: Guideline ->
-                binding.listSearchview.clearFocus()
-                guidelineClicked(guideline)
-            }
+            val guidelineList =
+                Guideline.getGuidelinesFromFile(
+                    "guidelines.json",
+                    safeContext
+                )
 
-        linearLayoutManager = LinearLayoutManager(context)
-        binding.listRecyclerview.layoutManager = linearLayoutManager
-        binding.listRecyclerview.adapter = adapter
-        binding.listRecyclerview.isNestedScrollingEnabled = false
-
-        var alreadyAnimated = false
-
-        adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
-            override fun onChanged() {
-                super.onChanged()
-                if (adapter.itemCount == 0) {
-                    if(!alreadyAnimated) {
-                        alreadyAnimated = true
-                        binding.listEmpty.alpha = 0F
-                        binding.listEmpty.visibility = View.VISIBLE
-                        binding.listEmpty.animate().alpha(1F).duration = 300
-                    }
-                } else {
-                    binding.listEmpty.visibility = View.GONE
-                    alreadyAnimated = false
+            val adapter =
+                ListRecyclerAdapter(guidelineList) { guideline: Guideline ->
+                    binding.listSearchView.clearFocus()
+                    snack.dismiss()
+                    guidelineClicked(guideline)
                 }
-            }
-        })
 
-        binding.listSearchview.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return false
-            }
+            linearLayoutManager = LinearLayoutManager(context)
+            binding.listRecyclerView.layoutManager = linearLayoutManager
+            binding.listRecyclerView.adapter = adapter
+            binding.listRecyclerView.isNestedScrollingEnabled = false
 
-            override fun onQueryTextChange(newText: String): Boolean {
-                adapter.filter.filter(newText)
-                return true
-            }
-        })
+            var alreadyAnimated = false
 
-        (view.parent as? ViewGroup)?.doOnPreDraw {
-            startPostponedEnterTransition()
-            (activity as MainInt).progressShow(false)
-        }
-
-        if(vm.isStartup) {
-            vm.isStartup = false
-
-            this.context?.let { safeContext ->
-            val snack =
-                Snackbar
-                    .make(
-                        view,
-                                "Unofficial adaptation of Quick Reference Handbook\n" +
-                                "Not endorsed by the Association of Anaesthetists\n" +
-                                "Untested and unregulated; not recommended for clinical use\n" +
-                                "No guarantees of completeness, accuracy or performance\n" +
-                                "Should not override your own knowledge and judgement",
-                        Snackbar.LENGTH_LONG
-                    )
-                    .setDuration(8000)
-                    .setBackgroundTint(getColor(safeContext, R.color.snackbarBackground))
-                    .setTextColor(getColor(safeContext, R.color.snackbarText))
-
-
-            val snackView: View = snack.view
-            val snackTextView = snackView.findViewById(R.id.snackbar_text) as TextView
-            snackTextView.maxLines = 5
-            snackTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12F)
-
-            lifecycleScope.launch {
-                delay(100)
-                snack.show()
-            }
-
-            // Dismiss snackbar if list scrolled (otherwise will stay visible for 8 seconds)
-
-            var isDismissing = false
-
-                binding.listRecyclerview.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    super.onScrolled(recyclerView, dx, dy)
-                    if (dy > 2) {
-                        binding.listSearchview.clearFocus()
-                        if (!isDismissing) {
-                            isDismissing = true
-                            snackView.animate().alpha(0F).setDuration(600)
-                                .withEndAction {
-                                    snack.view.visibility = View.GONE
-                                    snack.dismiss()
-                                }
+            adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+                override fun onChanged() {
+                    super.onChanged()
+                    if (adapter.itemCount == 0) {
+                        if (!alreadyAnimated) {
+                            alreadyAnimated = true
+                            binding.listEmpty.alpha = 0F
+                            binding.listEmpty.visibility = View.VISIBLE
+                            binding.listEmpty.animate().alpha(1F).duration = 300
                         }
+                    } else {
+                        binding.listEmpty.visibility = View.GONE
+                        alreadyAnimated = false
                     }
                 }
             })
+
+
+
+            binding.listSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    return false
+                }
+
+                override fun onQueryTextChange(newText: String): Boolean {
+                    adapter.filter.filter(newText)
+                    return true
+                }
+            })
+
         }
+
+            (view.parent as? ViewGroup)?.doOnPreDraw {
+                startPostponedEnterTransition()
+                (activity as MainInt).progressShow(false)
+            }
+
+            if (vm.isStartup) {
+                vm.isStartup = false
+
+                this.context?.let { safeContext ->
+
+                    snack
+                        .setDuration(8000)
+                        .setBackgroundTint(getColor(safeContext, R.color.snackbarBackground))
+                        .setTextColor(getColor(safeContext, R.color.snackbarText))
+
+                    val snackView: View = snack.view
+                    val snackTextView = snackView.findViewById(R.id.snackbar_text) as TextView
+                    snackTextView.maxLines = 5
+                    snackTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12F)
+
+                    lifecycleScope.launch {
+                        delay(100)
+                        snack.show()
+                    }
+
+                    // Dismiss snackbar if list scrolled (otherwise will stay visible for 8 seconds)
+
+                    var isDismissing = false
+
+                    binding.listRecyclerView.addOnScrollListener(object :
+                        RecyclerView.OnScrollListener() {
+                        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                            super.onScrolled(recyclerView, dx, dy)
+                            if (dy > 2) {
+                                binding.listSearchView.clearFocus()
+                                if (!isDismissing) {
+                                    isDismissing = true
+                                    snackView.animate().alpha(0F).setDuration(600)
+                                        .withEndAction {
+                                            snack.view.visibility = View.GONE
+                                            snack.dismiss()
+                                        }
+                                }
+                            }
+                        }
+                    })
+                }
+            }
         }
-    }
 
     private fun guidelineClicked(guideline: Guideline) {
         val action = ListFragmentDirections.LoadDetail(
