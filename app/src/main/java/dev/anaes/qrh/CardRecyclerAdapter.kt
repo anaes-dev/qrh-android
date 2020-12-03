@@ -8,6 +8,7 @@ import android.text.style.BulletSpan
 import android.text.style.URLSpan
 import android.text.util.Linkify
 import android.text.util.Linkify.TransformFilter
+import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -50,7 +51,7 @@ class CardRecyclerAdapter(
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                 bodyTxt.lineHeight =
-                    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 16F,itemView.resources.displayMetrics).toInt()
+                    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 18F,itemView.resources.displayMetrics).toInt()
             }
 
             bodyTxt.movementMethod = object : TextViewLinkHandler() {
@@ -73,8 +74,10 @@ class CardRecyclerAdapter(
             val bodyTxt = itemView.findViewById<TextView>(R.id.detail_body)
             val subArrow = itemView.findViewById<ImageView>(R.id.detail_arrow)
 
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                bodyTxt.lineHeight = 48
+                bodyTxt.lineHeight =
+                    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 18F,itemView.resources.displayMetrics).toInt()
             }
 
 
@@ -146,7 +149,7 @@ class CardRecyclerAdapter(
     class ViewHolder4(itemView: View) : RecyclerView.ViewHolder(itemView),
         UpdateViewHolder {
         override fun bindViews(detailContent: DetailContent, linkListener: (String) -> Unit) {
-            itemView.findViewById<TextView>(R.id.detail_text).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            itemView.findViewById<TextView>(R.id.detailText).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 Html.fromHtml(detailContent.body, Html.FROM_HTML_MODE_LEGACY).trim()
             } else {
                 @Suppress("DEPRECATION")
@@ -159,7 +162,7 @@ class CardRecyclerAdapter(
     class ViewHolder5(itemView: View) : RecyclerView.ViewHolder(itemView),
         UpdateViewHolder {
         override fun bindViews(detailContent: DetailContent, linkListener: (String) -> Unit) {
-            itemView.findViewById<TextView>(R.id.detail_text).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            itemView.findViewById<TextView>(R.id.detailText).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 Html.fromHtml(detailContent.head, Html.FROM_HTML_MODE_LEGACY).trim()
             } else {
                 @Suppress("DEPRECATION")
@@ -323,7 +326,7 @@ class CardRecyclerAdapter(
                     val end = parseSpans.getSpanEnd(it)
                     parseSpans.removeSpan(it)
                     parseSpans.setSpan(
-                        ImprovedBullet(bulletRadius = dip(2.5, view), gapWidth = dip(7.5, view)),
+                        ImprovedBullet(bulletRadius = dip(2.0, view), gapWidth = dip(7.5, view)),
                         start,
                         end,
                         Spanned.SPAN_INCLUSIVE_EXCLUSIVE
@@ -331,10 +334,10 @@ class CardRecyclerAdapter(
                 }
                 return parseSpans
             } else {
-                return Html.fromHtml(text, null,
+                val paraStrippedText = text.replace("<p>","<br /><br />").replace("</p>","")
+                return Html.fromHtml(paraStrippedText, null,
                     { opening, tag, output, _ ->
                         if (tag == "br" && opening) output.append("\n")
-                        if (tag == "p" && opening) output.append("\n")
                         if (tag == "li" && opening) output.append("\n\n• ")
                     }).trim()
             }

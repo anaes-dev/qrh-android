@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/qrhDisclaimersLayout"
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -40,7 +41,8 @@
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:text="@string/splash_2a"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                android:textColor="?android:attr/textColorSecondary"
                 android:textSize="12sp" />
 
             <TextView
@@ -48,27 +50,28 @@
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:text="@string/splash_2b"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                android:textColor="?android:attr/textColorSecondary"
                 android:textSize="12sp"
                 android:textStyle="italic" />
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:cardBackgroundColor="#FFCDD2"
+                app:cardBackgroundColor="@color/detailItemRedBG"
                 app:cardCornerRadius="8dp"
-                app:cardElevation="5dp"
                 app:cardUseCompatPadding="true"
                 app:contentPadding="8dp">
 
                 <TextView
+                    style="@style/TextAppearance.MaterialComponents.Body2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/about_4"
-                    android:textColor="#C62828"
+                    android:textColor="@color/detailItemRedTXT"
                     android:textSize="12sp"
                     android:textStyle="bold" />
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
 
     </LinearLayout>
@@ -96,12 +99,14 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            style="@style/TextAppearance.MaterialComponents.Body2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autoLink="web"
             android:padding="8dp"
             android:text="@string/splash_3"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            android:textColor="?android:attr/textColorSecondary"
             android:textSize="12sp" />
 
     </LinearLayout>
@@ -129,12 +134,14 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            style="@style/TextAppearance.MaterialComponents.Body2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autoLink="web"
             android:padding="8dp"
             android:text="@string/splash_4"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="?android:attr/textColorSecondary"
             android:textSize="12sp" />
 
     </LinearLayout>
@@ -162,12 +169,14 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            style="@style/TextAppearance.MaterialComponents.Body2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autoLink="web"
             android:padding="8dp"
             android:text="@string/splash_5"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="?android:attr/textColorSecondary"
             android:textSize="12sp" />
 
     </LinearLayout>
@@ -195,12 +204,14 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            style="@style/TextAppearance.MaterialComponents.Body2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autoLink="web"
             android:padding="8dp"
             android:text="@string/splash_6"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="?android:attr/textColorSecondary"
             android:textSize="12sp" />
 
     </LinearLayout>

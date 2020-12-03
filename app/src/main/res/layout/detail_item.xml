@@ -1,91 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_vertical"
-    android:orientation="horizontal"
-    android:paddingStart="4dp"
-    android:paddingTop="4dp"
-    android:paddingEnd="4dp"
-    >
+    android:layout_marginStart="32dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginEnd="4dp"
+    android:id="@+id/detail_card"
+    android:hapticFeedbackEnabled="true"
+    app:cardCornerRadius="6dp"
+    app:cardElevation="4dp"
+    app:cardUseCompatPadding="true"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
 
-  <androidx.cardview.widget.CardView
-      android:id="@+id/detail_card"
+
+  <RelativeLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginStart="32dp"
-      android:foreground="?android:attr/selectableItemBackground"
-      android:hapticFeedbackEnabled="true"
-      app:cardCornerRadius="6dp"
-      app:cardElevation="4dp"
-      app:cardUseCompatPadding="true"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent">
+      android:paddingStart="0dp"
+      android:paddingTop="6dp"
+      android:paddingEnd="4dp"
+      android:paddingBottom="8dp">
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/detail_head"
+        style="@style/TextAppearance.MaterialComponents.Subtitle1"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:paddingStart="0dp"
-        android:paddingTop="6dp"
-        android:paddingEnd="4dp"
-        android:paddingBottom="5dp">
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="8dp"
+        android:layout_toStartOf="@id/detailArrowContainer"
+        android:gravity="start|center_vertical"
+        android:minHeight="40dp"
+        android:textStyle="bold"
+        tools:text="step 1" />
+
+    <FrameLayout
+        android:id="@+id/detailArrowContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_alignTop="@id/detail_head"
+        android:layout_alignBottom="@id/detail_head"
+        android:layout_alignParentEnd="true">
 
       <ImageView
           android:id="@+id/detail_arrow"
           android:layout_width="20dp"
           android:layout_height="20dp"
-          android:layout_marginEnd="2dp"
+          android:layout_gravity="center_vertical"
           android:contentDescription="@string/arrow"
-          android:src="@drawable/ic_arrow_down"
-          app:layout_constraintBottom_toBottomOf="@+id/detail_head_container"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintTop_toTopOf="@+id/detail_head_container" />
+          android:src="@drawable/ic_arrow_down" />
+    </FrameLayout>
 
-      <androidx.constraintlayout.widget.ConstraintLayout
-          android:id="@+id/detail_head_container"
-          android:layout_width="match_parent"
-          android:layout_height="0dp"
-          android:layout_marginEnd="24dp"
-          android:minHeight="40dp"
-          app:layout_constraintEnd_toStartOf="@+id/detail_arrow"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toTopOf="parent">
+    <TextView
+        android:id="@+id/detail_body"
+        style="@style/TextAppearance.MaterialComponents.Body2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/detail_head"
+        android:layout_alignStart="@id/detail_head"
+        android:layout_alignParentEnd="true"
+        android:textColor="?android:attr/textColorPrimary"
+        android:visibility="gone"
+        tools:text="sub 1" />
 
-        <TextView
-            android:id="@+id/detail_head"
-            style="@style/Widget.AppCompat.TextView.SpinnerItem"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="start|center_vertical"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="step 1" />
-      </androidx.constraintlayout.widget.ConstraintLayout>
+  </RelativeLayout>
 
-
-      <TextView
-          android:id="@+id/detail_body"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="8dp"
-          android:layout_marginTop="8dp"
-          android:textColor="?android:attr/textColorSecondary"
-          android:visibility="gone"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toStartOf="@id/detail_head_container"
-          app:layout_constraintTop_toBottomOf="@+id/detail_head_container"
-          tools:text="sub 1" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-  </androidx.cardview.widget.CardView>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

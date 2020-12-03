@@ -9,8 +9,6 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
-import android.widget.ProgressBar
-import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -22,7 +20,6 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
@@ -31,9 +28,9 @@ import com.google.android.play.core.install.InstallStateUpdatedListener
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
+import dev.anaes.qrh.databinding.ActivityMainBinding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-
 
 interface MainInt {
     fun popToDetail(num: Int)
@@ -55,6 +52,8 @@ class Main : AppCompatActivity(), MainInt {
     private lateinit var appUpdateManager: AppUpdateManager
 
     private val vm: MainViewModel by viewModels()
+
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,17 +89,19 @@ class Main : AppCompatActivity(), MainInt {
             vm.isDarkDisabled = false
         }
 
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        val toolbar: Toolbar = binding.toolbar
         setSupportActionBar(toolbar)
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-        val appBar = this.findViewById<AppBarLayout>(R.id.app_bar)
+        val appBar = binding.appBar
         val params = appBar.layoutParams as CoordinatorLayout.LayoutParams
         if (params.behavior == null)
             params.behavior = AppBarLayout.Behavior()
@@ -220,10 +221,10 @@ class Main : AppCompatActivity(), MainInt {
         expanded: Boolean,
         hideKeyboard: Boolean
     ) {
-        findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout).title = title
-        findViewById<TextView>(R.id.detail_code).text = code
-        findViewById<TextView>(R.id.detail_version).text = version
-        findViewById<AppBarLayout>(R.id.app_bar).setExpanded(expanded)
+        binding.toolbarLayout.title = title
+        binding.detailCode.text = code
+        binding.detailVersion.text = version
+        binding.appBar.setExpanded(expanded)
 
         if (hideKeyboard && Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
             window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
@@ -235,7 +236,7 @@ class Main : AppCompatActivity(), MainInt {
     }
 
     override fun progressShow(show: Boolean) {
-        val indicator = findViewById<ProgressBar>(R.id.progress_circular)
+        val indicator = binding.progressCircular
         if (show) {
             indicator.visibility = View.VISIBLE
         } else {
@@ -251,7 +252,7 @@ class Main : AppCompatActivity(), MainInt {
 
     private fun popCompleteUpdate() {
         val snack = Snackbar.make(
-            findViewById(R.id.main_container),
+            binding.mainContainer,
             "Update ready to install",
             Snackbar.LENGTH_INDEFINITE
         )
@@ -263,7 +264,7 @@ class Main : AppCompatActivity(), MainInt {
 
     private fun popFailedUpdate() {
         val snack = Snackbar.make(
-            findViewById(R.id.main_container),
+            binding.mainContainer,
             "Update failed, please update via Google Play",
             Snackbar.LENGTH_LONG
         )
