@@ -1,12 +1,10 @@
 package dev.anaes.qrh
 
-
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.*
 import android.widget.SearchView
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getColor
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
@@ -16,7 +14,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_list.*
+import dev.anaes.qrh.databinding.FragmentListBinding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -29,6 +27,10 @@ class ListFragment : Fragment() {
 
     private val vm: MainViewModel by activityViewModels()
 
+    private var _binding: FragmentListBinding? = null
+
+    private val binding get() = _binding!!
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -38,7 +40,8 @@ class ListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_list, container, false)
+        _binding = FragmentListBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -55,14 +58,14 @@ class ListFragment : Fragment() {
 
         val adapter =
             ListRecyclerAdapter(guidelineList) { guideline: Guideline ->
-                list_searchview.clearFocus()
+                binding.listSearchview.clearFocus()
                 guidelineClicked(guideline)
             }
 
         linearLayoutManager = LinearLayoutManager(context)
-        list_recyclerview.layoutManager = linearLayoutManager
-        list_recyclerview.adapter = adapter
-        list_recyclerview.isNestedScrollingEnabled = false
+        binding.listRecyclerview.layoutManager = linearLayoutManager
+        binding.listRecyclerview.adapter = adapter
+        binding.listRecyclerview.isNestedScrollingEnabled = false
 
         var alreadyAnimated = false
 
@@ -72,18 +75,18 @@ class ListFragment : Fragment() {
                 if (adapter.itemCount == 0) {
                     if(!alreadyAnimated) {
                         alreadyAnimated = true
-                        list_empty.alpha = 0F
-                        list_empty.visibility = View.VISIBLE
-                        list_empty.animate().alpha(1F).duration = 300
+                        binding.listEmpty.alpha = 0F
+                        binding.listEmpty.visibility = View.VISIBLE
+                        binding.listEmpty.animate().alpha(1F).duration = 300
                     }
                 } else {
-                    list_empty.visibility = View.GONE
+                    binding.listEmpty.visibility = View.GONE
                     alreadyAnimated = false
                 }
             }
         })
 
-        list_searchview.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        binding.listSearchview.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
@@ -133,11 +136,11 @@ class ListFragment : Fragment() {
 
             var isDismissing = false
 
-            list_recyclerview.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                binding.listRecyclerview.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
                     if (dy > 2) {
-                        list_searchview.clearFocus()
+                        binding.listSearchview.clearFocus()
                         if (!isDismissing) {
                             isDismissing = true
                             snackView.animate().alpha(0F).setDuration(600)

@@ -14,8 +14,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.appbar.AppBarLayout
-import kotlinx.android.synthetic.main.fragment_detail.*
+import dev.anaes.qrh.databinding.FragmentDetailBinding
 
 
 interface PushDetail {
@@ -36,6 +35,10 @@ class DetailFragment : Fragment(), PushDetail {
     var title: String? = String()
     var url: String? = String()
     var version: String? = String()
+
+    private var _binding: FragmentDetailBinding? = null
+
+    private val binding get() = _binding!!
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,7 +65,8 @@ class DetailFragment : Fragment(), PushDetail {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_detail, container, false)
+        _binding = FragmentDetailBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
 
@@ -77,22 +81,18 @@ class DetailFragment : Fragment(), PushDetail {
             hideKeyboard = true
         )
 
-
-        detail_code_2.text = code.toString()
+        binding.detailCode2.text = code.toString()
 
         when(code) {
             "3-2" -> {
-                detail_code_2.textSize = 60F
-                detail_code_2.translationY = -20F
+                binding.detailCode2.textSize = 60F
+                binding.detailCode2.translationY = -20F
             }
             "3-3", "3-7", "3-11" -> {
-                detail_code_2.textSize = 72F
-                detail_code_2.translationY = -32F
+                binding.detailCode2.textSize = 72F
+                binding.detailCode2.translationY = -32F
             }
         }
-
-        activity?.findViewById<AppBarLayout>(R.id.app_bar)?.setExpanded(true)
-
 
         val filenameSuffix = ".json"
         val filename = code + filenameSuffix
@@ -115,15 +115,15 @@ class DetailFragment : Fragment(), PushDetail {
                 }
 
             linearLayoutManager = LinearLayoutManager(context)
-            detail_recyclerview.layoutManager = linearLayoutManager
-            detail_recyclerview.isNestedScrollingEnabled = false
-            detail_recyclerview.adapter = adapter
+            binding.detailRecyclerview.layoutManager = linearLayoutManager
+            binding.detailRecyclerview.isNestedScrollingEnabled = false
+            binding.detailRecyclerview.adapter = adapter
         }
 
         if(parentFragmentManager.backStackEntryCount > 1) {
-            detail_scroll.isVisible = true
+            binding.detailScroll.isVisible = true
 
-            val bcStack = detail_stack
+            val bcStack = binding.detailStack
 
             var bci = 0
             var bcd: Int = parentFragmentManager.backStackEntryCount - 1
@@ -182,7 +182,7 @@ class DetailFragment : Fragment(), PushDetail {
         (view.parent as? ViewGroup)?.doOnPreDraw {
             startPostponedEnterTransition()
             (activity as MainInt).progressShow(false)
-            detail_scroll.scrollTo(detail_scroll.right, 0)
+            binding.detailScroll.scrollTo(binding.detailScroll.right, 0)
         }
     }
 
