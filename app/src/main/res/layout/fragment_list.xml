@@ -11,14 +11,12 @@
         android:id="@+id/listSearchView"
         android:queryBackground="@drawable/empty"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/windowBackground"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/searchBackground"
         android:elevation="4dp"
         android:iconifiedByDefault="false"
         android:inputType="text"
-        android:queryHint="Search...">
-
-    </SearchView>
+        android:queryHint="Search..." />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listRecyclerView"
@@ -43,11 +41,6 @@
         android:textColor="@color/colorAccent"
         android:visibility="gone" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="8dp"
-        android:layout_below="@id/listSearchView"
-        android:background="@drawable/grad_down" />
 
 
 </RelativeLayout>

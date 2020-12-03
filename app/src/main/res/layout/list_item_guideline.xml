@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -16,11 +15,11 @@
         style="@style/TextAppearance.MaterialComponents.Overline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:textColor="?android:attr/textColorSecondary"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         tools:text="code" />
 
     <TextView
@@ -28,40 +27,36 @@
         style="@style/TextAppearance.MaterialComponents.Headline6"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_below="@id/guideline_code"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:ellipsize="end"
         android:lines="1"
+        android:singleLine="true"
         android:textColor="?android:attr/textColorPrimary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/guideline_code"
         tools:text="title" />
 
     <TextView
         android:id="@+id/guideline_version"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@id/guideline_title"
+        android:layout_alignEnd="@id/guideline_title"
         android:layout_gravity="bottom|end"
-        android:layout_marginEnd="16dp"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
         android:textColor="?android:attr/textColorSecondary"
-        app:layout_constraintBottom_toBottomOf="@+id/guideline_code"
-        app:layout_constraintEnd_toEndOf="parent"
         tools:text="version" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:background="?android:attr/listDivider" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

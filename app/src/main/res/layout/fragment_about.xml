@@ -61,7 +61,7 @@
                     android:layout_height="match_parent">
 
                     <ImageView
-                        android:id="@+id/dark_logo"
+                        android:id="@+id/darkLogo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:contentDescription="@string/disable_dark_mode"
@@ -70,19 +70,19 @@
                         app:srcCompat="@drawable/ic_baseline_tonality" />
 
                     <TextView
-                        android:id="@+id/dark_title"
+                        android:id="@+id/darkTitle"
                         style="@style/TextAppearance.MaterialComponents.Subtitle1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:text="@string/dark_theme"
                         android:textColor="?android:attr/textColorSecondary"
-                        app:layout_constraintBottom_toBottomOf="@+id/dark_logo"
-                        app:layout_constraintStart_toEndOf="@+id/dark_logo"
-                        app:layout_constraintTop_toTopOf="@+id/dark_logo" />
+                        app:layout_constraintBottom_toBottomOf="@+id/darkLogo"
+                        app:layout_constraintStart_toEndOf="@+id/darkLogo"
+                        app:layout_constraintTop_toTopOf="@+id/darkLogo" />
 
                     <TextView
-                        android:id="@+id/dark_explanation"
+                        android:id="@+id/darkExplanation"
                         style="@style/TextAppearance.MaterialComponents.Body2"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -92,7 +92,7 @@
                         android:textColor="?android:attr/textColorSecondary"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/dark_logo" />
+                        app:layout_constraintTop_toBottomOf="@+id/darkLogo" />
 
                     <com.google.android.material.switchmaterial.SwitchMaterial
                         android:id="@+id/darkDisableSwitch"
@@ -103,7 +103,7 @@
                         android:textColor="?android:attr/textColorSecondary"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/dark_explanation"
+                        app:layout_constraintTop_toBottomOf="@+id/darkExplanation"
                         app:switchPadding="8dp"
                         app:switchTextAppearance="@style/TextAppearance.MaterialComponents.Body2" />
 
@@ -123,6 +123,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
                     android:text="@string/privacy"
                     android:textColor="@android:color/white" />
 
@@ -135,6 +136,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
                     android:text="@string/disclaimers"
                     android:textColor="@android:color/white" />
             </LinearLayout>
