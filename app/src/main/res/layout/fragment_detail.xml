@@ -35,29 +35,23 @@
                 android:orientation="horizontal" />
         </HorizontalScrollView>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <View
             android:layout_width="24dp"
             android:layout_height="0dp"
-            android:foreground="@drawable/grad_left"
-            android:foregroundGravity="fill"
+            android:background="@drawable/grad_left"
             app:layout_constraintBottom_toBottomOf="@+id/detail_scroll"
             app:layout_constraintStart_toStartOf="@+id/detail_scroll"
-            app:layout_constraintTop_toTopOf="@+id/detail_scroll"
-            tools:ignore="UnusedAttribute">
+            app:layout_constraintTop_toTopOf="@+id/detail_scroll" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <View
             android:layout_width="24dp"
             android:layout_height="0dp"
-            android:foreground="@drawable/grad_right"
-            android:foregroundGravity="fill"
+            android:background="@drawable/grad_right"
             app:layout_constraintBottom_toBottomOf="@+id/detail_scroll"
             app:layout_constraintEnd_toEndOf="@+id/detail_scroll"
-            app:layout_constraintTop_toTopOf="@+id/detail_scroll"
-            tools:ignore="UnusedAttribute">
+            app:layout_constraintTop_toTopOf="@+id/detail_scroll">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </View>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/detail_recyclerview"

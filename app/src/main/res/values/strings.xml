@@ -29,6 +29,7 @@
     <string name="version_hint">Adapted from QRH section </string>
     <string name="emptySearch">No results</string>
 
+    <string name="snackLaunch">Unofficial adaptation of Quick Reference Handbook\nNot endorsed by the Association of Anaesthetists\nUntested and unregulated; not recommended for clinical use\nNo guarantees of completeness, accuracy or performance\nShould not override your own knowledge and judgement</string>
     <string name="old_android"><b>This app displays best on Android Nougat or later.</b>\n\nYou may continue to use on older Android versions, however certain formatting (particularly bulleted lists) may not display optimally.</string>
     <string name="app_update">Updated to latest version.</string>
 
