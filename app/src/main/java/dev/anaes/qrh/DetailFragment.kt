@@ -8,14 +8,12 @@ import android.widget.Button
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.core.view.doOnPreDraw
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.anaes.qrh.databinding.FragmentDetailBinding
-
 
 interface PushDetail {
     fun navToDetail(code: String, title: String, url: String, version: String)
@@ -47,7 +45,6 @@ class DetailFragment : Fragment(), PushDetail {
         title = args.title
         url = args.url
         version = "v. " + args.version
-
         setHasOptionsMenu(true)
     }
 
@@ -62,9 +59,10 @@ class DetailFragment : Fragment(), PushDetail {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentDetailBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -115,15 +113,12 @@ class DetailFragment : Fragment(), PushDetail {
                 }
 
             linearLayoutManager = LinearLayoutManager(context)
-            binding.detailRecyclerview.layoutManager = linearLayoutManager
-            binding.detailRecyclerview.isNestedScrollingEnabled = false
-            binding.detailRecyclerview.adapter = adapter
+            binding.detailRecyclerView.layoutManager = linearLayoutManager
+            binding.detailRecyclerView.isNestedScrollingEnabled = false
+            binding.detailRecyclerView.adapter = adapter
         }
 
         if(parentFragmentManager.backStackEntryCount > 1) {
-            binding.detailScroll.isVisible = true
-
-            val bcStack = binding.detailStack
 
             var bci = 0
             var bcd: Int = parentFragmentManager.backStackEntryCount - 1
@@ -146,7 +141,7 @@ class DetailFragment : Fragment(), PushDetail {
             bcHomeButton.setOnClickListener {
                 (activity as MainInt).popToDetail(parentFragmentManager.backStackEntryCount)
             }
-            bcStack.addView(bcHomeButton)
+            binding.breadCrumbStack.addView(bcHomeButton)
 
 
             while (bci < parentFragmentManager.backStackEntryCount) {
@@ -155,7 +150,7 @@ class DetailFragment : Fragment(), PushDetail {
                 chevron.setImageResource(R.drawable.ic_chevron_right)
                 chevron.maxHeight = 12
                 chevron.maxWidth = 12
-                bcStack.addView(chevron)
+                binding.breadCrumbStack.addView(chevron)
 
                 val button = Button(context, null, android.R.attr.buttonBarButtonStyle)
 
@@ -172,7 +167,7 @@ class DetailFragment : Fragment(), PushDetail {
                     }
 
                 }
-                bcStack.addView(button)
+                binding.breadCrumbStack.addView(button)
                 bci++
                 bcd--
             }
@@ -182,7 +177,7 @@ class DetailFragment : Fragment(), PushDetail {
         (view.parent as? ViewGroup)?.doOnPreDraw {
             startPostponedEnterTransition()
             (activity as MainInt).progressShow(false)
-            binding.detailScroll.scrollTo(binding.detailScroll.right, 0)
+            binding.breadCrumbScroll.scrollTo(binding.breadCrumbScroll.right, 0)
         }
     }
 

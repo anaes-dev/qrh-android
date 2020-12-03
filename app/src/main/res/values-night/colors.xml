@@ -31,7 +31,7 @@
     <color name="detailItemRedBG">#241615</color>
     <color name="detailItemRedTXT">#E57373</color>
 
-    <color name="snackbarBackground">#CCFFFFFF</color>
+    <color name="snackbarBackground">#D9FFFFFF</color>
     <color name="snackbarText">#000000</color>
 
     <color name="launchButtonsTxtDisabled">#dddddd</color>

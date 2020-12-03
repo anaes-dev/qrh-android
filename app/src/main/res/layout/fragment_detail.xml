@@ -2,72 +2,71 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/detailScroll"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:scrollbars="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".DetailFragment">
 
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:focusableInTouchMode="true"
+        android:focusable="true">
 
         <HorizontalScrollView
-            android:id="@+id/detail_scroll"
+            android:id="@+id/breadCrumbScroll"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:fadeScrollbars="true"
             android:scrollbarSize="2dp"
-            android:scrollbarThumbHorizontal="?attr/colorButtonNormal"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/detail_recyclerview"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:scrollbarThumbHorizontal="?attr/colorButtonNormal">
 
             <LinearLayout
-                android:id="@+id/detail_stack"
+                android:id="@+id/breadCrumbStack"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:dividerPadding="0dp"
                 android:gravity="center"
                 android:orientation="horizontal" />
         </HorizontalScrollView>
 
         <View
-            android:layout_width="24dp"
+            android:layout_width="20dp"
             android:layout_height="0dp"
-            android:background="@drawable/grad_left"
-            app:layout_constraintBottom_toBottomOf="@+id/detail_scroll"
-            app:layout_constraintStart_toStartOf="@+id/detail_scroll"
-            app:layout_constraintTop_toTopOf="@+id/detail_scroll" />
+            android:layout_alignStart="@id/breadCrumbScroll"
+            android:layout_alignTop="@id/breadCrumbScroll"
+            android:layout_alignBottom="@id/breadCrumbScroll"
+            android:background="@drawable/grad_left" />
 
         <View
-            android:layout_width="24dp"
+            android:layout_width="20dp"
             android:layout_height="0dp"
-            android:background="@drawable/grad_right"
-            app:layout_constraintBottom_toBottomOf="@+id/detail_scroll"
-            app:layout_constraintEnd_toEndOf="@+id/detail_scroll"
-            app:layout_constraintTop_toTopOf="@+id/detail_scroll">
+            android:layout_alignTop="@id/breadCrumbScroll"
+            android:layout_alignEnd="@id/breadCrumbScroll"
+            android:layout_alignBottom="@id/breadCrumbScroll"
+            android:background="@drawable/grad_right">
 
         </View>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/detail_recyclerview"
+            android:id="@+id/detailRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:isScrollContainer="false"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/detail_scroll" />
+            android:layout_alignWithParentIfMissing="true"
+            android:layout_below="@id/breadCrumbScroll"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:isScrollContainer="false" />
 
         <TextView
-            android:id="@+id/detail_code_2"
+            android:id="@+id/detailCode2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="top|end"
+            android:layout_alignTop="@id/detailRecyclerView"
+            android:layout_alignParentTop="false"
+            android:layout_alignParentEnd="true"
             android:layout_marginEnd="8dp"
             android:alpha=".1"
             android:fontFamily="sans-serif-black"
@@ -75,10 +74,8 @@
             android:text=""
             android:textSize="96sp"
             android:textStyle="bold"
-            android:translationY="-16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/detail_recyclerview" />
+            android:translationY="-16dp" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
 
 </androidx.core.widget.NestedScrollView>
