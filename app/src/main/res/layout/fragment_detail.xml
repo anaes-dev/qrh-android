@@ -31,7 +31,7 @@
                 android:dividerPadding="0dp"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:paddingStart="0dp"
+                android:paddingStart="8dp"
                 android:paddingEnd="8dp" />
         </HorizontalScrollView>
 
