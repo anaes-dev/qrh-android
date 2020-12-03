@@ -148,7 +148,7 @@ class CardRecyclerAdapter(
     class ViewHolder4(itemView: View) : RecyclerView.ViewHolder(itemView),
         UpdateViewHolder {
         override fun bindViews(detailContent: DetailContent, linkListener: (String) -> Unit) {
-            itemView.findViewById<TextView>(R.id.detail_text).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            itemView.findViewById<TextView>(R.id.detailText).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 Html.fromHtml(detailContent.body, Html.FROM_HTML_MODE_LEGACY).trim()
             } else {
                 @Suppress("DEPRECATION")
@@ -161,7 +161,7 @@ class CardRecyclerAdapter(
     class ViewHolder5(itemView: View) : RecyclerView.ViewHolder(itemView),
         UpdateViewHolder {
         override fun bindViews(detailContent: DetailContent, linkListener: (String) -> Unit) {
-            itemView.findViewById<TextView>(R.id.detail_text).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            itemView.findViewById<TextView>(R.id.detailText).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 Html.fromHtml(detailContent.head, Html.FROM_HTML_MODE_LEGACY).trim()
             } else {
                 @Suppress("DEPRECATION")

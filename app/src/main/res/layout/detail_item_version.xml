@@ -10,7 +10,8 @@
     android:paddingEnd="4dp">
 
   <TextView
-      android:id="@+id/detail_text"
+      android:id="@+id/detailText"
+      style="@style/TextAppearance.MaterialComponents.Caption"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_gravity="end"
@@ -30,7 +31,7 @@
       android:layout_marginEnd="2dp"
       android:animateLayoutChanges="true"
       android:text="@string/version_hint"
-      app:layout_constraintEnd_toStartOf="@+id/detail_text"
+      app:layout_constraintEnd_toStartOf="@+id/detailText"
       app:layout_constraintTop_toTopOf="parent" />
 
 

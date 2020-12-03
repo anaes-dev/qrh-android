@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center_vertical"
-    android:orientation="horizontal"
-    android:paddingStart="4dp"
-    android:paddingTop="4dp"
-    android:paddingEnd="4dp">
-
-  <com.google.android.material.card.MaterialCardView
+<com.google.android.material.card.MaterialCardView
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:layout_marginStart="4dp"
+      android:layout_marginTop="4dp"
+      android:layout_marginEnd="4dp"
       android:animationCache="true"
       app:cardUseCompatPadding="true"
       app:contentPadding="8dp"
@@ -27,12 +22,10 @@
 
       <TextView
           android:id="@+id/detail_step"
-          style="@style/Widget.AppCompat.TextView.SpinnerItem"
           android:layout_width="28dp"
           android:layout_height="28dp"
           android:background="@drawable/step_circle"
           android:gravity="center"
-          android:includeFontPadding="false"
           android:maxLines="1"
           android:paddingStart="2dp"
           android:paddingEnd="2dp"
@@ -51,10 +44,9 @@
           android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:layout_marginStart="8dp"
-          android:layout_marginTop="6dp"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toEndOf="@id/detail_step"
-          app:layout_constraintTop_toTopOf="@+id/detail_step"
+          app:layout_constraintBaseline_toBaselineOf="@id/detail_step"
           tools:text="step 1" />
 
       <TextView
@@ -68,5 +60,3 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
   </com.google.android.material.card.MaterialCardView>
-
-</androidx.constraintlayout.widget.ConstraintLayout>

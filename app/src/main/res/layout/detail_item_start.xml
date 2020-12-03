@@ -10,7 +10,7 @@
     android:paddingEnd="4dp">
 
   <TextView
-      android:id="@+id/detail_text"
+      android:id="@+id/detailText"
       style="@android:style/TextAppearance.Material.Subhead"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
