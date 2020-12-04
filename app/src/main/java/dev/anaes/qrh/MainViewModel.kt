@@ -6,4 +6,5 @@ class MainViewModel : ViewModel() {
     var breadcrumbTitles: MutableMap<Int, String> = HashMap()
     var isStartup: Boolean = true
     var isDarkDisabled: Boolean = false
+    var isDarkMode: Boolean = false
 }

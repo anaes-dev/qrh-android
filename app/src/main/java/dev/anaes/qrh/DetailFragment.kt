@@ -57,7 +57,8 @@ class DetailFragment : Fragment(), PushDetail {
         vm.breadcrumbTitles[bcEntry] = args.title
         (activity as MainInt).updateBar(title.toString(), code.toString(), version.toString(),
             expanded = true,
-            hideKeyboard = true
+            hideKeyboard = true,
+            opaque = false
         )
     }
 
@@ -79,19 +80,20 @@ class DetailFragment : Fragment(), PushDetail {
         vm.breadcrumbTitles[bcEntry] = args.title
         (activity as MainInt).updateBar(title.toString(), code.toString(), version.toString(),
             expanded = true,
-            hideKeyboard = true
+            hideKeyboard = true,
+            opaque = false
         )
 
         binding.detailCode2.text = code.toString()
 
         when(code) {
             "3-2" -> {
-                binding.detailCode2.textSize = 60F
-                binding.detailCode2.translationY = -20F
+                binding.detailCode2.textSize = 48F
+                binding.detailCode2.translationY = 0F
             }
             "3-3", "3-7", "3-11" -> {
                 binding.detailCode2.textSize = 72F
-                binding.detailCode2.translationY = -32F
+                binding.detailCode2.translationY = -12F
             }
         }
 
