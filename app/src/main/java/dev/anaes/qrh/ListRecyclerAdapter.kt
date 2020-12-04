@@ -5,20 +5,19 @@ import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ListRecyclerAdapter(  var dataSource: ArrayList<Guideline>,
-                            private val clickListener: (Guideline) -> Unit) : RecyclerView.Adapter<ListRecyclerAdapter.GuidelineHolder>(),
-                        Filterable {
+class ListRecyclerAdapter(
+    var dataSource: ArrayList<Guideline>,
+    private val clickListener: (Guideline) -> Unit
+) : RecyclerView.Adapter<ListRecyclerAdapter.GuidelineHolder>(),
+    Filterable {
 
-    var guidelineFilterList = ArrayList<Guideline>()
-    init {
-        guidelineFilterList = dataSource
-    }
-
-
+    var filterList = ArrayList<Guideline>()
+    var filterListPublished = dataSource
 
     class GuidelineHolder(inflater: LayoutInflater, parent: ViewGroup) :
         RecyclerView.ViewHolder(inflater.inflate(R.layout.list_item_guideline, parent, false)) {
@@ -40,49 +39,59 @@ class ListRecyclerAdapter(  var dataSource: ArrayList<Guideline>,
     }
 
     override fun getItemCount(): Int {
-
-        return guidelineFilterList.size
+        return filterListPublished.size
     }
 
     override fun onBindViewHolder(holder: GuidelineHolder, position: Int) {
-        val guideline: Guideline = guidelineFilterList[position]
+        val guideline: Guideline = filterListPublished[position]
         holder.mTitleView.text = guideline.title
         holder.mCodeView.text= guideline.code
 
         val guidelineVersion = "v." + guideline.version.toString()
         holder.mVersionView.text = guidelineVersion
 
-        holder.bind(guidelineFilterList[position], clickListener)
-        }
+        holder.bind(filterListPublished[position], clickListener)
+    }
 
 
     override fun getFilter(): Filter {
         return object : Filter() {
-            override fun performFiltering(constraint: CharSequence?): FilterResults {
-                var charSearch = constraint.toString()
-                    guidelineFilterList = if (charSearch.isEmpty()) {
+            override fun performFiltering(searchSeq: CharSequence): FilterResults {
+                var charSearch = searchSeq.toString()
+                filterList = if (charSearch.isEmpty()) {
                     dataSource
                 } else {
                     val resultList = ArrayList<Guideline>()
                     charSearch = charSearch.toLowerCase(Locale.ROOT)
                     for (item in dataSource) {
-                        if ((item.code.toLowerCase(Locale.ROOT)+(item.title.toLowerCase(Locale.ROOT))).contains(charSearch.toLowerCase(Locale.ROOT))) {
+                        if ((item.code.toLowerCase(Locale.ROOT)+(item.title.toLowerCase(Locale.ROOT))).contains(
+                                charSearch.toLowerCase(
+                                    Locale.ROOT
+                                )
+                            )) {
                             resultList.add(item)
                         }
                     }
                     resultList
                 }
                 val filterResults = FilterResults()
-                filterResults.values = guidelineFilterList
-                filterResults.count = guidelineFilterList.size
+                filterResults.values = filterList
+                filterResults.count = filterList.size
                 return filterResults
             }
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                guidelineFilterList = results?.values as ArrayList<Guideline>
-                notifyDataSetChanged()
+                val newList = results?.values as ArrayList<Guideline>
+                updateList(newList)
             }
         }
+    }
+
+    fun updateList(guidelines: ArrayList<Guideline>) {
+        val diffCallback = ListDiffUtil(filterListPublished, guidelines)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+        filterListPublished = filterList
+        diffResult.dispatchUpdatesTo(this)
     }
 
 }
