@@ -52,9 +52,16 @@ class ListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         postponeEnterTransition()
 
-        val snack = Snackbar.make(view,getString(R.string.snackLaunch),Snackbar.LENGTH_LONG)
+        val snack = Snackbar.make(view, getString(R.string.snackLaunch), Snackbar.LENGTH_LONG)
 
-        (activity as MainInt).updateBar("QRH", "", "", expanded = false, hideKeyboard = true, opaque = true)
+        (activity as MainInt).updateBar(
+            "QRH",
+            "",
+            "",
+            expanded = false,
+            hideKeyboard = true,
+            opaque = true
+        )
 
         this.context?.let { safeContext ->
 
@@ -77,12 +84,12 @@ class ListFragment : Fragment() {
             binding.listRecyclerView.isNestedScrollingEnabled = false
 
 
-
             var alreadyAnimated = false
 
+
             adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
-                override fun onChanged() {
-                    super.onChanged()
+                override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) {
+                    super.onItemRangeInserted(positionStart, itemCount)
                     if (adapter.itemCount == 0) {
                         if (!alreadyAnimated) {
                             alreadyAnimated = true
@@ -90,13 +97,17 @@ class ListFragment : Fragment() {
                             binding.listEmpty.visibility = View.VISIBLE
                             binding.listEmpty.animate().alpha(1F).duration = 300
                         }
-                    } else {
+                    }
+                }
+
+                override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                    super.onItemRangeInserted(positionStart, itemCount)
+                    if (adapter.itemCount > 0) {
                         binding.listEmpty.visibility = View.GONE
                         alreadyAnimated = false
                     }
                 }
             })
-
 
 
             binding.listSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -105,6 +116,7 @@ class ListFragment : Fragment() {
                 }
 
                 override fun onQueryTextChange(newText: String): Boolean {
+                    snack.dismiss()
                     adapter.filter.filter(newText)
                     return true
                 }
@@ -115,57 +127,57 @@ class ListFragment : Fragment() {
 
 
 
-            (view.parent as? ViewGroup)?.doOnPreDraw {
-                startPostponedEnterTransition()
-                (activity as MainInt).progressShow(false)
-            }
+        (view.parent as? ViewGroup)?.doOnPreDraw {
+            startPostponedEnterTransition()
+            (activity as MainInt).progressShow(false)
+        }
 
-            if (vm.isStartup) {
-                vm.isStartup = false
+        if (vm.isStartup) {
+            vm.isStartup = false
 
-                this.context?.let { safeContext ->
+            this.context?.let { safeContext ->
 
-                    snack
-                        .setDuration(8000)
-                        .setBackgroundTint(getColor(safeContext, R.color.snackbarBackground))
-                        .setTextColor(getColor(safeContext, R.color.snackbarText))
+                snack
+                    .setDuration(8000)
+                    .setBackgroundTint(getColor(safeContext, R.color.snackbarBackground))
+                    .setTextColor(getColor(safeContext, R.color.snackbarText))
 
-                    val snackView: View = snack.view
-                    val snackTextView = snackView.findViewById(R.id.snackbar_text) as TextView
-                    snackTextView.maxLines = 5
-                    snackTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12F)
+                val snackView: View = snack.view
+                val snackTextView = snackView.findViewById(R.id.snackbar_text) as TextView
+                snackTextView.maxLines = 5
+                snackTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12F)
 
-                    lifecycleScope.launch {
-                        delay(100)
-                        snack.show()
-                    }
+                lifecycleScope.launch {
+                    delay(100)
+                    snack.show()
+                }
 
-                    // Dismiss snackbar if list scrolled (otherwise will stay visible for 8 seconds)
+                // Dismiss snackbar if list scrolled (otherwise will stay visible for 8 seconds)
 
-                    var isDismissing = false
+                var isDismissing = false
 
-                    binding.listRecyclerView.addOnScrollListener(object :
-                        RecyclerView.OnScrollListener() {
-                        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                            super.onScrolled(recyclerView, dx, dy)
-                            if (dy > 2) {
-                                binding.listSearchView.clearFocus()
-                                if (!isDismissing) {
-                                    isDismissing = true
-                                    snackView.animate().alpha(0F).setDuration(600)
-                                        .withEndAction {
-                                            snack.view.visibility = View.GONE
-                                            snack.dismiss()
-                                        }
-                                }
+                binding.listRecyclerView.addOnScrollListener(object :
+                    RecyclerView.OnScrollListener() {
+                    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                        super.onScrolled(recyclerView, dx, dy)
+                        if (dy > 2) {
+                            binding.listSearchView.clearFocus()
+                            if (!isDismissing) {
+                                isDismissing = true
+                                snackView.animate().alpha(0F).setDuration(600)
+                                    .withEndAction {
+                                        snack.view.visibility = View.GONE
+                                        snack.dismiss()
+                                    }
                             }
                         }
-                    })
-                }
+                    }
+                })
             }
-
-
         }
+
+
+    }
 
 
     private fun guidelineClicked(guideline: Guideline) {
@@ -179,7 +191,7 @@ class ListFragment : Fragment() {
         navController.navigate(action)
     }
 
-   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_list, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
@@ -196,7 +208,14 @@ class ListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        (activity as MainInt).updateBar("QRH", "", "", expanded = false, hideKeyboard = true, opaque = true)
+        (activity as MainInt).updateBar(
+            "QRH",
+            "",
+            "",
+            expanded = false,
+            hideKeyboard = true,
+            opaque = true
+        )
     }
 
 
