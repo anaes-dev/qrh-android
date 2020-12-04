@@ -26,7 +26,7 @@ class AboutFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         (activity as MainInt).progressShow(false)
         _binding = FragmentAboutBinding.inflate(inflater, container, false)
         return binding.root
@@ -61,20 +61,15 @@ class AboutFragment : Fragment() {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://www.creativecommons.org/licenses/by-nc-sa/4.0/")))
         }
 
-
-        if (vm.isDarkDisabled) {
-            binding.darkDisableSwitch.isChecked = true
-        } else if (!vm.isDarkDisabled) {
-            binding.darkDisableSwitch.isChecked = false
-        }
+        binding.darkDisableSwitch.isChecked = vm.checkDarkDisabled()
 
         binding.darkDisableSwitch.setOnCheckedChangeListener { _, _ ->
             if (binding.darkDisableSwitch.isChecked) {
-                vm.isDarkDisabled = true
+                vm.darkDisabled(true)
                 (activity as MainInt).setDarkModeDisabled(true)
                 (activity as MainInt).recreateActivity()
             } else {
-                vm.isDarkDisabled = false
+                vm.darkDisabled(false)
                 (activity as MainInt).setDarkModeDisabled(false)
                 (activity as MainInt).recreateActivity()
 

@@ -24,15 +24,17 @@
             android:layout_height="match_parent"
             android:clipChildren="false"
             android:clipToPadding="false"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonExit"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start|center_vertical"
                 android:layout_weight="0"
-                android:backgroundTint="@color/launchButtonsBgExit"
                 android:text="@string/exit"
                 android:textColor="@color/launchButtonsTxtDisabled" />
 
@@ -41,8 +43,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonAgreeActive"
+                style="@style/Widget.MaterialComponents.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|end"
@@ -51,8 +54,9 @@
                 android:textColor="@color/launchButtonsTxtEnabled"
                 android:visibility="gone" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonAgreeInactive"
+                style="@style/Widget.MaterialComponents.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|end"
