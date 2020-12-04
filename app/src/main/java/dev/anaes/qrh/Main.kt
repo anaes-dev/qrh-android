@@ -88,10 +88,10 @@ class Main : AppCompatActivity(), MainInt {
 
         if (sharedPref.getBoolean("night_disabled", false)) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            vm.isDarkDisabled = true
+            vm.darkDisabled(true)
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-            vm.isDarkDisabled = false
+            vm.darkDisabled(false)
         }
 
 
@@ -325,5 +325,4 @@ class Main : AppCompatActivity(), MainInt {
             recreate()
         }
     }
-
 }

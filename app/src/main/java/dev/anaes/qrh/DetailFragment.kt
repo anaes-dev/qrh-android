@@ -54,7 +54,7 @@ class DetailFragment : Fragment(), PushDetail {
     override fun onResume() {
         super.onResume()
         val bcEntry: Int = parentFragmentManager.backStackEntryCount
-        vm.breadcrumbTitles[bcEntry] = args.title
+        vm.setBreadCrumbTitle(args.title, bcEntry)
         (activity as MainInt).updateBar(title.toString(), code.toString(), version.toString(),
             expanded = true,
             hideKeyboard = true,
@@ -77,7 +77,7 @@ class DetailFragment : Fragment(), PushDetail {
         postponeEnterTransition()
 
         val bcEntry: Int = parentFragmentManager.backStackEntryCount
-        vm.breadcrumbTitles[bcEntry] = args.title
+        vm.setBreadCrumbTitle(args.title, bcEntry)
         (activity as MainInt).updateBar(title.toString(), code.toString(), version.toString(),
             expanded = true,
             hideKeyboard = true,
@@ -158,7 +158,7 @@ class DetailFragment : Fragment(), PushDetail {
                 button.isAllCaps = false
                 button.letterSpacing = 0F
                 button.setTextColor(color)
-                button.text = vm.breadcrumbTitles[bci + 1]
+                button.text = vm.getBreadCrumbTitle(bci + 1)
 
                 button.tag = bcd
                 if (bcd > 0) {
