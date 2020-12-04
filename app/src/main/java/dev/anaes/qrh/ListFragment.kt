@@ -5,6 +5,8 @@ import android.util.TypedValue
 import android.view.*
 import android.widget.SearchView
 import android.widget.TextView
+import android.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getColor
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
@@ -13,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.snackbar.Snackbar
 import dev.anaes.qrh.databinding.FragmentListBinding
 import kotlinx.coroutines.delay
@@ -52,7 +55,7 @@ class ListFragment : Fragment() {
 
         val snack = Snackbar.make(view,getString(R.string.snackLaunch),Snackbar.LENGTH_LONG)
 
-        (activity as MainInt).updateBar("QRH", "", "", expanded = false, hideKeyboard = true)
+        (activity as MainInt).updateBar("QRH", "", "", expanded = false, hideKeyboard = true, opaque = true)
 
         this.context?.let { safeContext ->
 
@@ -73,6 +76,8 @@ class ListFragment : Fragment() {
             binding.listRecyclerView.layoutManager = linearLayoutManager
             binding.listRecyclerView.adapter = adapter
             binding.listRecyclerView.isNestedScrollingEnabled = false
+
+
 
             var alreadyAnimated = false
 
@@ -107,6 +112,9 @@ class ListFragment : Fragment() {
             })
 
         }
+
+
+
 
             (view.parent as? ViewGroup)?.doOnPreDraw {
                 startPostponedEnterTransition()
@@ -189,7 +197,7 @@ class ListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        (activity as MainInt).updateBar("QRH", "", "", expanded = false, hideKeyboard = true)
+        (activity as MainInt).updateBar("QRH", "", "", expanded = false, hideKeyboard = true, opaque = true)
     }
 
 

@@ -1,9 +1,12 @@
 package dev.anaes.qrh
 
+import android.animation.AnimatorInflater
 import android.content.Context
 import android.content.Intent
 import android.content.IntentSender.SendIntentException
 import android.content.SharedPreferences
+import android.content.res.Configuration
+import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -14,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -39,7 +43,8 @@ interface MainInt {
         code: String,
         version: String,
         expanded: Boolean,
-        hideKeyboard: Boolean
+        hideKeyboard: Boolean,
+        opaque: Boolean
     )
     fun openURL(url: String)
     fun progressShow(show: Boolean)
@@ -89,6 +94,7 @@ class Main : AppCompatActivity(), MainInt {
             vm.isDarkDisabled = false
         }
 
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
@@ -111,6 +117,15 @@ class Main : AppCompatActivity(), MainInt {
                 return false
             }
         })
+
+        if(this.resources.configuration.uiMode and
+            Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES) {
+            vm.isDarkMode = true
+        } else {
+            vm.isDarkMode = false
+            appBar.stateListAnimator =
+                AnimatorInflater.loadStateListAnimator(this, R.animator.appbar_elevated)
+        }
 
         val currentTime = System.currentTimeMillis()
         val lastCheckedTime = sharedPref.getLong("update_checked", 0)
@@ -219,12 +234,26 @@ class Main : AppCompatActivity(), MainInt {
         code: String,
         version: String,
         expanded: Boolean,
-        hideKeyboard: Boolean
+        hideKeyboard: Boolean,
+        opaque: Boolean,
     ) {
         binding.toolbarLayout.title = title
         binding.detailCode.text = code
         binding.detailVersion.text = version
         binding.appBar.setExpanded(expanded)
+
+        if(vm.isDarkMode) {
+            if (opaque) {
+                binding.toolbar.setBackgroundColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.colorPrimary
+                    )
+                )
+            } else {
+                binding.toolbar.setBackgroundColor(Color.TRANSPARENT)
+            }
+        }
 
         if (hideKeyboard && Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
             window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
@@ -296,4 +325,5 @@ class Main : AppCompatActivity(), MainInt {
             recreate()
         }
     }
+
 }

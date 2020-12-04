@@ -76,7 +76,7 @@
             android:letterSpacing="-0.05"
             android:textSize="96sp"
             android:textStyle="bold"
-            android:translationY="-8dp" />
+            android:translationY="-6dp" />
 
     </RelativeLayout>
 

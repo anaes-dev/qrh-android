@@ -35,7 +35,7 @@ class AboutFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as MainInt).progressShow(false)
-        (activity as MainInt).updateBar(title, "", "", expanded = false, hideKeyboard = true)
+        (activity as MainInt).updateBar(title, "", "", expanded = false, hideKeyboard = true, opaque = false)
 
         val verCode = BuildConfig.VERSION_NAME
         val verOutput = "Version $verCode"
@@ -87,6 +87,6 @@ class AboutFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         (activity as MainInt).progressShow(false)
-        (activity as MainInt).updateBar(title, "", "", expanded = false, hideKeyboard = true)
+        (activity as MainInt).updateBar(title, "", "", expanded = false, hideKeyboard = true, opaque = false)
     }
 }
