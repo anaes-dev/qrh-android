@@ -48,6 +48,9 @@
         <argument
             android:name="version"
             app:argType="string" />
+        <action
+            android:id="@+id/LoadSwipe"
+            app:destination="@id/swipeFragment" />
     </fragment>
     <fragment
         android:id="@+id/aboutFragment"
@@ -67,5 +70,24 @@
         android:name="dev.anaes.qrh.DisclaimersFragment"
         android:label="Disclaimers"
         tools:layout="@layout/fragment_disclaimers" />
+    <fragment
+        android:id="@+id/swipeFragment"
+        android:name="dev.anaes.qrh.SwipeFragment"
+        android:label="fragment_swipe"
+        tools:layout="@layout/fragment_swipe"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right" >
+        <argument
+            android:name="code"
+            app:argType="string" />
+        <argument
+            android:name="title"
+            app:argType="string" />
+        <argument
+            android:name="version"
+            app:argType="string" />
+    </fragment>
 
 </navigation>
