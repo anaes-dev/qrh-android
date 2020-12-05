@@ -4,12 +4,9 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
-import android.widget.Button
 import android.widget.ImageView
-import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.doOnPreDraw
-import androidx.core.view.setPadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -197,6 +194,11 @@ class DetailFragment : Fragment(), PushDetail {
         return when (item.itemId) {
             R.id.navigation_download -> {
                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+                return true
+            }
+            R.id.navigation_swipe -> {
+                val action = DetailFragmentDirections.LoadSwipe(args.code, args.title, args.version)
+                navController.navigate(action)
                 return true
             }
             else -> super.onOptionsItemSelected(item)
