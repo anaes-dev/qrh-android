@@ -50,6 +50,7 @@ interface MainInt {
     fun progressShow(show: Boolean)
     fun setDarkModeDisabled(disabled: Boolean)
     fun recreateActivity()
+    fun collapseBar(collapse: Boolean)
 }
 
 class Main : AppCompatActivity(), MainInt {
@@ -227,6 +228,10 @@ class Main : AppCompatActivity(), MainInt {
             navController.popBackStack()
             x--
         }
+    }
+
+    override fun collapseBar(collapse: Boolean) {
+        binding.appBar.setExpanded(!collapse)
     }
 
     override fun updateBar(

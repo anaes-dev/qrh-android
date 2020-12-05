@@ -6,10 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import com.google.android.material.card.MaterialCardView
 
-class SwipeItemBox(passedStep: String, passedHead: String, passedBody: String, passedType: Int) : Fragment() {
+class SwipeItemBox(passedHead: String, passedBody: String, passedType: Int) : Fragment() {
 
-    private val step: String = passedStep
     private val head: String = passedHead
     private val body: String = passedBody
     private val type: Int = passedType
@@ -22,39 +23,42 @@ class SwipeItemBox(passedStep: String, passedHead: String, passedBody: String, p
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.swipe_item_standard, container, false)
+        return inflater.inflate(R.layout.swipe_item_box, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val detailStep = view.findViewById<TextView>(R.id.detail_step)
         val detailHead = view.findViewById<TextView>(R.id.detail_head)
         val detailBody = view.findViewById<TextView>(R.id.detail_body)
+        val detailCard = view.findViewById<MaterialCardView>(R.id.detail_card)
 
         when (type) {
-            1 -> {
-                detailStep.visibility = View.GONE
-                detailHead.visibility = View.GONE
+            5 -> {
+                detailCard.setCardBackgroundColor(ContextCompat.getColor(view.context, R.color.detailItemOrangeBG))
+                detailHead.setTextColor(ContextCompat.getColor(view.context, R.color.detailItemOrangeTXT))
             }
-            2 -> {
-                detailStep.visibility = View.GONE
-                detailBody.visibility = View.GONE
-                detailHead.visibility = View.GONE
-                val detailStart = view.findViewById<TextView>(R.id.detail_start)
-                detailStart.visibility = View.VISIBLE
-                detailStart.text = SwipeAdapter.htmlProcess(body, view)
+            6 -> {
+                detailCard.setCardBackgroundColor(ContextCompat.getColor(view.context, R.color.detailItemBlueBG))
+                detailHead.setTextColor(ContextCompat.getColor(view.context, R.color.detailItemBlueTXT))
             }
-            3 -> {
-                detailStep.text = step
-                detailHead.text = head
+            7 -> {
+                detailCard.setCardBackgroundColor(ContextCompat.getColor(view.context, R.color.detailItemGreenBG))
+                detailHead.setTextColor(ContextCompat.getColor(view.context, R.color.detailItemGreenTXT))
             }
-            4 -> {
-                detailStep.text = step
-                detailHead.visibility = View.GONE
+            8 -> {
+                detailCard.setCardBackgroundColor(ContextCompat.getColor(view.context, R.color.detailItemBlackBG))
+                detailHead.setTextColor(ContextCompat.getColor(view.context, R.color.detailItemBlackTXT))
+            }
+            9 -> {
+                detailCard.setCardBackgroundColor(ContextCompat.getColor(view.context, R.color.detailItemPurpleBG))
+                detailHead.setTextColor(ContextCompat.getColor(view.context, R.color.detailItemPurpleTXT))
             }
         }
 
-        detailBody.text = SwipeAdapter.htmlProcess(body, view)
+        detailHead.text = head
+        detailBody.text = htmlProcess(body, view)
+
+
     }
 }
