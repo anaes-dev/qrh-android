@@ -62,10 +62,24 @@ class SwipeFragment : Fragment() {
                 "$code.json",
                 safeContext
             )
+            content.removeAll {
+                it.type == 12 || it.type == 11
+            }
             val adapter = SwipeAdapter(this, content)
             viewPager.adapter = adapter
 
-            binding.swipeIndicator.text = adapter.itemCount.toString()
+            var swipeCallback = object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    val currentPage = (position + 1).toString()
+                    val totalPages = adapter.itemCount.toString()
+                    val pagesString = "$currentPage of $totalPages"
+                    binding.swipeIndicator.text = pagesString
+                }
+            }
+
+            viewPager.registerOnPageChangeCallback(swipeCallback)
+
         }
 
 

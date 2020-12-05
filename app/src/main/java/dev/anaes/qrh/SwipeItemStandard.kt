@@ -66,7 +66,7 @@ class SwipeItemStandard(passedStep: String, passedHead: String, passedBody: Stri
                 detailHead.visibility = View.GONE
                 val detailStart = view.findViewById<TextView>(R.id.detail_start)
                 detailStart.visibility = View.VISIBLE
-                detailStart.text = SwipeAdapter.htmlProcess(body, view)
+                detailStart.text = htmlProcess(body, view)
             }
             3 -> {
                 detailStep.text = step
@@ -78,6 +78,6 @@ class SwipeItemStandard(passedStep: String, passedHead: String, passedBody: Stri
             }
         }
 
-        detailBody.text = SwipeAdapter.htmlProcess(body, view)
+        detailBody.text = htmlProcess(body, view)
     }
 }
