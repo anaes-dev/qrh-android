@@ -1,15 +1,18 @@
 package dev.anaes.qrh
 import android.content.res.ColorStateList
+import android.graphics.Color
+import android.media.Image
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.util.TypedValue
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
-import androidx.constraintlayout.widget.Group
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.google.android.material.card.MaterialCardView
 
 class SwipeItemBox() : Fragment() {
@@ -23,6 +26,13 @@ class SwipeItemBox() : Fragment() {
             val fragment = SwipeItemBox()
             fragment.arguments = args
             return fragment
+        }
+
+        fun loadImage(view: View, imgView: ImageView, url: String?) {
+            Glide
+                .with(view)
+                .load(Uri.parse("file:///android_asset/$url"))
+                .into(imgView)
         }
     }
 
@@ -52,8 +62,14 @@ class SwipeItemBox() : Fragment() {
         val detailHead = view.findViewById<TextView>(R.id.detail_head)
         val detailBody = view.findViewById<TextView>(R.id.detail_body)
         val detailCard = view.findViewById<MaterialCardView>(R.id.detail_card)
+        val detailImage = view.findViewById<ImageView>(R.id.detail_image)
         val gradTop = view.findViewById<View>(R.id.grad_top)
         val gradBottom = view.findViewById<View>(R.id.grad_bottom)
+
+        if (Build.VERSION.SDK_INT == 21) {
+            gradTop.visibility = View.GONE
+            gradBottom.visibility = View.GONE
+        }
 
         when (type) {
             5 -> {
@@ -89,7 +105,15 @@ class SwipeItemBox() : Fragment() {
                 detailHead.setTextColor(ContextCompat.getColor(view.context, R.color.detailItemPurpleTXT))
                 gradTop.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(view.context, R.color.detailItemPurpleBG))
                 gradBottom.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(view.context, R.color.detailItemPurpleBG))
-
+            }
+            10 -> {
+                detailCard.setCardBackgroundColor(Color.parseColor("#FFFFFF"))
+                detailHead.setTextColor(Color.parseColor("#000000"))
+                detailBody.visibility = View.GONE
+                detailImage.visibility = View.VISIBLE
+                loadImage(view, detailImage, body)
+                gradBottom.visibility = View.GONE
+                gradTop.visibility = View.GONE
             }
         }
 

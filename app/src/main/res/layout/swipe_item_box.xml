@@ -26,7 +26,8 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:fadeScrollbars="false">
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -55,6 +56,16 @@
                     android:layout_alignStart="@id/detail_head"
                     android:layout_alignParentEnd="true"
                     android:textColor="?android:attr/textColorPrimary" />
+
+                <ImageView
+                    android:id="@+id/detail_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/detail_head"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:contentDescription="@string/image"
+                    android:visibility="gone" />
 
             </RelativeLayout>
 

@@ -78,5 +78,13 @@ class SwipeItemStandard() : Fragment() {
         }
 
         detailBody.text = htmlProcess(body, view)
+
+        linkifyFunction(detailBody)
+
+        detailBody.movementMethod = object : TextViewLinkHandler() {
+            override fun onLinkClick(url: String?) {
+                activity?.let { SwipeFragment.swipeToLink(url as String, it, context!!) }
+            }
+        }
     }
 }
