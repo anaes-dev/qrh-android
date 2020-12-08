@@ -191,7 +191,6 @@ class DetailFragment : Fragment(), PushDetail {
         navController.navigate(action)
     }
 
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.navigation_download -> {

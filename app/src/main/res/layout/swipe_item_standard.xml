@@ -39,7 +39,10 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:fadeScrollbars="false"
+            android:scrollbarStyle="insideOverlay"
+            android:scrollbars="vertical">
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -90,5 +93,27 @@
 
             </RelativeLayout>
         </ScrollView>
+
+        <View
+            android:id="@+id/grad_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="16dp"
+            android:layout_gravity="bottom"
+            android:background="@drawable/grad_up"
+            android:alpha="0.7"
+            android:elevation="4dp"
+            />
+
+        <View
+            android:id="@+id/grad_top"
+            android:layout_width="wrap_content"
+            android:layout_height="16dp"
+            android:layout_gravity="top"
+            android:background="@drawable/grad_down"
+            android:alpha="0.7"
+            android:translationZ="4dp"
+            />
+
+
     </com.google.android.material.card.MaterialCardView>
 </FrameLayout>
