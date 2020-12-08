@@ -14,7 +14,7 @@ import kotlin.coroutines.coroutineContext
 class SwipeAdapter(
     fragment: Fragment,
     private var dataSource: ArrayList<DetailContent>
-    ) : FragmentStateAdapter(fragment) {
+) : FragmentStateAdapter(fragment) {
 
     override fun getItemCount(): Int {
         return dataSource.size
@@ -23,13 +23,13 @@ class SwipeAdapter(
     override fun createFragment(position: Int): Fragment {
         when(dataSource[position].type) {
             5,6,7,8,9 -> {
-                return SwipeItemBox(
+                return SwipeItemBox.newInstance(
                     dataSource[position].head,
                     dataSource[position].body,
                     dataSource[position].type
                 )}
             else ->
-                return SwipeItemStandard(
+                return SwipeItemStandard.newInstance(
                     dataSource[position].step,
                     dataSource[position].head,
                     dataSource[position].body,

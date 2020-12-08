@@ -51,6 +51,7 @@ interface MainInt {
     fun setDarkModeDisabled(disabled: Boolean)
     fun recreateActivity()
     fun collapseBar(collapse: Boolean)
+    fun swipeDetail(code: String, title: String, url: String, version: String)
 }
 
 class Main : AppCompatActivity(), MainInt {
@@ -232,6 +233,14 @@ class Main : AppCompatActivity(), MainInt {
 
     override fun collapseBar(collapse: Boolean) {
         binding.appBar.setExpanded(!collapse)
+    }
+
+    override fun swipeDetail(code: String, title: String, url: String, version: String) {
+        val navController = findNavController(R.id.nav_host_fragment)
+        val action = DetailFragmentDirections.LoadNewDetail(code, title, url, version)
+        navController.navigateUp()
+        navController.navigate(action)
+
     }
 
     override fun updateBar(
