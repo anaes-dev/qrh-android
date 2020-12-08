@@ -16,12 +16,13 @@ class AboutFragment : Fragment() {
 
     private val title = "About"
 
+    //    Binding & View Model
     private val vm: MainViewModel by activityViewModels()
-
     private var _binding: FragmentAboutBinding? = null
-
     private val binding get() = _binding!!
 
+
+    //    Inflate about fragment
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -32,36 +33,57 @@ class AboutFragment : Fragment() {
         return binding.root
     }
 
+
+    //    Populate view
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as MainInt).progressShow(false)
         (activity as MainInt).updateBar(title, "", "", expanded = false, hideKeyboard = true, opaque = false)
 
+//    Build string from version number
         val verCode = BuildConfig.VERSION_NAME
         val verOutput = "Version $verCode"
         binding.qrhHeader.aboutVersion.text = verOutput
+
+//    Show warning about older Android version if API level < 24
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
             binding.androidOld.androidOldCard.visibility = View.VISIBLE
         }
 
+//    Show dark mode option if API level >= 10
+
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
             binding.androidDark.visibility = View.GONE
         }
+
+//    Navigate to disclaimers page
 
         binding.btnViewDisclaimers.setOnClickListener {
             findNavController().navigate(R.id.LoadDisclaimers)
         }
 
+        //    Navigate to privacy policy
+
+
         binding.btnViewPrivacy.setOnClickListener {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("http://anaes.dev/privacy")))
         }
+
+        //    Navigate to Creative Commons license page
+
 
         binding.qrhInfo.imageViewCC.setOnClickListener{
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://www.creativecommons.org/licenses/by-nc-sa/4.0/")))
         }
 
+
+        //    Set dark mode switch based on current state
+
         binding.darkDisableSwitch.isChecked = vm.checkDarkDisabled()
+
+        //    Update settings if switch changed
+
 
         binding.darkDisableSwitch.setOnCheckedChangeListener { _, _ ->
             if (binding.darkDisableSwitch.isChecked) {

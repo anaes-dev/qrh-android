@@ -8,6 +8,8 @@
     <color name="titleTextColorCollapsed">#ffffff</color>
     <color name="titleTextColorExpanded">#ffffff</color>
 
+    <color name="cardBG">@color/cardview_light_background</color>
+
     <color name="detailItemOrangeBG">#FBE9E7</color>
     <color name="detailItemOrangeARR">#FFCCBC</color>
     <color name="detailItemOrangeTXT">#BF360C</color>

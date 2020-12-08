@@ -180,6 +180,33 @@
                     android:layout_height="24dp"
                     android:layout_marginEnd="4dp"
                     android:layout_weight="0"
+                    android:background="@drawable/ic_stories_dark"
+                    android:contentDescription="@string/image"
+                    app:srcCompat="@drawable/empty"
+                    app:tint="#000000" />
+
+                <TextView
+                    style="@style/TextAppearance.MaterialComponents.Body2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_weight="1"
+                    android:text="@string/iconhint2"
+                    android:textColor="?android:attr/textColorSecondary" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_weight="0"
                     android:background="@drawable/ic_baseline_arrow_forward_24"
                     android:contentDescription="@string/image"
                     app:srcCompat="@drawable/empty"
