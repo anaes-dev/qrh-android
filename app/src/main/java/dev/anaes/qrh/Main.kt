@@ -205,19 +205,19 @@ class Main : AppCompatActivity(), MainInt {
         }
     }
 
-
-    override fun onSaveInstanceState(savedInstanceState: Bundle) {
-        super.onSaveInstanceState(savedInstanceState)
-        savedInstanceState.putBundle(
-            "nav_state",
-            findNavController(R.id.nav_host_fragment).saveState()
-        )
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        findNavController(R.id.nav_host_fragment).restoreState(savedInstanceState.getBundle("nav_state"))
-    }
+//
+//    override fun onSaveInstanceState(savedInstanceState: Bundle) {
+//        super.onSaveInstanceState(savedInstanceState)
+//        savedInstanceState.putBundle(
+//            "nav_state",
+//            findNavController(R.id.nav_host_fragment).saveState()
+//        )
+//    }
+//
+//    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+//        super.onRestoreInstanceState(savedInstanceState)
+//        findNavController(R.id.nav_host_fragment).restoreState(savedInstanceState.getBundle("nav_state"))
+//    }
 
 
     override fun popToDetail(num: Int) {

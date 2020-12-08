@@ -5,8 +5,6 @@
     android:id="@+id/mainContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clipChildren="false"
-    android:fitsSystemWindows="true"
     tools:context=".Main">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -14,14 +12,12 @@
         style="@style/Widget.MaterialComponents.AppBarLayout.PrimarySurface"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
         app:liftOnScroll="true">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/toolbarLayout"
             android:layout_width="match_parent"
             android:layout_height="180dp"
-            android:fitsSystemWindows="true"
             app:collapsedTitleTextAppearance="@style/TextAppearance.App.CollapsingToolbar.Collapsed"
             app:contentInsetEnd="0dp"
             app:contentScrim="?attr/colorPrimary"
@@ -70,7 +66,6 @@
                 app:contentInsetStartWithNavigation="0dp"
                 app:layout_collapseMode="pin"
                 app:liftOnScroll="true">
-
 
                 <ProgressBar
                     android:id="@+id/progressCircular"

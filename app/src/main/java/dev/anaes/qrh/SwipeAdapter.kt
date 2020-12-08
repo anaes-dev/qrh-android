@@ -22,7 +22,7 @@ class SwipeAdapter(
 
     override fun createFragment(position: Int): Fragment {
         when(dataSource[position].type) {
-            5,6,7,8,9 -> {
+            5,6,7,8,9,10 -> {
                 return SwipeItemBox.newInstance(
                     dataSource[position].head,
                     dataSource[position].body,
