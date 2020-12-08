@@ -76,7 +76,7 @@ class SwipeFragment : Fragment() {
             val adapter = SwipeAdapter(this, content)
             viewPager.adapter = adapter
 
-            var swipeCallback = object : ViewPager2.OnPageChangeCallback() {
+            val swipeCallback = object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
                     val currentPage = (position + 1).toString()
@@ -86,7 +86,7 @@ class SwipeFragment : Fragment() {
                 }
             }
 
-            val offsetPx = 16.dpToPx(resources.displayMetrics)
+            val offsetPx = 18.dpToPx(resources.displayMetrics)
             val pageMarginPx = 16.dpToPx(resources.displayMetrics)
 
             viewPager.apply {
@@ -101,7 +101,7 @@ class SwipeFragment : Fragment() {
                     } else {
                         page.translationX = offset
                     }
-                    page.alpha = 0.8F + (1 - kotlin.math.abs(position))
+                    page.alpha = 0.9F + (1 - kotlin.math.abs(position))
                 }
             }
 

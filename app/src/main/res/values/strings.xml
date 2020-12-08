@@ -4,6 +4,7 @@
     <string name="title_about">About</string>
     <string name="title_home">Home</string>
     <string name="title_download">Download</string>
+    <string name="title_cards">View cards</string>
     <string name="github"><u>github.com/anaes-dev/qrh-android</u></string>
     <string name="app_type">Android</string>
 
@@ -39,6 +40,7 @@
     <string name="disclaimers">View disclaimers</string>
     <string name="privacy">View privacy policy</string>
     <string name="iconhint">Click this icon at the top\-right of each guideline to access the original PDF file from the Association of Anaesthetists website.</string>
+    <string name="iconhint2">Click this icon at the top\-right of each guideline to view it in a large-format card view - swipe horizontally through the steps.</string>
     <string name="arrowhint">Click highlighted links to jump to related guidelines.</string>
     <string name="_1">1</string>
     <string name="_2">2</string>
@@ -53,6 +55,4 @@
     <string name="dark_theme">Dark theme</string>
     <string name="dark_explanation">The app will automatically follow the system setting unless overridden here:</string>
     <string name="home">Home</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

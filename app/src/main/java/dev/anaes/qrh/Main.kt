@@ -240,7 +240,6 @@ class Main : AppCompatActivity(), MainInt {
         val action = DetailFragmentDirections.LoadNewDetail(code, title, url, version)
         navController.navigateUp()
         navController.navigate(action)
-
     }
 
     override fun updateBar(

@@ -42,7 +42,11 @@ class CardRecyclerAdapter(
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                 bodyTxt.lineHeight =
-                    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 18F,itemView.resources.displayMetrics).toInt()
+                    TypedValue.applyDimension(
+                        TypedValue.COMPLEX_UNIT_SP,
+                        18F,
+                        itemView.resources.displayMetrics
+                    ).toInt()
             }
 
             bodyTxt.movementMethod = object : TextViewLinkHandler() {
@@ -68,35 +72,114 @@ class CardRecyclerAdapter(
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                 bodyTxt.lineHeight =
-                    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 18F,itemView.resources.displayMetrics).toInt()
+                    TypedValue.applyDimension(
+                        TypedValue.COMPLEX_UNIT_SP,
+                        18F,
+                        itemView.resources.displayMetrics
+                    ).toInt()
             }
 
 
             when (detailContent.type) {
                 5 -> {
-                    cardBody.setCardBackgroundColor(ContextCompat.getColor(itemView.context, R.color.detailItemOrangeBG))
-                    headerTxt.setTextColor(ContextCompat.getColor(itemView.context, R.color.detailItemOrangeTXT))
-                    subArrow.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.detailItemOrangeARR))
+                    cardBody.setCardBackgroundColor(
+                        ContextCompat.getColor(
+                            itemView.context,
+                            R.color.detailItemOrangeBG
+                        )
+                    )
+                    headerTxt.setTextColor(
+                        ContextCompat.getColor(
+                            itemView.context,
+                            R.color.detailItemOrangeTXT
+                        )
+                    )
+                    subArrow.setBackgroundColor(
+                        ContextCompat.getColor(
+                            itemView.context,
+                            R.color.detailItemOrangeARR
+                        )
+                    )
                 }
                 6 -> {
-                    cardBody.setCardBackgroundColor(ContextCompat.getColor(itemView.context, R.color.detailItemBlueBG))
-                    headerTxt.setTextColor(ContextCompat.getColor(itemView.context, R.color.detailItemBlueTXT))
-                    subArrow.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.detailItemBlueARR))
+                    cardBody.setCardBackgroundColor(
+                        ContextCompat.getColor(
+                            itemView.context,
+                            R.color.detailItemBlueBG
+                        )
+                    )
+                    headerTxt.setTextColor(
+                        ContextCompat.getColor(
+                            itemView.context,
+                            R.color.detailItemBlueTXT
+                        )
+                    )
+                    subArrow.setBackgroundColor(
+                        ContextCompat.getColor(
+                            itemView.context,
+                            R.color.detailItemBlueARR
+                        )
+                    )
                 }
                 7 -> {
-                    cardBody.setCardBackgroundColor(ContextCompat.getColor(itemView.context, R.color.detailItemGreenBG))
-                    headerTxt.setTextColor(ContextCompat.getColor(itemView.context, R.color.detailItemGreenTXT))
-                    subArrow.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.detailItemGreenARR))
+                    cardBody.setCardBackgroundColor(
+                        ContextCompat.getColor(
+                            itemView.context,
+                            R.color.detailItemGreenBG
+                        )
+                    )
+                    headerTxt.setTextColor(
+                        ContextCompat.getColor(
+                            itemView.context,
+                            R.color.detailItemGreenTXT
+                        )
+                    )
+                    subArrow.setBackgroundColor(
+                        ContextCompat.getColor(
+                            itemView.context,
+                            R.color.detailItemGreenARR
+                        )
+                    )
                 }
                 8 -> {
-                    cardBody.setCardBackgroundColor(ContextCompat.getColor(itemView.context, R.color.detailItemBlackBG))
-                    headerTxt.setTextColor(ContextCompat.getColor(itemView.context, R.color.detailItemBlackTXT))
-                    subArrow.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.detailItemBlackARR))
+                    cardBody.setCardBackgroundColor(
+                        ContextCompat.getColor(
+                            itemView.context,
+                            R.color.detailItemBlackBG
+                        )
+                    )
+                    headerTxt.setTextColor(
+                        ContextCompat.getColor(
+                            itemView.context,
+                            R.color.detailItemBlackTXT
+                        )
+                    )
+                    subArrow.setBackgroundColor(
+                        ContextCompat.getColor(
+                            itemView.context,
+                            R.color.detailItemBlackARR
+                        )
+                    )
                 }
                 9 -> {
-                    cardBody.setCardBackgroundColor(ContextCompat.getColor(itemView.context, R.color.detailItemPurpleBG))
-                    headerTxt.setTextColor(ContextCompat.getColor(itemView.context, R.color.detailItemPurpleTXT))
-                    subArrow.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.detailItemPurpleARR))
+                    cardBody.setCardBackgroundColor(
+                        ContextCompat.getColor(
+                            itemView.context,
+                            R.color.detailItemPurpleBG
+                        )
+                    )
+                    headerTxt.setTextColor(
+                        ContextCompat.getColor(
+                            itemView.context,
+                            R.color.detailItemPurpleTXT
+                        )
+                    )
+                    subArrow.setBackgroundColor(
+                        ContextCompat.getColor(
+                            itemView.context,
+                            R.color.detailItemPurpleARR
+                        )
+                    )
                 }
             }
 
@@ -111,7 +194,7 @@ class CardRecyclerAdapter(
                 }
             }
 
-            if(detailContent.collapsed) {
+            if (detailContent.collapsed) {
                 bodyTxt.visibility = View.GONE
                 subArrow.setImageResource(R.drawable.ic_arrow_down)
             } else {
@@ -128,7 +211,8 @@ class CardRecyclerAdapter(
         override fun bindViews(detailContent: DetailContent, linkListener: (String) -> Unit) {
             val detailImage = itemView.findViewById<ImageView>(R.id.detail_image)
             val imagePath = detailContent.body
-            itemView.findViewById<TextView>(R.id.detail_caption).setText(detailContent.head).toString()
+            itemView.findViewById<TextView>(R.id.detail_caption).setText(detailContent.head)
+                .toString()
             Glide
                 .with(itemView)
                 .load(Uri.parse("file:///android_asset/$imagePath"))
@@ -140,12 +224,8 @@ class CardRecyclerAdapter(
     class ViewHolder4(itemView: View) : RecyclerView.ViewHolder(itemView),
         UpdateViewHolder {
         override fun bindViews(detailContent: DetailContent, linkListener: (String) -> Unit) {
-            itemView.findViewById<TextView>(R.id.detailText).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                Html.fromHtml(detailContent.body, Html.FROM_HTML_MODE_LEGACY).trim()
-            } else {
-                @Suppress("DEPRECATION")
-                Html.fromHtml(detailContent.body).trim()
-            }
+            itemView.findViewById<TextView>(R.id.detailText).text =
+                htmlProcess(detailContent.body, itemView)
         }
     }
 
@@ -153,12 +233,8 @@ class CardRecyclerAdapter(
     class ViewHolder5(itemView: View) : RecyclerView.ViewHolder(itemView),
         UpdateViewHolder {
         override fun bindViews(detailContent: DetailContent, linkListener: (String) -> Unit) {
-            itemView.findViewById<TextView>(R.id.detailText).text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                Html.fromHtml(detailContent.head, Html.FROM_HTML_MODE_LEGACY).trim()
-            } else {
-                @Suppress("DEPRECATION")
-                Html.fromHtml(detailContent.head).trim()
-            }
+            itemView.findViewById<TextView>(R.id.detailText).text =
+                htmlProcess(detailContent.head, itemView)
         }
     }
 
@@ -179,7 +255,7 @@ class CardRecyclerAdapter(
             11 -> VIEW_ELEVEN
             12 -> VIEW_TWELVE
             else -> VIEW_THREE
-            }
+        }
     }
 
     //Inflate item layout according to view type

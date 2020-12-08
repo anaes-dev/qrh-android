@@ -60,5 +60,22 @@
 
         </ScrollView>
 
+
+        <View
+            android:id="@+id/grad_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="16dp"
+            android:layout_gravity="bottom"
+            android:background="@drawable/grad_up"
+            android:alpha="0.7"/>
+
+        <View
+            android:id="@+id/grad_top"
+            android:layout_width="wrap_content"
+            android:layout_height="16dp"
+            android:layout_gravity="top"
+            android:background="@drawable/grad_down"
+            android:alpha="0.7" />
+
     </com.google.android.material.card.MaterialCardView>
 </FrameLayout>
