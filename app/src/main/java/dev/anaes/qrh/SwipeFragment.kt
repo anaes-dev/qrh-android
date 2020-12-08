@@ -1,17 +1,25 @@
 package dev.anaes.qrh
 
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
+import android.util.DisplayMetrics
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
+import androidx.viewpager2.widget.ViewPager2.ORIENTATION_HORIZONTAL
+import com.google.android.material.tabs.TabLayoutMediator
 import dev.anaes.qrh.databinding.FragmentSwipeBinding
+import java.lang.Math.abs
 
 class SwipeFragment : Fragment() {
 
@@ -78,8 +86,26 @@ class SwipeFragment : Fragment() {
                 }
             }
 
-            viewPager.registerOnPageChangeCallback(swipeCallback)
+            val offsetPx = 16.dpToPx(resources.displayMetrics)
+            val pageMarginPx = 16.dpToPx(resources.displayMetrics)
 
+            viewPager.apply {
+                registerOnPageChangeCallback(swipeCallback)
+                clipChildren = false
+                clipToPadding = false
+                offscreenPageLimit = 2
+                setPageTransformer { page, position ->
+                    val offset = position * -(2 * offsetPx + pageMarginPx)
+                    if(ViewCompat.getLayoutDirection(binding.swipeViewpager) == ViewCompat.LAYOUT_DIRECTION_RTL) {
+                        page.translationX = -offset
+                    } else {
+                        page.translationX = offset
+                    }
+                    page.alpha = 0.8F + (1 - kotlin.math.abs(position))
+                }
+            }
+
+            TabLayoutMediator(binding.swipeTabLayout, viewPager) { _, _ -> }.attach()
         }
 
 
@@ -92,6 +118,21 @@ class SwipeFragment : Fragment() {
 
     }
 
+    private fun Int.dpToPx(displayMetrics: DisplayMetrics): Int = (this * displayMetrics.density).toInt()
 
+    companion object {
+        fun swipeToLink(url: String, activity: Activity, context: Context) {
+            if (url.startsWith("qrh://")) {
+                val codeNew = url.removePrefix("qrh://")
+                (activity as MainInt).progressShow(true)
+                val fetchDetails: Array<String> =
+                    DetailFragment.getDetailsFromCode(codeNew, context)
+                (activity as MainInt).swipeDetail(
+                    codeNew, fetchDetails[0], fetchDetails[1], fetchDetails[2])
+            } else {
+                (activity as MainInt).openURL(url)
+            }
+        }
+    }
 
 }

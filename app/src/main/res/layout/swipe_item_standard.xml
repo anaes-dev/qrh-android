@@ -1,21 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
+    android:background="@android:color/transparent"
+    android:paddingStart="16dp"
+    android:paddingTop="16dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="0dp"
     tools:context=".SwipeItemStandard">
 
+
+    <TextView
+        android:id="@+id/detail_start"
+        style="@android:style/TextAppearance.Material.Subhead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="?android:attr/colorForeground"
+        android:padding="4dp"
+        android:textColor="?android:attr/colorForegroundInverse"
+        android:textSize="48sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/detail_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:hapticFeedbackEnabled="true"
         app:cardCornerRadius="6dp"
         app:cardElevation="4dp"
@@ -36,7 +52,7 @@
                     android:layout_height="48dp"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
                     android:background="@drawable/step_circle"
                     android:gravity="center"
                     android:maxLines="1"
@@ -58,7 +74,7 @@
                     android:layout_below="@id/detail_step"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
                     android:textColor="?android:attr/textColorPrimary" />
 
                 <TextView
@@ -70,26 +86,9 @@
                     android:layout_below="@id/detail_head"
                     android:layout_alignStart="@id/detail_step"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginTop="16dp"
                     android:textColor="?android:attr/textColorPrimary" />
 
-                <TextView
-                    android:id="@+id/detail_start"
-                    style="@android:style/TextAppearance.Material.Subhead"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginTop="16dp"
-                    android:background="?android:attr/colorForeground"
-                    android:padding="4dp"
-                    android:textColor="?android:attr/colorForegroundInverse"
-                    android:textSize="48sp"
-                    android:textStyle="bold"
-                    android:visibility="gone"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
             </RelativeLayout>
         </ScrollView>
     </com.google.android.material.card.MaterialCardView>
-</RelativeLayout>
+</FrameLayout>

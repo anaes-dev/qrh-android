@@ -1,5 +1,6 @@
 package dev.anaes.qrh
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -107,7 +108,7 @@ class DetailFragment : Fragment(), PushDetail {
                     if(url.startsWith("qrh://")) {
                         val codeNew = url.removePrefix("qrh://")
                         (activity as MainInt).progressShow(true)
-                        val fetchDetails: Array<String> = getDetailsFromCode(codeNew)
+                        val fetchDetails: Array<String> = getDetailsFromCode(codeNew, safeContext)
                         navToDetail(codeNew, fetchDetails[0], fetchDetails[1], fetchDetails[2])
                     } else {
                         (activity as MainInt).openURL(url)
@@ -190,6 +191,7 @@ class DetailFragment : Fragment(), PushDetail {
         navController.navigate(action)
     }
 
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.navigation_download -> {
@@ -205,24 +207,20 @@ class DetailFragment : Fragment(), PushDetail {
         }
     }
 
-    private fun getDetailsFromCode(codePassed: String?): Array<String> {
-        this.context?.let { safeContext ->
-            val guideList = Guideline.getGuidelinesFromFile(
-                "guidelines.json",
-                safeContext
-            )
-            val position: Int = guideList.indexOfFirst { it.code == codePassed }
-            return arrayOf(
-                guideList[position].title,
-                guideList[position].url,
-                guideList[position].version.toString()
-            )
-        } ?: run {
-            return arrayOf(
-                "Default", "", ""
-            )
+    companion object {
+        fun getDetailsFromCode(codePassed: String?, context: Context): Array<String> {
+                val guideList = Guideline.getGuidelinesFromFile(
+                    "guidelines.json",
+                    context
+                )
+                val position: Int = guideList.indexOfFirst { it.code == codePassed }
+                return arrayOf(
+                    guideList[position].title,
+                    guideList[position].url,
+                    guideList[position].version.toString()
+                )
+
         }
     }
-
 }
 

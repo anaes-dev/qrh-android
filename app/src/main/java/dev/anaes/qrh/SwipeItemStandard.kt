@@ -10,15 +10,33 @@ import com.google.android.material.card.MaterialCardView
 import kotlinx.coroutines.ThreadContextElement
 import org.w3c.dom.Text
 
-class SwipeItemStandard(passedStep: String, passedHead: String, passedBody: String, passedType: Int) : Fragment() {
+class SwipeItemStandard() : Fragment() {
 
-    private val step: String = passedStep
-    private val head: String = passedHead
-    private val body: String = passedBody
-    private val type: Int = passedType
+    companion object {
+        fun newInstance(passedStep: String, passedHead: String, passedBody: String, passedType: Int): Fragment {
+            val args = Bundle()
+            args.putString("step", passedStep)
+            args.putString("head", passedHead)
+            args.putString("body", passedBody)
+            args.putInt("type", passedType)
+            val fragment = SwipeItemStandard()
+            fragment.arguments = args
+            return fragment
+        }
+    }
+    private var step: String = String()
+    private var head: String = String()
+    private var body: String = String()
+    private var type: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        arguments?.let {
+            step = it.getString("step").toString()
+            head = it.getString("head").toString()
+            body = it.getString("body").toString()
+            type = it.getInt("type")
+        }
     }
 
     override fun onCreateView(
@@ -34,25 +52,11 @@ class SwipeItemStandard(passedStep: String, passedHead: String, passedBody: Stri
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val detailStep: TextView
-        val detailHead: TextView
-        var detailBody: TextView
-        var detailStart: TextView
-        var detailCard: MaterialCardView
-
-        when(type) {
-            5,6,7,8,9 -> {
-                detailStep = view.findViewById<TextView>(R.id.detail_step)
-                detailHead = view.findViewById<TextView>(R.id.detail_head)
-                detailBody = view.findViewById<TextView>(R.id.detail_body)
-
-            }
-            else -> {
-                detailStep = view.findViewById<TextView>(R.id.detail_step)
-                detailHead = view.findViewById<TextView>(R.id.detail_head)
-                detailBody = view.findViewById<TextView>(R.id.detail_body)
-            }
-        }
+        var detailStart: TextView = view.findViewById(R.id.detail_start)
+        var detailCard: MaterialCardView = view.findViewById(R.id.detail_card)
+        val detailStep: TextView = view.findViewById(R.id.detail_step)
+        val detailHead: TextView = view.findViewById(R.id.detail_head)
+        var detailBody: TextView = view.findViewById(R.id.detail_body)
 
 
         when (type) {
@@ -61,12 +65,9 @@ class SwipeItemStandard(passedStep: String, passedHead: String, passedBody: Stri
                 detailHead.visibility = View.GONE
             }
             2 -> {
-                detailStep.visibility = View.GONE
-                detailBody.visibility = View.GONE
-                detailHead.visibility = View.GONE
-                val detailStart = view.findViewById<TextView>(R.id.detail_start)
+                detailCard.visibility = View.GONE
                 detailStart.visibility = View.VISIBLE
-                detailStart.text = htmlProcess(body, view)
+                detailStart.text = body?.let { htmlProcess(it, view) }
             }
             3 -> {
                 detailStep.text = step
@@ -78,6 +79,6 @@ class SwipeItemStandard(passedStep: String, passedHead: String, passedBody: Stri
             }
         }
 
-        detailBody.text = htmlProcess(body, view)
+        detailBody.text = body?.let { htmlProcess(it, view) }
     }
 }
