@@ -1,15 +1,13 @@
 package dev.anaes.qrh
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
-import android.widget.Button
 import android.widget.ImageView
-import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.doOnPreDraw
-import androidx.core.view.setPadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -110,7 +108,7 @@ class DetailFragment : Fragment(), PushDetail {
                     if(url.startsWith("qrh://")) {
                         val codeNew = url.removePrefix("qrh://")
                         (activity as MainInt).progressShow(true)
-                        val fetchDetails: Array<String> = getDetailsFromCode(codeNew)
+                        val fetchDetails: Array<String> = getDetailsFromCode(codeNew, safeContext)
                         navToDetail(codeNew, fetchDetails[0], fetchDetails[1], fetchDetails[2])
                     } else {
                         (activity as MainInt).openURL(url)
@@ -199,28 +197,29 @@ class DetailFragment : Fragment(), PushDetail {
                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
                 return true
             }
+            R.id.navigation_swipe -> {
+                val action = DetailFragmentDirections.LoadSwipe(args.code, args.title, args.version)
+                navController.navigate(action)
+                return true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
 
-    private fun getDetailsFromCode(codePassed: String?): Array<String> {
-        this.context?.let { safeContext ->
-            val guideList = Guideline.getGuidelinesFromFile(
-                "guidelines.json",
-                safeContext
-            )
-            val position: Int = guideList.indexOfFirst { it.code == codePassed }
-            return arrayOf(
-                guideList[position].title,
-                guideList[position].url,
-                guideList[position].version.toString()
-            )
-        } ?: run {
-            return arrayOf(
-                "Default", "", ""
-            )
+    companion object {
+        fun getDetailsFromCode(codePassed: String?, context: Context): Array<String> {
+                val guideList = Guideline.getGuidelinesFromFile(
+                    "guidelines.json",
+                    context
+                )
+                val position: Int = guideList.indexOfFirst { it.code == codePassed }
+                return arrayOf(
+                    guideList[position].title,
+                    guideList[position].url,
+                    guideList[position].version.toString()
+                )
+
         }
     }
-
 }
 

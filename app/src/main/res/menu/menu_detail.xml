@@ -2,6 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/navigation_swipe"
+        android:icon="@drawable/ic_stories"
+        android:title="@string/title_cards"
+        app:showAsAction="ifRoom|withText" />
+    <item
         android:id="@+id/navigation_download"
         android:icon="@drawable/ic_download"
         app:showAsAction="ifRoom|withText"
