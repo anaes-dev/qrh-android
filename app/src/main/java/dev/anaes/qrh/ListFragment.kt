@@ -63,16 +63,10 @@ class ListFragment : Fragment() {
             opaque = true
         )
 
-        this.context?.let { safeContext ->
 
-            val guidelineList =
-                Guideline.getGuidelinesFromFile(
-                    "guidelines.json",
-                    safeContext
-                )
 
             val adapter =
-                ListRecyclerAdapter(guidelineList) { guideline: Guideline ->
+                ListRecyclerAdapter(vm.getGuidelineList()) { guideline: Guideline ->
                     binding.listSearchView.clearFocus()
                     snack.dismiss()
                     guidelineClicked(guideline)
@@ -122,7 +116,6 @@ class ListFragment : Fragment() {
                 }
             })
 
-        }
 
 
 
@@ -218,5 +211,9 @@ class ListFragment : Fragment() {
         )
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
 }

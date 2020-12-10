@@ -10,6 +10,8 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.PersistableBundle
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import androidx.activity.viewModels
@@ -88,6 +90,10 @@ class Main : AppCompatActivity(), MainInt {
             finish()
         }
 
+        if (savedInstanceState != null) {
+            vm.breadcrumbTitles = savedInstanceState.getSerializable("breadcrumbs") as HashMap<Int, String>
+        }
+
         if (sharedPref.getBoolean("night_disabled", false)) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             vm.darkDisabled(true)
@@ -159,6 +165,11 @@ class Main : AppCompatActivity(), MainInt {
                 .apply()
         }
 
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putSerializable("breadcrumbs", vm.breadcrumbTitles)
+        super.onSaveInstanceState(outState)
     }
 
 
