@@ -1,8 +1,8 @@
 # Quick Reference Handbook (QRH)
 
-<img src="./readme/screenshot1c.png" width="240px">   <img src="./readme/screenshot2c.png" width="240px">   <img src="./readme/screenshot3c.png" width="240px">
+<img src="./readme/screenshot1d.png" width="240px">   <img src="./readme/screenshot2d.png" width="240px">   <img src="./readme/screenshot3d.png" width="240px">
 
-<img src="./readme/screenshot4c.png" width="240px">   <img src="./readme/screenshot5c.png" width="240px">   <img src="./readme/screenshot6c.png" width="240px">
+<img src="./readme/screenshot4d.png" width="240px">   <img src="./readme/screenshot5d.png" width="240px">   <img src="./readme/screenshot6d.png" width="240px">
 
 ## Features
 - Unofficial derivative of the Association of Anaesthetists Quick Reference Handbook (QRH): www.anaesthetists.org/qrh (CC BY-NC-SA 4.0)
@@ -33,7 +33,7 @@ You may not use for commercial purposes.
 ## Download
 
 Available on Google Play:   
-<a href='https://play.google.com/store/apps/details?id=com.mttrnd.qrh&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' width="240px"/></a>
+<a href='https://play.google.com/store/apps/details?id=dev.anaes.qrh'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' width="240px"/></a>
 
 Otherwise please build from source or download APK from releases:
 
