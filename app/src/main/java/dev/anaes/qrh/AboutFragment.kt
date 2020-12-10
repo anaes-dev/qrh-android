@@ -106,4 +106,10 @@ class AboutFragment : Fragment() {
         (activity as MainInt).progressShow(false)
         (activity as MainInt).updateBar(title, "", "", expanded = false, hideKeyboard = true, opaque = false)
     }
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

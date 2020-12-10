@@ -66,10 +66,7 @@ class SwipeFragment : Fragment() {
 
         this.context?.let { safeContext ->
             viewPager = binding.swipeViewpager
-            val content = DetailContent.getContentFromFile(
-                "$code.json",
-                safeContext
-            )
+            val content = vm.fetchGuideline(code)
             content.removeAll {
                 it.type == 12 || it.type == 11
             }
@@ -116,6 +113,11 @@ class SwipeFragment : Fragment() {
             (activity as MainInt).progressShow(false)
         }
 
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun Int.dpToPx(displayMetrics: DisplayMetrics): Int = (this * displayMetrics.density).toInt()

@@ -30,10 +30,10 @@ class DetailFragment : Fragment(), PushDetail {
 
     private val vm: MainViewModel by activityViewModels()
 
-    var code: String? = String()
-    var title: String? = String()
-    var url: String? = String()
-    var version: String? = String()
+    var code: String = String()
+    var title: String = String()
+    var url: String = String()
+    var version: String = String()
 
     private var _binding: FragmentDetailBinding? = null
 
@@ -99,12 +99,8 @@ class DetailFragment : Fragment(), PushDetail {
         val filename = code + filenameSuffix
 
         this.context?.let { safeContext ->
-            val content = DetailContent.getContentFromFile(
-                filename,
-                safeContext
-            )
             val adapter =
-                CardRecyclerAdapter(content, code) { url: String ->
+                CardRecyclerAdapter(vm.fetchGuideline(code), code) { url: String ->
                     if(url.startsWith("qrh://")) {
                         val codeNew = url.removePrefix("qrh://")
                         (activity as MainInt).progressShow(true)
@@ -204,6 +200,11 @@ class DetailFragment : Fragment(), PushDetail {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {
