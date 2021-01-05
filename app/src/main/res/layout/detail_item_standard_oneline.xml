@@ -46,6 +46,7 @@
             android:layout_alignBaseline="@id/detail_step"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="8dp"
+            android:layout_marginBottom="8dp"
             android:layout_toEndOf="@id/detail_step"
             tools:text="step 1" />
 
