@@ -8,7 +8,7 @@
     <string name="github"><u>github.com/anaes-dev/qrh-android</u></string>
     <string name="app_type">Android</string>
 
-    <string name="updated">Updated January 2021</string>
+    <string name="updated">Updated April 2021</string>
     <string name="about_1">Unofficial open-source mobile application adaptation of the Association of Anaesthetists Quick Reference Handbook (QRH) January 2021 version. www.anaesthetists.org/qrh</string>
     <string name="about_2">This material is a derivative of the \"Quick Reference Handbook\" ( www.anaesthetists.org/qrh ) by The Association of Anaesthetists ( www.anaesthetists.org ), used under Creative Commons license CC BY-NC-SA 4.0 ( www.creativecommons.org/licenses/by-nc-sa/4.0 ).  Subject to Creative Commons license CC BY-NC-SA 4.0. You may distribute original version or adapt for yourself and distribute with acknowledgement of source. You may not use for commercial purposes.</string>
     <string name="about_3">Please report any bugs via the github page</string>

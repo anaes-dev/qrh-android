@@ -49,6 +49,12 @@
       "step": "3"
     },
     {
+      "type": 9,
+      "head": "Box D: POTENTIAL CAUSES AND ACTIONS",
+      "body": "<ul><li>Inadequate neuromuscular blockade.</li><li>If laparoscopic surgery, consider releasing pneumoperitoneum and levelling patient position.</li><li>Consider potential causes:<p>- Laryngospasm and stridor <b>→3-6</b></p><p>- Bronchospasm <b>→3-4</b></p><p>- Anaphylaxis <b>→3-1</b></p><p>- Circulatory embolus <b>→3-5</b></p><p>- Aspiration, pulmonary oedema; bronchial intubation; foreign body; pneumothorax.</p></li><li>Consider potential actions: tracheal/bronchial suction; bronchodilator; PEEP; diuretic; bronchoscopy.</li></ul>",
+      "step": ""
+    },
+    {
       "type": 3,
       "head": "Circulation",
       "body": "<ul><li>Check heart rate, rhythm, perfusion, recheck blood pressure.</li><li>If circulation unstable, consider if it is due to high airway pressure gas trapping</li></ul>",
