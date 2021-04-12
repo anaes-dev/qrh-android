@@ -2,7 +2,7 @@
 
 <img src="./readme/screenshot1d.png" width="240px">   <img src="./readme/screenshot2d.png" width="240px">   <img src="./readme/screenshot3d.png" width="240px">
 
-<img src="./readme/screenshot4d.png" width="240px">   <img src="./readme/screenshot5d.png" width="240px">   <img src="./readme/screenshot6d.png" width="240px">
+<img src="./readme/screenshot4d.png" width="240px">   <img src="./readme/screenshot4e.png" width="240px">   <img src="./readme/screenshot5e.png" width="240px">
 
 ## Features
 - Unofficial derivative of the Association of Anaesthetists Quick Reference Handbook (QRH): www.anaesthetists.org/qrh (CC BY-NC-SA 4.0)
