@@ -180,8 +180,10 @@ class ListFragment : Fragment() {
             guideline.url,
             guideline.version.toString()
         )
-        (activity as MainInt).progressShow(true)
-        navController.navigate(action)
+        if(navController.currentDestination?.id == R.id.listFragment) {
+            (activity as MainInt).progressShow(true)
+            navController.navigate(action)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

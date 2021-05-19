@@ -78,16 +78,27 @@ class Main : AppCompatActivity(), MainInt {
         )
 
         if (sharedPref.getInt("version", 0) < BuildConfig.VERSION_CODE) {
-            if (!sharedPref.getBoolean("seen_warning", false)) {
-                if (oldSharedPref.getBoolean("com.mttrnd.qrh.seenwarning", false)) {
-                    startActivity(Intent(this, FirstRun::class.java).putExtra("isUpdate", true))
-                } else {
-                    startActivity(Intent(this, FirstRun::class.java).putExtra("isUpdate", false))
-                }
+            if(sharedPref.getInt("version", 0) == 42) {
+                val editor = sharedPref.edit()
+                editor.putInt("version", BuildConfig.VERSION_CODE)
+                editor.apply()
             } else {
-                startActivity(Intent(this, FirstRun::class.java).putExtra("isUpdate", true))
+                if (!sharedPref.getBoolean("seen_warning", false)) {
+                    if (oldSharedPref.getBoolean("com.mttrnd.qrh.seenwarning", false)) {
+                        startActivity(Intent(this, FirstRun::class.java).putExtra("isUpdate", true))
+                    } else {
+                        startActivity(
+                            Intent(this, FirstRun::class.java).putExtra(
+                                "isUpdate",
+                                false
+                            )
+                        )
+                    }
+                } else {
+                    startActivity(Intent(this, FirstRun::class.java).putExtra("isUpdate", true))
+                }
+                finish()
             }
-            finish()
         }
 
         if (savedInstanceState != null) {
@@ -207,6 +218,7 @@ class Main : AppCompatActivity(), MainInt {
             }
         }
 
+    @Suppress("DEPRECATION")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 10133) {
