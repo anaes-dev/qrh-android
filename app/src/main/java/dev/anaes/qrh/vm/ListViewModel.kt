@@ -19,6 +19,8 @@ class ListViewModel @Inject constructor(
 
     var filteredList: MutableState<List<ListItem>> = mutableStateOf(listOf())
 
+
+
     var searchString: MutableState<TextFieldValue> = mutableStateOf(TextFieldValue())
 
     var onList: MutableState<Boolean> = mutableStateOf(true)

@@ -3,16 +3,14 @@ package dev.anaes.qrh
 import android.app.Application
 import android.os.Bundle
 import android.util.Log
-import android.widget.ListView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.TextFieldValue
@@ -21,7 +19,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.HiltAndroidApp
 import dev.anaes.qrh.ui.list.ListComposable
@@ -36,6 +33,7 @@ class App: Application() {
 }
 
 @AndroidEntryPoint
+@ExperimentalMaterialApi
 class Main : ComponentActivity() {
     private val listVm: ListViewModel by viewModels()
     private val detailVm: DetailViewModel by viewModels()
@@ -62,6 +60,7 @@ class Main : ComponentActivity() {
 }
 
 @Composable
+@ExperimentalMaterialApi
 fun QRH(listVm: ListViewModel) {
     val navController = rememberNavController()
     val scaffoldState = rememberScaffoldState()
@@ -91,6 +90,7 @@ fun TopBar(scaffoldState: ScaffoldState, scope: CoroutineScope) {
     )
 }
 
+@ExperimentalMaterialApi
 @Composable
 fun NavComposable(navController: NavHostController, modifier: Modifier = Modifier, listVm: ListViewModel){
     NavHost(navController = navController, startDestination = "list", modifier = modifier) {
@@ -103,6 +103,7 @@ fun NavComposable(navController: NavHostController, modifier: Modifier = Modifie
     }
 }
 
+@ExperimentalMaterialApi
 @Composable
 fun ListScreen(
     navController: NavController,

@@ -1,19 +1,21 @@
 package dev.anaes.qrh.ui.list
 
-import android.graphics.Paint
-import androidx.activity.compose.BackHandler
-import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
+import androidx.compose.material.ListItem
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,23 +28,51 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.anaes.qrh.vm.ListViewModel
 
+@ExperimentalFoundationApi
+@ExperimentalMaterialApi
 @Composable
     fun ListComposable(viewModel: ListViewModel) {
         val scrollState = rememberLazyListState()
 
 
-        viewModel.filteredList.value = viewModel.unfilteredList.filter {
+    viewModel.filteredList.value = viewModel.unfilteredList.filter {
             it.title.contains(viewModel.searchString.value.text, true)
         }
+
+    val grouped = viewModel.filteredList.value.groupBy { it.code[0] }
 
     Column {
             SearchView(viewModel)
             LazyColumn(state = scrollState) {
+                grouped.forEach { (initial, items ) ->
+                    stickyHeader {
+                        Text(
+                            text = "Section ${initial.toString()}",
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(Color.LightGray)
+                                .padding(6.dp)
+                        )
+                        Divider()
+                    }
+                    items(items) { item ->
 
-                    items(viewModel.filteredList.value) { item ->
-                        Text(text = item.title)
+                        ListItem(
+                            text = { Text(item.title) },
+                            overlineText = { Text(item.code) },
+                            trailing = { Text("v.${item.version.toString()}") },
+                            modifier = Modifier
+                                .selectable(
+                                    selected = false,
+                                    onClick = { }
+                                )
+                        )
+
+                        Divider()
 
                     }
+                }
+
 
             }
         }
@@ -69,6 +99,8 @@ fun SearchView(viewModel: ListViewModel) {
         ) {
 
             TextField(
+
+                isError = noResults,
 
                 value = viewModel.searchString.value,
 
