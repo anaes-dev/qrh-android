@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -38,6 +39,7 @@ class Main : ComponentActivity() {
     private val listVm: ListViewModel by viewModels()
     private val detailVm: DetailViewModel by viewModels()
 
+    @ExperimentalFoundationApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -51,14 +53,15 @@ class Main : ComponentActivity() {
     }
 
     override fun onBackPressed() {
-        if (listVm.searchString.value.text != "" && listVm.onList.value) {
-            listVm.searchString.value = TextFieldValue("")
+        if (listVm.searchString.value != "" && listVm.onList.value) {
+            listVm.searchString.value = ""
         } else {
             super.onBackPressed()
         }
     }
 }
 
+@ExperimentalFoundationApi
 @Composable
 @ExperimentalMaterialApi
 fun QRH(listVm: ListViewModel) {
@@ -90,6 +93,7 @@ fun TopBar(scaffoldState: ScaffoldState, scope: CoroutineScope) {
     )
 }
 
+@ExperimentalFoundationApi
 @ExperimentalMaterialApi
 @Composable
 fun NavComposable(navController: NavHostController, modifier: Modifier = Modifier, listVm: ListViewModel){
@@ -103,6 +107,7 @@ fun NavComposable(navController: NavHostController, modifier: Modifier = Modifie
     }
 }
 
+@ExperimentalFoundationApi
 @ExperimentalMaterialApi
 @Composable
 fun ListScreen(

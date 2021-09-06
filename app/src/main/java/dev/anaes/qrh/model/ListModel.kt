@@ -1,5 +1,6 @@
 package dev.anaes.qrh.model
 
+import androidx.compose.ui.text.AnnotatedString
 import com.google.gson.annotations.SerializedName
 
 data class ListModel (
@@ -10,7 +11,7 @@ data class ListModel (
 data class ListItem (
 
         @SerializedName("title")
-        val title: String,
+        var title: String,
 
         @SerializedName("code")
         val code: String,
@@ -19,6 +20,11 @@ data class ListItem (
         val version: Int,
 
         @SerializedName("url")
-        val url: String
+        val url: String,
+
+        var titleA: AnnotatedString,
+
+        var codeA: AnnotatedString
+
 
 )

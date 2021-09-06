@@ -35,14 +35,14 @@ import dev.anaes.qrh.vm.ListViewModel
         val scrollState = rememberLazyListState()
 
 
-    viewModel.filteredList.value = viewModel.unfilteredList.filter {
-            it.title.contains(viewModel.searchString.value.text, true)
-        }
-
     val grouped = viewModel.filteredList.value.groupBy { it.code[0] }
 
+
+
     Column {
-            SearchView(viewModel)
+            SearchView(viewModel.searchError.value, viewModel.searchString.value) {
+                viewModel.updateSearch(it)
+            }
             LazyColumn(state = scrollState) {
                 grouped.forEach { (initial, items ) ->
                     stickyHeader {
@@ -56,10 +56,9 @@ import dev.anaes.qrh.vm.ListViewModel
                         Divider()
                     }
                     items(items) { item ->
-
                         ListItem(
-                            text = { Text(item.title) },
-                            overlineText = { Text(item.code) },
+                            text = { Text(item.titleA) },
+                            overlineText = { Text(item.codeA) },
                             trailing = { Text("v.${item.version.toString()}") },
                             modifier = Modifier
                                 .selectable(
@@ -81,13 +80,14 @@ import dev.anaes.qrh.vm.ListViewModel
 
 
 @Composable
-fun SearchView(viewModel: ListViewModel) {
+fun SearchView(
+    searchError: Boolean,
+    searchValue: String,
+    newSearchValue: (String) -> Unit
+) {
     val focusManager = LocalFocusManager.current
 
-    val noResults: Boolean = viewModel.filteredList.value.isEmpty()
-
-
-    val errorColor = if (noResults) {
+    val errorColor = if (searchError) {
         MaterialTheme.colors.error
     } else {
         MaterialTheme.colors.primary
@@ -100,12 +100,12 @@ fun SearchView(viewModel: ListViewModel) {
 
             TextField(
 
-                isError = noResults,
+                isError = searchError,
 
-                value = viewModel.searchString.value,
+                value = searchValue,
 
                 onValueChange = { value ->
-                    viewModel.searchString.value = value
+                    newSearchValue(value)
                 },
 
                 label = {
@@ -132,11 +132,11 @@ fun SearchView(viewModel: ListViewModel) {
                 },
 
                 trailingIcon = {
-                    if (viewModel.searchString.value != TextFieldValue("")) {
+                    if (searchValue.isNotEmpty()) {
                         IconButton(
                             onClick = {
                                 focusManager.clearFocus()
-                                viewModel.searchString.value = TextFieldValue("")
+                                newSearchValue("")
                             }
                         ) {
                             Icon(
@@ -170,7 +170,7 @@ fun SearchView(viewModel: ListViewModel) {
                     disabledIndicatorColor = Color.Transparent
                 )
             )
-            if (noResults) {
+            if (searchError) {
                 Text(
                     text = "No results",
                     style = MaterialTheme.typography.caption.copy(color = errorColor),
