@@ -54,7 +54,7 @@ class Main : ComponentActivity() {
 
     override fun onBackPressed() {
         if (listVm.searchString.value != "" && listVm.onList.value) {
-            listVm.searchString.value = ""
+            listVm.updateSearch("")
         } else {
             super.onBackPressed()
         }
@@ -114,7 +114,9 @@ fun ListScreen(
     navController: NavController,
     listVm: ListViewModel
 ) {
-    ListComposable(listVm)
+    ListComposable(listVm) {
+        Log.d("Click:", it)
+    }
 }
 
 @Composable
