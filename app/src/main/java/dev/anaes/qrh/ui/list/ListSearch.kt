@@ -14,15 +14,12 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.*
 import androidx.compose.ui.unit.dp
@@ -36,8 +33,7 @@ fun ListSearch(
     newSearchValue: (String) -> Unit
 ) {
     var hasFocus by rememberSaveable { mutableStateOf(false) }
-    var imeSwitch by remember { mutableStateOf(false) }
-    var imeType by remember { mutableStateOf(KeyboardType.Text) }
+    var imeSwitch by rememberSaveable { mutableStateOf(false) }
 
     val focusManager = LocalFocusManager.current
 
@@ -45,6 +41,12 @@ fun ListSearch(
         MaterialTheme.colors.error
     } else {
         MaterialTheme.colors.primary
+    }
+
+    val imeType = if (imeSwitch) {
+        KeyboardType.Number
+    } else {
+        KeyboardType.Text
     }
 
     Column(
@@ -59,15 +61,6 @@ fun ListSearch(
             value = searchValue,
 
             onValueChange = { value ->
-//                var output: String = value
-//                when (value.length) {
-//                    1 -> if(value[0].isDigit()) {
-//                        output = "$output-"
-//                    }
-//                    2 -> if((value[0].isDigit()) and (value.endsWith("-"))) {
-//                        output = output.removeSuffix("-")
-//                    }
-//                }
                 newSearchValue(value)
             },
 
@@ -95,7 +88,6 @@ fun ListSearch(
                         IconButton(
                             onClick = {
                                 imeSwitch = false
-                                imeType = KeyboardType.Text
                             }
                         ) {
                             Icon(
@@ -110,7 +102,6 @@ fun ListSearch(
                         IconButton(
                             onClick = {
                                 imeSwitch = true
-                                imeType = KeyboardType.Number
                             }
                         ) {
                             Icon(
@@ -193,8 +184,7 @@ class CodeTransformation() : VisualTransformation {
 
 fun codeTextFilter(text: AnnotatedString): TransformedText {
     var outputText = ""
-
-    var isCode: Boolean = false
+    var isCode = false
 
     if(text.text.isNotBlank()) {
         isCode = text.text[0].isDigit()
@@ -214,7 +204,6 @@ fun codeTextFilter(text: AnnotatedString): TransformedText {
                 return if (offset <= 1 || !isCode) offset else offset - 1
             }
         }
-
 
     return TransformedText(AnnotatedString(outputText), codeTextOffsetTranslator)
 }

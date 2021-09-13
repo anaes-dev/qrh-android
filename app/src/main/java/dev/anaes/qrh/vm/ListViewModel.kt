@@ -43,11 +43,9 @@ class ListViewModel @Inject constructor(
         val cleanQuery: String = query.replace("\n", "")
 
         val codeQuery: String = when (cleanQuery.length) {
-            0 ->
-                cleanQuery
             1 ->
                 "$cleanQuery-"
-            in 2..5 ->
+            in 2..4 ->
                 if (cleanQuery.subSequence(1,1) == "-") {
                     cleanQuery
                 } else {
@@ -73,32 +71,33 @@ class ListViewModel @Inject constructor(
                 val titleMatches = regex.findAll(item.title).map { it.range }.toList()
                 val codeMatches = codeRegex.findAll(item.code).map { it.range }.toList()
 
+                val titleOutput = AnnotatedString.Builder(item.title)
+                val codeOutput = AnnotatedString.Builder(item.code)
+
                 titleMatches.forEach { match ->
-                    val output = AnnotatedString.Builder(item.title)
-                        .apply {
+                    titleOutput.apply {
                             addStyle(
                                 SpanStyle(background = Color.Red.copy(alpha = 0.5F)),
                                 match.first,
                                 match.last + 1
                             )
                         }
-                        .toAnnotatedString()
-                    item.titleA = output
                 }
+
+                item.titleA = titleOutput.toAnnotatedString()
 
                 codeMatches.forEach { match ->
-                    val output = AnnotatedString.Builder(item.code)
-                        .apply {
+                    codeOutput.apply {
                             addStyle(
                                 SpanStyle(background = Color.Red.copy(alpha = 0.5F)),
                                 match.first,
                                 match.last + 1
                             )
                         }
-                        .toAnnotatedString()
-                    item.codeA = output
+
                 }
 
+                item.codeA = codeOutput.toAnnotatedString()
 
             }
 
