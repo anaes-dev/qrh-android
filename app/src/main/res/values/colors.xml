@@ -1,10 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+<color name="purple_200">#FFBB86FC</color>
+<color name="purple_500">#FF6200EE</color>
+<color name="purple_700">#FF3700B3</color>
+<color name="teal_200">#FF03DAC5</color>
+<color name="teal_700">#FF018786</color>
+<color name="black">#FF000000</color>
+<color name="white">#FFFFFFFF</color>
+
+<color name="colorPrimary">#F44336</color>
+<color name="colorPrimaryDark">#F44336</color>
+<color name="colorAccent">#0096FF</color>
+<color name="windowBackground">#fafafa</color>
+
+<color name="titleTextColorCollapsed">#ffffff</color>
+<color name="titleTextColorExpanded">#ffffff</color>
+
+<color name="cardBG">@color/cardview_light_background</color>
+
+<color name="detailItemOrangeBG">#FBE9E7</color>
+<color name="detailItemOrangeARR">#FFCCBC</color>
+<color name="detailItemOrangeTXT">#BF360C</color>
+
+<color name="detailItemBlueBG">#E3F2FD</color>
+<color name="detailItemBlueARR">#BBDEFB</color>
+<color name="detailItemBlueTXT">#1565C0</color>
+
+<color name="detailItemGreenBG">#E8F5E9</color>
+<color name="detailItemGreenARR">#C8E6C9</color>
+<color name="detailItemGreenTXT">#2E7D32</color>
+
+<color name="detailItemBlackBG">#EDEDED</color>
+<color name="detailItemBlackARR">#D1D1D1</color>
+<color name="detailItemBlackTXT">#000000</color>
+
+<color name="detailItemPurpleBG">#EDE7F6</color>
+<color name="detailItemPurpleARR">#D1C4E9</color>
+<color name="detailItemPurpleTXT">#512DA8</color>
+
+<color name="detailItemRedBG">#FFCDD2</color>
+<color name="detailItemRedTXT">#B71C1C</color>
+
+<color name="searchBackground">#fafafa</color>
+
+<color name="snackbarBackground">#D9000000</color>
+<color name="snackbarText">#ffffff</color>
+
+<color name="launchButtonsTxtDisabled">#555555</color>
+<color name="launchButtonsTxtEnabled">#ffffff</color>
+<color name="launchButtonsBgExit">#eeeeee</color>
+<color name="launchButtonsBgDisabled">#dddddd</color>
+<color name="launchButtonsBgEnabled">#F44336</color>
 </resources>

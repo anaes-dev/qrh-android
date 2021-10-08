@@ -13,10 +13,13 @@ import dev.anaes.qrh.model.ListItem
 import javax.inject.Inject
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.input.TextFieldValue
+import dev.anaes.qrh.data.DetailData
+import dev.anaes.qrh.model.DetailItem
 
 @HiltViewModel
 class ListViewModel @Inject constructor(
-    private val repository: ListData
+    private val repository: ListData,
+    private val detailRepository: DetailData
 ): ViewModel() {
 
     private var unfilteredList: List<ListItem> = listOf()
@@ -29,8 +32,15 @@ class ListViewModel @Inject constructor(
 
     var onList: MutableState<Boolean> = mutableStateOf(true)
 
+    var detailDataObject: MutableState<MutableMap<String, List<DetailItem>>> = mutableStateOf(mutableMapOf())
+
     init {
         unfilteredList = repository.getListData()
+
+        unfilteredList.forEach {
+            detailDataObject.value[it.code] = detailRepository.getDetailData(it.code).items
+        }
+
         filteredList = mutableStateOf(unfilteredList)
         filteredList.value.forEach {
             it.titleA = AnnotatedString(it.title)

@@ -12,13 +12,11 @@ class DetailData @Inject constructor(@ApplicationContext val context: Context) {
 
     private var _guidelines: ArrayList<DetailModel> = ArrayList()
 
-    fun getDetailData(code: String): DetailModel? {
+    fun getDetailData(code: String): DetailModel {
         var data: DetailModel? = null
         if (_parsedGuidelines.contains(code)) {
             val index = _parsedGuidelines[code] as Int
-            index?.let {
-                data = _guidelines[index]
-            }
+            data = _guidelines[index]
         } else {
             val filename = "$code.json"
             data = getFromFile(filename, context)

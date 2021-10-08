@@ -2,7 +2,6 @@ package dev.anaes.qrh
 
 import android.app.Application
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -14,7 +13,6 @@ import androidx.compose.material.icons.filled.Info
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -22,6 +20,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.HiltAndroidApp
+import dev.anaes.qrh.ui.detail.DetailComposable
 import dev.anaes.qrh.ui.list.ListComposable
 import dev.anaes.qrh.ui.theme.QRHTheme
 import dev.anaes.qrh.vm.DetailViewModel
@@ -42,8 +41,6 @@ class Main : ComponentActivity() {
     @ExperimentalFoundationApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        Log.d("test", detailVm.testData?.items?.get(5)?.head.toString())
 
         setContent {
             QRHTheme {
@@ -101,8 +98,8 @@ fun NavComposable(navController: NavHostController, modifier: Modifier = Modifie
         composable(route = "list") {
             ListScreen(navController, listVm)
         }
-        composable(route = "guideline") {
-            DetailScreen(navController)
+        composable(route = "guideline/{code}") {
+            DetailScreen(navController, listVm, it.arguments!!.getString("code")!!)
         }
     }
 }
@@ -115,11 +112,15 @@ fun ListScreen(
     listVm: ListViewModel
 ) {
     ListComposable(listVm) {
-        Log.d("Click:", it)
+        navController.navigate("guideline/$it")
     }
 }
 
 @Composable
-fun DetailScreen(navController: NavController) {
-    Text("Guideline Screen")
+fun DetailScreen(
+    navController: NavController,
+    listVm: ListViewModel,
+    code: String
+) {
+    DetailComposable(listVm, code)
 }
