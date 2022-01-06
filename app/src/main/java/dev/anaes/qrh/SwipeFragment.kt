@@ -66,7 +66,7 @@ class SwipeFragment : Fragment() {
 
         this.context?.let { safeContext ->
             viewPager = binding.swipeViewpager
-            val content = vm.fetchGuideline(code)
+            val content = vm.fetchGuideline(code, safeContext)
             content.removeAll {
                 it.type == 12 || it.type == 11
             }

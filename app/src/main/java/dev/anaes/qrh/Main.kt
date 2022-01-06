@@ -51,6 +51,7 @@ interface MainInt {
     fun openURL(url: String)
     fun progressShow(show: Boolean)
     fun setDarkModeDisabled(disabled: Boolean)
+    fun setExpandingDisabled(disabled: Boolean)
     fun recreateActivity()
     fun collapseBar(collapse: Boolean)
     fun swipeDetail(code: String, title: String, url: String, version: String)
@@ -111,6 +112,12 @@ class Main : AppCompatActivity(), MainInt {
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
             vm.darkDisabled(false)
+        }
+
+        if (sharedPref.getBoolean("expanding_disabled", false)) {
+            vm.expandingDisabled(true)
+        } else {
+            vm.expandingDisabled(false)
         }
 
 
@@ -260,7 +267,7 @@ class Main : AppCompatActivity(), MainInt {
 
     override fun swipeDetail(code: String, title: String, url: String, version: String) {
         val navController = findNavController(R.id.nav_host_fragment)
-        val action = DetailFragmentDirections.LoadNewDetail(code, title, url, version)
+        val action = DetailFragmentDirections.loadNewDetail(code, title, url, version)
         navController.navigateUp()
         navController.navigate(action)
     }
@@ -349,6 +356,23 @@ class Main : AppCompatActivity(), MainInt {
         } else {
             sharedPref.edit()
                 .putBoolean("night_disabled", false)
+                .apply()
+        }
+    }
+
+    override fun setExpandingDisabled(disabled: Boolean) {
+        val sharedPref: SharedPreferences = getSharedPreferences(
+            "dev.anaes.qrh",
+            Context.MODE_PRIVATE
+        )
+
+        if (disabled) {
+            sharedPref.edit()
+                .putBoolean("expanding_disabled", true)
+                .apply()
+        } else {
+            sharedPref.edit()
+                .putBoolean("expanding_disabled", false)
                 .apply()
         }
     }

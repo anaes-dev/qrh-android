@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide
 class CardRecyclerAdapter(
     private var dataSource: ArrayList<DetailContent>,
     private val codePassed: String?,
+    private val expandingDisabled: Boolean,
     private val linkListener: (String) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -194,6 +195,8 @@ class CardRecyclerAdapter(
                 }
             }
 
+
+
             if (detailContent.collapsed) {
                 bodyTxt.visibility = View.GONE
                 subArrow.setImageResource(R.drawable.ic_arrow_down)
@@ -304,15 +307,25 @@ class CardRecyclerAdapter(
         val detailContent: DetailContent = dataSource[position]
 
         //Collapsing box logic
+
+
+
         when (dataSource[position].type) {
             5, 6, 7, 8, 9 -> {
-                holder.itemView.setOnClickListener {
-                    if (detailContent.collapsed) {
-                        detailContent.collapsed = false
-                        notifyItemChanged(position)
-                    } else {
-                        detailContent.collapsed = true
-                        notifyItemChanged(position)
+                if(expandingDisabled) {
+                    detailContent.collapsed = false
+                    holder.itemView.findViewById<ImageView>(R.id.detail_arrow)?.let {
+                        it.visibility = View.GONE
+                    }
+                } else {
+                    holder.itemView.setOnClickListener {
+                        if (detailContent.collapsed) {
+                            detailContent.collapsed = false
+                            notifyItemChanged(position)
+                        } else {
+                            detailContent.collapsed = true
+                            notifyItemChanged(position)
+                        }
                     }
                 }
             }

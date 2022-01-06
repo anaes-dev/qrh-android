@@ -11,7 +11,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private var _darkDisabled: Boolean = false
 
-    var context: Context = application.applicationContext
+    private var _expandingDisabled: Boolean = false
 
     var isStartup: Boolean = true
     var isDarkMode: Boolean = false
@@ -36,9 +36,17 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         _darkDisabled = disabled
     }
 
+    fun checkExpandingDisabled(): Boolean {
+        return _expandingDisabled
+    }
+
+    fun expandingDisabled(disabled: Boolean) {
+        _expandingDisabled = disabled
+    }
 
 
-    private var list: ArrayList<Guideline> = Guideline.getGuidelinesFromFile("guidelines.json", context)
+
+    private var list: ArrayList<Guideline> = Guideline.getGuidelinesFromFile("guidelines.json", application.applicationContext)
 
     fun getGuidelineList(): ArrayList<Guideline> {
         return list
@@ -50,12 +58,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private var _guidelines: ArrayList<ArrayList<DetailContent>> = ArrayList()
 
-    fun fetchGuideline(code: String): ArrayList<DetailContent> {
-        var data = ArrayList<DetailContent>()
+    fun fetchGuideline(code: String, context: Context): ArrayList<DetailContent> {
+        var data: ArrayList<DetailContent>
         if (_parsedGuidelines.contains(code)) {
             val index = _parsedGuidelines[code] as Int
-            index?.let {
-                data = _guidelines[index]
+            index.let {
+                data = _guidelines[it]
             }
         } else {
             val filename = "$code.json"
