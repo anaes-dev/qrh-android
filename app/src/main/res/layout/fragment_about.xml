@@ -37,109 +37,15 @@
                 android:visibility="gone" />
 
 
-            <include
-                android:id="@+id/qrhInfo"
-                layout="@layout/qrh_info"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/androidDark"
+            <TextView
+                android:id="@+id/blurb"
+                style="@style/TextAppearance.MaterialComponents.Body2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="8dp"
-                android:clickable="false"
-                app:cardCornerRadius="4dp"
-                app:cardElevation="2dp"
-                app:contentPadding="8dp">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <ImageView
-                        android:id="@+id/darkLogo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@string/disable_dark_mode"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_baseline_tonality" />
-
-                    <TextView
-                        android:id="@+id/darkTitle"
-                        style="@style/TextAppearance.MaterialComponents.Subtitle1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:text="@string/dark_theme"
-                        android:textColor="?android:attr/textColorSecondary"
-                        app:layout_constraintBottom_toBottomOf="@+id/darkLogo"
-                        app:layout_constraintStart_toEndOf="@+id/darkLogo"
-                        app:layout_constraintTop_toTopOf="@+id/darkLogo" />
-
-                    <TextView
-                        android:id="@+id/darkExplanation"
-                        style="@style/TextAppearance.MaterialComponents.Body2"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:gravity="start"
-                        android:text="@string/dark_explanation"
-                        android:textColor="?android:attr/textColorSecondary"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/darkLogo" />
-
-                    <com.google.android.material.switchmaterial.SwitchMaterial
-                        android:id="@+id/darkDisableSwitch"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/disable_dark_mode"
-                        android:textColor="?android:attr/textColorSecondary"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/darkExplanation"
-                        app:switchPadding="8dp"
-                        app:switchTextAppearance="@style/TextAppearance.MaterialComponents.Body2" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:orientation="horizontal"
-                android:padding="16sp">
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_view_privacy"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:text="@string/privacy"
-                    android:textColor="@android:color/white" />
-
-                <Space
-                    android:layout_width="8dp"
-                    android:layout_height="wrap_content" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_view_disclaimers"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:text="@string/disclaimers"
-                    android:textColor="@android:color/white" />
-            </LinearLayout>
+                android:autoLink="web"
+                android:padding="16dp"
+                android:text="@string/about_1"
+                android:textColor="?android:attr/textColorSecondary" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -222,6 +128,202 @@
                     android:text="@string/arrowhint"
                     android:textColor="?android:attr/textColorSecondary" />
 
+            </LinearLayout>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/androidExpand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
+                android:clickable="false"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="2dp"
+                app:contentPadding="8dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/expandLogo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/disable_dark_mode"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_baseline_open_in_full_24" />
+
+                    <TextView
+                        android:id="@+id/expandTitle"
+                        style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/expanding_toggle"
+                        android:textColor="?android:attr/textColorSecondary"
+                        app:layout_constraintBottom_toBottomOf="@+id/expandLogo"
+                        app:layout_constraintStart_toEndOf="@+id/expandLogo"
+                        app:layout_constraintTop_toTopOf="@+id/expandLogo" />
+
+                    <TextView
+                        android:id="@+id/expandExplanation"
+                        style="@style/TextAppearance.MaterialComponents.Body2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="start"
+                        android:text="@string/expanding_toggle_explanation"
+                        android:textColor="?android:attr/textColorSecondary"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/expandLogo" />
+
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/expandDisableSwitch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/disable_expanding_toggle"
+                        android:textColor="?android:attr/textColorSecondary"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/expandExplanation"
+                        app:switchPadding="8dp"
+                        app:switchTextAppearance="@style/TextAppearance.MaterialComponents.Body2" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/androidDark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
+                android:clickable="false"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="2dp"
+                app:contentPadding="8dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/darkLogo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/disable_dark_mode"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_baseline_tonality" />
+
+                    <TextView
+                        android:id="@+id/darkTitle"
+                        style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/dark_theme"
+                        android:textColor="?android:attr/textColorSecondary"
+                        app:layout_constraintBottom_toBottomOf="@+id/darkLogo"
+                        app:layout_constraintStart_toEndOf="@+id/darkLogo"
+                        app:layout_constraintTop_toTopOf="@+id/darkLogo" />
+
+                    <TextView
+                        android:id="@+id/darkExplanation"
+                        style="@style/TextAppearance.MaterialComponents.Body2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="start"
+                        android:text="@string/dark_explanation"
+                        android:textColor="?android:attr/textColorSecondary"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/darkLogo" />
+
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/darkDisableSwitch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/disable_dark_mode"
+                        android:textColor="?android:attr/textColorSecondary"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/darkExplanation"
+                        app:switchPadding="8dp"
+                        app:switchTextAppearance="@style/TextAppearance.MaterialComponents.Body2" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <ImageView
+                    android:id="@+id/imageViewCC"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start"
+                    android:clickable="true"
+                    android:contentDescription="@string/CCBYNCSA"
+                    android:focusable="true"
+                    android:padding="8dp"
+                    app:srcCompat="@drawable/by_nc_sa" />
+
+                <TextView
+                    style="@android:style/TextAppearance.Material.Small"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autoLink="web"
+                    android:padding="8dp"
+                    android:text="@string/about_2"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:textSize="10sp"
+                    tools:ignore="SmallSp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                android:padding="16sp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_view_privacy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:text="@string/privacy"
+                    android:textColor="@android:color/white" />
+
+                <Space
+                    android:layout_width="8dp"
+                    android:layout_height="wrap_content" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_view_disclaimers"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:text="@string/disclaimers"
+                    android:textColor="@android:color/white" />
             </LinearLayout>
 
             <TextView

@@ -53,7 +53,8 @@ class DetailFragment : Fragment(), PushDetail {
         super.onResume()
         val bcEntry: Int = parentFragmentManager.backStackEntryCount
         vm.setBreadCrumbTitle(args.title, bcEntry)
-        (activity as MainInt).updateBar(title.toString(), code.toString(), version.toString(),
+        (activity as MainInt).updateBar(
+            title, code, version,
             expanded = true,
             hideKeyboard = true,
             opaque = false
@@ -76,13 +77,14 @@ class DetailFragment : Fragment(), PushDetail {
 
         val bcEntry: Int = parentFragmentManager.backStackEntryCount
         vm.setBreadCrumbTitle(args.title, bcEntry)
-        (activity as MainInt).updateBar(title.toString(), code.toString(), version.toString(),
+        (activity as MainInt).updateBar(
+            title, code, version,
             expanded = true,
             hideKeyboard = true,
             opaque = false
         )
 
-        binding.detailCode2.text = code.toString()
+        binding.detailCode2.text = code
 
         when(code) {
             "3-2" -> {
@@ -95,12 +97,9 @@ class DetailFragment : Fragment(), PushDetail {
             }
         }
 
-        val filenameSuffix = ".json"
-        val filename = code + filenameSuffix
-
         this.context?.let { safeContext ->
             val adapter =
-                CardRecyclerAdapter(vm.fetchGuideline(code), code) { url: String ->
+                CardRecyclerAdapter(vm.fetchGuideline(code, safeContext), code, vm.checkExpandingDisabled()) { url: String ->
                     if(url.startsWith("qrh://")) {
                         val codeNew = url.removePrefix("qrh://")
                         (activity as MainInt).progressShow(true)
@@ -182,7 +181,7 @@ class DetailFragment : Fragment(), PushDetail {
     }
 
     override fun navToDetail(code: String, title: String, url: String, version: String) {
-        val action = DetailFragmentDirections.LoadNewDetail(code, title, url, version)
+        val action = DetailFragmentDirections.loadNewDetail(code, title, url, version)
         (activity as MainInt).progressShow(true)
         navController.navigate(action)
     }
@@ -194,7 +193,7 @@ class DetailFragment : Fragment(), PushDetail {
                 return true
             }
             R.id.navigation_swipe -> {
-                val action = DetailFragmentDirections.LoadSwipe(args.code, args.title, args.version)
+                val action = DetailFragmentDirections.loadSwipe(args.code, args.title, args.version)
                 navController.navigate(action)
                 return true
             }

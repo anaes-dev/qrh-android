@@ -174,7 +174,7 @@ class ListFragment : Fragment() {
 
 
     private fun guidelineClicked(guideline: Guideline) {
-        val action = ListFragmentDirections.LoadDetail(
+        val action = ListFragmentDirections.loadDetail(
             guideline.code,
             guideline.title,
             guideline.url,
@@ -194,7 +194,7 @@ class ListFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.navigation_about -> {
-                findNavController().navigate(R.id.LoadAbout)
+                findNavController().navigate(R.id.loadAbout)
                 return true
             }
             else -> super.onOptionsItemSelected(item)

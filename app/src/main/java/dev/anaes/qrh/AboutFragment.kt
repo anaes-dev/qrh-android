@@ -60,7 +60,7 @@ class AboutFragment : Fragment() {
 //    Navigate to disclaimers page
 
         binding.btnViewDisclaimers.setOnClickListener {
-            findNavController().navigate(R.id.LoadDisclaimers)
+            findNavController().navigate(R.id.loadDisclaimers)
         }
 
         //    Navigate to privacy policy
@@ -73,7 +73,7 @@ class AboutFragment : Fragment() {
         //    Navigate to Creative Commons license page
 
 
-        binding.qrhInfo.imageViewCC.setOnClickListener{
+        binding.imageViewCC.setOnClickListener{
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://www.creativecommons.org/licenses/by-nc-sa/4.0/")))
         }
 
@@ -94,10 +94,28 @@ class AboutFragment : Fragment() {
                 vm.darkDisabled(false)
                 (activity as MainInt).setDarkModeDisabled(false)
                 (activity as MainInt).recreateActivity()
-
             }
-
         }
+
+
+        //    Set expanding mode switch based on current state
+
+        binding.expandDisableSwitch.isChecked = vm.checkExpandingDisabled()
+
+        //    Update settings if switch changed
+
+
+        binding.expandDisableSwitch.setOnCheckedChangeListener { _, _ ->
+            if (binding.expandDisableSwitch.isChecked) {
+                vm.expandingDisabled(true)
+                (activity as MainInt).setExpandingDisabled(true)
+            } else {
+                vm.expandingDisabled(false)
+                (activity as MainInt).setExpandingDisabled(false)
+            }
+        }
+
+
 
     }
 

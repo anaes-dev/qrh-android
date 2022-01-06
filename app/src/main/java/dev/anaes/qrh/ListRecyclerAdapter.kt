@@ -62,10 +62,10 @@ class ListRecyclerAdapter(
                     dataSource
                 } else {
                     val resultList = ArrayList<Guideline>()
-                    charSearch = charSearch.toLowerCase(Locale.ROOT)
+                    charSearch = charSearch.lowercase(Locale.ROOT)
                     for (item in dataSource) {
-                        if ((item.code.toLowerCase(Locale.ROOT)+(item.title.toLowerCase(Locale.ROOT))).contains(
-                                charSearch.toLowerCase(
+                        if ((item.code.lowercase(Locale.ROOT) +(item.title.lowercase(Locale.ROOT))).contains(
+                                charSearch.lowercase(
                                     Locale.ROOT
                                 )
                             )) {

@@ -10,14 +10,14 @@
         android:label="QRH"
         tools:layout="@layout/fragment_list">
         <action
-            android:id="@+id/LoadDetail"
+            android:id="@+id/loadDetail"
             app:destination="@id/detailFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
         <action
-            android:id="@+id/LoadAbout"
+            android:id="@+id/loadAbout"
             app:destination="@id/aboutFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
@@ -33,7 +33,7 @@
             android:name="code"
             app:argType="string" />
         <action
-            android:id="@+id/LoadNewDetail"
+            android:id="@+id/loadNewDetail"
             app:destination="@id/detailFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
@@ -49,7 +49,7 @@
             android:name="version"
             app:argType="string" />
         <action
-            android:id="@+id/LoadSwipe"
+            android:id="@+id/loadSwipe"
             app:destination="@id/swipeFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
@@ -62,7 +62,7 @@
         android:label="About"
         tools:layout="@layout/fragment_about">
         <action
-            android:id="@+id/LoadDisclaimers"
+            android:id="@+id/loadDisclaimers"
             app:destination="@id/disclaimersFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
