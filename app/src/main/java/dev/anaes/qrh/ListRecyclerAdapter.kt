@@ -81,6 +81,8 @@ class ListRecyclerAdapter(
             }
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+
+
                 val newList = results?.values as ArrayList<Guideline>
                 updateList(newList)
             }
