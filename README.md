@@ -5,7 +5,7 @@
 <img src="./readme/screenshot4d.png" width="240px">   <img src="./readme/screenshot4e.png" width="240px">   <img src="./readme/screenshot5e.png" width="240px">
 
 ## Features
-- Unofficial derivative of the Association of Anaesthetists Quick Reference Handbook (QRH): www.anaesthetists.org/qrh (CC BY-NC-SA 4.0)
+- Unofficial derivative of the Association of Anaesthetists Quick Reference Handbook (QRH): www.anaesthetists.org/Quick-Reference-Handbook (CC BY-NC-SA 4.0)
 - ***Not endorsed by the Association of Anaesthetists***
 - Rapidly searchable guideline list
 - Simple guideline layout echoing original handbook
