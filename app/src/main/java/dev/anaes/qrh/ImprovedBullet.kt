@@ -35,7 +35,6 @@ class ImprovedBullet(
         first: Boolean,
         layout: Layout?
     ) {
-        val bottom = bottom
         if ((text as Spanned).getSpanStart(this) == start) {
             val style = paint.style
             paint.style = Paint.Style.FILL

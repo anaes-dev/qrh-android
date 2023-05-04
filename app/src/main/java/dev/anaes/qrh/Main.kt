@@ -10,8 +10,6 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import androidx.activity.viewModels
@@ -201,13 +199,14 @@ class Main : AppCompatActivity(), MainInt {
         return true
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         if (findNavController(R.id.nav_host_fragment).currentDestination.toString()
                 .contains("DetailFragment")
         ) {
             progressShow(true)
         }
-        super.onBackPressed()
+        onBackPressedDispatcher.onBackPressed()
     }
 
 
@@ -225,7 +224,7 @@ class Main : AppCompatActivity(), MainInt {
             }
         }
 
-    @Suppress("DEPRECATION")
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 10133) {
