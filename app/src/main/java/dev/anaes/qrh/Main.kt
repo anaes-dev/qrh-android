@@ -101,7 +101,12 @@ class Main : AppCompatActivity(), MainInt {
         }
 
         if (savedInstanceState != null) {
-            vm.breadcrumbTitles = savedInstanceState.getSerializable("breadcrumbs") as HashMap<Int, String>
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                vm.breadcrumbTitles = savedInstanceState.getSerializable("breadcrumbs", HashMap::class.java) as HashMap<Int, String>
+            } else {
+                @Suppress("DEPRECATION")
+                vm.breadcrumbTitles = savedInstanceState.getSerializable("breadcrumbs") as HashMap<Int, String>
+            }
         }
 
         if (sharedPref.getBoolean("night_disabled", false)) {
@@ -225,6 +230,7 @@ class Main : AppCompatActivity(), MainInt {
         }
 
     @Deprecated("Deprecated in Java")
+    @Suppress("DEPRECATION")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 10133) {
