@@ -1,17 +1,19 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: "androidx.navigation.safeargs"
-apply plugin: 'org.jetbrains.kotlin.android'
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'org.jetbrains.kotlin.android'
+    id "androidx.navigation.safeargs"
+}
 
 android {
-    compileSdkVersion 33
+    compileSdkVersion 34
 
     defaultConfig {
         applicationId "dev.anaes.qrh"
         minSdkVersion 21
-        targetSdkVersion 33
-        versionCode 46
-        versionName "2.16"
+        targetSdkVersion 34
+        versionCode 47
+        versionName "2.17"
     }
 
     buildTypes {

@@ -3,7 +3,6 @@ package dev.anaes.qrh
 import android.animation.AnimatorInflater
 import android.content.Context
 import android.content.Intent
-import android.content.IntentSender.SendIntentException
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.graphics.Color
@@ -24,14 +23,6 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.play.core.appupdate.AppUpdateManager
-import com.google.android.play.core.appupdate.AppUpdateManagerFactory
-import com.google.android.play.core.install.InstallState
-import com.google.android.play.core.install.InstallStateUpdatedListener
-import com.google.android.play.core.install.model.AppUpdateType
-import com.google.android.play.core.install.model.InstallStatus
-import com.google.android.play.core.install.model.UpdateAvailability
 import dev.anaes.qrh.databinding.ActivityMainBinding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -56,8 +47,6 @@ interface MainInt {
 }
 
 class Main : AppCompatActivity(), MainInt {
-
-    private lateinit var appUpdateManager: AppUpdateManager
 
     private val vm: MainViewModel by viewModels()
 
@@ -156,36 +145,6 @@ class Main : AppCompatActivity(), MainInt {
                 AnimatorInflater.loadStateListAnimator(this, R.animator.appbar_elevated)
         }
 
-        val currentTime = System.currentTimeMillis()
-        val lastCheckedTime = sharedPref.getLong("update_checked", 0)
-
-        if ((currentTime - lastCheckedTime) > 600000) {
-            appUpdateManager = AppUpdateManagerFactory.create(this)
-            appUpdateManager.registerListener(installStateUpdatedListener)
-
-            appUpdateManager.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
-                if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
-                    && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)
-                ) {
-                    try {
-                        appUpdateManager.startUpdateFlowForResult(
-                            appUpdateInfo,
-                            AppUpdateType.FLEXIBLE,
-                            this,
-                            10133
-                        )
-                    } catch (e: SendIntentException) {
-                        e.printStackTrace()
-                    }
-                } else if (appUpdateInfo.installStatus() == InstallStatus.DOWNLOADED) {
-                    popCompleteUpdate()
-                }
-            }
-            sharedPref.edit()
-                .putLong("update_checked", System.currentTimeMillis())
-                .apply()
-        }
-
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -214,31 +173,6 @@ class Main : AppCompatActivity(), MainInt {
         onBackPressedDispatcher.onBackPressed()
     }
 
-
-    private var installStateUpdatedListener: InstallStateUpdatedListener =
-        object : InstallStateUpdatedListener {
-            override fun onStateUpdate(state: InstallState) {
-                when {
-                    state.installStatus() == InstallStatus.DOWNLOADED -> {
-                        popCompleteUpdate()
-                    }
-                    state.installStatus() == InstallStatus.INSTALLED -> {
-                        appUpdateManager.unregisterListener(this)
-                    }
-                }
-            }
-        }
-
-    @Deprecated("Deprecated in Java")
-    @Suppress("DEPRECATION")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 10133) {
-            if (resultCode != RESULT_OK) {
-                popFailedUpdate()
-            }
-        }
-    }
 
 //
 //    override fun onSaveInstanceState(savedInstanceState: Bundle) {
@@ -327,26 +261,6 @@ class Main : AppCompatActivity(), MainInt {
         }
     }
 
-    private fun popCompleteUpdate() {
-        val snack = Snackbar.make(
-            binding.mainContainer,
-            "Update ready to install",
-            Snackbar.LENGTH_INDEFINITE
-        )
-        snack.setAction("Install") {
-            appUpdateManager.completeUpdate()
-        }
-        snack.show()
-    }
-
-    private fun popFailedUpdate() {
-        val snack = Snackbar.make(
-            binding.mainContainer,
-            "Update failed, please update via Google Play",
-            Snackbar.LENGTH_LONG
-        )
-        snack.show()
-    }
 
     override fun setDarkModeDisabled(disabled: Boolean) {
         val sharedPref: SharedPreferences = getSharedPreferences(
