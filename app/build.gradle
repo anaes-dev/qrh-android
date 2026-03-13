@@ -1,30 +1,32 @@
 plugins {
-    id 'com.android.application'
-    id 'kotlin-android'
-    id 'org.jetbrains.kotlin.android'
-    id "androidx.navigation.safeargs"
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
-    compileSdkVersion 34
+    namespace = "dev.anaes.qrh"
+    compileSdk = 35
 
     defaultConfig {
-        applicationId "dev.anaes.qrh"
-        minSdkVersion 21
-        targetSdkVersion 34
-        versionCode 47
-        versionName "2.17"
+        applicationId = "dev.anaes.qrh"
+        minSdk = 24
+        targetSdk = 35
+        versionCode = 48
+        versionName = "3.0"
     }
 
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            isMinifyEnabled = false
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
 
     buildFeatures {
-        viewBinding true
+        compose = true
+        buildConfig = true
     }
 
     compileOptions {
@@ -32,25 +34,34 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-
-    namespace 'dev.anaes.qrh'
+    kotlinOptions {
+        jvmTarget = "17"
+    }
 }
 
 dependencies {
-    implementation 'androidx.core:core-ktx:1.10.0'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.8.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.4.1'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.4.1'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    implementation 'androidx.preference:preference-ktx:1.2.0'
-    implementation 'com.github.bumptech.glide:glide:4.11.0'
-    implementation 'androidx.recyclerview:recyclerview:1.3.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
-    implementation 'com.google.android.play:core-ktx:1.8.1'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-}
-repositories {
-    mavenCentral()
+    implementation(libs.core.ktx)
+
+    // Compose
+    implementation(platform(libs.compose.bom))
+    implementation(libs.compose.ui)
+    implementation(libs.compose.ui.graphics)
+    implementation(libs.compose.ui.tooling.preview)
+    implementation(libs.compose.material3)
+    implementation(libs.compose.material.icons)
+    implementation(libs.compose.foundation)
+    debugImplementation(libs.compose.ui.tooling)
+
+    // Architecture
+    implementation(libs.activity.compose)
+    implementation(libs.navigation.compose)
+    implementation(libs.lifecycle.viewmodel.compose)
+    implementation(libs.lifecycle.runtime.compose)
+
+    // Data
+    implementation(libs.serialization.json)
+    implementation(libs.datastore.preferences)
+
+    // Image loading
+    implementation(libs.coil.compose)
 }
