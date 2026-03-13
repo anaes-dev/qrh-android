@@ -9,17 +9,19 @@ import android.text.style.UnderlineSpan
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
@@ -39,8 +41,7 @@ private val GUIDELINE_PATTERN = Pattern.compile("[(]?[→][\\s]?[1-4][-][0-9]{1,
 
 /**
  * Renders HTML text with clickable links for guidelines, URLs, and phone numbers.
- * Note: Uses ClickableText which consumes touch events.
- * TODO: Migrate to LinkAnnotation API when stable.
+ * Uses LinkAnnotation API with standard Text composable — only link areas consume touches.
  */
 @Composable
 fun HtmlText(
@@ -53,8 +54,17 @@ fun HtmlText(
     val linkColor = MaterialTheme.colorScheme.secondary
     val textColor = resolveTextColor(style)
 
+    // Use rememberUpdatedState so cached AnnotatedStrings always invoke the latest callbacks
+    val currentOnGuidelineLink = rememberUpdatedState(onGuidelineLink)
+    val currentOnExternalLink = rememberUpdatedState(onExternalLink)
+
     val parsed = remember(html, linkColor, textColor) {
-        parseHtml(html, linkColor)
+        parseHtml(
+            html = html,
+            linkColor = linkColor,
+            onGuidelineLink = { code -> currentOnGuidelineLink.value(code) },
+            onExternalLink = { url -> currentOnExternalLink.value(url) },
+        )
     }
 
     val resolvedStyle = style.copy(color = textColor)
@@ -62,25 +72,25 @@ fun HtmlText(
     if (parsed.bulletItems.isNotEmpty()) {
         Column(modifier = modifier) {
             parsed.preText?.let {
-                ClickableTextBlock(it, resolvedStyle, onGuidelineLink, onExternalLink)
+                Text(text = it, style = resolvedStyle)
             }
             for (bulletItem in parsed.bulletItems) {
                 Row(modifier = Modifier.padding(start = 8.dp, top = 2.dp, bottom = 2.dp)) {
                     Text("\u2022", style = resolvedStyle, modifier = Modifier.padding(end = 8.dp))
-                    ClickableTextBlock(bulletItem, resolvedStyle, onGuidelineLink, onExternalLink, Modifier.weight(1f))
+                    Text(text = bulletItem, style = resolvedStyle, modifier = Modifier.weight(1f))
                 }
             }
             parsed.postText?.let {
-                ClickableTextBlock(it, resolvedStyle, onGuidelineLink, onExternalLink, Modifier.padding(top = 2.dp))
+                Text(text = it, style = resolvedStyle, modifier = Modifier.padding(top = 2.dp))
             }
         }
     } else {
-        ClickableTextBlock(parsed.fullText, resolvedStyle, onGuidelineLink, onExternalLink, modifier)
+        Text(text = parsed.fullText, style = resolvedStyle, modifier = modifier)
     }
 }
 
 /**
- * Non-clickable HTML text. Does not consume touch events,
+ * Non-clickable HTML text. Does not add link annotations,
  * so parent clickable modifiers work properly.
  */
 @Composable
@@ -103,33 +113,6 @@ fun HtmlTextStatic(
 private fun resolveTextColor(style: TextStyle): Color =
     style.color.takeIf { it != Color.Unspecified } ?: LocalContentColor.current
 
-@Composable
-private fun ClickableTextBlock(
-    annotated: AnnotatedString,
-    style: TextStyle,
-    onGuidelineLink: (String) -> Unit,
-    onExternalLink: (String) -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    @Suppress("DEPRECATION")
-    ClickableText(
-        text = annotated,
-        modifier = modifier,
-        style = style,
-        onClick = { offset ->
-            annotated.getStringAnnotations("qrh", offset, offset).firstOrNull()?.let {
-                onGuidelineLink(it.item); return@ClickableText
-            }
-            annotated.getStringAnnotations("url", offset, offset).firstOrNull()?.let {
-                onExternalLink(it.item); return@ClickableText
-            }
-            annotated.getStringAnnotations("phone", offset, offset).firstOrNull()?.let {
-                onExternalLink("tel:${it.item}"); return@ClickableText
-            }
-        }
-    )
-}
-
 // --- Parsing ---
 
 private data class ParsedHtml(
@@ -139,12 +122,19 @@ private data class ParsedHtml(
     val postText: AnnotatedString? = null,
 )
 
-private fun parseHtml(html: String, linkColor: Color): ParsedHtml {
+private fun parseHtml(
+    html: String,
+    linkColor: Color,
+    onGuidelineLink: (String) -> Unit,
+    onExternalLink: (String) -> Unit,
+): ParsedHtml {
     val spanned = Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY)
     val bulletSpans = spanned.getSpans(0, spanned.length, BulletSpan::class.java)
 
     if (bulletSpans.isEmpty()) {
-        return ParsedHtml(fullText = buildAnnotatedFromSpanned(spanned, 0, spanned.length, linkColor))
+        return ParsedHtml(
+            fullText = buildAnnotatedFromSpanned(spanned, 0, spanned.length, linkColor, onGuidelineLink, onExternalLink)
+        )
     }
 
     val raw = spanned.toString()
@@ -156,19 +146,19 @@ private fun parseHtml(html: String, linkColor: Color): ParsedHtml {
     val lastEnd = bulletRanges.last().second
 
     val preText = if (firstStart > 0 && raw.substring(0, firstStart).isNotBlank()) {
-        buildAnnotatedFromSpanned(spanned, 0, firstStart, linkColor)
+        buildAnnotatedFromSpanned(spanned, 0, firstStart, linkColor, onGuidelineLink, onExternalLink)
     } else null
 
     val items = bulletRanges.map { (start, end) ->
-        buildAnnotatedFromSpanned(spanned, start, end, linkColor)
+        buildAnnotatedFromSpanned(spanned, start, end, linkColor, onGuidelineLink, onExternalLink)
     }
 
     val postText = if (lastEnd < raw.length && raw.substring(lastEnd).isNotBlank()) {
-        buildAnnotatedFromSpanned(spanned, lastEnd, raw.length, linkColor)
+        buildAnnotatedFromSpanned(spanned, lastEnd, raw.length, linkColor, onGuidelineLink, onExternalLink)
     } else null
 
     return ParsedHtml(
-        fullText = buildAnnotatedFromSpanned(spanned, 0, spanned.length, linkColor),
+        fullText = buildAnnotatedFromSpanned(spanned, 0, spanned.length, linkColor, onGuidelineLink, onExternalLink),
         bulletItems = items,
         preText = preText,
         postText = postText,
@@ -179,13 +169,17 @@ private fun parseHtml(html: String, linkColor: Color): ParsedHtml {
 
 /**
  * Builds an AnnotatedString from a substring of a Spanned object.
- * @param linkColor If null, URL/link annotations are not added (static mode).
+ * @param linkColor If null, link annotations are not added (static mode).
+ * @param onGuidelineLink Callback for guideline cross-references (only used when linkColor != null).
+ * @param onExternalLink Callback for URLs and phone numbers (only used when linkColor != null).
  */
 private fun buildAnnotatedFromSpanned(
     spanned: Spanned,
     rangeStart: Int,
     rangeEnd: Int,
     linkColor: Color?,
+    onGuidelineLink: ((String) -> Unit)? = null,
+    onExternalLink: ((String) -> Unit)? = null,
 ): AnnotatedString {
     val raw = spanned.toString()
     val text = raw.substring(
@@ -214,16 +208,26 @@ private fun buildAnnotatedFromSpanned(
                 }
                 is UnderlineSpan ->
                     addStyle(SpanStyle(textDecoration = TextDecoration.Underline), start, end)
-                is URLSpan -> if (linkColor != null) {
-                    addStyle(SpanStyle(color = linkColor, textDecoration = TextDecoration.Underline), start, end)
-                    addStringAnnotation("url", span.url, start, end)
+                is URLSpan -> if (linkColor != null && onExternalLink != null) {
+                    val url = span.url
+                    addLink(
+                        LinkAnnotation.Clickable(
+                            tag = "url",
+                            styles = TextLinkStyles(
+                                style = SpanStyle(color = linkColor, textDecoration = TextDecoration.Underline),
+                            ),
+                            linkInteractionListener = { onExternalLink(url) },
+                        ),
+                        start,
+                        end,
+                    )
                 }
             }
         }
 
         // Auto-detect links (only in interactive mode)
-        if (linkColor != null) {
-            addAutoLinks(text, linkColor, spanned, rangeStart)
+        if (linkColor != null && onGuidelineLink != null && onExternalLink != null) {
+            addAutoLinks(text, linkColor, spanned, rangeStart, onGuidelineLink, onExternalLink)
         }
     }
 }
@@ -233,6 +237,8 @@ private fun AnnotatedString.Builder.addAutoLinks(
     linkColor: Color,
     spanned: Spanned,
     baseOffset: Int,
+    onGuidelineLink: (String) -> Unit,
+    onExternalLink: (String) -> Unit,
 ) {
     val annotatedRanges = mutableListOf<IntRange>()
 
@@ -248,11 +254,25 @@ private fun AnnotatedString.Builder.addAutoLinks(
     while (guidelineMatcher.find()) {
         val start = guidelineMatcher.start()
         val end = guidelineMatcher.end()
+        if (isAnnotated(start)) continue
         val matchText = text.substring(start, end)
-        val code = matchText.replace("→ ", "").replace("→", "")
+        val code = matchText.replace("\u2192 ", "").replace("\u2192", "")
             .replace("(", "").replace(")", "").trim()
-        addStyle(SpanStyle(color = linkColor, fontWeight = FontWeight.Bold, textDecoration = TextDecoration.Underline), start, end)
-        addStringAnnotation("qrh", code, start, end)
+        addLink(
+            LinkAnnotation.Clickable(
+                tag = "qrh",
+                styles = TextLinkStyles(
+                    style = SpanStyle(
+                        color = linkColor,
+                        fontWeight = FontWeight.Bold,
+                        textDecoration = TextDecoration.Underline,
+                    ),
+                ),
+                linkInteractionListener = { onGuidelineLink(code) },
+            ),
+            start,
+            end,
+        )
         annotatedRanges.add(start..end)
     }
 
@@ -263,8 +283,17 @@ private fun AnnotatedString.Builder.addAutoLinks(
         if (isAnnotated(start)) continue
         val url = text.substring(start, end)
         val fullUrl = if (url.startsWith("http")) url else "http://$url"
-        addStyle(SpanStyle(color = linkColor, textDecoration = TextDecoration.Underline), start, end)
-        addStringAnnotation("url", fullUrl, start, end)
+        addLink(
+            LinkAnnotation.Clickable(
+                tag = "url",
+                styles = TextLinkStyles(
+                    style = SpanStyle(color = linkColor, textDecoration = TextDecoration.Underline),
+                ),
+                linkInteractionListener = { onExternalLink(fullUrl) },
+            ),
+            start,
+            end,
+        )
         annotatedRanges.add(start..end)
     }
 
@@ -274,7 +303,16 @@ private fun AnnotatedString.Builder.addAutoLinks(
         val end = phoneMatcher.end()
         if (isAnnotated(start)) continue
         val phone = text.substring(start, end)
-        addStyle(SpanStyle(color = linkColor, textDecoration = TextDecoration.Underline), start, end)
-        addStringAnnotation("phone", phone, start, end)
+        addLink(
+            LinkAnnotation.Clickable(
+                tag = "phone",
+                styles = TextLinkStyles(
+                    style = SpanStyle(color = linkColor, textDecoration = TextDecoration.Underline),
+                ),
+                linkInteractionListener = { onExternalLink("tel:$phone") },
+            ),
+            start,
+            end,
+        )
     }
 }
