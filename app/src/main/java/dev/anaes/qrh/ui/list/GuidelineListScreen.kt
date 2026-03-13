@@ -165,6 +165,19 @@ private fun GuidelineListItem(
 ) {
     val highlightColor = MaterialTheme.colorScheme.secondary
 
+    val annotatedSnippet = remember(searchResult) {
+        val snippet = searchResult?.snippet ?: return@remember null
+        buildAnnotatedString {
+            val start = searchResult.matchStart.coerceIn(0, snippet.length)
+            val end = searchResult.matchEnd.coerceIn(start, snippet.length)
+            append(snippet.substring(0, start))
+            withStyle(SpanStyle(fontWeight = FontWeight.Bold, color = highlightColor)) {
+                append(snippet.substring(start, end))
+            }
+            append(snippet.substring(end))
+        }
+    }
+
     ListItem(
         headlineContent = {
             Text(
@@ -174,19 +187,8 @@ private fun GuidelineListItem(
             )
         },
         overlineContent = { Text(guideline.code) },
-        supportingContent = if (searchResult?.snippet != null) {
+        supportingContent = if (annotatedSnippet != null) {
             {
-                val annotatedSnippet = buildAnnotatedString {
-                    val snippet = searchResult.snippet
-                    val start = searchResult.matchStart.coerceIn(0, snippet.length)
-                    val end = searchResult.matchEnd.coerceIn(start, snippet.length)
-
-                    append(snippet.substring(0, start))
-                    withStyle(SpanStyle(fontWeight = FontWeight.Bold, color = highlightColor)) {
-                        append(snippet.substring(start, end))
-                    }
-                    append(snippet.substring(end))
-                }
                 Text(
                     text = annotatedSnippet,
                     fontSize = 12.sp,

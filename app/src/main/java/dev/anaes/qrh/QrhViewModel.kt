@@ -36,15 +36,21 @@ class QrhViewModel(
 
     private var searchJob: Job? = null
 
-    // Pre-compute plain text content for each guideline for search
-    private val guidelineTextCache: Map<String, String> by lazy {
+    // Pre-compute plain text and lowercased versions for search
+    private val guidelineTextCache: Map<String, Pair<String, String>> by lazy {
         guidelines.associate { guideline ->
-            guideline.code to guideline.content.joinToString(" ") { item ->
+            val text = guideline.content.joinToString(" ") { item ->
                 val headText = if (item.head.isNotBlank()) stripHtml(item.head) else ""
                 val bodyText = if (item.body.isNotBlank()) stripHtml(item.body) else ""
                 "$headText $bodyText"
-            }.replace("\\s+".toRegex(), " ").trim()
+            }.replace(WHITESPACE_REGEX, " ").trim()
+            guideline.code to (text to text.lowercase())
         }
+    }
+
+    // Pre-compute lowercased title strings
+    private val guidelineTitleCache: Map<String, String> by lazy {
+        guidelines.associate { it.code to "${it.code} ${it.title}".lowercase() }
     }
 
     fun onSearchQueryChange(query: String) {
@@ -75,16 +81,13 @@ class QrhViewModel(
         val results = mutableListOf<SearchResult>()
 
         for (guideline in guidelines) {
-            val titleMatch = "${guideline.code} ${guideline.title}".lowercase()
+            val titleMatch = guidelineTitleCache[guideline.code] ?: ""
             if (titleMatch.contains(lowerQuery)) {
-                // Title/code match — no snippet needed
                 results.add(SearchResult(guideline))
                 continue
             }
 
-            // Search content
-            val fullText = guidelineTextCache[guideline.code] ?: continue
-            val lowerText = fullText.lowercase()
+            val (fullText, lowerText) = guidelineTextCache[guideline.code] ?: continue
             val matchIndex = lowerText.indexOf(lowerQuery)
             if (matchIndex >= 0) {
                 val snippet = extractSnippet(fullText, matchIndex, lowerQuery.length)
@@ -111,7 +114,6 @@ class QrhViewModel(
         val snippetStart = (matchIndex - contextChars).coerceAtLeast(0)
         val snippetEnd = (matchIndex + matchLength + contextChars).coerceAtMost(text.length)
 
-        // Adjust to word boundaries
         val adjustedStart = if (snippetStart > 0) {
             val spaceIndex = text.indexOf(' ', snippetStart)
             if (spaceIndex in snippetStart until matchIndex) spaceIndex + 1 else snippetStart
@@ -135,6 +137,8 @@ class QrhViewModel(
     fun getGuideline(code: String): Guideline? = repository.getGuideline(code)
 
     companion object {
+        private val WHITESPACE_REGEX = "\\s+".toRegex()
+
         private fun stripHtml(html: String): String {
             return Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY).toString().trim()
         }

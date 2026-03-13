@@ -27,6 +27,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -43,6 +44,8 @@ import dev.anaes.qrh.ui.components.HtmlText
 import dev.anaes.qrh.ui.components.HtmlTextStatic
 import dev.anaes.qrh.ui.theme.BoxColors
 import dev.anaes.qrh.ui.theme.LocalIsDarkTheme
+import dev.anaes.qrh.ui.theme.SubtleCardBgDark
+import dev.anaes.qrh.ui.theme.SubtleCardBgLight
 import dev.anaes.qrh.ui.theme.RedBgDark
 import dev.anaes.qrh.ui.theme.RedBgLight
 import dev.anaes.qrh.ui.theme.RedTxtDark
@@ -110,7 +113,7 @@ private fun SubtleCard(
             .fillMaxWidth()
             .padding(horizontal = 12.dp, vertical = 4.dp),
         colors = CardDefaults.cardColors(
-            containerColor = if (isDark) Color(0xFF1E1E1E) else Color(0xFFF5F5F5),
+            containerColor = if (isDark) SubtleCardBgDark else SubtleCardBgLight,
         ),
         shape = RoundedCornerShape(8.dp),
     ) {
