@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import dev.anaes.qrh.model.ContentItem
 import dev.anaes.qrh.ui.components.HtmlText
+import dev.anaes.qrh.ui.components.HtmlTextStatic
 import dev.anaes.qrh.ui.theme.BoxColors
 import dev.anaes.qrh.ui.theme.LocalIsDarkTheme
 import dev.anaes.qrh.ui.theme.RedBgDark
@@ -148,19 +149,21 @@ private fun StartMarker(
     modifier: Modifier = Modifier,
 ) {
     val isDark = LocalIsDarkTheme.current
+    val bgColor = if (isDark) Color.White else Color.Black
+    val fgColor = if (isDark) Color.Black else Color.White
     Box(
         modifier = modifier
             .padding(horizontal = 12.dp, vertical = 4.dp)
             .clip(RoundedCornerShape(4.dp))
-            .background(if (isDark) Color.White else Color.Black)
+            .background(bgColor)
             .padding(horizontal = 12.dp, vertical = 6.dp),
     ) {
-        HtmlText(
+        HtmlTextStatic(
             html = item.body,
             style = TextStyle(
                 fontWeight = FontWeight.Bold,
                 fontSize = 16.sp,
-                color = if (isDark) Color.Black else Color.White,
+                color = fgColor,
             ),
         )
     }
@@ -243,17 +246,18 @@ private fun CollapsibleBoxItem(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(start = 24.dp, end = 12.dp, top = 4.dp, bottom = 4.dp),
+            .padding(start = 36.dp, end = 12.dp, top = 4.dp, bottom = 4.dp),
         colors = CardDefaults.cardColors(containerColor = colors.background),
     ) {
+        // Header row — uses HtmlTextStatic so it doesn't consume clicks
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .then(if (showArrow) Modifier.clickable { onToggle() } else Modifier)
+                .then(if (showArrow) Modifier.clickable(onClick = onToggle) else Modifier)
                 .padding(start = 12.dp, end = 4.dp, top = 8.dp, bottom = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            HtmlText(
+            HtmlTextStatic(
                 html = item.head,
                 style = TextStyle(
                     color = colors.text,
