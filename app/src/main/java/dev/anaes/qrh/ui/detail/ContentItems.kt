@@ -1,7 +1,12 @@
 package dev.anaes.qrh.ui.detail
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -16,7 +21,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -27,6 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -242,6 +247,14 @@ private fun CollapsibleBoxItem(
 ) {
     val isDark = LocalIsDarkTheme.current
     val colors = BoxColors.forType(item.type, isDark)
+    val arrowRotation by animateFloatAsState(
+        targetValue = if (isCollapsed) 0f else 180f,
+        animationSpec = spring(
+            dampingRatio = Spring.DampingRatioMediumBouncy,
+            stiffness = Spring.StiffnessMedium,
+        ),
+        label = "arrowRotation",
+    )
 
     Card(
         modifier = modifier
@@ -276,18 +289,25 @@ private fun CollapsibleBoxItem(
                     contentAlignment = Alignment.Center,
                 ) {
                     Icon(
-                        imageVector = if (isCollapsed) Icons.Filled.KeyboardArrowDown
-                            else Icons.Filled.KeyboardArrowUp,
+                        imageVector = Icons.Filled.KeyboardArrowDown,
                         contentDescription = if (isCollapsed) "Expand" else "Collapse",
                         tint = colors.text,
+                        modifier = Modifier.graphicsLayer { rotationZ = arrowRotation },
                     )
                 }
             }
         }
         AnimatedVisibility(
             visible = !isCollapsed,
-            enter = expandVertically(),
-            exit = shrinkVertically(),
+            enter = expandVertically(
+                animationSpec = spring(
+                    dampingRatio = Spring.DampingRatioLowBouncy,
+                    stiffness = Spring.StiffnessMediumLow,
+                )
+            ) + fadeIn(spring(stiffness = Spring.StiffnessMediumLow)),
+            exit = shrinkVertically(
+                animationSpec = spring(stiffness = Spring.StiffnessMedium)
+            ) + fadeOut(spring(stiffness = Spring.StiffnessMedium)),
         ) {
             HtmlText(
                 html = item.body,
