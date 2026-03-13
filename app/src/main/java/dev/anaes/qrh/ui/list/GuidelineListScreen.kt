@@ -35,11 +35,16 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.anaes.qrh.QrhViewModel
 import dev.anaes.qrh.R
+import dev.anaes.qrh.SearchResult
 import dev.anaes.qrh.model.Guideline
 import kotlinx.coroutines.flow.filter
 
@@ -53,6 +58,8 @@ fun GuidelineListScreen(
     val snackbarHostState = remember { SnackbarHostState() }
     val listState = rememberLazyListState()
     val filtered = viewModel.filteredGuidelines
+    val searchResults = viewModel.searchResults
+    val hasQuery = viewModel.searchQuery.isNotBlank()
 
     // Startup snackbar
     LaunchedEffect(viewModel.isStartup) {
@@ -74,6 +81,11 @@ fun GuidelineListScreen(
         snapshotFlow { listState.firstVisibleItemScrollOffset }
             .filter { it > 10 }
             .collect { snackbarHostState.currentSnackbarData?.dismiss() }
+    }
+
+    // Build a lookup map for snippets when searching
+    val snippetMap = remember(searchResults) {
+        searchResults.associateBy { it.guideline.code }
     }
 
     Scaffold(
@@ -117,26 +129,12 @@ fun GuidelineListScreen(
                         items = filtered,
                         key = { it.code }
                     ) { guideline ->
-                        ListItem(
-                            headlineContent = {
-                                Text(
-                                    guideline.title,
-                                    maxLines = 2,
-                                    overflow = TextOverflow.Ellipsis,
-                                )
-                            },
-                            overlineContent = { Text(guideline.code) },
-                            trailingContent = {
-                                Text(
-                                    "v.${guideline.version}",
-                                    fontSize = 12.sp,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                )
-                            },
-                            modifier = Modifier
-                                .animateItem()
-                                .clickable { onGuidelineClick(guideline) },
-                            tonalElevation = 0.dp,
+                        val result = if (hasQuery) snippetMap[guideline.code] else null
+                        GuidelineListItem(
+                            guideline = guideline,
+                            searchResult = result,
+                            onClick = { onGuidelineClick(guideline) },
+                            modifier = Modifier.animateItem(),
                         )
                     }
                 }
@@ -156,4 +154,56 @@ fun GuidelineListScreen(
             }
         }
     }
+}
+
+@Composable
+private fun GuidelineListItem(
+    guideline: Guideline,
+    searchResult: SearchResult?,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val highlightColor = MaterialTheme.colorScheme.secondary
+
+    ListItem(
+        headlineContent = {
+            Text(
+                guideline.title,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+            )
+        },
+        overlineContent = { Text(guideline.code) },
+        supportingContent = if (searchResult?.snippet != null) {
+            {
+                val annotatedSnippet = buildAnnotatedString {
+                    val snippet = searchResult.snippet
+                    val start = searchResult.matchStart.coerceIn(0, snippet.length)
+                    val end = searchResult.matchEnd.coerceIn(start, snippet.length)
+
+                    append(snippet.substring(0, start))
+                    withStyle(SpanStyle(fontWeight = FontWeight.Bold, color = highlightColor)) {
+                        append(snippet.substring(start, end))
+                    }
+                    append(snippet.substring(end))
+                }
+                Text(
+                    text = annotatedSnippet,
+                    fontSize = 12.sp,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+        } else null,
+        trailingContent = {
+            Text(
+                "v.${guideline.version}",
+                fontSize = 12.sp,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        },
+        modifier = modifier.clickable(onClick = onClick),
+        tonalElevation = 0.dp,
+    )
 }

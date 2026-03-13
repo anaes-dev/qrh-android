@@ -1,12 +1,8 @@
 package dev.anaes.qrh.ui.components
 
-import android.os.Build
 import android.text.Html
-import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.BulletSpan
-import android.text.style.ForegroundColorSpan
-import android.text.style.RelativeSizeSpan
 import android.text.style.StyleSpan
 import android.text.style.URLSpan
 import android.text.style.UnderlineSpan
@@ -72,13 +68,60 @@ fun HtmlText(
     )
 }
 
+/**
+ * Pre-processes Android Spanned text to insert bullet characters for BulletSpans,
+ * since toString() strips them. Returns the processed text and an offset map
+ * so that original span positions can be adjusted.
+ */
+private fun insertBulletCharacters(spanned: Spanned): Pair<String, (Int) -> Int> {
+    val raw = spanned.toString()
+    val bulletSpans = spanned.getSpans(0, spanned.length, BulletSpan::class.java)
+
+    if (bulletSpans.isEmpty()) {
+        return raw.trimEnd() to { pos: Int -> pos }
+    }
+
+    // Collect insertion points (start of each bullet span)
+    val insertions = bulletSpans.map { span ->
+        spanned.getSpanStart(span)
+    }.sorted().distinct()
+
+    val bullet = "  \u2022  " // bullet with indent
+    val sb = StringBuilder()
+    var lastIndex = 0
+    // Map from original position to new position offset
+    val offsets = mutableListOf<Pair<Int, Int>>() // (originalPos, addedChars)
+    var totalAdded = 0
+
+    for (insertPos in insertions) {
+        sb.append(raw, lastIndex, insertPos)
+        sb.append(bullet)
+        totalAdded += bullet.length
+        offsets.add(insertPos to totalAdded)
+        lastIndex = insertPos
+    }
+    sb.append(raw, lastIndex, raw.length)
+
+    val result = sb.toString().trimEnd()
+
+    val mapper: (Int) -> Int = { originalPos ->
+        var added = 0
+        for ((pos, total) in offsets) {
+            if (originalPos >= pos) added = total else break
+        }
+        (originalPos + added).coerceAtMost(result.length)
+    }
+
+    return result to mapper
+}
+
 private fun buildHtmlAnnotatedString(
     html: String,
     linkColor: Color,
     textColor: Color,
 ): AnnotatedString {
     val spanned = Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY)
-    val text = spanned.toString().trimEnd()
+    val (text, mapPos) = insertBulletCharacters(spanned)
 
     return buildAnnotatedString {
         append(text)
@@ -86,8 +129,8 @@ private fun buildHtmlAnnotatedString(
         // Convert Android spans to Compose SpanStyles
         if (spanned is Spanned) {
             for (span in spanned.getSpans(0, spanned.length, Any::class.java)) {
-                val start = spanned.getSpanStart(span).coerceAtMost(text.length)
-                val end = spanned.getSpanEnd(span).coerceAtMost(text.length)
+                val start = mapPos(spanned.getSpanStart(span)).coerceAtMost(text.length)
+                val end = mapPos(spanned.getSpanEnd(span)).coerceAtMost(text.length)
                 if (start >= end) continue
 
                 when (span) {
@@ -114,16 +157,8 @@ private fun buildHtmlAnnotatedString(
                         )
                         addStringAnnotation("url", url, start, end)
                     }
-                    is BulletSpan -> {
-                        // Bullet points — prefix with bullet character
-                        // The HTML parser creates BulletSpan for <li> elements
-                    }
                 }
             }
-
-            // Handle bullet spans: find lines that were list items and prefix with bullet
-            val bulletSpans = spanned.getSpans(0, spanned.length, BulletSpan::class.java)
-            // Bullets are already in the text from HTML parsing, just style them
         }
 
         // Auto-detect guideline cross-references: → X-YY patterns
@@ -153,8 +188,8 @@ private fun buildHtmlAnnotatedString(
         // Collect ranges from URL spans added from HTML <a> tags
         if (spanned is Spanned) {
             for (span in spanned.getSpans(0, spanned.length, URLSpan::class.java)) {
-                val s = spanned.getSpanStart(span).coerceAtMost(text.length)
-                val e = spanned.getSpanEnd(span).coerceAtMost(text.length)
+                val s = mapPos(spanned.getSpanStart(span)).coerceAtMost(text.length)
+                val e = mapPos(spanned.getSpanEnd(span)).coerceAtMost(text.length)
                 if (s < e) annotatedRanges.add(s..e)
             }
         }
@@ -167,7 +202,6 @@ private fun buildHtmlAnnotatedString(
         while (urlMatcher.find()) {
             val start = urlMatcher.start()
             val end = urlMatcher.end()
-            // Skip if already annotated (from <a href> or guideline)
             if (isAlreadyAnnotated(start)) continue
             val url = text.substring(start, end)
             val fullUrl = if (url.startsWith("http")) url else "http://$url"

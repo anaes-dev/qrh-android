@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
@@ -75,19 +76,39 @@ fun ContentItemView(
 @Composable
 private fun StepCircle(step: String) {
     if (step.isBlank()) return
+    val isDark = LocalIsDarkTheme.current
     Box(
         modifier = Modifier
             .size(28.dp)
             .clip(CircleShape)
-            .background(MaterialTheme.colorScheme.primary),
+            .background(if (isDark) Color.White else Color.Black),
         contentAlignment = Alignment.Center,
     ) {
         Text(
             text = step,
-            color = Color.White,
+            color = if (isDark) Color.Black else Color.White,
             fontSize = 14.sp,
             fontWeight = FontWeight.Bold,
         )
+    }
+}
+
+@Composable
+private fun SubtleCard(
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit,
+) {
+    val isDark = LocalIsDarkTheme.current
+    Card(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 12.dp, vertical = 4.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = if (isDark) Color(0xFF1E1E1E) else Color(0xFFF5F5F5),
+        ),
+        shape = RoundedCornerShape(8.dp),
+    ) {
+        content()
     }
 }
 
@@ -98,52 +119,8 @@ private fun PreambleItem(
     onExternalLink: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Column(modifier = modifier.padding(horizontal = 16.dp, vertical = 4.dp)) {
-        if (item.head.isNotBlank()) {
-            HtmlText(
-                html = item.head,
-                style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 15.sp, lineHeight = 20.sp),
-                onGuidelineLink = onGuidelineLink,
-                onExternalLink = onExternalLink,
-            )
-        }
-        if (item.body.isNotBlank()) {
-            HtmlText(
-                html = item.body,
-                style = TextStyle(fontSize = 15.sp, lineHeight = 20.sp),
-                onGuidelineLink = onGuidelineLink,
-                onExternalLink = onExternalLink,
-                modifier = Modifier.padding(top = 4.dp),
-            )
-        }
-    }
-}
-
-@Composable
-private fun StartMarker(
-    item: ContentItem,
-    modifier: Modifier = Modifier,
-) {
-    HtmlText(
-        html = item.body,
-        style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 16.sp),
-        modifier = modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-    )
-}
-
-@Composable
-private fun StandardStepItem(
-    item: ContentItem,
-    onGuidelineLink: (String) -> Unit,
-    onExternalLink: (String) -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    Row(
-        modifier = modifier.padding(horizontal = 16.dp, vertical = 6.dp),
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
-    ) {
-        StepCircle(item.step)
-        Column(modifier = Modifier.weight(1f)) {
+    SubtleCard(modifier = modifier) {
+        Column(modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)) {
             if (item.head.isNotBlank()) {
                 HtmlText(
                     html = item.head,
@@ -158,8 +135,68 @@ private fun StandardStepItem(
                     style = TextStyle(fontSize = 15.sp, lineHeight = 20.sp),
                     onGuidelineLink = onGuidelineLink,
                     onExternalLink = onExternalLink,
-                    modifier = Modifier.padding(top = 2.dp),
+                    modifier = Modifier.padding(top = 4.dp),
                 )
+            }
+        }
+    }
+}
+
+@Composable
+private fun StartMarker(
+    item: ContentItem,
+    modifier: Modifier = Modifier,
+) {
+    val isDark = LocalIsDarkTheme.current
+    Box(
+        modifier = modifier
+            .padding(horizontal = 12.dp, vertical = 4.dp)
+            .clip(RoundedCornerShape(4.dp))
+            .background(if (isDark) Color.White else Color.Black)
+            .padding(horizontal = 12.dp, vertical = 6.dp),
+    ) {
+        HtmlText(
+            html = item.body,
+            style = TextStyle(
+                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp,
+                color = if (isDark) Color.Black else Color.White,
+            ),
+        )
+    }
+}
+
+@Composable
+private fun StandardStepItem(
+    item: ContentItem,
+    onGuidelineLink: (String) -> Unit,
+    onExternalLink: (String) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    SubtleCard(modifier = modifier) {
+        Row(
+            modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
+            StepCircle(item.step)
+            Column(modifier = Modifier.weight(1f)) {
+                if (item.head.isNotBlank()) {
+                    HtmlText(
+                        html = item.head,
+                        style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 15.sp, lineHeight = 20.sp),
+                        onGuidelineLink = onGuidelineLink,
+                        onExternalLink = onExternalLink,
+                    )
+                }
+                if (item.body.isNotBlank()) {
+                    HtmlText(
+                        html = item.body,
+                        style = TextStyle(fontSize = 15.sp, lineHeight = 20.sp),
+                        onGuidelineLink = onGuidelineLink,
+                        onExternalLink = onExternalLink,
+                        modifier = Modifier.padding(top = 2.dp),
+                    )
+                }
             }
         }
     }
@@ -172,19 +209,21 @@ private fun OneLineStepItem(
     onExternalLink: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Row(
-        modifier = modifier.padding(horizontal = 16.dp, vertical = 6.dp),
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        StepCircle(item.step)
-        HtmlText(
-            html = item.body,
-            style = TextStyle(fontSize = 15.sp, lineHeight = 20.sp),
-            onGuidelineLink = onGuidelineLink,
-            onExternalLink = onExternalLink,
-            modifier = Modifier.weight(1f),
-        )
+    SubtleCard(modifier = modifier) {
+        Row(
+            modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            StepCircle(item.step)
+            HtmlText(
+                html = item.body,
+                style = TextStyle(fontSize = 15.sp, lineHeight = 20.sp),
+                onGuidelineLink = onGuidelineLink,
+                onExternalLink = onExternalLink,
+                modifier = Modifier.weight(1f),
+            )
+        }
     }
 }
 
@@ -204,13 +243,13 @@ private fun CollapsibleBoxItem(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 12.dp, vertical = 4.dp)
-            .then(if (showArrow) Modifier.clickable { onToggle() } else Modifier),
+            .padding(start = 24.dp, end = 12.dp, top = 4.dp, bottom = 4.dp),
         colors = CardDefaults.cardColors(containerColor = colors.background),
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
+                .then(if (showArrow) Modifier.clickable { onToggle() } else Modifier)
                 .padding(start = 12.dp, end = 4.dp, top = 8.dp, bottom = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {

@@ -2,6 +2,9 @@ package dev.anaes.qrh.ui.swipe
 
 import android.content.Intent
 import android.net.Uri
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -16,6 +19,7 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -51,10 +55,12 @@ import dev.anaes.qrh.ui.theme.BoxColors
 import dev.anaes.qrh.ui.theme.LocalIsDarkTheme
 import kotlin.math.abs
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
 @Composable
 fun SwipeViewScreen(
     guideline: Guideline,
+    sharedTransitionScope: SharedTransitionScope,
+    animatedVisibilityScope: AnimatedVisibilityScope,
     onNavigateBack: () -> Unit,
     onGuidelineLink: (code: String) -> Unit,
 ) {
@@ -68,9 +74,16 @@ fun SwipeViewScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Column {
-                        Text(guideline.title, fontSize = 14.sp, maxLines = 1)
-                        Text(guideline.code, fontSize = 12.sp, color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.7f))
+                    with(sharedTransitionScope) {
+                        Column(
+                            modifier = Modifier.sharedBounds(
+                                rememberSharedContentState(key = "title-${guideline.code}"),
+                                animatedVisibilityScope = animatedVisibilityScope,
+                            )
+                        ) {
+                            Text(guideline.title, fontSize = 14.sp, maxLines = 1)
+                            Text(guideline.code, fontSize = 12.sp, color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.7f))
+                        }
                     }
                 },
                 navigationIcon = {
@@ -181,18 +194,19 @@ private fun SwipeBoxPage(
                 modifier = Modifier
                     .fillMaxSize()
                     .verticalScroll(rememberScrollState())
-                    .padding(20.dp),
+                    .padding(24.dp),
             ) {
                 Text(
                     text = item.head,
                     color = colors.text,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 18.sp,
-                    modifier = Modifier.padding(bottom = 12.dp),
+                    fontSize = 22.sp,
+                    lineHeight = 28.sp,
+                    modifier = Modifier.padding(bottom = 16.dp),
                 )
                 HtmlText(
                     html = item.body,
-                    style = TextStyle(fontSize = 15.sp, lineHeight = 22.sp),
+                    style = TextStyle(fontSize = 18.sp, lineHeight = 26.sp),
                     onGuidelineLink = onGuidelineLink,
                     onExternalLink = onExternalLink,
                 )
@@ -244,7 +258,8 @@ private fun SwipeImagePage(item: ContentItem) {
                 text = item.head,
                 color = Color.Black,
                 fontWeight = FontWeight.Bold,
-                fontSize = 18.sp,
+                fontSize = 22.sp,
+                lineHeight = 28.sp,
                 modifier = Modifier.padding(bottom = 12.dp),
             )
             AsyncImage(
@@ -263,6 +278,8 @@ private fun SwipeStandardPage(
     onGuidelineLink: (String) -> Unit,
     onExternalLink: (String) -> Unit,
 ) {
+    val isDark = LocalIsDarkTheme.current
+
     Card(
         modifier = Modifier.fillMaxSize(),
     ) {
@@ -270,33 +287,64 @@ private fun SwipeStandardPage(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .padding(20.dp),
+                .padding(24.dp),
         ) {
             if (item.step.isNotBlank()) {
-                Text(
-                    text = item.step,
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.padding(bottom = 8.dp),
-                )
+                // Large step number in a circle
+                Box(
+                    modifier = Modifier
+                        .size(48.dp)
+                        .clip(CircleShape)
+                        .background(if (isDark) Color.White else Color.Black),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Text(
+                        text = item.step,
+                        fontSize = 22.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = if (isDark) Color.Black else Color.White,
+                    )
+                }
+                Box(modifier = Modifier.height(12.dp))
             }
-            if (item.head.isNotBlank()) {
-                HtmlText(
-                    html = item.head,
-                    style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 16.sp, lineHeight = 22.sp),
-                    onGuidelineLink = onGuidelineLink,
-                    onExternalLink = onExternalLink,
-                    modifier = Modifier.padding(bottom = 8.dp),
-                )
-            }
-            if (item.body.isNotBlank()) {
-                HtmlText(
-                    html = item.body,
-                    style = TextStyle(fontSize = 15.sp, lineHeight = 22.sp),
-                    onGuidelineLink = onGuidelineLink,
-                    onExternalLink = onExternalLink,
-                )
+            if (item.type == 2) {
+                // START marker in card view
+                Box(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(4.dp))
+                        .background(if (isDark) Color.White else Color.Black)
+                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                ) {
+                    HtmlText(
+                        html = item.body,
+                        style = TextStyle(
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 20.sp,
+                            lineHeight = 26.sp,
+                            color = if (isDark) Color.Black else Color.White,
+                        ),
+                        onGuidelineLink = onGuidelineLink,
+                        onExternalLink = onExternalLink,
+                    )
+                }
+            } else {
+                if (item.head.isNotBlank()) {
+                    HtmlText(
+                        html = item.head,
+                        style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 20.sp, lineHeight = 26.sp),
+                        onGuidelineLink = onGuidelineLink,
+                        onExternalLink = onExternalLink,
+                        modifier = Modifier.padding(bottom = 12.dp),
+                    )
+                }
+                if (item.body.isNotBlank()) {
+                    HtmlText(
+                        html = item.body,
+                        style = TextStyle(fontSize = 18.sp, lineHeight = 26.sp),
+                        onGuidelineLink = onGuidelineLink,
+                        onExternalLink = onExternalLink,
+                    )
+                }
             }
         }
     }

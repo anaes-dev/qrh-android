@@ -4,6 +4,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -51,6 +54,7 @@ class Main : ComponentActivity() {
     }
 }
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun QrhApp(
     repository: GuidelineRepository,
@@ -76,112 +80,118 @@ fun QrhApp(
         false -> "firstrun/false"
     }
 
-    NavHost(navController = navController, startDestination = startDest) {
+    SharedTransitionLayout {
+        NavHost(navController = navController, startDestination = startDest) {
 
-        composable(
-            route = "firstrun/{isUpdate}",
-            arguments = listOf(navArgument("isUpdate") { type = NavType.BoolType })
-        ) { entry ->
-            val isUpdate = entry.arguments?.getBoolean("isUpdate") ?: false
-            FirstRunScreen(
-                isUpdate = isUpdate,
-                onAgree = {
-                    scope.launch {
-                        preferences.acceptDisclaimers()
-                        navController.navigate("list") {
-                            popUpTo("firstrun/{isUpdate}") { inclusive = true }
+            composable(
+                route = "firstrun/{isUpdate}",
+                arguments = listOf(navArgument("isUpdate") { type = NavType.BoolType })
+            ) { entry ->
+                val isUpdate = entry.arguments?.getBoolean("isUpdate") ?: false
+                FirstRunScreen(
+                    isUpdate = isUpdate,
+                    onAgree = {
+                        scope.launch {
+                            preferences.acceptDisclaimers()
+                            navController.navigate("list") {
+                                popUpTo("firstrun/{isUpdate}") { inclusive = true }
+                            }
                         }
-                    }
-                },
-            )
-        }
-
-        composable("list") {
-            GuidelineListScreen(
-                viewModel = viewModel,
-                onGuidelineClick = { guideline ->
-                    navController.navigate("detail/${guideline.code}")
-                },
-                onAboutClick = {
-                    navController.navigate("about")
-                },
-            )
-        }
-
-        composable(
-            route = "detail/{code}",
-            arguments = listOf(navArgument("code") { type = NavType.StringType })
-        ) { entry ->
-            val code = entry.arguments?.getString("code") ?: return@composable
-            val guideline = viewModel.getGuideline(code) ?: return@composable
-
-            // Build breadcrumbs from back stack
-            val backStack by navController.currentBackStackEntryAsState()
-            val breadcrumbs = remember(backStack) {
-                val entries = navController.currentBackStack.value
-                    .filter { it.destination.route == "detail/{code}" }
-                    .mapNotNull { navEntry ->
-                        val entryCode = navEntry.arguments?.getString("code") ?: return@mapNotNull null
-                        val entryGuideline = repository.getGuideline(entryCode) ?: return@mapNotNull null
-                        BreadcrumbEntry(entryCode, entryGuideline.title)
-                    }
-                entries
+                    },
+                )
             }
 
-            GuidelineDetailScreen(
-                guideline = guideline,
-                breadcrumbs = breadcrumbs,
-                preferences = preferences,
-                onNavigateBack = { navController.popBackStack() },
-                onHomeClick = {
-                    navController.popBackStack("list", inclusive = false)
-                },
-                onBreadcrumbClick = { index ->
-                    val entriesToPop = breadcrumbs.size - 1 - index
-                    repeat(entriesToPop) {
+            composable("list") {
+                GuidelineListScreen(
+                    viewModel = viewModel,
+                    onGuidelineClick = { guideline ->
+                        navController.navigate("detail/${guideline.code}")
+                    },
+                    onAboutClick = {
+                        navController.navigate("about")
+                    },
+                )
+            }
+
+            composable(
+                route = "detail/{code}",
+                arguments = listOf(navArgument("code") { type = NavType.StringType })
+            ) { entry ->
+                val code = entry.arguments?.getString("code") ?: return@composable
+                val guideline = viewModel.getGuideline(code) ?: return@composable
+
+                // Build breadcrumbs from back stack
+                val backStack by navController.currentBackStackEntryAsState()
+                val breadcrumbs = remember(backStack) {
+                    val entries = navController.currentBackStack.value
+                        .filter { it.destination.route == "detail/{code}" }
+                        .mapNotNull { navEntry ->
+                            val entryCode = navEntry.arguments?.getString("code") ?: return@mapNotNull null
+                            val entryGuideline = repository.getGuideline(entryCode) ?: return@mapNotNull null
+                            BreadcrumbEntry(entryCode, entryGuideline.title)
+                        }
+                    entries
+                }
+
+                GuidelineDetailScreen(
+                    guideline = guideline,
+                    breadcrumbs = breadcrumbs,
+                    preferences = preferences,
+                    sharedTransitionScope = this@SharedTransitionLayout,
+                    animatedVisibilityScope = this@composable,
+                    onNavigateBack = { navController.popBackStack() },
+                    onHomeClick = {
+                        navController.popBackStack("list", inclusive = false)
+                    },
+                    onBreadcrumbClick = { index ->
+                        val entriesToPop = breadcrumbs.size - 1 - index
+                        repeat(entriesToPop) {
+                            navController.popBackStack()
+                        }
+                    },
+                    onGuidelineLink = { linkedCode ->
+                        navController.navigate("detail/$linkedCode")
+                    },
+                    onSwipeView = {
+                        navController.navigate("swipe/$code")
+                    },
+                )
+            }
+
+            composable(
+                route = "swipe/{code}",
+                arguments = listOf(navArgument("code") { type = NavType.StringType })
+            ) { entry ->
+                val code = entry.arguments?.getString("code") ?: return@composable
+                val guideline = viewModel.getGuideline(code) ?: return@composable
+
+                SwipeViewScreen(
+                    guideline = guideline,
+                    sharedTransitionScope = this@SharedTransitionLayout,
+                    animatedVisibilityScope = this@composable,
+                    onNavigateBack = { navController.popBackStack() },
+                    onGuidelineLink = { linkedCode ->
                         navController.popBackStack()
-                    }
-                },
-                onGuidelineLink = { linkedCode ->
-                    navController.navigate("detail/$linkedCode")
-                },
-                onSwipeView = {
-                    navController.navigate("swipe/$code")
-                },
-            )
-        }
+                        navController.navigate("detail/$linkedCode")
+                    },
+                )
+            }
 
-        composable(
-            route = "swipe/{code}",
-            arguments = listOf(navArgument("code") { type = NavType.StringType })
-        ) { entry ->
-            val code = entry.arguments?.getString("code") ?: return@composable
-            val guideline = viewModel.getGuideline(code) ?: return@composable
+            composable("about") {
+                AboutScreen(
+                    preferences = preferences,
+                    onNavigateBack = { navController.popBackStack() },
+                    onViewDisclaimers = {
+                        navController.navigate("disclaimers")
+                    },
+                )
+            }
 
-            SwipeViewScreen(
-                guideline = guideline,
-                onNavigateBack = { navController.popBackStack() },
-                onGuidelineLink = { linkedCode ->
-                    navController.popBackStack()
-                    navController.navigate("detail/$linkedCode")
-                },
-            )
-        }
-
-        composable("about") {
-            AboutScreen(
-                preferences = preferences,
-                onNavigateBack = { navController.popBackStack() },
-                onViewDisclaimers = {
-                    navController.navigate("disclaimers")
-                },
-            )
-        }
-
-        composable("disclaimers") {
-            DisclaimersScreen(
-                onNavigateBack = { navController.popBackStack() },
-            )
+            composable("disclaimers") {
+                DisclaimersScreen(
+                    onNavigateBack = { navController.popBackStack() },
+                )
+            }
         }
     }
 }
