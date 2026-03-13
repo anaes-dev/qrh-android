@@ -2,9 +2,6 @@ package dev.anaes.qrh.ui.detail
 
 import android.content.Intent
 import android.net.Uri
-import androidx.compose.animation.AnimatedVisibilityScope
-import androidx.compose.animation.ExperimentalSharedTransitionApi
-import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -38,14 +35,12 @@ import dev.anaes.qrh.model.Guideline
 import dev.anaes.qrh.ui.components.BreadcrumbBar
 import dev.anaes.qrh.ui.components.BreadcrumbEntry
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GuidelineDetailScreen(
     guideline: Guideline,
     breadcrumbs: List<BreadcrumbEntry>,
     preferences: UserPreferences,
-    sharedTransitionScope: SharedTransitionScope,
-    animatedVisibilityScope: AnimatedVisibilityScope,
     onNavigateBack: () -> Unit,
     onHomeClick: () -> Unit,
     onBreadcrumbClick: (index: Int) -> Unit,
@@ -76,30 +71,23 @@ fun GuidelineDetailScreen(
         topBar = {
             LargeTopAppBar(
                 title = {
-                    with(sharedTransitionScope) {
-                        Column(
-                            modifier = Modifier.sharedBounds(
-                                rememberSharedContentState(key = "title-${guideline.code}"),
-                                animatedVisibilityScope = animatedVisibilityScope,
-                            )
-                        ) {
-                            Text(
-                                text = guideline.code,
-                                fontSize = codeFontSize,
-                                fontWeight = FontWeight.Bold,
-                                color = MaterialTheme.colorScheme.onPrimary,
-                            )
-                            Text(
-                                text = guideline.title,
-                                fontSize = 16.sp,
-                                color = MaterialTheme.colorScheme.onPrimary,
-                            )
-                            Text(
-                                text = "v. ${guideline.version}",
-                                fontSize = 12.sp,
-                                color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.7f),
-                            )
-                        }
+                    Column {
+                        Text(
+                            text = guideline.code,
+                            fontSize = codeFontSize,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onPrimary,
+                        )
+                        Text(
+                            text = guideline.title,
+                            fontSize = 16.sp,
+                            color = MaterialTheme.colorScheme.onPrimary,
+                        )
+                        Text(
+                            text = "v. ${guideline.version}",
+                            fontSize = 12.sp,
+                            color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.7f),
+                        )
                     }
                 },
                 navigationIcon = {

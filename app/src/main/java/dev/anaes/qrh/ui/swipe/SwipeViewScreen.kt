@@ -2,9 +2,6 @@ package dev.anaes.qrh.ui.swipe
 
 import android.content.Intent
 import android.net.Uri
-import androidx.compose.animation.AnimatedVisibilityScope
-import androidx.compose.animation.ExperimentalSharedTransitionApi
-import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -55,12 +52,10 @@ import dev.anaes.qrh.ui.theme.BoxColors
 import dev.anaes.qrh.ui.theme.LocalIsDarkTheme
 import kotlin.math.abs
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SwipeViewScreen(
     guideline: Guideline,
-    sharedTransitionScope: SharedTransitionScope,
-    animatedVisibilityScope: AnimatedVisibilityScope,
     onNavigateBack: () -> Unit,
     onGuidelineLink: (code: String) -> Unit,
 ) {
@@ -74,16 +69,9 @@ fun SwipeViewScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    with(sharedTransitionScope) {
-                        Column(
-                            modifier = Modifier.sharedBounds(
-                                rememberSharedContentState(key = "title-${guideline.code}"),
-                                animatedVisibilityScope = animatedVisibilityScope,
-                            )
-                        ) {
-                            Text(guideline.title, fontSize = 14.sp, maxLines = 1)
-                            Text(guideline.code, fontSize = 12.sp, color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.7f))
-                        }
+                    Column {
+                        Text(guideline.title, fontSize = 14.sp, maxLines = 1)
+                        Text(guideline.code, fontSize = 12.sp, color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.7f))
                     }
                 },
                 navigationIcon = {
