@@ -141,14 +141,34 @@ private fun buildHtmlAnnotatedString(
             addStringAnnotation("qrh", code, start, end)
         }
 
+        // Track annotated ranges to avoid double-annotating
+        val annotatedRanges = mutableListOf<IntRange>()
+
+        // Collect ranges from guideline annotations above
+        val guidelineMatcher2 = GUIDELINE_PATTERN.matcher(text)
+        while (guidelineMatcher2.find()) {
+            annotatedRanges.add(guidelineMatcher2.start()..guidelineMatcher2.end())
+        }
+
+        // Collect ranges from URL spans added from HTML <a> tags
+        if (spanned is Spanned) {
+            for (span in spanned.getSpans(0, spanned.length, URLSpan::class.java)) {
+                val s = spanned.getSpanStart(span).coerceAtMost(text.length)
+                val e = spanned.getSpanEnd(span).coerceAtMost(text.length)
+                if (s < e) annotatedRanges.add(s..e)
+            }
+        }
+
+        fun isAlreadyAnnotated(position: Int): Boolean =
+            annotatedRanges.any { position in it }
+
         // Auto-detect URLs not already linked
         val urlMatcher = URL_PATTERN.matcher(text)
         while (urlMatcher.find()) {
             val start = urlMatcher.start()
             val end = urlMatcher.end()
-            // Skip if already annotated (from <a href>)
-            if (getStringAnnotations("url", start, start).isNotEmpty()) continue
-            if (getStringAnnotations("qrh", start, start).isNotEmpty()) continue
+            // Skip if already annotated (from <a href> or guideline)
+            if (isAlreadyAnnotated(start)) continue
             val url = text.substring(start, end)
             val fullUrl = if (url.startsWith("http")) url else "http://$url"
             addStyle(
@@ -156,6 +176,7 @@ private fun buildHtmlAnnotatedString(
                 start, end
             )
             addStringAnnotation("url", fullUrl, start, end)
+            annotatedRanges.add(start..end)
         }
 
         // Auto-detect phone numbers
@@ -163,7 +184,7 @@ private fun buildHtmlAnnotatedString(
         while (phoneMatcher.find()) {
             val start = phoneMatcher.start()
             val end = phoneMatcher.end()
-            if (getStringAnnotations("url", start, start).isNotEmpty()) continue
+            if (isAlreadyAnnotated(start)) continue
             val phone = text.substring(start, end)
             addStyle(
                 SpanStyle(color = linkColor, textDecoration = TextDecoration.Underline),

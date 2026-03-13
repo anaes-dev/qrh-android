@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ChevronRight
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.Icon
@@ -60,7 +60,7 @@ fun BreadcrumbBar(
 
         entries.forEachIndexed { index, entry ->
             Icon(
-                Icons.AutoMirrored.Filled.ChevronRight,
+                Icons.AutoMirrored.Filled.KeyboardArrowRight,
                 contentDescription = null,
                 modifier = Modifier.size(16.dp),
                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
