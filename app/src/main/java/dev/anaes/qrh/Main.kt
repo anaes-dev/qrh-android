@@ -268,7 +268,9 @@ fun QrhApp(
                     }
                 },
                 onGuidelineLink = { linkedCode ->
-                    navController.navigate(DetailRoute(linkedCode))
+                    if (linkedCode != route.code) {
+                        navController.navigate(DetailRoute(linkedCode))
+                    }
                 },
                 onSwipeView = {
                     navController.navigate(SwipeRoute(route.code))
