@@ -137,7 +137,7 @@ fun GuidelineListScreen(
                     }
                 }
 
-                AnimatedVisibility(
+                androidx.compose.animation.AnimatedVisibility(
                     visible = filtered.isEmpty() && viewModel.searchQuery.isNotBlank() && !viewModel.isSearching,
                     enter = fadeIn(),
                     exit = fadeOut(),
