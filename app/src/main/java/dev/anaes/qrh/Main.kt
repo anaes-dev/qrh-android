@@ -15,6 +15,8 @@ import androidx.compose.animation.core.EaseOut
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutHorizontally
@@ -152,20 +154,26 @@ fun QrhApp(
             )
         }
 
-        // List — slides out left when pushing detail, slides back in from left when popping
+        // List — slides out left + scales down when pushing detail, reverses when popping
         composable<ListRoute>(
             enterTransition = { fadeIn(tween(FADE_DURATION)) },
             exitTransition = {
                 slideOutHorizontally(
                     targetOffsetX = { -it / 4 },
                     animationSpec = tween(NAV_DURATION, easing = EaseIn)
-                ) + fadeOut(tween(NAV_DURATION))
+                ) + fadeOut(tween(NAV_DURATION)) + scaleOut(
+                    targetScale = 0.94f,
+                    animationSpec = tween(NAV_DURATION, easing = EaseIn)
+                )
             },
             popEnterTransition = {
                 slideInHorizontally(
                     initialOffsetX = { -it / 4 },
                     animationSpec = tween(NAV_DURATION, easing = EaseOut)
-                ) + fadeIn(tween(NAV_DURATION))
+                ) + fadeIn(tween(NAV_DURATION)) + scaleIn(
+                    initialScale = 0.94f,
+                    animationSpec = tween(NAV_DURATION, easing = EaseOut)
+                )
             },
             popExitTransition = { fadeOut(tween(FADE_DURATION)) },
         ) {
@@ -180,7 +188,7 @@ fun QrhApp(
             )
         }
 
-        // Detail — slides in from right, slides out to right when popping
+        // Detail — slides in from right; slides out left + scales when pushing another detail/swipe
         composable<DetailRoute>(
             enterTransition = {
                 slideInHorizontally(
@@ -189,10 +197,22 @@ fun QrhApp(
                 ) + fadeIn(tween(NAV_DURATION))
             },
             exitTransition = {
-                fadeOut(tween(NAV_DURATION))
+                slideOutHorizontally(
+                    targetOffsetX = { -it / 4 },
+                    animationSpec = tween(NAV_DURATION, easing = EaseIn)
+                ) + fadeOut(tween(NAV_DURATION)) + scaleOut(
+                    targetScale = 0.94f,
+                    animationSpec = tween(NAV_DURATION, easing = EaseIn)
+                )
             },
             popEnterTransition = {
-                fadeIn(tween(NAV_DURATION))
+                slideInHorizontally(
+                    initialOffsetX = { -it / 4 },
+                    animationSpec = tween(NAV_DURATION, easing = EaseOut)
+                ) + fadeIn(tween(NAV_DURATION)) + scaleIn(
+                    initialScale = 0.94f,
+                    animationSpec = tween(NAV_DURATION, easing = EaseOut)
+                )
             },
             popExitTransition = {
                 slideOutHorizontally(
@@ -272,7 +292,7 @@ fun QrhApp(
             )
         }
 
-        // About — slide up from bottom (overlay feel)
+        // About — slide up from bottom (overlay feel); slides left when pushing disclaimers
         composable<AboutRoute>(
             enterTransition = {
                 slideInVertically(
@@ -280,8 +300,24 @@ fun QrhApp(
                     animationSpec = tween(NAV_DURATION, easing = EaseOut)
                 ) + fadeIn(tween(FADE_DURATION))
             },
-            exitTransition = { fadeOut(tween(FADE_DURATION)) },
-            popEnterTransition = { fadeIn(tween(FADE_DURATION)) },
+            exitTransition = {
+                slideOutHorizontally(
+                    targetOffsetX = { -it / 4 },
+                    animationSpec = tween(NAV_DURATION, easing = EaseIn)
+                ) + fadeOut(tween(NAV_DURATION)) + scaleOut(
+                    targetScale = 0.94f,
+                    animationSpec = tween(NAV_DURATION, easing = EaseIn)
+                )
+            },
+            popEnterTransition = {
+                slideInHorizontally(
+                    initialOffsetX = { -it / 4 },
+                    animationSpec = tween(NAV_DURATION, easing = EaseOut)
+                ) + fadeIn(tween(NAV_DURATION)) + scaleIn(
+                    initialScale = 0.94f,
+                    animationSpec = tween(NAV_DURATION, easing = EaseOut)
+                )
+            },
             popExitTransition = {
                 slideOutVertically(
                     targetOffsetY = { it / 4 },

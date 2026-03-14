@@ -19,6 +19,9 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.Spring
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Card
@@ -151,7 +154,24 @@ fun SwipeViewScreen(
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
+                val activeColor = MaterialTheme.colorScheme.primary
+                val inactiveColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
+
                 repeat(filteredContent.size) { index ->
+                    val isSelected = index == pagerState.currentPage
+                    val scale by animateFloatAsState(
+                        targetValue = if (isSelected) 1f else 0.75f,
+                        animationSpec = spring(
+                            dampingRatio = Spring.DampingRatioMediumBouncy,
+                            stiffness = Spring.StiffnessMedium,
+                        ),
+                        label = "dotScale",
+                    )
+                    val alpha by animateFloatAsState(
+                        targetValue = if (isSelected) 1f else 0.4f,
+                        label = "dotAlpha",
+                    )
+
                     Box(
                         modifier = Modifier
                             .size(24.dp)
@@ -162,14 +182,14 @@ fun SwipeViewScreen(
                     ) {
                         Box(
                             modifier = Modifier
-                                .size(if (index == pagerState.currentPage) 8.dp else 6.dp)
+                                .size(8.dp)
+                                .graphicsLayer {
+                                    scaleX = scale
+                                    scaleY = scale
+                                    this.alpha = alpha
+                                }
                                 .clip(CircleShape)
-                                .background(
-                                    if (index == pagerState.currentPage)
-                                        MaterialTheme.colorScheme.primary
-                                    else
-                                        MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
-                                )
+                                .background(if (isSelected) activeColor else inactiveColor)
                         )
                     }
                 }

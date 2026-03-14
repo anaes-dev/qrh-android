@@ -1,6 +1,7 @@
 package dev.anaes.qrh.ui.list
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.clickable
@@ -13,6 +14,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
@@ -81,6 +83,13 @@ fun GuidelineListScreen(
             .collect { snackbarHostState.currentSnackbarData?.dismiss() }
     }
 
+    // Scroll to top when search results change
+    LaunchedEffect(searchResults) {
+        if (hasQuery) {
+            listState.scrollToItem(0)
+        }
+    }
+
     // Build a lookup map for snippets when searching
     val snippetMap = remember(searchResults) {
         searchResults.associateBy { it.guideline.code }
@@ -115,8 +124,32 @@ fun GuidelineListScreen(
                 modifier = Modifier.fillMaxWidth(),
                 placeholder = { Text("Search guidelines...") },
                 leadingIcon = { Icon(Icons.Filled.Search, contentDescription = stringResource(R.string.search)) },
+                trailingIcon = if (viewModel.searchQuery.isNotEmpty()) {
+                    {
+                        IconButton(onClick = { viewModel.onSearchQueryChange("") }) {
+                            Icon(Icons.Filled.Clear, contentDescription = "Clear search")
+                        }
+                    }
+                } else null,
                 singleLine = true,
             )
+
+            // Result count
+            AnimatedVisibility(
+                visible = hasQuery && !viewModel.isSearching,
+                enter = fadeIn(),
+                exit = fadeOut(),
+            ) {
+                Text(
+                    text = "${filtered.size} result${if (filtered.size != 1) "s" else ""}",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 4.dp)
+                        .animateContentSize(),
+                )
+            }
 
             Box(modifier = Modifier.fillMaxSize()) {
                 LazyColumn(
@@ -163,6 +196,20 @@ private fun GuidelineListItem(
 ) {
     val highlightColor = MaterialTheme.colorScheme.secondary
 
+    val annotatedTitle = remember(searchResult, guideline.title) {
+        val sr = searchResult ?: return@remember null
+        if (sr.titleMatchStart < 0) return@remember null
+        buildAnnotatedString {
+            val start = sr.titleMatchStart.coerceIn(0, guideline.title.length)
+            val end = sr.titleMatchEnd.coerceIn(start, guideline.title.length)
+            append(guideline.title.substring(0, start))
+            withStyle(SpanStyle(fontWeight = FontWeight.Bold, color = highlightColor)) {
+                append(guideline.title.substring(start, end))
+            }
+            append(guideline.title.substring(end))
+        }
+    }
+
     val annotatedSnippet = remember(searchResult) {
         val snippet = searchResult?.snippet ?: return@remember null
         buildAnnotatedString {
@@ -178,11 +225,19 @@ private fun GuidelineListItem(
 
     ListItem(
         headlineContent = {
-            Text(
-                guideline.title,
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis,
-            )
+            if (annotatedTitle != null) {
+                Text(
+                    text = annotatedTitle,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
+                )
+            } else {
+                Text(
+                    guideline.title,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
+                )
+            }
         },
         overlineContent = { Text(guideline.code) },
         supportingContent = if (annotatedSnippet != null) {

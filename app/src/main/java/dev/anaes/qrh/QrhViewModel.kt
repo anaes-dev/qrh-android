@@ -17,6 +17,8 @@ data class SearchResult(
     val snippet: String? = null,
     val matchStart: Int = -1,
     val matchEnd: Int = -1,
+    val titleMatchStart: Int = -1,
+    val titleMatchEnd: Int = -1,
 )
 
 class QrhViewModel(
@@ -89,7 +91,14 @@ class QrhViewModel(
         for (guideline in guidelines) {
             val titleMatch = guidelineTitleCache[guideline.code] ?: ""
             if (titleMatch.contains(lowerQuery)) {
-                results.add(SearchResult(guideline))
+                // Find where the match is within the title itself (not the "code title" combo)
+                val titleLower = guideline.title.lowercase()
+                val titleIdx = titleLower.indexOf(lowerQuery)
+                results.add(SearchResult(
+                    guideline = guideline,
+                    titleMatchStart = if (titleIdx >= 0) titleIdx else -1,
+                    titleMatchEnd = if (titleIdx >= 0) titleIdx + lowerQuery.length else -1,
+                ))
                 continue
             }
 
