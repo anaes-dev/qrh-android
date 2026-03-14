@@ -94,9 +94,38 @@ fun AboutScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            Image(
+                painter = painterResource(R.drawable.by_nc_sa),
+                contentDescription = stringResource(R.string.CCBYNCSA),
+                modifier = Modifier
+                    .width(160.dp)
+                    .clickable {
+                        context.startActivity(
+                            Intent(Intent.ACTION_VIEW, Uri.parse("https://creativecommons.org/licenses/by-nc-sa/4.0/"))
+                        )
+                    },
+                contentScale = ContentScale.FillWidth,
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
             Text(
                 text = stringResource(R.string.about_2),
                 style = MaterialTheme.typography.bodySmall,
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Text(
+                text = stringResource(R.string.CCBYNCSA),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.secondary,
+                textDecoration = TextDecoration.Underline,
+                modifier = Modifier.clickable {
+                    context.startActivity(
+                        Intent(Intent.ACTION_VIEW, Uri.parse("https://creativecommons.org/licenses/by-nc-sa/4.0/"))
+                    )
+                },
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -182,34 +211,6 @@ fun AboutScreen(
                 Text(stringResource(R.string.privacy))
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Image(
-                painter = painterResource(R.drawable.by_nc_sa),
-                contentDescription = stringResource(R.string.CCBYNCSA),
-                modifier = Modifier
-                    .width(160.dp)
-                    .clickable {
-                        context.startActivity(
-                            Intent(Intent.ACTION_VIEW, Uri.parse("https://creativecommons.org/licenses/by-nc-sa/4.0/"))
-                        )
-                    },
-                contentScale = ContentScale.FillWidth,
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Text(
-                text = stringResource(R.string.CCBYNCSA),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.secondary,
-                textDecoration = TextDecoration.Underline,
-                modifier = Modifier.clickable {
-                    context.startActivity(
-                        Intent(Intent.ACTION_VIEW, Uri.parse("https://creativecommons.org/licenses/by-nc-sa/4.0/"))
-                    )
-                },
-            )
         }
     }
 }
