@@ -1,5 +1,7 @@
 package dev.anaes.qrh.ui.disclaimers
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,15 +21,20 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import dev.anaes.qrh.R
+import dev.anaes.qrh.ui.components.HtmlText
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DisclaimersScreen(
     onNavigateBack: () -> Unit,
 ) {
+    val context = LocalContext.current
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -54,9 +61,27 @@ fun DisclaimersScreen(
         ) {
             Text(text = stringResource(R.string.about_4), style = MaterialTheme.typography.bodyMedium)
             Spacer(modifier = Modifier.height(16.dp))
-            Text(text = stringResource(R.string.splash_3), style = MaterialTheme.typography.bodySmall)
+            HtmlText(
+                html = stringResource(R.string.splash_3).replace("\n", "<br>"),
+                style = TextStyle(
+                    fontSize = MaterialTheme.typography.bodySmall.fontSize,
+                    lineHeight = MaterialTheme.typography.bodySmall.lineHeight,
+                ),
+                onExternalLink = { url ->
+                    context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+                },
+            )
             Spacer(modifier = Modifier.height(12.dp))
-            Text(text = stringResource(R.string.splash_4), style = MaterialTheme.typography.bodySmall)
+            HtmlText(
+                html = stringResource(R.string.splash_4).replace("\n", "<br>"),
+                style = TextStyle(
+                    fontSize = MaterialTheme.typography.bodySmall.fontSize,
+                    lineHeight = MaterialTheme.typography.bodySmall.lineHeight,
+                ),
+                onExternalLink = { url ->
+                    context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+                },
+            )
             Spacer(modifier = Modifier.height(12.dp))
             Text(text = stringResource(R.string.splash_5), style = MaterialTheme.typography.bodySmall)
         }

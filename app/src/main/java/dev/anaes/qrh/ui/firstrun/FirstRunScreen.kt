@@ -185,7 +185,7 @@ fun FirstRunScreen(
             )
             Spacer(modifier = Modifier.height(12.dp))
             HtmlText(
-                html = stringResource(R.string.splash_3),
+                html = stringResource(R.string.splash_3).replace("\n", "<br>"),
                 style = TextStyle(fontSize = MaterialTheme.typography.bodyMedium.fontSize, lineHeight = MaterialTheme.typography.bodyMedium.lineHeight),
                 onExternalLink = { url ->
                     context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
@@ -193,7 +193,7 @@ fun FirstRunScreen(
             )
             Spacer(modifier = Modifier.height(12.dp))
             HtmlText(
-                html = stringResource(R.string.splash_4),
+                html = stringResource(R.string.splash_4).replace("\n", "<br>"),
                 style = TextStyle(fontSize = MaterialTheme.typography.bodyMedium.fontSize, lineHeight = MaterialTheme.typography.bodyMedium.lineHeight),
                 onExternalLink = { url ->
                     context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
