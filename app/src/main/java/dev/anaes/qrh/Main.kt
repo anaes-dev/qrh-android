@@ -1,5 +1,6 @@
 package dev.anaes.qrh
 
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -23,10 +24,12 @@ import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.platform.LocalView
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -90,6 +93,17 @@ class Main : ComponentActivity() {
             val darkTheme = if (nightDisabled) false else isSystemInDarkTheme()
 
             QrhTheme(darkTheme = darkTheme) {
+                // Sync the Activity window background with the Compose theme so
+                // navigation transitions don't reveal a mismatched background
+                // (e.g. dark window behind light Compose content).
+                val view = LocalView.current
+                val bgColor = if (darkTheme) 0xFF121212.toInt() else 0xFFFAFAFA.toInt()
+                SideEffect {
+                    (view.context as? ComponentActivity)?.window?.setBackgroundDrawable(
+                        ColorDrawable(bgColor)
+                    )
+                }
+
                 QrhApp(repository = repository, preferences = preferences)
             }
         }
