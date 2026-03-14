@@ -1,7 +1,6 @@
 package dev.anaes.qrh.ui.list
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.clickable
@@ -136,23 +135,6 @@ fun GuidelineListScreen(
                 } else null,
                 singleLine = true,
             )
-
-            // Result count
-            AnimatedVisibility(
-                visible = hasQuery && !viewModel.isSearching,
-                enter = fadeIn(),
-                exit = fadeOut(),
-            ) {
-                Text(
-                    text = "${filtered.size} result${if (filtered.size != 1) "s" else ""}",
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 4.dp)
-                        .animateContentSize(),
-                )
-            }
 
             Box(modifier = Modifier.fillMaxSize()) {
                 LazyColumn(
