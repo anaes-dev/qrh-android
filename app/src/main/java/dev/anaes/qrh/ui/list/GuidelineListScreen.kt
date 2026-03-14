@@ -15,7 +15,6 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
@@ -48,7 +47,6 @@ import dev.anaes.qrh.SearchResult
 import dev.anaes.qrh.model.Guideline
 import kotlinx.coroutines.flow.filter
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GuidelineListScreen(
     viewModel: QrhViewModel,
@@ -60,17 +58,14 @@ fun GuidelineListScreen(
     val filtered = viewModel.filteredGuidelines
     val searchResults = viewModel.searchResults
     val hasQuery = viewModel.searchQuery.isNotBlank()
+    val snackLaunchText = stringResource(R.string.snackLaunch)
 
     // Startup snackbar
     LaunchedEffect(viewModel.isStartup) {
         if (viewModel.isStartup) {
             viewModel.onStartupComplete()
             snackbarHostState.showSnackbar(
-                message = "Unofficial adaptation of Quick Reference Handbook\n" +
-                    "Not endorsed by the Association of Anaesthetists\n" +
-                    "Untested and unregulated; not recommended for clinical use\n" +
-                    "No guarantees of completeness, accuracy or performance\n" +
-                    "Should not override your own knowledge and judgement",
+                message = snackLaunchText,
                 duration = SnackbarDuration.Long,
             )
         }
@@ -116,7 +111,7 @@ fun GuidelineListScreen(
                 onValueChange = viewModel::onSearchQueryChange,
                 modifier = Modifier.fillMaxWidth(),
                 placeholder = { Text("Search guidelines...") },
-                leadingIcon = { Icon(Icons.Filled.Search, contentDescription = null) },
+                leadingIcon = { Icon(Icons.Filled.Search, contentDescription = stringResource(R.string.search)) },
                 singleLine = true,
             )
 

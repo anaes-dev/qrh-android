@@ -336,7 +336,7 @@ private fun ImageItem(
     ) {
         AsyncImage(
             model = "file:///android_asset/${item.body}",
-            contentDescription = item.head,
+            contentDescription = item.head.ifEmpty { "Guideline image" },
             modifier = Modifier.fillMaxWidth(),
             contentScale = ContentScale.FillWidth,
         )

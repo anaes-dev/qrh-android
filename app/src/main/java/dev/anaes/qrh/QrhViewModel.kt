@@ -61,7 +61,7 @@ class QrhViewModel(
             return
         }
         searchJob = viewModelScope.launch {
-            delay(250) // debounce
+            delay(SEARCH_DEBOUNCE_MS)
             searchResults = performSearch(query.trim())
         }
     }
@@ -137,6 +137,7 @@ class QrhViewModel(
     fun getGuideline(code: String): Guideline? = repository.getGuideline(code)
 
     companion object {
+        private const val SEARCH_DEBOUNCE_MS = 250L
         private val WHITESPACE_REGEX = "\\s+".toRegex()
 
         private fun stripHtml(html: String): String {

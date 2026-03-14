@@ -4,9 +4,12 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.animation.AnimatedContentTransitionScope
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.animation.core.EaseIn
 import androidx.compose.animation.core.EaseOut
 import androidx.compose.animation.core.tween
@@ -25,12 +28,11 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
+import androidx.navigation.toRoute
 import dev.anaes.qrh.data.GuidelineRepository
 import dev.anaes.qrh.data.UserPreferences
 import dev.anaes.qrh.ui.about.AboutScreen
@@ -42,8 +44,34 @@ import dev.anaes.qrh.ui.list.GuidelineListScreen
 import dev.anaes.qrh.ui.swipe.SwipeViewScreen
 import dev.anaes.qrh.ui.theme.QrhTheme
 import kotlinx.coroutines.launch
+import kotlinx.serialization.Serializable
 
+// --- Type-safe route definitions ---
+
+@Serializable
+data class FirstRunRoute(val isUpdate: Boolean)
+
+@Serializable
+object ListRoute
+
+@Serializable
+data class DetailRoute(val code: String)
+
+@Serializable
+data class SwipeRoute(val code: String)
+
+@Serializable
+object AboutRoute
+
+@Serializable
+object DisclaimersRoute
+
+// --- Animation constants ---
+
+/** Duration for slide/combined navigation transitions (ms). */
 private const val NAV_DURATION = 300
+
+/** Duration for simple fade transitions (ms). */
 private const val FADE_DURATION = 200
 
 class Main : ComponentActivity() {
@@ -85,11 +113,14 @@ fun QrhApp(
     )
 
     // Wait for DataStore to load before deciding start destination
-    val startDest = when (disclaimersAccepted) {
-        null -> return // Still loading
-        true -> "list"
-        false -> "firstrun/false"
+    if (disclaimersAccepted == null) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            CircularProgressIndicator()
+        }
+        return
     }
+
+    val startDest: Any = if (disclaimersAccepted == true) ListRoute else FirstRunRoute(isUpdate = false)
 
     NavHost(
         navController = navController,
@@ -101,20 +132,20 @@ fun QrhApp(
     ) {
 
         // First run — fade through
-        composable(
-            route = "firstrun/{isUpdate}",
-            arguments = listOf(navArgument("isUpdate") { type = NavType.BoolType }),
+        composable<FirstRunRoute>(
             enterTransition = { fadeIn(tween(FADE_DURATION)) },
             exitTransition = { fadeOut(tween(FADE_DURATION)) },
         ) { entry ->
-            val isUpdate = entry.arguments?.getBoolean("isUpdate") ?: false
+            val route = entry.toRoute<FirstRunRoute>()
+            val activity = LocalContext.current as? ComponentActivity
             FirstRunScreen(
-                isUpdate = isUpdate,
+                isUpdate = route.isUpdate,
+                onExit = { activity?.finish() },
                 onAgree = {
                     scope.launch {
                         preferences.acceptDisclaimers()
-                        navController.navigate("list") {
-                            popUpTo("firstrun/{isUpdate}") { inclusive = true }
+                        navController.navigate(ListRoute) {
+                            popUpTo<FirstRunRoute> { inclusive = true }
                         }
                     }
                 },
@@ -122,8 +153,7 @@ fun QrhApp(
         }
 
         // List — slides out left when pushing detail, slides back in from left when popping
-        composable(
-            route = "list",
+        composable<ListRoute>(
             enterTransition = { fadeIn(tween(FADE_DURATION)) },
             exitTransition = {
                 slideOutHorizontally(
@@ -142,18 +172,16 @@ fun QrhApp(
             GuidelineListScreen(
                 viewModel = viewModel,
                 onGuidelineClick = { guideline ->
-                    navController.navigate("detail/${guideline.code}")
+                    navController.navigate(DetailRoute(guideline.code))
                 },
                 onAboutClick = {
-                    navController.navigate("about")
+                    navController.navigate(AboutRoute)
                 },
             )
         }
 
         // Detail — slides in from right, slides out to right when popping
-        composable(
-            route = "detail/{code}",
-            arguments = listOf(navArgument("code") { type = NavType.StringType }),
+        composable<DetailRoute>(
             enterTransition = {
                 slideInHorizontally(
                     initialOffsetX = { it / 3 },
@@ -161,7 +189,6 @@ fun QrhApp(
                 ) + fadeIn(tween(NAV_DURATION))
             },
             exitTransition = {
-                // When pushing swipe view: slight scale down + fade
                 fadeOut(tween(NAV_DURATION))
             },
             popEnterTransition = {
@@ -174,19 +201,22 @@ fun QrhApp(
                 ) + fadeOut(tween(NAV_DURATION))
             },
         ) { entry ->
-            val code = entry.arguments?.getString("code") ?: return@composable
-            val guideline = viewModel.getGuideline(code) ?: return@composable
+            val route = entry.toRoute<DetailRoute>()
+            val guideline = viewModel.getGuideline(route.code) ?: return@composable
 
             val backStack by navController.currentBackStackEntryAsState()
             val breadcrumbs = remember(backStack) {
-                val entries = navController.currentBackStack.value
-                    .filter { it.destination.route == "detail/{code}" }
+                navController.currentBackStack.value
                     .mapNotNull { navEntry ->
-                        val entryCode = navEntry.arguments?.getString("code") ?: return@mapNotNull null
-                        val entryGuideline = repository.getGuideline(entryCode) ?: return@mapNotNull null
-                        BreadcrumbEntry(entryCode, entryGuideline.title)
+                        val detailRoute = try {
+                            navEntry.toRoute<DetailRoute>()
+                        } catch (_: Exception) {
+                            null
+                        }
+                        detailRoute ?: return@mapNotNull null
+                        val entryGuideline = repository.getGuideline(detailRoute.code) ?: return@mapNotNull null
+                        BreadcrumbEntry(detailRoute.code, entryGuideline.title)
                     }
-                entries
             }
 
             GuidelineDetailScreen(
@@ -195,7 +225,7 @@ fun QrhApp(
                 preferences = preferences,
                 onNavigateBack = { navController.popBackStack() },
                 onHomeClick = {
-                    navController.popBackStack("list", inclusive = false)
+                    navController.popBackStack<ListRoute>(inclusive = false)
                 },
                 onBreadcrumbClick = { index ->
                     val entriesToPop = breadcrumbs.size - 1 - index
@@ -204,18 +234,16 @@ fun QrhApp(
                     }
                 },
                 onGuidelineLink = { linkedCode ->
-                    navController.navigate("detail/$linkedCode")
+                    navController.navigate(DetailRoute(linkedCode))
                 },
                 onSwipeView = {
-                    navController.navigate("swipe/$code")
+                    navController.navigate(SwipeRoute(route.code))
                 },
             )
         }
 
         // Swipe view — slides up from bottom (mode change), slides back down when popping
-        composable(
-            route = "swipe/{code}",
-            arguments = listOf(navArgument("code") { type = NavType.StringType }),
+        composable<SwipeRoute>(
             enterTransition = {
                 slideInVertically(
                     initialOffsetY = { it / 2 },
@@ -231,22 +259,21 @@ fun QrhApp(
                 ) + fadeOut(tween(NAV_DURATION))
             },
         ) { entry ->
-            val code = entry.arguments?.getString("code") ?: return@composable
-            val guideline = viewModel.getGuideline(code) ?: return@composable
+            val route = entry.toRoute<SwipeRoute>()
+            val guideline = viewModel.getGuideline(route.code) ?: return@composable
 
             SwipeViewScreen(
                 guideline = guideline,
                 onNavigateBack = { navController.popBackStack() },
                 onGuidelineLink = { linkedCode ->
                     navController.popBackStack()
-                    navController.navigate("detail/$linkedCode")
+                    navController.navigate(DetailRoute(linkedCode))
                 },
             )
         }
 
         // About — slide up from bottom (overlay feel)
-        composable(
-            route = "about",
+        composable<AboutRoute>(
             enterTransition = {
                 slideInVertically(
                     initialOffsetY = { it / 4 },
@@ -266,14 +293,13 @@ fun QrhApp(
                 preferences = preferences,
                 onNavigateBack = { navController.popBackStack() },
                 onViewDisclaimers = {
-                    navController.navigate("disclaimers")
+                    navController.navigate(DisclaimersRoute)
                 },
             )
         }
 
         // Disclaimers — slide in from right (sub-page of about)
-        composable(
-            route = "disclaimers",
+        composable<DisclaimersRoute>(
             enterTransition = {
                 slideInHorizontally(
                     initialOffsetX = { it / 3 },

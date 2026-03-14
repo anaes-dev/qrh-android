@@ -43,17 +43,18 @@ import dev.anaes.qrh.ui.theme.LaunchBtnBgExitDark
 import dev.anaes.qrh.ui.theme.LaunchBtnTxtDisabledDark
 import dev.anaes.qrh.ui.theme.LaunchBtnTxtEnabledDark
 import kotlinx.coroutines.launch
-import kotlin.system.exitProcess
 
 @Composable
 fun FirstRunScreen(
     isUpdate: Boolean,
     onAgree: () -> Unit,
+    onExit: () -> Unit = {},
 ) {
     val scrollState = rememberScrollState()
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
     val isDark = LocalIsDarkTheme.current
+    val scrollFirstText = stringResource(R.string.please_scroll_first)
 
     val hasScrolledToBottom by remember {
         derivedStateOf {
@@ -78,7 +79,7 @@ fun FirstRunScreen(
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
             ) {
                 Button(
-                    onClick = { exitProcess(1) },
+                    onClick = onExit,
                     modifier = Modifier.weight(1f),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = btnBgExit,
@@ -94,7 +95,7 @@ fun FirstRunScreen(
                             onAgree()
                         } else {
                             scope.launch {
-                                snackbarHostState.showSnackbar("Please scroll and read first.")
+                                snackbarHostState.showSnackbar(scrollFirstText)
                             }
                         }
                     },

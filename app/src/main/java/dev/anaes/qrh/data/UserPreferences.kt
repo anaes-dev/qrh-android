@@ -52,25 +52,4 @@ class UserPreferences(private val context: Context) {
             prefs[versionKey] = BuildConfig.VERSION_CODE
         }
     }
-
-    suspend fun migrateFromSharedPrefs(context: Context) {
-        val oldPrefs = context.getSharedPreferences("dev.anaes.qrh", Context.MODE_PRIVATE)
-        if (oldPrefs.contains("seen_warning") || oldPrefs.contains("version")) {
-            context.dataStore.edit { prefs ->
-                if (oldPrefs.contains("seen_warning")) {
-                    prefs[seenWarningKey] = oldPrefs.getBoolean("seen_warning", false)
-                }
-                if (oldPrefs.contains("version")) {
-                    prefs[versionKey] = oldPrefs.getInt("version", 0)
-                }
-                if (oldPrefs.contains("night_disabled")) {
-                    prefs[nightDisabledKey] = oldPrefs.getBoolean("night_disabled", false)
-                }
-                if (oldPrefs.contains("expanding_disabled")) {
-                    prefs[expandingDisabledKey] = oldPrefs.getBoolean("expanding_disabled", false)
-                }
-            }
-            oldPrefs.edit().clear().apply()
-        }
-    }
 }
