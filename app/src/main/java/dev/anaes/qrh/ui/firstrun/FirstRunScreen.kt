@@ -1,13 +1,18 @@
 package dev.anaes.qrh.ui.firstrun
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -25,12 +30,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.anaes.qrh.BuildConfig
 import dev.anaes.qrh.R
+import dev.anaes.qrh.ui.components.HtmlText
 import dev.anaes.qrh.ui.theme.LaunchBtnBgDisabledLight
 import dev.anaes.qrh.ui.theme.LaunchBtnBgEnabledLight
 import dev.anaes.qrh.ui.theme.LaunchBtnBgExitLight
@@ -69,12 +78,15 @@ fun FirstRunScreen(
     val btnTxtEnabled = if (isDark) LaunchBtnTxtEnabledDark else LaunchBtnTxtEnabledLight
     val btnTxtDisabled = if (isDark) LaunchBtnTxtDisabledDark else LaunchBtnTxtDisabledLight
 
+    val context = LocalContext.current
+
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         bottomBar = {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .windowInsetsPadding(WindowInsets.navigationBars)
                     .padding(16.dp),
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
             ) {
@@ -166,15 +178,31 @@ fun FirstRunScreen(
 
             Text(text = stringResource(R.string.splash_2a), style = MaterialTheme.typography.bodyMedium)
             Spacer(modifier = Modifier.height(8.dp))
-            Text(text = stringResource(R.string.splash_2b), style = MaterialTheme.typography.bodySmall)
+            Text(
+                text = stringResource(R.string.splash_2b),
+                style = MaterialTheme.typography.bodySmall,
+                fontStyle = FontStyle.Italic,
+            )
             Spacer(modifier = Modifier.height(12.dp))
-            Text(text = stringResource(R.string.splash_3), style = MaterialTheme.typography.bodySmall)
+            HtmlText(
+                html = stringResource(R.string.splash_3),
+                style = TextStyle(fontSize = MaterialTheme.typography.bodyMedium.fontSize, lineHeight = MaterialTheme.typography.bodyMedium.lineHeight),
+                onExternalLink = { url ->
+                    context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+                },
+            )
             Spacer(modifier = Modifier.height(12.dp))
-            Text(text = stringResource(R.string.splash_4), style = MaterialTheme.typography.bodySmall)
+            HtmlText(
+                html = stringResource(R.string.splash_4),
+                style = TextStyle(fontSize = MaterialTheme.typography.bodyMedium.fontSize, lineHeight = MaterialTheme.typography.bodyMedium.lineHeight),
+                onExternalLink = { url ->
+                    context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+                },
+            )
             Spacer(modifier = Modifier.height(12.dp))
-            Text(text = stringResource(R.string.splash_5), style = MaterialTheme.typography.bodySmall)
+            Text(text = stringResource(R.string.splash_5), style = MaterialTheme.typography.bodyMedium)
             Spacer(modifier = Modifier.height(12.dp))
-            Text(text = stringResource(R.string.splash_6), style = MaterialTheme.typography.bodySmall)
+            Text(text = stringResource(R.string.splash_6), style = MaterialTheme.typography.bodyMedium)
             Spacer(modifier = Modifier.height(12.dp))
             Text(
                 text = stringResource(R.string.splash_7),

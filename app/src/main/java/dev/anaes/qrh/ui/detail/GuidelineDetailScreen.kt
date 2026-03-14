@@ -21,6 +21,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.remember
@@ -67,6 +68,10 @@ fun GuidelineDetailScreen(
         else -> 34.sp
     }
 
+    val isExpanded by remember {
+        derivedStateOf { scrollBehavior.state.collapsedFraction < 0.5f }
+    }
+
     Scaffold(
         topBar = {
             LargeTopAppBar(
@@ -83,11 +88,13 @@ fun GuidelineDetailScreen(
                             fontSize = 16.sp,
                             color = MaterialTheme.colorScheme.onPrimary,
                         )
-                        Text(
-                            text = "v. ${guideline.version}",
-                            fontSize = 12.sp,
-                            color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.7f),
-                        )
+                        if (isExpanded) {
+                            Text(
+                                text = "v. ${guideline.version}",
+                                fontSize = 12.sp,
+                                color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.7f),
+                            )
+                        }
                     }
                 },
                 navigationIcon = {

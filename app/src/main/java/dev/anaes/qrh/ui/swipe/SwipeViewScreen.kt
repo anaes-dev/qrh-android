@@ -3,6 +3,7 @@ package dev.anaes.qrh.ui.swipe
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -32,6 +33,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -50,6 +52,7 @@ import dev.anaes.qrh.model.Guideline
 import dev.anaes.qrh.ui.components.HtmlText
 import dev.anaes.qrh.ui.theme.BoxColors
 import dev.anaes.qrh.ui.theme.LocalIsDarkTheme
+import kotlinx.coroutines.launch
 import kotlin.math.abs
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -60,6 +63,7 @@ fun SwipeViewScreen(
     onGuidelineLink: (code: String) -> Unit,
 ) {
     val context = LocalContext.current
+    val scope = rememberCoroutineScope()
     val filteredContent = remember(guideline.code) {
         guideline.content.filter { it.type != 11 && it.type != 12 }
     }
@@ -145,19 +149,29 @@ fun SwipeViewScreen(
             Row(
                 modifier = Modifier.padding(bottom = 12.dp),
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 repeat(filteredContent.size) { index ->
                     Box(
                         modifier = Modifier
-                            .size(if (index == pagerState.currentPage) 8.dp else 6.dp)
-                            .clip(CircleShape)
-                            .background(
-                                if (index == pagerState.currentPage)
-                                    MaterialTheme.colorScheme.primary
-                                else
-                                    MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
-                            )
-                    )
+                            .size(24.dp)
+                            .clickable {
+                                scope.launch { pagerState.animateScrollToPage(index) }
+                            },
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(if (index == pagerState.currentPage) 8.dp else 6.dp)
+                                .clip(CircleShape)
+                                .background(
+                                    if (index == pagerState.currentPage)
+                                        MaterialTheme.colorScheme.primary
+                                    else
+                                        MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
+                                )
+                        )
+                    }
                 }
             }
         }

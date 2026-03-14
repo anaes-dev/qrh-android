@@ -34,6 +34,9 @@ class QrhViewModel(
     var searchResults by mutableStateOf<List<SearchResult>>(emptyList())
         private set
 
+    var isSearching by mutableStateOf(false)
+        private set
+
     private var searchJob: Job? = null
 
     // Pre-compute plain text and lowercased versions for search
@@ -58,11 +61,14 @@ class QrhViewModel(
         searchJob?.cancel()
         if (query.isBlank()) {
             searchResults = emptyList()
+            isSearching = false
             return
         }
+        isSearching = true
         searchJob = viewModelScope.launch {
             delay(SEARCH_DEBOUNCE_MS)
             searchResults = performSearch(query.trim())
+            isSearching = false
         }
     }
 
@@ -137,7 +143,7 @@ class QrhViewModel(
     fun getGuideline(code: String): Guideline? = repository.getGuideline(code)
 
     companion object {
-        private const val SEARCH_DEBOUNCE_MS = 250L
+        private const val SEARCH_DEBOUNCE_MS = 150L
         private val WHITESPACE_REGEX = "\\s+".toRegex()
 
         private fun stripHtml(html: String): String {

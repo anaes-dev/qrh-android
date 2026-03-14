@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -31,8 +32,11 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import dev.anaes.qrh.BuildConfig
 import dev.anaes.qrh.R
@@ -180,10 +184,26 @@ fun AboutScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            Image(
+                painter = painterResource(R.drawable.by_nc_sa),
+                contentDescription = stringResource(R.string.CCBYNCSA),
+                modifier = Modifier
+                    .width(160.dp)
+                    .clickable {
+                        context.startActivity(
+                            Intent(Intent.ACTION_VIEW, Uri.parse("https://creativecommons.org/licenses/by-nc-sa/4.0/"))
+                        )
+                    },
+                contentScale = ContentScale.FillWidth,
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
             Text(
                 text = stringResource(R.string.CCBYNCSA),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.secondary,
+                textDecoration = TextDecoration.Underline,
                 modifier = Modifier.clickable {
                     context.startActivity(
                         Intent(Intent.ACTION_VIEW, Uri.parse("https://creativecommons.org/licenses/by-nc-sa/4.0/"))
