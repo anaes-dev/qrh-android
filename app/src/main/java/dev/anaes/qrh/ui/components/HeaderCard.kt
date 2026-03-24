@@ -1,16 +1,18 @@
 package dev.anaes.qrh.ui.components
 
-import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -18,13 +20,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import dev.anaes.qrh.BuildConfig
 import dev.anaes.qrh.R
 
@@ -44,11 +48,7 @@ fun HeaderCard(
             Row(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Image(
-                    painter = painterResource(R.mipmap.ic_launcher_round),
-                    contentDescription = stringResource(R.string.image),
-                    modifier = Modifier.size(32.dp),
-                )
+                AppIcon(iconSize = 32.dp)
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
                     text = stringResource(R.string.long_name),
@@ -67,7 +67,7 @@ fun HeaderCard(
                     modifier = Modifier.padding(horizontal = 8.dp),
                 )
                 Text(
-                    text = "Version ${BuildConfig.VERSION_NAME}",
+                    text = stringResource(R.string.version_name, BuildConfig.VERSION_NAME),
                     style = MaterialTheme.typography.labelSmall,
                     modifier = Modifier.padding(horizontal = 8.dp),
                 )
@@ -86,14 +86,32 @@ fun HeaderCard(
                 modifier = Modifier
                     .padding(8.dp)
                     .clickable {
-                        context.startActivity(
-                            Intent(
-                                Intent.ACTION_VIEW,
-                                Uri.parse("https://github.com/anaes-dev/qrh-android")
-                            )
-                        )
+                        context.openExternalLink("https://github.com/anaes-dev/qrh-android")
                     },
             )
         }
+    }
+}
+
+/**
+ * The round launcher icon, drawn from its background colour and foreground vector.
+ * (`painterResource(R.mipmap.ic_launcher_round)` can't be used: on API 26+ that resource is an
+ * adaptive icon, which painterResource doesn't support and throws on.)
+ */
+@Composable
+private fun AppIcon(iconSize: Dp) {
+    Box(
+        modifier = Modifier
+            .size(iconSize)
+            .clip(CircleShape)
+            .background(colorResource(R.color.ic_launcher_background)),
+        contentAlignment = Alignment.Center,
+    ) {
+        // Adaptive icon foregrounds are 108dp with the visible (masked) area being the middle 72dp
+        Image(
+            painter = painterResource(R.drawable.ic_launcher_foreground),
+            contentDescription = stringResource(R.string.image),
+            modifier = Modifier.requiredSize(iconSize * 108f / 72f),
+        )
     }
 }

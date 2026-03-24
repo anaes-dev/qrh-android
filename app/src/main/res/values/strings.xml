@@ -52,6 +52,9 @@
     <string name="label_warning">Warning</string>
     <string name="label_tick">Green tick</string>
     <string name="loading">Loading…</string>
+    <string name="please_scroll_first">Please scroll and read first.</string>
+    <string name="search">Search</string>
+    <string name="guideline_image">Guideline image</string>
 
     <string name="disable_dark_mode">Disable automatic theme</string>
     <string name="dark_theme">Dark theme</string>
@@ -61,4 +64,21 @@
     <string name="disable_expanding_toggle">Disable expanding boxes</string>
     <string name="expanding_toggle">Expanding boxes</string>
     <string name="expanding_toggle_explanation">If you would like all content boxes to be expanded by default, please change this setting:</string>
+
+    <string name="title_disclaimers">Disclaimers</string>
+    <string name="back">Back</string>
+    <string name="search_hint">Search guidelines…</string>
+    <string name="clear_search">Clear search</string>
+    <string name="download_pdf">Download PDF</string>
+    <string name="expand">Expand</string>
+    <string name="collapse">Collapse</string>
+    <string name="version_name">Version %1$s</string>
+    <string name="guideline_version">v.%1$d</string>
+    <string name="adapted_from_section">Adapted from QRH section %1$s</string>
+    <string name="card_position">%1$d of %2$d</string>
+    <string name="go_to_card">Go to card %1$d</string>
+    <string name="no_app_for_link">No app available to open this link</string>
+    <!-- Copyright holder name, year, website (from data.json) -->
+    <string name="cc_footer_attribution">%1$s %2$d. %3$s</string>
+    <string name="cc_footer_license">Subject to Creative Commons license CC BY-NC-SA 4.0. You may distribute original version or adapt for yourself and distribute with acknowledgement of source. You may not use for commercial purposes. Visit website for details.</string>
 </resources>

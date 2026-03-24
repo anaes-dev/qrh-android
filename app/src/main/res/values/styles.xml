@@ -1,6 +1,5 @@
 <resources>
     <style name="Theme.QRH" parent="android:Theme.Material.Light.NoActionBar">
-        <item name="android:statusBarColor">@color/colorPrimary</item>
         <item name="android:windowBackground">@color/windowBackground</item>
     </style>
 </resources>

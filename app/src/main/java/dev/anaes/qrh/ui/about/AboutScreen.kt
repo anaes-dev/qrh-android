@@ -1,7 +1,5 @@
 package dev.anaes.qrh.ui.about
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -35,7 +33,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -51,6 +48,8 @@ import androidx.compose.ui.unit.sp
 import dev.anaes.qrh.R
 import dev.anaes.qrh.data.UserPreferences
 import dev.anaes.qrh.ui.components.HeaderCard
+import dev.anaes.qrh.ui.components.openExternalLink
+import dev.anaes.qrh.ui.theme.qrhTopAppBarColors
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -68,17 +67,16 @@ fun AboutScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("About") },
+                title = { Text(stringResource(R.string.title_about)) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(
+                            Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = stringResource(R.string.back),
+                        )
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimary,
-                    navigationIconContentColor = MaterialTheme.colorScheme.onPrimary,
-                ),
+                colors = qrhTopAppBarColors(),
             )
         },
     ) { paddingValues ->
@@ -231,12 +229,7 @@ fun AboutScreen(
                         .width(120.dp)
                         .padding(8.dp)
                         .clickable {
-                            context.startActivity(
-                                Intent(
-                                    Intent.ACTION_VIEW,
-                                    Uri.parse("https://creativecommons.org/licenses/by-nc-sa/4.0/")
-                                )
-                            )
+                            context.openExternalLink("https://creativecommons.org/licenses/by-nc-sa/4.0/")
                         },
                 )
                 Text(
@@ -256,11 +249,7 @@ fun AboutScreen(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 Button(
-                    onClick = {
-                        context.startActivity(
-                            Intent(Intent.ACTION_VIEW, Uri.parse("http://anaes.dev/privacy"))
-                        )
-                    },
+                    onClick = { context.openExternalLink("https://anaes.dev/privacy") },
                     modifier = Modifier.weight(1f),
                 ) {
                     Text(stringResource(R.string.privacy))

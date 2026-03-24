@@ -1,16 +1,30 @@
 {
   "version": "3.00",
+  "copyrightHolders": {
+    "aagbi": {
+      "name": "The Association of Anaesthetists of Great Britain & Ireland",
+      "website": "www.aagbi.org/qrh"
+    },
+    "aoa": {
+      "name": "Association of Anaesthetists",
+      "website": "www.anaesthetists.org/qrh"
+    }
+  },
   "data": [
     {
       "code": "0-3",
       "title": "Instructions for use",
       "version": 2,
-      "url": "https://anaesthetists.org/Portals/0/PDFs/QRH/QRH_0-3_Instructions_for_use_v1.pdf",
+      "url": "https://anaesthetists.org/Portals/0/PDFs/QRH/QRH_0-3_Instructions_for_use_v2.pdf",
+      "copyright": {
+        "holder": "aoa",
+        "year": 2021
+      },
       "content": [
         {
           "type": 1,
           "head": "",
-          "body": "The QRH is intended for use by individuals who are familiar with it and who are practised in its use.<p>See http://anaesthetists.org/Quick-Reference-Handbook for further details on implementation.",
+          "body": "<p>The QRH is intended for use by individuals who are familiar with it and who are practised in its use.</p><p>See http://anaesthetists.org/Quick-Reference-Handbook for further details on implementation.</p>",
           "step": ""
         },
         {
@@ -102,24 +116,6 @@
           "head": "",
           "body": "The original handbook PDF for each section can be downloaded by clicking the button at the top-right of the screen.",
           "step": "!"
-        },
-        {
-          "type": 11,
-          "head": "",
-          "body": "v.1",
-          "step": ""
-        },
-        {
-          "type": 12,
-          "head": "The guidelines in this handbook are not intended to be standards of medical care. The ultimate judgement with regard to a particular clinical procedure or treatment plan must be made by the clinician in the light of the clinical data presented and the diagnostic and treatment options available.",
-          "body": "",
-          "step": ""
-        },
-        {
-          "type": 1,
-          "head": "",
-          "body": "<p><small><b>The Association of Anaesthetists of Great Britain & Ireland 2018. www.aagbi.org/qrh</b></small></p><p><small>Subject to Creative Commons license CC BY-NC-SA 4.0. You may distribute original version or adapt for yourself and distribute with acknowledgement of source. You may not use for commercial purposes. Visit website for details.</small></p>",
-          "step": ""
         }
       ]
     },
@@ -128,6 +124,10 @@
       "title": "Key basic plan",
       "version": 1,
       "url": "https://anaesthetists.org/Portals/0/PDFs/QRH/QRH_1-1_Key_basic_plan_v1.pdf",
+      "copyright": {
+        "holder": "aagbi",
+        "year": 2018
+      },
       "content": [
         {
           "type": 1,
@@ -218,24 +218,6 @@
           "head": "",
           "body": "Call for help if problem not resolving quickly.",
           "step": "7"
-        },
-        {
-          "type": 11,
-          "head": "",
-          "body": "v.1",
-          "step": ""
-        },
-        {
-          "type": 12,
-          "head": "The guidelines in this handbook are not intended to be standards of medical care. The ultimate judgement with regard to a particular clinical procedure or treatment plan must be made by the clinician in the light of the clinical data presented and the diagnostic and treatment options available.",
-          "body": "",
-          "step": ""
-        },
-        {
-          "type": 1,
-          "head": "",
-          "body": "<p><small><b>The Association of Anaesthetists of Great Britain & Ireland 2018. www.aagbi.org/qrh</b></small></p><p><small>Subject to Creative Commons license CC BY-NC-SA 4.0. You may distribute original version or adapt for yourself and distribute with acknowledgement of source. You may not use for commercial purposes. Visit website for details.</small></p>",
-          "step": ""
         }
       ]
     },
@@ -244,6 +226,10 @@
       "title": "Cardiac arrest",
       "version": 1,
       "url": "https://anaesthetists.org/Portals/0/PDFs/QRH/QRH_2-1_Cardiac_arrest_Revised_v1.pdf",
+      "copyright": {
+        "holder": "aagbi",
+        "year": 2018
+      },
       "content": [
         {
           "type": 1,
@@ -296,7 +282,7 @@
         {
           "type": 3,
           "head": "Circulation",
-          "body": "<li>Check rate and adequacy of chest compressions (visual and ETCO₂).<li>Encourage rotation of personnel performing compressions.</li><li>If IV access fails or impossible use intraosseous (IO) route.</li><li>Check ECG rhythm for no more than 5 seconds.</li><li>Follow Resuscitation Council (UK) and ERC Guidelines.</li><li>See <b>Boxes B and C</b> for reminders about drugs and defibrillation.</li>",
+          "body": "<ul><li>Check rate and adequacy of chest compressions (visual and ETCO₂).</li><li>Encourage rotation of personnel performing compressions.</li><li>If IV access fails or impossible use intraosseous (IO) route.</li><li>Check ECG rhythm for no more than 5 seconds.</li><li>Follow Resuscitation Council (UK) and ERC Guidelines.</li><li>See <b>Boxes B and C</b> for reminders about drugs and defibrillation.</li></ul>",
           "step": "5"
         },
         {
@@ -308,7 +294,7 @@
         {
           "type": 8,
           "head": "Box C: DEFIBRILLATION",
-          "body": "<p>Continue compressions while charging</p><p>Biphasic 4 J.kg⁻¹ (adult 150-200 J)</small></p><p>DO NOT check pulse after defibrillation</p><p>Use 3 stacked shocks in cardiac catheterisation lab</p>",
+          "body": "<p>Continue compressions while charging</p><p>Biphasic 4 J.kg⁻¹ <small>(adult 150-200 J)</small></p><p>DO NOT check pulse after defibrillation</p><p>Use 3 stacked shocks in cardiac catheterisation lab</p>",
           "step": ""
         },
         {
@@ -328,24 +314,6 @@
           "head": "Box D: DON'T FORGET!",
           "body": "<ul><li><b>Use waveform capnography. No expired CO₂ = lungs not being ventilated (assume and exclude oesophageal intubation). Very rarely, absent/minimal expired CO₂ = CPR not occurring OR pulmonary circulation disconnected from systemic (e.g. in major trauma).</b> Sudden increase in ETCO₂ usually signals return of spontaneous circulation</li><li>Optimise position for chest compressions (use overhead for bariatric patients)</li><li>Uterine displacement in pregnant patients.</li><li>Ventilator can free up hands but remember to set to volume control. Minimise intrathoracic pressure: avoid excessive tidal volume and hyperventilation.</li></ul>",
           "step": ""
-        },
-        {
-          "type": 11,
-          "head": "",
-          "body": "v.1",
-          "step": ""
-        },
-        {
-          "type": 12,
-          "head": "The guidelines in this handbook are not intended to be standards of medical care. The ultimate judgement with regard to a particular clinical procedure or treatment plan must be made by the clinician in the light of the clinical data presented and the diagnostic and treatment options available.",
-          "body": "",
-          "step": ""
-        },
-        {
-          "type": 1,
-          "head": "",
-          "body": "<p><small><b>The Association of Anaesthetists of Great Britain & Ireland 2018. www.aagbi.org/qrh</b></small></p><p><small>Subject to Creative Commons license CC BY-NC-SA 4.0. You may distribute original version or adapt for yourself and distribute with acknowledgement of source. You may not use for commercial purposes. Visit website for details.</small></p>",
-          "step": ""
         }
       ]
     },
@@ -354,6 +322,10 @@
       "title": "Hypoxia / desaturation / cyanosis",
       "version": 1,
       "url": "https://anaesthetists.org/Portals/0/PDFs/QRH/QRH_2-2_Hypoxia-desaturation-cyanosis_v1.pdf",
+      "copyright": {
+        "holder": "aagbi",
+        "year": 2018
+      },
       "content": [
         {
           "type": 1,
@@ -376,7 +348,7 @@
         {
           "type": 3,
           "head": "Adequate oxygen delivery",
-          "body": "<ul><li>Pause surgery if possible.</li><li>Increase fresh gas flow AND give 100% oxygen AND check measured F<small>i</small>O₂.<li>Visual inspection of entire breathing system including valves and connections.</li><li>Rapidly confirm reservoir bag moving OR ventilator bellows moving.</li><li>If S<small>p</small>O₂ low, is it accurate? Consider whether poor perfusion could be the problem.</li></ul>",
+          "body": "<ul><li>Pause surgery if possible.</li><li>Increase fresh gas flow AND give 100% oxygen AND check measured F<small>i</small>O₂.</li><li>Visual inspection of entire breathing system including valves and connections.</li><li>Rapidly confirm reservoir bag moving OR ventilator bellows moving.</li><li>If S<small>p</small>O₂ low, is it accurate? Consider whether poor perfusion could be the problem.</li></ul>",
           "step": "1"
         },
         {
@@ -432,24 +404,6 @@
           "head": "",
           "body": "If not resolving call for help AND check arterial blood gas, 12-lead ECG, chest X-ray",
           "step": "6"
-        },
-        {
-          "type": 11,
-          "head": "",
-          "body": "v.1",
-          "step": ""
-        },
-        {
-          "type": 12,
-          "head": "The guidelines in this handbook are not intended to be standards of medical care. The ultimate judgement with regard to a particular clinical procedure or treatment plan must be made by the clinician in the light of the clinical data presented and the diagnostic and treatment options available.",
-          "body": "",
-          "step": ""
-        },
-        {
-          "type": 1,
-          "head": "",
-          "body": "<p><small><b>The Association of Anaesthetists of Great Britain & Ireland 2018. www.aagbi.org/qrh</b></small></p><p><small>Subject to Creative Commons license CC BY-NC-SA 4.0. You may distribute original version or adapt for yourself and distribute with acknowledgement of source. You may not use for commercial purposes. Visit website for details.</small></p>",
-          "step": ""
         }
       ]
     },
@@ -458,6 +412,10 @@
       "title": "Increased airway pressure",
       "version": 1,
       "url": "https://anaesthetists.org/Portals/0/PDFs/QRH/QRH_2-3_Increased_airway_pressure_v1.pdf",
+      "copyright": {
+        "holder": "aagbi",
+        "year": 2018
+      },
       "content": [
         {
           "type": 1,
@@ -530,24 +488,6 @@
           "head": "",
           "body": "If not resolving, call for help AND check arterial blood gas, 12-lead ECG, chest X-ray",
           "step": "6"
-        },
-        {
-          "type": 11,
-          "head": "",
-          "body": "v.1",
-          "step": ""
-        },
-        {
-          "type": 12,
-          "head": "The guidelines in this handbook are not intended to be standards of medical care. The ultimate judgement with regard to a particular clinical procedure or treatment plan must be made by the clinician in the light of the clinical data presented and the diagnostic and treatment options available.",
-          "body": "",
-          "step": ""
-        },
-        {
-          "type": 1,
-          "head": "",
-          "body": "<p><small><b>The Association of Anaesthetists of Great Britain & Ireland 2018. www.aagbi.org/qrh</b></small></p><p><small>Subject to Creative Commons license CC BY-NC-SA 4.0. You may distribute original version or adapt for yourself and distribute with acknowledgement of source. You may not use for commercial purposes. Visit website for details.</small></p>",
-          "step": ""
         }
       ]
     },
@@ -556,6 +496,10 @@
       "title": "Hypotension",
       "version": 1,
       "url": "https://anaesthetists.org/Portals/0/PDFs/QRH/QRH_2-4_Hypotension_v1.pdf",
+      "copyright": {
+        "holder": "aagbi",
+        "year": 2018
+      },
       "content": [
         {
           "type": 1,
@@ -646,24 +590,6 @@
           "head": "Also consider:",
           "body": "<ul><li>Cardiac ischaemia <b>→3-12</b></li><li>Anaphylaxis <b>→3-1</b></li><li>Cardiac tamponade <b>→3-9</b></li><li>Local anaesthetic toxicity <b>→3-10</b></li><li>Sepsis <b>→3-14</b></li><li>Cardiac valvular problem</li><li>Endocrine cause (e.g. steroid dependency)</li></ul>",
           "step": ""
-        },
-        {
-          "type": 11,
-          "head": "",
-          "body": "v.1",
-          "step": ""
-        },
-        {
-          "type": 12,
-          "head": "The guidelines in this handbook are not intended to be standards of medical care. The ultimate judgement with regard to a particular clinical procedure or treatment plan must be made by the clinician in the light of the clinical data presented and the diagnostic and treatment options available.",
-          "body": "",
-          "step": ""
-        },
-        {
-          "type": 1,
-          "head": "",
-          "body": "<p><small><b>The Association of Anaesthetists of Great Britain & Ireland 2018. www.aagbi.org/qrh</b></small></p><p><small>Subject to Creative Commons license CC BY-NC-SA 4.0. You may distribute original version or adapt for yourself and distribute with acknowledgement of source. You may not use for commercial purposes. Visit website for details.</small></p>",
-          "step": ""
         }
       ]
     },
@@ -672,6 +598,10 @@
       "title": "Hypertension",
       "version": 1,
       "url": "https://anaesthetists.org/Portals/0/PDFs/QRH/QRH_2-5_Hypertension_v1.pdf",
+      "copyright": {
+        "holder": "aagbi",
+        "year": 2018
+      },
       "content": [
         {
           "type": 1,
@@ -750,24 +680,6 @@
           "head": "Box C: TEMPORISING DRUGS FOR HYPERTENSION",
           "body": "<ul><li>Alfentanil 10 µg.kg⁻¹ <small>(adult 0.5-1 mg)</small></li><li>Propofol 1 mg.kg⁻¹ <small>(adult 50-100 mg)</small></li><li>Labetolol 0.5 mg.kg⁻¹ <small>(adult 25-50mg) repeat as necessary</small></li><li>Esmolol 0.5 mg.kg⁻¹ <small>(adult 25-50mg) follow with infusion</small></li><li>hydrALAZINE 0.1 mg.kg⁻¹ <small>(adult 5-10mg)</small></li><li>Glyceryl trinitrate 0.5-5 µg.kg.min⁻¹ infusion <small>(adult 2-20 ml.hr⁻¹ of 1 mg.ml⁻¹ solution)</small></li></ul>",
           "step": ""
-        },
-        {
-          "type": 11,
-          "head": "",
-          "body": "v.1",
-          "step": ""
-        },
-        {
-          "type": 12,
-          "head": "The guidelines in this handbook are not intended to be standards of medical care. The ultimate judgement with regard to a particular clinical procedure or treatment plan must be made by the clinician in the light of the clinical data presented and the diagnostic and treatment options available.",
-          "body": "",
-          "step": ""
-        },
-        {
-          "type": 1,
-          "head": "",
-          "body": "<p><small><b>The Association of Anaesthetists of Great Britain & Ireland 2018. www.aagbi.org/qrh</b></small></p><p><small>Subject to Creative Commons license CC BY-NC-SA 4.0. You may distribute original version or adapt for yourself and distribute with acknowledgement of source. You may not use for commercial purposes. Visit website for details.</small></p>",
-          "step": ""
         }
       ]
     },
@@ -776,6 +688,10 @@
       "title": "Bradycardia",
       "version": 1,
       "url": "https://anaesthetists.org/Portals/0/PDFs/QRH/QRH_2-6_Bradycardia_v1.pdf",
+      "copyright": {
+        "holder": "aagbi",
+        "year": 2018
+      },
       "content": [
         {
           "type": 1,
@@ -798,7 +714,7 @@
         {
           "type": 5,
           "head": "Box A: CRITICAL BRADYCARDIA",
-          "body": "<p>Give atropine 20 µg.kg⁻¹ (adult 0.5-1 mg) with fluid flush.<p>If no pulse: (or heart rate &lt;60 bpm infant or neonate):</p><p>Delegate (minimum) 1 person to chest compressions</p><p><b>→2-1 (Cardiac arrest)</b></p>",
+          "body": "<p>Give atropine 20 µg.kg⁻¹ (adult 0.5-1 mg) with fluid flush.</p><p>If no pulse: (or heart rate &lt;60 bpm infant or neonate):</p><p>Delegate (minimum) 1 person to chest compressions</p><p><b>→2-1 (Cardiac arrest)</b></p>",
           "step": ""
         },
         {
@@ -866,24 +782,6 @@
           "head": "Box D: TRANSCUTANEOUS PACING",
           "body": "<ul><li>Attach pads and ECG leads from pacing defibrillator</li><li>Set to PACING MODE</li><li>Set PACER RATE</li><li>Increase PACER OUTPUT from 60 mA until capture (spikes align QRS)</li><li>Confirm capture: electrical AND mechanical (femoral pulse)</li><li>Set PACER OUTPUT 10 mA above capture</li></ul>",
           "step": ""
-        },
-        {
-          "type": 11,
-          "head": "",
-          "body": "v.1",
-          "step": ""
-        },
-        {
-          "type": 12,
-          "head": "The guidelines in this handbook are not intended to be standards of medical care. The ultimate judgement with regard to a particular clinical procedure or treatment plan must be made by the clinician in the light of the clinical data presented and the diagnostic and treatment options available.",
-          "body": "",
-          "step": ""
-        },
-        {
-          "type": 1,
-          "head": "",
-          "body": "<p><small><b>The Association of Anaesthetists of Great Britain & Ireland 2018. www.aagbi.org/qrh</b></small></p><p><small>Subject to Creative Commons license CC BY-NC-SA 4.0. You may distribute original version or adapt for yourself and distribute with acknowledgement of source. You may not use for commercial purposes. Visit website for details.</small></p>",
-          "step": ""
         }
       ]
     },
@@ -892,6 +790,10 @@
       "title": "Tachycardia",
       "version": 1,
       "url": "https://anaesthetists.org/Portals/0/PDFs/QRH/QRH_2-7_Tachycardia_v1.pdf",
+      "copyright": {
+        "holder": "aagbi",
+        "year": 2018
+      },
       "content": [
         {
           "type": 1,
@@ -922,6 +824,12 @@
           "head": "Adequate oxygen delivery",
           "body": "<ul><li>Check fresh gas flow for circuit in use AND check measured F<small>i</small>O₂.</li><li>Visual inspection of entire breathing system including valves and connections.</li><li>Rapidly confirm reservoir bag moving OR ventilator bellows moving.</li></ul>",
           "step": "2"
+        },
+        {
+          "type": 3,
+          "head": "Airway",
+          "body": "<ul><li>Check position of airway device and listen for noise (including larynx and stomach).</li><li>Check capnogram shape compatible with patent airway.</li><li>Confirm airway device is patent (consider passing suction catheter).</li></ul>",
+          "step": "3"
         },
         {
           "type": 3,
@@ -976,24 +884,6 @@
           "head": "Depth",
           "body": "Consider current depth of anaesthesia AND adequacy of analgesia.",
           "step": "9"
-        },
-        {
-          "type": 11,
-          "head": "",
-          "body": "v.1",
-          "step": ""
-        },
-        {
-          "type": 12,
-          "head": "The guidelines in this handbook are not intended to be standards of medical care. The ultimate judgement with regard to a particular clinical procedure or treatment plan must be made by the clinician in the light of the clinical data presented and the diagnostic and treatment options available.",
-          "body": "",
-          "step": ""
-        },
-        {
-          "type": 1,
-          "head": "",
-          "body": "<p><small><b>The Association of Anaesthetists of Great Britain & Ireland 2018. www.aagbi.org/qrh</b></small></p><p><small>Subject to Creative Commons license CC BY-NC-SA 4.0. You may distribute original version or adapt for yourself and distribute with acknowledgement of source. You may not use for commercial purposes. Visit website for details.</small></p>",
-          "step": ""
         }
       ]
     },
@@ -1002,6 +892,10 @@
       "title": "Peri-operative hyperthermia",
       "version": 1,
       "url": "https://anaesthetists.org/Portals/0/PDFs/QRH/QRH_2-8_Perioperative_hyperthermia_v1.pdf",
+      "copyright": {
+        "holder": "aagbi",
+        "year": 2018
+      },
       "content": [
         {
           "type": 1,
@@ -1104,32 +998,18 @@
           "head": "",
           "body": "<p>Monitor and manage life-threatening complications especially:</p><ul><li>Hyperkalaemia, hypoglycaemia, acidosis</li><li>Hypotension <b>→2-4</b>, malignant hypertension</li><li>Altered conscious level, convulsions</li><li>Coagulopathy and disseminated intravascular coagulation</li></ul>",
           "step": "8"
-        },
-        {
-          "type": 11,
-          "head": "",
-          "body": "v.1",
-          "step": ""
-        },
-        {
-          "type": 12,
-          "head": "The guidelines in this handbook are not intended to be standards of medical care. The ultimate judgement with regard to a particular clinical procedure or treatment plan must be made by the clinician in the light of the clinical data presented and the diagnostic and treatment options available.",
-          "body": "",
-          "step": ""
-        },
-        {
-          "type": 1,
-          "head": "",
-          "body": "<p><small><b>The Association of Anaesthetists of Great Britain & Ireland 2018. www.aagbi.org/qrh</b></small></p><p><small>Subject to Creative Commons license CC BY-NC-SA 4.0. You may distribute original version or adapt for yourself and distribute with acknowledgement of source. You may not use for commercial purposes. Visit website for details.</small></p>",
-          "step": ""
         }
       ]
     },
     {
       "code": "3-1",
       "title": "Anaphylaxis",
-      "version": 3,
-      "url": "https://anaesthetists.org/Portals/0/PDFs/QRH/QRH_3-1_Anaphylaxis_v3.pdf",
+      "version": 5,
+      "url": "https://anaesthetists.org/Portals/0/PDFs/QRH/QRH_3-1_Anaphylaxis_v5.pdf",
+      "copyright": {
+        "holder": "aoa",
+        "year": 2022
+      },
       "content": [
         {
           "type": 1,
@@ -1170,7 +1050,7 @@
         {
           "type": 4,
           "head": "",
-          "body": "Elevate patient’s legs if there is hypotension. ",
+          "body": "Elevate patient’s legs if there is hypotension.",
           "step": "5"
         },
         {
@@ -1181,93 +1061,63 @@
         },
         {
           "type": 5,
-          "head": "Box C: CRITICAL CHANGES",
+          "head": "Box B: CRITICAL CHANGES",
           "body": "<b>CARDIAC ARREST →2-1</b>",
           "step": ""
         },
         {
           "type": 4,
           "head": "",
-          "body": "<p>Give drugs to treat hypotension <b>(Box A)</b>:</p><ul><li><b>Hypotension may be resistant and may require prolonged treatment.</b></li><li>Give adrenaline bolus and repeat as necessary.</li><li>Consider starting an adrenaline infusion after three boluses.</li><li>If hypotension resistant, give alternate vasopressor (e.g. metaraminol, noradrenaline infusion +/- vasopressin)</li><li>Give glucagon in ß-blocked patient unresponsive to adrenaline.</li></ul>",
+          "body": "<p>Give drugs to treat hypotension (Box A):</p><ul><li><b>Hypotension may be resistant and may require prolonged treatment.</b></li><li>Give adrenaline bolus and repeat as necessary.</li><li>Consider starting an adrenaline infusion after three boluses.</li><li>If hypotension resistant, give alternate vasopressor (e.g. metaraminol, noradrenaline infusion +/- vasopressin)</li><li>Give glucagon in ß-blocked patient unresponsive to adrenaline.</li><li>Hydrocortisone and chlorphenamine are no longer part of acute treatment (Box C)</li></ul>",
           "step": "7"
         },
         {
           "type": 6,
           "head": "Box A: DRUGS TO TREAT HYPOTENSION",
-          "body": "<p><b>IF CARDIAC ARREST →2-1</b></p><ul><li>Adult adrenaline:<br>Intra<b>VENOUS</b> 50 μg <small>(= 0.5 ml of <b>1:10 000</b>)</small><br>Intra<b>MUSCULAR</b> 0.5 mg <small>(= 0.5 ml of <b>1:1000</b>) <i>if IV not possible</i></small></li><li>Paediatric adrenaline: intraVENOUS 1.0 μg.kg⁻¹ <small>(0.1 ml.kg⁻¹ of <b>1:100 000</b>)<br>[<b>1:100 000</b> solution made by diluting 1 ml of <b>1:10 000</b> up to 10 ml]</small></li><li>If no IV access, intraosseous adrenaline dose same as IV</li><li>Suggested adrenaline infusion regimes (adult):<br>5 mg in 500 mL dextrose = <b>1:100 000</b>, titrate to effect<br>3 mg in 50 mL saline. Start at 3 ml.h-1 (= 3 μg.min⁻¹), titrate to maximum 40 ml.h⁻¹1 (= 40 μg.min⁻¹)</li><li>Glucagon (adult): 1 mg, <small>repeat as necessary</small></li><li>Vasopressin (adult): 2 units, <small>repeat necessary (consider infusion)</small></li></ul>",
+          "body": "<p><b>IF CARDIAC ARREST →2-1</b></p><ul><li>Adult adrenaline:<br>intra<b>VENOUS</b> 50 μg <small>(= 0.5 ml of 1:<b>10 000</b>)</small><br>intra<b>MUSCULAR</b> 0.5 mg <small>(= 0.5 ml of 1:<b>1000</b>) <i>if IV not possible</i></small></li><li>Paediatric adrenaline:<br>intraVENOUS 1.0 μg.kg⁻¹ <small>(0.1 ml.kg⁻¹ of 1:<b>100 000</b>)<br>[1:<b>100 000</b> solution made by diluting 1 ml of 1:<b>10 000</b> up to 10 ml]</small></li><li>If no IV access, intraosseous adrenaline dose same as IV</li><li>Suggested adrenaline infusion regimes (adult):<br>5 mg in 500 mL dextrose = 1:<b>100 000</b>, titrate to effect<br>3 mg in 50 mL saline. Start at 3 ml.h-1 (= 3 μg.min⁻¹), titrate to maximum 40 ml.h⁻¹ (= 40 μg.min⁻¹)</li><li>Glucagon (adult): 1 mg, <small>repeat as necessary</small></li><li>Vasopressin (adult): 2 units, <small>repeat as necessary (consider infusion)</small></li></ul>",
+          "step": "7"
+        },
+        {
+          "type": 6,
+          "head": "Box C: HYDROCORTISONE and CHLORPHENAMINE CHANGES",
+          "body": "<p><b>AFTER</b> initial resuscitation:</p><ul><li>Consider steroids for refractory reactions or ongoing asthma/shock.</li><li>Antihistamines (preferably oral, non-sedating) can be given for skin symptoms.</li></ul>",
           "step": "7"
         },
         {
           "type": 4,
           "head": "",
-          "body": "Give rapid IV crystalloid: 20 ml.kg⁻¹ initial bolus, repeated until hypotension resolved.",
+          "body": "<p>Give rapid IV crystalloid:</p><ul><li>20 ml.kg⁻¹ initial bolus, repeated until hypotension resolved.</li><li>Fluid requirements may be significant</li></ul>",
           "step": "8"
         },
         {
           "type": 4,
           "head": "",
-          "body": "Give hydrocortisone as part of resuscitation <b>(Box B)</b>.",
+          "body": "If bronchospasm is persistent, consider <b>→3-4</b>",
           "step": "9"
-        },
-        {
-          "type": 6,
-          "head": "Box B: OTHER DRUGS",
-          "body": "<p><b>Hydrocortisone i.v. doses:</b></p><ul><li>Adult: 200 mg</li><li>Child 6-12 years: 100 mg</li><li>Child 6 months-6 years: 50 mg</li><li>Child &lt;6 months: 25 mg </li></ul><p><b>Chlorphenamine i.v. doses:</b></p><ul><li>Adult: 10 mg</li><li>Child 6-12 years: 5 mg</li><li>Child 6 months-6 years: 2.5 mg</li><li>Child &lt;6 months: 250 μg.kg⁻¹</li></ul>",
-          "step": ""
         },
         {
           "type": 4,
           "head": "",
-          "body": "If bronchospasm is persistent, consider <b>→3-4</b>",
+          "body": "<p>Take 5-10 ml clotted blood sample for <b>serum tryptase</b> as soon as patient is stable.</p><ul><li>Plan for repeat sample at 1-2 hours and >24 hours.</li></ul>",
           "step": "10"
         },
         {
           "type": 4,
           "head": "",
-          "body": "Take 5-10 ml clotted blood sample for <b>serum tryptase</b> as soon as patient is stable. Plan for repeat sample at 1-2 hours and >24 hours.",
+          "body": "Plan transfer of the patient to an appropriate critical care area. Note tasks in Box D.",
           "step": "11"
-        },
-        {
-          "type": 4,
-          "head": "",
-          "body": "Give chlorphenamine when feasible <b>(Box B)</b>.",
-          "step": "12"
-        },
-        {
-          "type": 4,
-          "head": "",
-          "body": "Plan transfer of the patient to an appropriate critical care area. Note tasks in <b>Box D</b>.",
-          "step": "13"
         },
         {
           "type": 9,
           "head": "Box D: DON’T FORGET",
-          "body": "<ul><li>Repeat testing for serum tryptase at 1-2 hours and >24 hours</li><li>Liaise with hospital laboratory about analysis of samples</li><li>Liaise with department anaphylaxis lead regarding referral to a specialist allergy or immunology centre to identify the causative agent (see www.bsaci.org for details</li><li>Inform the patient, surgeon and general practitioner</li><li>Report to MHRA: www.mhra.gov.uk/yellowcard</li><li>NAP6 online resource: www.nationalauditprojects.org.uk/NAP6-Resources#pt</li></ul>",
+          "body": "<ul><li>Repeat testing for serum tryptase at 1-2 hours and >24 hours.</li><li>Liaise with hospital laboratory about analysis of samples.</li><li>Liaise with department anaphylaxis lead regarding referral to a specialist allergy or immunology centre to identify the causative agent (see www.bsaci.org for details).</li><li>Inform the patient, surgeon and general practitioner</li><li>Report to MHRA: yellowcard.mhra.gov.uk</li><li>NAP6 online resource <b>including anaphylaxis follow-up packs</b>: www.nationalauditprojects.org.uk/NAP6-Resources#pt  </li></ul>",
           "step": ""
         },
         {
           "type": 4,
           "head": "",
-          "body": "Prevent re-administration of possible trigger agents (allergy band, annotate notes/drug chart.",
-          "step": "14"
-        },
-        {
-          "type": 11,
-          "head": "",
-          "body": "v.3",
-          "step": ""
-        },
-        {
-          "type": 12,
-          "head": "The guidelines in this handbook are not intended to be standards of medical care. The ultimate judgement with regard to a particular clinical procedure or treatment plan must be made by the clinician in the light of the clinical data presented and the diagnostic and treatment options available.",
-          "body": "",
-          "step": ""
-        },
-        {
-          "type": 1,
-          "head": "",
-          "body": "<p><small><b>The Association of Anaesthetists of Great Britain & Ireland 2018. www.aagbi.org/qrh</b></small></p><p><small>Subject to Creative Commons license CC BY-NC-SA 4.0. You may distribute original version or adapt for yourself and distribute with acknowledgement of source. You may not use for commercial purposes. Visit website for details.</small></p>",
-          "step": ""
+          "body": "Prevent re-administration of possible trigger agents (allergy band, annotate notes/drug chart)",
+          "step": "12"
         }
       ]
     },
@@ -1276,6 +1126,10 @@
       "title": "Massive blood loss",
       "version": 2,
       "url": "https://anaesthetists.org/Portals/0/PDFs/QRH/QRH_3-2_Massive_blood_loss_v2.pdf",
+      "copyright": {
+        "holder": "aagbi",
+        "year": 2018
+      },
       "content": [
         {
           "type": 1,
@@ -1328,7 +1182,7 @@
         {
           "type": 4,
           "head": "",
-          "body": "Begin active patient warming",
+          "body": "Use rapid infusion and fluid warming equipment",
           "step": "7"
         },
         {
@@ -1378,24 +1232,6 @@
           "head": "",
           "body": "Plan ongoing care in an appropriate clinical area.",
           "step": "12"
-        },
-        {
-          "type": 11,
-          "head": "",
-          "body": "v.2",
-          "step": ""
-        },
-        {
-          "type": 12,
-          "head": "The guidelines in this handbook are not intended to be standards of medical care. The ultimate judgement with regard to a particular clinical procedure or treatment plan must be made by the clinician in the light of the clinical data presented and the diagnostic and treatment options available.",
-          "body": "",
-          "step": ""
-        },
-        {
-          "type": 1,
-          "head": "",
-          "body": "<p><small><b>The Association of Anaesthetists of Great Britain & Ireland 2018. www.aagbi.org/qrh</b></small></p><p><small>Subject to Creative Commons license CC BY-NC-SA 4.0. You may distribute original version or adapt for yourself and distribute with acknowledgement of source. You may not use for commercial purposes. Visit website for details.</small></p>",
-          "step": ""
         }
       ]
     },
@@ -1404,6 +1240,10 @@
       "title": "Can't intubate, can't oxygenate (CICO)",
       "version": 1,
       "url": "https://anaesthetists.org/Portals/0/PDFs/QRH/QRH_3-3_Cant_intubate_cant_oxygenate_CICO_v1.pdf",
+      "copyright": {
+        "holder": "aagbi",
+        "year": 2018
+      },
       "content": [
         {
           "type": 1,
@@ -1450,7 +1290,7 @@
         {
           "type": 4,
           "head": "",
-          "body": "Call for airway rescue trolley and then cardiac arrest trolley",
+          "body": "Give neuromuscular blocking drug now",
           "step": "5"
         },
         {
@@ -1506,32 +1346,18 @@
           "head": "",
           "body": "Secure tube, continue to oxygenate patient and ensure adequate depth of anaesthesia",
           "step": "11"
-        },
-        {
-          "type": 11,
-          "head": "",
-          "body": "v.1",
-          "step": ""
-        },
-        {
-          "type": 12,
-          "head": "The guidelines in this handbook are not intended to be standards of medical care. The ultimate judgement with regard to a particular clinical procedure or treatment plan must be made by the clinician in the light of the clinical data presented and the diagnostic and treatment options available.",
-          "body": "",
-          "step": ""
-        },
-        {
-          "type": 1,
-          "head": "",
-          "body": "<p><small><b>The Association of Anaesthetists of Great Britain & Ireland 2018. www.aagbi.org/qrh</b></small></p><p><small>Subject to Creative Commons license CC BY-NC-SA 4.0. You may distribute original version or adapt for yourself and distribute with acknowledgement of source. You may not use for commercial purposes. Visit website for details.</small></p>",
-          "step": ""
         }
       ]
     },
     {
       "code": "3-4",
       "title": "Bronchospasm",
-      "version": 2,
-      "url": "https://anaesthetists.org/Portals/0/PDFs/QRH/QRH_3-4_Bronchospasm_v2.pdf",
+      "version": 3,
+      "url": "https://anaesthetists.org/Portals/0/PDFs/QRH/QRH_3-4_Bronchospasm_v3_June%202023.pdf",
+      "copyright": {
+        "holder": "aoa",
+        "year": 2023
+      },
       "content": [
         {
           "type": 1,
@@ -1572,43 +1398,37 @@
         {
           "type": 4,
           "head": "",
-          "body": "<p>Deepen anaesthesia:</p><ul><li>Bronchospasm may be a consequence of light anaesthesia</li><li>Inhalational anaesthetic agents are bronchodilators</li><li>Avoid isoflurane or desflurane if possible – airway irritant if increased rapidly</li></ul>",
+          "body": "<p>Deepen anaesthesia:</p><ul><li>Inhalational anaesthetic agents are bronchodilators AND bronchospasm may be a consequence of light anaesthesia.</li><li>Avoid isoflurane or desflurane if possible – airway irritant if increased rapidly.</li></ul>",
           "step": "5"
         },
         {
           "type": 4,
           "head": "",
-          "body": "Exclude malpositioned or obstructed tracheal tube or supraglottic airway. Consider whether there could be endobronchial or oesophageal intubation.",
+          "body": "<p>Exclude conditions that may be misinterpreted as bronchospasm:</p><ul><li>Mispositioned or occluded airway device.</li><li>Endobronchial or oesophageal intubation.</li><li>Occlusion of breathing system - check all hoses.</li><li>Consider other conditions mimicking bronchospasm <b>(Box A)</b>.</li></ul>",
           "step": "6"
         },
         {
-          "type": 4,
-          "head": "",
-          "body": "If anaphylaxis suspected <b>→3-1</b>",
-          "step": "7"
-        },
-        {
-          "type": 4,
-          "head": "",
-          "body": "If airway soiling/aspiration suspected airway see <b>Box A</b>",
-          "step": "8"
-        },
-        {
           "type": 9,
-          "head": "Box A: ACTIONS IF AIRWAY SOILING/ASPIRATION",
-          "body": "<p>Consider tracheal intubation and tracheal toilet</p><p>Use nasogastric tube to aspirate gastric contents</p><p>Chest X-ray</p><p>Consider post op level of care and follow-up</p>",
+          "head": "Box A: ALTERNATES and MIMICS",
+          "body": "<p><b>Wheeze:</b> pulmonary oedema; ARDS; laryngospasm.</p><p><b>Raised airway pressure:</b> obstruction of larynx, trachea or bronchi; decreased lung compliance; pneumothorax.</p>",
           "step": ""
         },
         {
           "type": 4,
           "head": "",
-          "body": "Treat bronchospasm <b>(Box B)</b>. First line is salbutamol by metered dose inhaler or by nebuliser; i.v. route is second line. Other drugs at clinician discretion.",
-          "step": "9"
+          "body": "Consider anaphylaxis; if suspected <b>→3-1</b>",
+          "step": "7"
+        },
+        {
+          "type": 4,
+          "head": "",
+          "body": "Treat bronchospasm <b>(Box B)</b>. First line is salbutamol by metered dose inhaler or by nebuliser (remove HME filter or nebulise downstream); intraVENOUS route is second line. Other drugs at clinician discretion.",
+          "step": "8"
         },
         {
           "type": 6,
           "head": "Box B: SALBUTAMOL",
-          "body": "<p><b>Salbutamol</b></p><ul><li>Nebuliser:<br>Child &lt;5 yr, 2.5 mg<br>Adult and &gt;5 yr 5 mg</li><li>IntraVENOUS bolus:<br>Adult 250 µg diluted, slowly<br>Child 1-23 months 5 µg.kg⁻¹ <small>once over 5 mins</small><br>Child 2-17 years 15 µg.kg⁻¹ <small>once over 5 mins (max. 250 µg)</small></li><li>Adult intraVENOUS infusion:<br>5-20 µg.min⁻¹</li><li>Child intraVENOUS infusion:<br>0.5-1 µg.kg⁻¹.min⁻¹ <small>(max. 20 µg.min⁻¹)</small></li></ul>",
+          "body": "<p><b>Salbutamol</b></p><ul><li>Nebuliser:<br>Child &lt;5 yr, 2.5 mg<br>Adult and &gt;5 yr 5 mg<br><b>(Remove HME filter OR nebulise downstream)</b></li><li>IntraVENOUS bolus:<br>Adult 250 µg diluted, slowly<br>Child 1-23 months 5 µg.kg⁻¹ <small>once over 5 mins</small><br>Child 2-17 years 15 µg.kg⁻¹ <small>once over 5 mins (max. 250 µg)</small></li><li>Adult intraVENOUS infusion:<br>5-20 µg.min⁻¹</li><li>Child intraVENOUS infusion:<br>0.5-1 µg.kg⁻¹.min⁻¹ <small>(max. 20 µg.min⁻¹)</small></li></ul>",
           "step": ""
         },
         {
@@ -1632,20 +1452,20 @@
         {
           "type": 4,
           "head": "",
-          "body": "Consider alternate diagnoses causing or mimicking bronchospasm <b>(Box C)</b>",
-          "step": "10"
+          "body": "If airway soiling/aspiration suspected airway see <b>Box C</b>",
+          "step": "9"
         },
         {
           "type": 9,
-          "head": "Box C: ALTERNATES and MIMICS",
-          "body": "<p><b>Wheeze:</b> pulmonary oedema; misplaced airway device; ARDS; laryngospasm</p><p><b>Raised airway pressure:</b> obstruction of larynx, trachea or bronchi; obstruction of breathing system (any part); decreased lung compliance; pneumothorax</p>",
+          "head": "Box C: ACTIONS IF AIRWAY SOILING/ASPIRATION",
+          "body": "<p>Consider tracheal intubation and tracheal toilet</p><p>Use nasogastric tube to aspirate gastric contents</p>",
           "step": ""
         },
         {
           "type": 4,
           "head": "",
           "body": "Use appropriate ventilation strategy <b>(Box D)</b>",
-          "step": "11"
+          "step": "10"
         },
         {
           "type": 8,
@@ -1657,37 +1477,19 @@
           "type": 4,
           "head": "",
           "body": "If raised airway pressure and/or desaturation persists, consider <b>→2-2 (Hypoxia/desaturation/cyanosis)</b>",
-          "step": "12"
+          "step": "11"
         },
         {
           "type": 4,
           "head": "",
           "body": "Obtain a chest X-ray as soon as clinically safe to do so",
-          "step": "13"
+          "step": "12"
         },
         {
           "type": 4,
           "head": "",
           "body": "Plan appropriate placement for post-procedure care",
-          "step": "14"
-        },
-        {
-          "type": 11,
-          "head": "",
-          "body": "v.2",
-          "step": ""
-        },
-        {
-          "type": 12,
-          "head": "The guidelines in this handbook are not intended to be standards of medical care. The ultimate judgement with regard to a particular clinical procedure or treatment plan must be made by the clinician in the light of the clinical data presented and the diagnostic and treatment options available.",
-          "body": "",
-          "step": ""
-        },
-        {
-          "type": 1,
-          "head": "",
-          "body": "<p><small><b>The Association of Anaesthetists of Great Britain & Ireland 2018. www.aagbi.org/qrh</b></small></p><p><small>Subject to Creative Commons license CC BY-NC-SA 4.0. You may distribute original version or adapt for yourself and distribute with acknowledgement of source. You may not use for commercial purposes. Visit website for details.</small></p>",
-          "step": ""
+          "step": "13"
         }
       ]
     },
@@ -1696,6 +1498,10 @@
       "title": "Circulatory embolus",
       "version": 1,
       "url": "https://anaesthetists.org/Portals/0/PDFs/QRH/QRH_3-5_Circulatory_embolus_v1.pdf",
+      "copyright": {
+        "holder": "aagbi",
+        "year": 2018
+      },
       "content": [
         {
           "type": 1,
@@ -1785,7 +1591,7 @@
           "type": 4,
           "head": "",
           "body": "<p>Consider investigations to help confirm diagnosis:</p><ul><li>Arterial blood gases (increased PaCO₂-ETCO₂ gradient)</li><li>Transoesophageal echocardiography (right heart strain, pulmonary arterial emboli)</li><li>Computerised tomography</li></ul>",
-          "step": "9"
+          "step": "8"
         },
         {
           "type": 4,
@@ -1798,24 +1604,6 @@
           "head": "",
           "body": "Plan transfer of the patient to an appropriate critical care area.",
           "step": "10"
-        },
-        {
-          "type": 11,
-          "head": "",
-          "body": "v.1",
-          "step": ""
-        },
-        {
-          "type": 12,
-          "head": "The guidelines in this handbook are not intended to be standards of medical care. The ultimate judgement with regard to a particular clinical procedure or treatment plan must be made by the clinician in the light of the clinical data presented and the diagnostic and treatment options available.",
-          "body": "",
-          "step": ""
-        },
-        {
-          "type": 1,
-          "head": "",
-          "body": "<p><small><b>The Association of Anaesthetists of Great Britain & Ireland 2018. www.aagbi.org/qrh</b></small></p><p><small>Subject to Creative Commons license CC BY-NC-SA 4.0. You may distribute original version or adapt for yourself and distribute with acknowledgement of source. You may not use for commercial purposes. Visit website for details.</small></p>",
-          "step": ""
         }
       ]
     },
@@ -1824,11 +1612,15 @@
       "title": "Laryngospasm and stridor",
       "version": 1,
       "url": "https://anaesthetists.org/Portals/0/PDFs/QRH/QRH_3-6_Laryngospasm_and_stridor_v1.pdf",
+      "copyright": {
+        "holder": "aagbi",
+        "year": 2018
+      },
       "content": [
         {
           "type": 1,
           "head": "",
-          "body": "Laryngospasm usually occurs when a patient is in a light plane of anaesthesia and their airway is stimulated in some way.<p>Stridor is a sign and associated with laryngospasm (although it can have other causes).",
+          "body": "<p>Laryngospasm usually occurs when a patient is in a light plane of anaesthesia and their airway is stimulated in some way.</p><p>Stridor is a sign and associated with laryngospasm (although it can have other causes).</p>",
           "step": ""
         },
         {
@@ -1920,24 +1712,6 @@
           "head": "Box C: CRITICAL CHANGES",
           "body": "<ul><li>Cardiac arrest <b>→2-1</b></li><li>Hypoxia/desaturation/cyanosis <b>→2-2</b></li><li>Increased airway pressure <b>→2-3</b></li><li>Hypotension <b>→2-4</b></li><li>Bradycardia <b>→2-6</b></li></ul>",
           "step": ""
-        },
-        {
-          "type": 11,
-          "head": "",
-          "body": "v.1",
-          "step": ""
-        },
-        {
-          "type": 12,
-          "head": "The guidelines in this handbook are not intended to be standards of medical care. The ultimate judgement with regard to a particular clinical procedure or treatment plan must be made by the clinician in the light of the clinical data presented and the diagnostic and treatment options available.",
-          "body": "",
-          "step": ""
-        },
-        {
-          "type": 1,
-          "head": "",
-          "body": "<p><small><b>The Association of Anaesthetists of Great Britain & Ireland 2018. www.aagbi.org/qrh</b></small></p><p><small>Subject to Creative Commons license CC BY-NC-SA 4.0. You may distribute original version or adapt for yourself and distribute with acknowledgement of source. You may not use for commercial purposes. Visit website for details.</small></p>",
-          "step": ""
         }
       ]
     },
@@ -1946,6 +1720,10 @@
       "title": "Patient fire",
       "version": 1,
       "url": "https://anaesthetists.org/Portals/0/PDFs/QRH/QRH_3-7_Patient_fire_v1.pdf",
+      "copyright": {
+        "holder": "aagbi",
+        "year": 2018
+      },
       "content": [
         {
           "type": 1,
@@ -1962,7 +1740,7 @@
         {
           "type": 3,
           "head": "Call for help and inform theatre team:",
-          "body": "<ul><li>Activate fire alarm</li><li>Dial hospital fire emergency number and report location and nature of fire</li><li>Bring CO2 fire extinguisher into theatre</li>",
+          "body": "<ul><li>Activate fire alarm</li><li>Dial hospital fire emergency number and report location and nature of fire</li><li>Bring CO2 fire extinguisher into theatre</li></ul>",
           "step": "1"
         },
         {
@@ -2024,24 +1802,6 @@
           "head": "",
           "body": "If secondary non-patient fire occurs, or concerned about smoke/fire risk to staff, follow local fire procedures.",
           "step": "6"
-        },
-        {
-          "type": 11,
-          "head": "",
-          "body": "v.1",
-          "step": ""
-        },
-        {
-          "type": 12,
-          "head": "The guidelines in this handbook are not intended to be standards of medical care. The ultimate judgement with regard to a particular clinical procedure or treatment plan must be made by the clinician in the light of the clinical data presented and the diagnostic and treatment options available.",
-          "body": "",
-          "step": ""
-        },
-        {
-          "type": 1,
-          "head": "",
-          "body": "<p><small><b>The Association of Anaesthetists of Great Britain & Ireland 2018. www.aagbi.org/qrh</b></small></p><p><small>Subject to Creative Commons license CC BY-NC-SA 4.0. You may distribute original version or adapt for yourself and distribute with acknowledgement of source. You may not use for commercial purposes. Visit website for details.</small></p>",
-          "step": ""
         }
       ]
     },
@@ -2050,6 +1810,10 @@
       "title": "Malignant hyperthermia crisis",
       "version": 2,
       "url": "https://anaesthetists.org/Portals/0/PDFs/QRH/QRH_3-8_Malignant_hyperthermia_crisis_v2.pdf",
+      "copyright": {
+        "holder": "aoa",
+        "year": 2021
+      },
       "content": [
         {
           "type": 1,
@@ -2176,24 +1940,6 @@
           "head": "EMERGENCY HELP",
           "body": "<p>Emergency hotline 07947609601 or 01132433144</p><p>UK MH Registry website: www.ukmhr.ac.uk</p>",
           "step": "10"
-        },
-        {
-          "type": 11,
-          "head": "",
-          "body": "v.2",
-          "step": ""
-        },
-        {
-          "type": 12,
-          "head": "The guidelines in this handbook are not intended to be standards of medical care. The ultimate judgement with regard to a particular clinical procedure or treatment plan must be made by the clinician in the light of the clinical data presented and the diagnostic and treatment options available.",
-          "body": "",
-          "step": ""
-        },
-        {
-          "type": 1,
-          "head": "",
-          "body": "<p><small><b>The Association of Anaesthetists of Great Britain & Ireland 2018. www.aagbi.org/qrh</b></small></p><p><small>Subject to Creative Commons license CC BY-NC-SA 4.0. You may distribute original version or adapt for yourself and distribute with acknowledgement of source. You may not use for commercial purposes. Visit website for details.</small></p>",
-          "step": ""
         }
       ]
     },
@@ -2202,6 +1948,10 @@
       "title": "Cardiac tamponade",
       "version": 1,
       "url": "https://anaesthetists.org/Portals/0/PDFs/QRH/QRH_3-9_Cardiac_tamponade_v1.pdf",
+      "copyright": {
+        "holder": "aagbi",
+        "year": 2018
+      },
       "content": [
         {
           "type": 1,
@@ -2242,7 +1992,7 @@
         {
           "type": 9,
           "head": "Box A: DIAGNOSTIC FEATURES",
-          "body": "<p><b>ULTRASOUND IS THE PREFERRED TECHNIQUE</b></p><ul><li>Unexplained dyspnoea/tachypnoea and agitation if conscious</li><li>At least one of ‘Beck’s Triad’: jugular venous distension; muffled heart sounds; hypotension</li><li>Other signs: Pulsus paradoxus; ECG → low voltage QRS / electrical alternans / pulseless electrical activity; chest X-ray → enlarged cardiac silhouette</li></ul>",
+          "body": "<p><b>ULTRASOUND DIAGNOSIS IS THE PREFERRED TECHNIQUE</b></p><ul><li>Unexplained dyspnoea/tachypnoea and agitation if conscious</li><li>At least one of ‘Beck’s Triad’: jugular venous distension; muffled heart sounds; hypotension</li><li>Other signs: Pulsus paradoxus; ECG → low voltage QRS / electrical alternans / pulseless electrical activity; chest X-ray → enlarged cardiac silhouette</li></ul>",
           "step": "2"
         },
         {
@@ -2266,7 +2016,7 @@
         {
           "type": 6,
           "head": "Box B: EMERGENCY PERICARDIOCENTESIS (sub-xiphoid approach)",
-          "body": "<p><b><u>ULTRASOUND IS THE PREFERRED TECHNIQUE</u></b></p><p><b>WARNING: Myocardial rupture, aortic dissection and severe bleeding disorder are <i>relative</i> contraindications</b></p><ul><li>Identify tip of xiphoid</li><li>Prep and drape overlying skin</li><li>Infiltrate local anaesthetic (if necessary and if time)</li><li>Ideally use ultrasound to identify pericardial fluid</li><li>Insert pericardiocentesis needle immediately to left of tip of xiphoid</li><li>Attach 3-way tap and 20 ml syringe</li><li>Direct needle generally toward left shoulder but using ultrasound to direct needle toward the largest pericardial collection</li><li>Aspirate and drain – aspiration of a small volume may cause a dramatic clinical improvement</li></ul>",
+          "body": "<p><b><u>ULTRASOUND GUIDANCE IS THE PREFERRED TECHNIQUE</u></b></p><p><b>WARNING: Myocardial rupture, aortic dissection and severe bleeding disorder are <i>relative</i> contraindications</b></p><ul><li>Identify tip of xiphoid</li><li>Prep and drape overlying skin</li><li>Infiltrate local anaesthetic (if necessary and if time)</li><li>Ideally use ultrasound to identify pericardial fluid</li><li>Insert pericardiocentesis needle immediately to left of tip of xiphoid</li><li>Attach 3-way tap and 20 ml syringe</li><li>Direct needle generally toward left shoulder but using ultrasound to direct needle toward the largest pericardial collection</li><li>Aspirate and drain – aspiration of a small volume may cause a dramatic clinical improvement</li></ul>",
           "step": "6"
         },
         {
@@ -2298,32 +2048,18 @@
           "head": "Box C: CRITICAL CHANGES",
           "body": "<b>CARDIAC ARREST →2-1</b>",
           "step": ""
-        },
-        {
-          "type": 11,
-          "head": "",
-          "body": "v.1",
-          "step": ""
-        },
-        {
-          "type": 12,
-          "head": "The guidelines in this handbook are not intended to be standards of medical care. The ultimate judgement with regard to a particular clinical procedure or treatment plan must be made by the clinician in the light of the clinical data presented and the diagnostic and treatment options available.",
-          "body": "",
-          "step": ""
-        },
-        {
-          "type": 1,
-          "head": "",
-          "body": "<p><small><b>The Association of Anaesthetists of Great Britain & Ireland 2018. www.aagbi.org/qrh</b></small></p><p><small>Subject to Creative Commons license CC BY-NC-SA 4.0. You may distribute original version or adapt for yourself and distribute with acknowledgement of source. You may not use for commercial purposes. Visit website for details.</small></p>",
-          "step": ""
         }
       ]
     },
     {
       "code": "3-10",
       "title": "Local anaesthetic toxicity",
-      "version": 1,
-      "url": "https://anaesthetists.org/Portals/0/PDFs/QRH/QRH_3-10_Local_anaesthetic_toxicity_v1.pdf",
+      "version": 2,
+      "url": "https://anaesthetists.org/Portals/0/PDFs/QRH/QRH_3-10_Local_anaesthetic_toxicity_v2_June%202023.pdf",
+      "copyright": {
+        "holder": "aoa",
+        "year": 2023
+      },
       "content": [
         {
           "type": 1,
@@ -2358,7 +2094,7 @@
         {
           "type": 4,
           "head": "",
-          "body": "<p>Give 100% oxygen and ensure adequate lung ventilation:</p><ul><li>Maintain the airway and if necessary secure it with a tracheal tube</li><li>Hyperventilation may help reduce acidosis</li></ul>",
+          "body": "<p>Give 100% oxygen and ensure adequate lung ventilation:</p><ul><li>Maintain the airway and if necessary secure it with a tracheal tube.</li><li>Avoid hypercarbia - consider mild hyperventilation.</li></ul>",
           "step": "4"
         },
         {
@@ -2376,13 +2112,13 @@
         {
           "type": 4,
           "head": "",
-          "body": "<ul><li>Start continuous CPR using standard protocols</li><li>Give intravenous lipid emulsion <b>(Box A)</b></li><li>Recovery may take >1 hour</li><li>Consider the use of cardiopulmonary bypass if available</li></ul>",
+          "body": "<ul><li>Start continuous CPR using standard protocols <b>(→2-1) but:</b></li><li><b>Give</b> intravenous lipid emulsion <b>(Box A)</b>.</li><li><b>Use smaller adrenaline dose</b> (≤ 1µg.kg⁻¹ instead of 1 mg).</li><li>Avoid vasopressin.</li><li>Recovery may take >1 hour.</li><li>Consider the use of cardiopulmonary bypass if available.</li></ul>",
           "step": "6"
         },
         {
           "type": 6,
           "head": "Box A: LIPID EMULSION REGIME",
-          "body": "<p><b>USE 20% Intralipid® <small>(propofol is not a suitable substitute)</small></b></p><p><b>Immediately:</b></p><ul><li>Give an initial intraVENOUS bolus of lipid emulsion 1.5 ml.kg⁻¹ over 1 min (~100 ml for a 70 kg adult)</li><li>Start an intraVENOUS infusion of lipid emulsion at 15 ml.kg⁻¹.h⁻¹ (17.5 ml.min⁻¹ for a 70 kg adult)</li></ul><p><b>At 5 and 10 minutes:</b></p><ul><li>Give a repeat bolus (same dose) if: cardiovascular stability has not been restored or; an adequate circulation deteriorates.</li></ul><p><b>At any time after 5 minutes:</b></p><ul><li>Double the rate to 30 ml.kg⁻¹.h⁻¹ if: cardiovascular stability has not been restored or; an adequate circulation deteriorates</li><p><b>Do not exceed maximum cumulative dose 12 ml.kg⁻¹ (70kg: 840 ml)</b></ul>",
+          "body": "<p><b>USE 20% Intralipid® <small>(propofol is not a suitable substitute)</small></b></p><p><b>Immediately:</b></p><ul><li>Give an initial intraVENOUS bolus of lipid emulsion 1.5 ml.kg⁻¹ over 2-3 min (~100 ml for a 70 kg adult)</li><li>Start an intraVENOUS infusion of lipid emulsion at 15 ml.kg⁻¹.h⁻¹ (17.5 ml.min⁻¹ for a 70 kg adult)</li></ul><p><b>At 5 and 10 minutes:</b></p><ul><li>Give a repeat bolus (same dose) if: cardiovascular stability has not been restored or; an adequate circulation deteriorates.</li></ul><p><b>At any time after 5 minutes:</b></p><ul><li>Double the rate to 30 ml.kg⁻¹.h⁻¹ if: cardiovascular stability has not been restored or; an adequate circulation deteriorates</li></ul><p><b>Do not exceed maximum cumulative dose 12 ml.kg⁻¹ (70kg: 840 ml)</b></p>",
           "step": ""
         },
         {
@@ -2394,43 +2130,31 @@
         {
           "type": 4,
           "head": "",
-          "body": "<ul><li>Conventional therapies to treat hypotension, brady- and tachyarrhythmia</li><li><i>Consider</i> intravenous lipid emulsion <b>(Box A)</b></li></ul>",
+          "body": "<ul><li>Conventional therapies to treat hypotension, brady- and tachyarrhythmia.</li><li><b><i>Consider</i></b> intravenous lipid emulsion <b>(Box A)</b>.</li></ul>",
           "step": "6"
+        },
+        {
+          "type": 6,
+          "head": "Box A: LIPID EMULSION REGIME",
+          "body": "<p><b>USE 20% Intralipid® <small>(propofol is not a suitable substitute)</small></b></p><p><b>Immediately:</b></p><ul><li>Give an initial intraVENOUS bolus of lipid emulsion 1.5 ml.kg⁻¹ over 2-3 min (~100 ml for a 70 kg adult)</li><li>Start an intraVENOUS infusion of lipid emulsion at 15 ml.kg⁻¹.h⁻¹ (17.5 ml.min⁻¹ for a 70 kg adult)</li></ul><p><b>At 5 and 10 minutes:</b></p><ul><li>Give a repeat bolus (same dose) if: cardiovascular stability has not been restored or; an adequate circulation deteriorates.</li></ul><p><b>At any time after 5 minutes:</b></p><ul><li>Double the rate to 30 ml.kg⁻¹.h⁻¹ if: cardiovascular stability has not been restored or; an adequate circulation deteriorates</li></ul><p><b>Do not exceed maximum cumulative dose 12 ml.kg⁻¹ (70kg: 840 ml)</b></p>",
+          "step": ""
         },
         {
           "type": 4,
           "head": "",
-          "body": "Control seizures with small incremental dose of benzodiazepine, thiopental or propofol.",
+          "body": "<p>Control seizures:</p><ul><li>Small incremental dose of benzodiazepine is drug of choice.</li><li>Thiopental or propofol can be used, but be aware of negative inotropic effect.</li><li>Consider neuromuscular blockade if seizures cannot be controlled.</li></ul>",
           "step": "7"
         },
         {
           "type": 5,
           "head": "Box B: CRITICAL CHANGES",
-          "body": "<b>CARDIAC ARREST →2-1</b>",
+          "body": "<p><b>CARDIAC ARREST →2-1</b></p><p>Check already done steps 1 to 5, then 6.</p>",
           "step": ""
         },
         {
           "type": 9,
           "head": "Box C: AFTER THE EVENT",
-          "body": "<p>Arrange safe transfer to appropriate clinical area</p><p>Exclude pancreatitis: regular clinical review, daily amylase or lipase</p><p>Report cases to MHRA: yellowcard.mhra.gov.uk</p>",
-          "step": ""
-        },
-        {
-          "type": 11,
-          "head": "",
-          "body": "v.1",
-          "step": ""
-        },
-        {
-          "type": 12,
-          "head": "The guidelines in this handbook are not intended to be standards of medical care. The ultimate judgement with regard to a particular clinical procedure or treatment plan must be made by the clinician in the light of the clinical data presented and the diagnostic and treatment options available.",
-          "body": "",
-          "step": ""
-        },
-        {
-          "type": 1,
-          "head": "",
-          "body": "<p><small><b>The Association of Anaesthetists of Great Britain & Ireland 2018. www.aagbi.org/qrh</b></small></p><p><small>Subject to Creative Commons license CC BY-NC-SA 4.0. You may distribute original version or adapt for yourself and distribute with acknowledgement of source. You may not use for commercial purposes. Visit website for details.</small></p>",
+          "body": "<p>Arrange safe transfer to appropriate clinical area</p><p>Exclude pancreatitis: regular clinical review, daily amylase or lipase</p><p>Report case on your local critical incident system and to the relevant national system (these vary between each devolved nation and in Ireland)</p>",
           "step": ""
         }
       ]
@@ -2440,6 +2164,10 @@
       "title": "High central neuraxial block",
       "version": 1,
       "url": "https://anaesthetists.org/Portals/0/PDFs/QRH/QRH_3-11_High_central_neuraxial_block_v1.pdf",
+      "copyright": {
+        "holder": "aagbi",
+        "year": 2018
+      },
       "content": [
         {
           "type": 1,
@@ -2518,24 +2246,6 @@
           "head": "",
           "body": "Plan ongoing care in a suitable location.",
           "step": "7"
-        },
-        {
-          "type": 11,
-          "head": "",
-          "body": "v.1",
-          "step": ""
-        },
-        {
-          "type": 12,
-          "head": "The guidelines in this handbook are not intended to be standards of medical care. The ultimate judgement with regard to a particular clinical procedure or treatment plan must be made by the clinician in the light of the clinical data presented and the diagnostic and treatment options available.",
-          "body": "",
-          "step": ""
-        },
-        {
-          "type": 1,
-          "head": "",
-          "body": "<p><small><b>The Association of Anaesthetists of Great Britain & Ireland 2018. www.aagbi.org/qrh</b></small></p><p><small>Subject to Creative Commons license CC BY-NC-SA 4.0. You may distribute original version or adapt for yourself and distribute with acknowledgement of source. You may not use for commercial purposes. Visit website for details.</small></p>",
-          "step": ""
         }
       ]
     },
@@ -2544,6 +2254,10 @@
       "title": "Cardiac ischaemia",
       "version": 2,
       "url": "https://anaesthetists.org/Portals/0/PDFs/QRH/QRH_3-12_Cardiac_ischaemia_v2.pdf",
+      "copyright": {
+        "holder": "aagbi",
+        "year": 2019
+      },
       "content": [
         {
           "type": 1,
@@ -2640,24 +2354,6 @@
           "head": "Box D: AFTER THE EVENT",
           "body": "<p>Admit to critical care environment and consult cardiology</p><p>Maintain head up position if practicable</p><p>Obtain serial 12-lead ECGs and cardiac enzymes</p>",
           "step": ""
-        },
-        {
-          "type": 11,
-          "head": "",
-          "body": "v.2",
-          "step": ""
-        },
-        {
-          "type": 12,
-          "head": "The guidelines in this handbook are not intended to be standards of medical care. The ultimate judgement with regard to a particular clinical procedure or treatment plan must be made by the clinician in the light of the clinical data presented and the diagnostic and treatment options available.",
-          "body": "",
-          "step": ""
-        },
-        {
-          "type": 1,
-          "head": "",
-          "body": "<p><small><b>The Association of Anaesthetists of Great Britain & Ireland 2018. www.aagbi.org/qrh</b></small></p><p><small>Subject to Creative Commons license CC BY-NC-SA 4.0. You may distribute original version or adapt for yourself and distribute with acknowledgement of source. You may not use for commercial purposes. Visit website for details.</small></p>",
-          "step": ""
         }
       ]
     },
@@ -2666,6 +2362,10 @@
       "title": "Neuroprotection following cardiac arrest",
       "version": 1,
       "url": "https://anaesthetists.org/Portals/0/PDFs/QRH/QRH_3-13_Neuroprotection_cardiac_arrest_v1.pdf",
+      "copyright": {
+        "holder": "aagbi",
+        "year": 2018
+      },
       "content": [
         {
           "type": 1,
@@ -2750,24 +2450,6 @@
           "head": "Box C: CRITICAL CHANGES",
           "body": "<b>CARDIAC ARREST →2-1</b>",
           "step": ""
-        },
-        {
-          "type": 11,
-          "head": "",
-          "body": "v.1",
-          "step": ""
-        },
-        {
-          "type": 12,
-          "head": "The guidelines in this handbook are not intended to be standards of medical care. The ultimate judgement with regard to a particular clinical procedure or treatment plan must be made by the clinician in the light of the clinical data presented and the diagnostic and treatment options available.",
-          "body": "",
-          "step": ""
-        },
-        {
-          "type": 1,
-          "head": "",
-          "body": "<p><small><b>The Association of Anaesthetists of Great Britain & Ireland 2018. www.aagbi.org/qrh</b></small></p><p><small>Subject to Creative Commons license CC BY-NC-SA 4.0. You may distribute original version or adapt for yourself and distribute with acknowledgement of source. You may not use for commercial purposes. Visit website for details.</small></p>",
-          "step": ""
         }
       ]
     },
@@ -2776,6 +2458,10 @@
       "title": "Sepsis",
       "version": 1,
       "url": "https://anaesthetists.org/Portals/0/PDFs/QRH/QRH_3-14_Sepsis_v1.pdf",
+      "copyright": {
+        "holder": "aagbi",
+        "year": 2018
+      },
       "content": [
         {
           "type": 1,
@@ -2896,24 +2582,6 @@
           "head": "",
           "body": "Discuss ongoing management plan with intensive care team.",
           "step": "14"
-        },
-        {
-          "type": 11,
-          "head": "",
-          "body": "v.1",
-          "step": ""
-        },
-        {
-          "type": 12,
-          "head": "The guidelines in this handbook are not intended to be standards of medical care. The ultimate judgement with regard to a particular clinical procedure or treatment plan must be made by the clinician in the light of the clinical data presented and the diagnostic and treatment options available.",
-          "body": "",
-          "step": ""
-        },
-        {
-          "type": 1,
-          "head": "",
-          "body": "<p><small><b>The Association of Anaesthetists of Great Britain & Ireland 2018. www.aagbi.org/qrh</b></small></p><p><small>Subject to Creative Commons license CC BY-NC-SA 4.0. You may distribute original version or adapt for yourself and distribute with acknowledgement of source. You may not use for commercial purposes. Visit website for details.</small></p>",
-          "step": ""
         }
       ]
     },
@@ -2922,6 +2590,10 @@
       "title": "Mains oxygen failure",
       "version": 1,
       "url": "https://anaesthetists.org/Portals/0/PDFs/QRH/QRH_4-1_Mains_oxygen_failure_v1.pdf",
+      "copyright": {
+        "holder": "aagbi",
+        "year": 2018
+      },
       "content": [
         {
           "type": 1,
@@ -3018,24 +2690,6 @@
           "head": "Box D: RE-ESTABLISHMENT OF SERVICES",
           "body": "<ul><li>Disconnect equipment from failed wall/pendant outlets</li><li>When re-established, output may not initially be 100% oxygen</li><li>Do not re-use outlet until gas composition and quality satisfactorily confirmed by a competent authority</li></ul>",
           "step": ""
-        },
-        {
-          "type": 11,
-          "head": "",
-          "body": "v.1",
-          "step": ""
-        },
-        {
-          "type": 12,
-          "head": "The guidelines in this handbook are not intended to be standards of medical care. The ultimate judgement with regard to a particular clinical procedure or treatment plan must be made by the clinician in the light of the clinical data presented and the diagnostic and treatment options available.",
-          "body": "",
-          "step": ""
-        },
-        {
-          "type": 1,
-          "head": "",
-          "body": "<p><small><b>The Association of Anaesthetists of Great Britain & Ireland 2018. www.aagbi.org/qrh</b></small></p><p><small>Subject to Creative Commons license CC BY-NC-SA 4.0. You may distribute original version or adapt for yourself and distribute with acknowledgement of source. You may not use for commercial purposes. Visit website for details.</small></p>",
-          "step": ""
         }
       ]
     },
@@ -3044,6 +2698,10 @@
       "title": "Mains electricity failure",
       "version": 1,
       "url": "https://anaesthetists.org/Portals/0/PDFs/QRH/QRH_4-2_Mains_electricity_failure_v1.pdf",
+      "copyright": {
+        "holder": "aagbi",
+        "year": 2018
+      },
       "content": [
         {
           "type": 1,
@@ -3134,24 +2792,6 @@
           "head": "Box D: CRITICAL CHANGES",
           "body": "<p>Mains oxygen failure <b>→4-1</b></p><p>Emergency evacuation <b>→4-3</b></p>",
           "step": ""
-        },
-        {
-          "type": 11,
-          "head": "",
-          "body": "v.1",
-          "step": ""
-        },
-        {
-          "type": 12,
-          "head": "The guidelines in this handbook are not intended to be standards of medical care. The ultimate judgement with regard to a particular clinical procedure or treatment plan must be made by the clinician in the light of the clinical data presented and the diagnostic and treatment options available.",
-          "body": "",
-          "step": ""
-        },
-        {
-          "type": 1,
-          "head": "",
-          "body": "<p><small><b>The Association of Anaesthetists of Great Britain & Ireland 2018. www.aagbi.org/qrh</b></small></p><p><small>Subject to Creative Commons license CC BY-NC-SA 4.0. You may distribute original version or adapt for yourself and distribute with acknowledgement of source. You may not use for commercial purposes. Visit website for details.</small></p>",
-          "step": ""
         }
       ]
     },
@@ -3160,6 +2800,10 @@
       "title": "Emergency evacuation",
       "version": 1,
       "url": "https://anaesthetists.org/Portals/0/PDFs/QRH/QRH_4-3_Emergency_evacuation_v1.pdf",
+      "copyright": {
+        "holder": "aagbi",
+        "year": 2018
+      },
       "content": [
         {
           "type": 1,
@@ -3243,7 +2887,7 @@
           "type": 4,
           "head": "",
           "body": "Take existing monitoring and mains cabling.",
-          "step": "19"
+          "step": "10"
         },
         {
           "type": 4,
@@ -3261,24 +2905,6 @@
           "type": 9,
           "head": "Box D: ROUTE",
           "body": "Ensure route avoids original hazard and any consequent ones. Caution using lifts, especially in fire.",
-          "step": ""
-        },
-        {
-          "type": 11,
-          "head": "",
-          "body": "v.1",
-          "step": ""
-        },
-        {
-          "type": 12,
-          "head": "The guidelines in this handbook are not intended to be standards of medical care. The ultimate judgement with regard to a particular clinical procedure or treatment plan must be made by the clinician in the light of the clinical data presented and the diagnostic and treatment options available.",
-          "body": "",
-          "step": ""
-        },
-        {
-          "type": 1,
-          "head": "",
-          "body": "<p><small><b>The Association of Anaesthetists of Great Britain & Ireland 2018. www.aagbi.org/qrh</b></small></p><p><small>Subject to Creative Commons license CC BY-NC-SA 4.0. You may distribute original version or adapt for yourself and distribute with acknowledgement of source. You may not use for commercial purposes. Visit website for details.</small></p>",
           "step": ""
         }
       ]
