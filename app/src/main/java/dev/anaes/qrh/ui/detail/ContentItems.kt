@@ -28,6 +28,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -290,10 +291,13 @@ private fun VersionItem(
     modifier: Modifier = Modifier,
 ) {
     Text(
-        text = item.body,
+        text = "Adapted from QRH section ${item.body}",
         style = MaterialTheme.typography.bodySmall,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
-        modifier = modifier.padding(horizontal = 16.dp, vertical = 4.dp),
+        textAlign = TextAlign.End,
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 4.dp),
     )
 }
 
@@ -315,6 +319,7 @@ private fun EndDisclaimerItem(
             html = item.head,
             style = TextStyle(
                 color = if (isDark) RedTxtDark else RedTxtLight,
+                fontWeight = FontWeight.Bold,
                 fontSize = 13.sp,
                 lineHeight = 18.sp,
             ),
