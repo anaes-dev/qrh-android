@@ -1,307 +1,187 @@
 package dev.anaes.qrh
 
-import android.animation.AnimatorInflater
-import android.content.Context
-import android.content.Intent
-import android.content.SharedPreferences
-import android.content.res.Configuration
-import android.graphics.Color
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.view.View
-import android.view.WindowManager
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.appcompat.widget.Toolbar
-import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.core.content.ContextCompat
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
-import com.google.android.material.appbar.AppBarLayout
-import dev.anaes.qrh.databinding.ActivityMainBinding
-import kotlinx.coroutines.delay
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import dev.anaes.qrh.data.GuidelineRepository
+import dev.anaes.qrh.data.UserPreferences
+import dev.anaes.qrh.ui.about.AboutScreen
+import dev.anaes.qrh.ui.components.BreadcrumbEntry
+import dev.anaes.qrh.ui.detail.GuidelineDetailScreen
+import dev.anaes.qrh.ui.disclaimers.DisclaimersScreen
+import dev.anaes.qrh.ui.firstrun.FirstRunScreen
+import dev.anaes.qrh.ui.list.GuidelineListScreen
+import dev.anaes.qrh.ui.swipe.SwipeViewScreen
+import dev.anaes.qrh.ui.theme.QrhTheme
 import kotlinx.coroutines.launch
 
-interface MainInt {
-    fun popToDetail(num: Int)
-    fun updateBar(
-        title: String,
-        code: String,
-        version: String,
-        expanded: Boolean,
-        hideKeyboard: Boolean,
-        opaque: Boolean
-    )
-    fun openURL(url: String)
-    fun progressShow(show: Boolean)
-    fun setDarkModeDisabled(disabled: Boolean)
-    fun setExpandingDisabled(disabled: Boolean)
-    fun recreateActivity()
-    fun collapseBar(collapse: Boolean)
-    fun swipeDetail(code: String, title: String, url: String, version: String)
-}
-
-class Main : AppCompatActivity(), MainInt {
-
-    private val vm: MainViewModel by viewModels()
-
-    private lateinit var binding: ActivityMainBinding
+class Main : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
 
-        val oldSharedPref: SharedPreferences = getSharedPreferences(
-            "com.mttrnd.qrh.seenwarning",
-            Context.MODE_PRIVATE
-        )
+        val repository = GuidelineRepository(assets)
+        val preferences = UserPreferences(applicationContext)
 
-        val sharedPref: SharedPreferences = getSharedPreferences(
-            "dev.anaes.qrh",
-            Context.MODE_PRIVATE
-        )
+        setContent {
+            val nightDisabled by preferences.nightDisabled.collectAsState(initial = false)
+            val darkTheme = if (nightDisabled) false else isSystemInDarkTheme()
 
-        if (sharedPref.getInt("version", 0) < BuildConfig.VERSION_CODE) {
-            if(sharedPref.getInt("version", 0) == 42) {
-                val editor = sharedPref.edit()
-                editor.putInt("version", BuildConfig.VERSION_CODE)
-                editor.apply()
-            } else {
-                if (!sharedPref.getBoolean("seen_warning", false)) {
-                    if (oldSharedPref.getBoolean("com.mttrnd.qrh.seenwarning", false)) {
-                        startActivity(Intent(this, FirstRun::class.java).putExtra("isUpdate", true))
-                    } else {
-                        startActivity(
-                            Intent(this, FirstRun::class.java).putExtra(
-                                "isUpdate",
-                                false
-                            )
-                        )
+            QrhTheme(darkTheme = darkTheme) {
+                QrhApp(repository = repository, preferences = preferences)
+            }
+        }
+    }
+}
+
+@Composable
+fun QrhApp(
+    repository: GuidelineRepository,
+    preferences: UserPreferences,
+) {
+    val navController = rememberNavController()
+    val scope = rememberCoroutineScope()
+    val disclaimersAccepted by preferences.disclaimersAccepted.collectAsState(initial = null)
+
+    val viewModel: QrhViewModel = viewModel(
+        factory = object : ViewModelProvider.Factory {
+            @Suppress("UNCHECKED_CAST")
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                return QrhViewModel(repository) as T
+            }
+        }
+    )
+
+    // Wait for DataStore to load before deciding start destination
+    val startDest = when (disclaimersAccepted) {
+        null -> return // Still loading
+        true -> "list"
+        false -> "firstrun/false"
+    }
+
+    NavHost(navController = navController, startDestination = startDest) {
+
+        composable(
+            route = "firstrun/{isUpdate}",
+            arguments = listOf(navArgument("isUpdate") { type = NavType.BoolType })
+        ) { entry ->
+            val isUpdate = entry.arguments?.getBoolean("isUpdate") ?: false
+            FirstRunScreen(
+                isUpdate = isUpdate,
+                onAgree = {
+                    scope.launch {
+                        preferences.acceptDisclaimers()
+                        navController.navigate("list") {
+                            popUpTo("firstrun/{isUpdate}") { inclusive = true }
+                        }
                     }
-                } else {
-                    startActivity(Intent(this, FirstRun::class.java).putExtra("isUpdate", true))
-                }
-                finish()
+                },
+            )
+        }
+
+        composable("list") {
+            GuidelineListScreen(
+                viewModel = viewModel,
+                onGuidelineClick = { guideline ->
+                    navController.navigate("detail/${guideline.code}")
+                },
+                onAboutClick = {
+                    navController.navigate("about")
+                },
+            )
+        }
+
+        composable(
+            route = "detail/{code}",
+            arguments = listOf(navArgument("code") { type = NavType.StringType })
+        ) { entry ->
+            val code = entry.arguments?.getString("code") ?: return@composable
+            val guideline = viewModel.getGuideline(code) ?: return@composable
+
+            // Build breadcrumbs from back stack
+            val backStack by navController.currentBackStackEntryAsState()
+            val breadcrumbs = remember(backStack) {
+                val entries = navController.currentBackStack.value
+                    .filter { it.destination.route == "detail/{code}" }
+                    .mapNotNull { navEntry ->
+                        val entryCode = navEntry.arguments?.getString("code") ?: return@mapNotNull null
+                        val entryGuideline = repository.getGuideline(entryCode) ?: return@mapNotNull null
+                        BreadcrumbEntry(entryCode, entryGuideline.title)
+                    }
+                entries
             }
+
+            GuidelineDetailScreen(
+                guideline = guideline,
+                breadcrumbs = breadcrumbs,
+                preferences = preferences,
+                onNavigateBack = { navController.popBackStack() },
+                onHomeClick = {
+                    navController.popBackStack("list", inclusive = false)
+                },
+                onBreadcrumbClick = { index ->
+                    val entriesToPop = breadcrumbs.size - 1 - index
+                    repeat(entriesToPop) {
+                        navController.popBackStack()
+                    }
+                },
+                onGuidelineLink = { linkedCode ->
+                    navController.navigate("detail/$linkedCode")
+                },
+                onSwipeView = {
+                    navController.navigate("swipe/$code")
+                },
+            )
         }
 
-        if (savedInstanceState != null) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                vm.breadcrumbTitles = savedInstanceState.getSerializable("breadcrumbs", HashMap::class.java) as HashMap<Int, String>
-            } else {
-                @Suppress("DEPRECATION")
-                vm.breadcrumbTitles = savedInstanceState.getSerializable("breadcrumbs") as HashMap<Int, String>
-            }
+        composable(
+            route = "swipe/{code}",
+            arguments = listOf(navArgument("code") { type = NavType.StringType })
+        ) { entry ->
+            val code = entry.arguments?.getString("code") ?: return@composable
+            val guideline = viewModel.getGuideline(code) ?: return@composable
+
+            SwipeViewScreen(
+                guideline = guideline,
+                onNavigateBack = { navController.popBackStack() },
+                onGuidelineLink = { linkedCode ->
+                    navController.popBackStack()
+                    navController.navigate("detail/$linkedCode")
+                },
+            )
         }
 
-        if (sharedPref.getBoolean("night_disabled", false)) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            vm.darkDisabled(true)
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-            vm.darkDisabled(false)
+        composable("about") {
+            AboutScreen(
+                preferences = preferences,
+                onNavigateBack = { navController.popBackStack() },
+                onViewDisclaimers = {
+                    navController.navigate("disclaimers")
+                },
+            )
         }
 
-        if (sharedPref.getBoolean("expanding_disabled", false)) {
-            vm.expandingDisabled(true)
-        } else {
-            vm.expandingDisabled(false)
-        }
-
-
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
-
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
-        val toolbar: Toolbar = binding.toolbar
-        setSupportActionBar(toolbar)
-        val appBarConfiguration = AppBarConfiguration(navController.graph)
-        setupActionBarWithNavController(navController, appBarConfiguration)
-
-        val appBar = binding.appBar
-        val params = appBar.layoutParams as CoordinatorLayout.LayoutParams
-        if (params.behavior == null)
-            params.behavior = AppBarLayout.Behavior()
-        val behaviour = params.behavior as AppBarLayout.Behavior
-        behaviour.setDragCallback(object : AppBarLayout.Behavior.DragCallback() {
-            override fun canDrag(appBarLayout: AppBarLayout): Boolean {
-                return false
-            }
-        })
-
-        if(this.resources.configuration.uiMode and
-            Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES) {
-            vm.isDarkMode = true
-        } else {
-            vm.isDarkMode = false
-            appBar.stateListAnimator =
-                AnimatorInflater.loadStateListAnimator(this, R.animator.appbar_elevated)
-        }
-
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        outState.putSerializable("breadcrumbs", vm.breadcrumbTitles)
-        super.onSaveInstanceState(outState)
-    }
-
-
-    override fun onSupportNavigateUp(): Boolean {
-        if (findNavController(R.id.nav_host_fragment).currentDestination.toString()
-                .contains("DetailFragment")
-        ) {
-            progressShow(true)
-        }
-        findNavController(R.id.nav_host_fragment).navigateUp()
-        return true
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
-        if (findNavController(R.id.nav_host_fragment).currentDestination.toString()
-                .contains("DetailFragment")
-        ) {
-            progressShow(true)
-        }
-        onBackPressedDispatcher.onBackPressed()
-    }
-
-
-//
-//    override fun onSaveInstanceState(savedInstanceState: Bundle) {
-//        super.onSaveInstanceState(savedInstanceState)
-//        savedInstanceState.putBundle(
-//            "nav_state",
-//            findNavController(R.id.nav_host_fragment).saveState()
-//        )
-//    }
-//
-//    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-//        super.onRestoreInstanceState(savedInstanceState)
-//        findNavController(R.id.nav_host_fragment).restoreState(savedInstanceState.getBundle("nav_state"))
-//    }
-
-
-    override fun popToDetail(num: Int) {
-        var x = num
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
-        while (x > 0) {
-            navController.popBackStack()
-            x--
-        }
-    }
-
-    override fun collapseBar(collapse: Boolean) {
-        binding.appBar.setExpanded(!collapse)
-    }
-
-    override fun swipeDetail(code: String, title: String, url: String, version: String) {
-        val navController = findNavController(R.id.nav_host_fragment)
-        val action = DetailFragmentDirections.loadNewDetail(code, title, url, version)
-        navController.navigateUp()
-        navController.navigate(action)
-    }
-
-    override fun updateBar(
-        title: String,
-        code: String,
-        version: String,
-        expanded: Boolean,
-        hideKeyboard: Boolean,
-        opaque: Boolean,
-    ) {
-        binding.toolbarLayout.title = title
-        binding.detailCode.text = code
-        binding.detailVersion.text = version
-        binding.appBar.setExpanded(expanded)
-
-        if(vm.isDarkMode) {
-            if (opaque) {
-                binding.toolbar.setBackgroundColor(
-                    ContextCompat.getColor(
-                        this,
-                        R.color.colorPrimary
-                    )
-                )
-            } else {
-                binding.toolbar.setBackgroundColor(Color.TRANSPARENT)
-            }
-        }
-
-        if (hideKeyboard && Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-            window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
-        }
-    }
-
-    override fun openURL(url: String) {
-        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
-    }
-
-    override fun progressShow(show: Boolean) {
-        val indicator = binding.progressCircular
-        if (show) {
-            indicator.visibility = View.VISIBLE
-        } else {
-            indicator.animate()
-                .setDuration(100)
-                .alpha(0F)
-                .withEndAction {
-                    indicator.visibility = View.GONE
-                    indicator.alpha = 0.5F
-                }
-        }
-    }
-
-
-    override fun setDarkModeDisabled(disabled: Boolean) {
-        val sharedPref: SharedPreferences = getSharedPreferences(
-            "dev.anaes.qrh",
-            Context.MODE_PRIVATE
-        )
-
-        if (disabled) {
-            sharedPref.edit()
-                .putBoolean("night_disabled", true)
-                .apply()
-        } else {
-            sharedPref.edit()
-                .putBoolean("night_disabled", false)
-                .apply()
-        }
-    }
-
-    override fun setExpandingDisabled(disabled: Boolean) {
-        val sharedPref: SharedPreferences = getSharedPreferences(
-            "dev.anaes.qrh",
-            Context.MODE_PRIVATE
-        )
-
-        if (disabled) {
-            sharedPref.edit()
-                .putBoolean("expanding_disabled", true)
-                .apply()
-        } else {
-            sharedPref.edit()
-                .putBoolean("expanding_disabled", false)
-                .apply()
-        }
-    }
-
-    override fun recreateActivity() {
-        startActivity(Intent(this, LoadingActivity::class.java))
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
-        lifecycleScope.launch {
-            delay(400)
-            recreate()
+        composable("disclaimers") {
+            DisclaimersScreen(
+                onNavigateBack = { navController.popBackStack() },
+            )
         }
     }
 }
