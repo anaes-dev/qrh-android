@@ -2,15 +2,12 @@ package dev.anaes.qrh
 
 import dev.anaes.qrh.model.AppData
 import dev.anaes.qrh.model.ContentItem
-import dev.anaes.qrh.model.Guideline
 import kotlinx.serialization.json.Json
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotNull
-import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
-class SearchLogicTest {
+class ModelSerializationTest {
 
     private val json = Json { ignoreUnknownKeys = true }
 
@@ -79,28 +76,7 @@ class SearchLogicTest {
         assertEquals("Content", item.body)
     }
 
-    @Test
-    fun `Guideline find by code returns correct guideline`() {
-        val guidelines = listOf(
-            Guideline("Alpha", "1-1", 1, "https://example.com/1.pdf", emptyList()),
-            Guideline("Beta", "2-3", 2, "https://example.com/2.pdf", emptyList()),
-            Guideline("Gamma", "3-5", 1, "https://example.com/3.pdf", emptyList()),
-        )
 
-        val found = guidelines.find { it.code == "2-3" }
-        assertNotNull(found)
-        assertEquals("Beta", found!!.title)
-    }
-
-    @Test
-    fun `Guideline find by code returns null for missing code`() {
-        val guidelines = listOf(
-            Guideline("Alpha", "1-1", 1, "https://example.com/1.pdf", emptyList()),
-        )
-
-        val found = guidelines.find { it.code == "9-9" }
-        assertNull(found)
-    }
 
     @Test
     fun `AppData deserialization ignores unknown keys`() {
@@ -126,15 +102,6 @@ class SearchLogicTest {
         assertEquals(1, appData.data.size)
     }
 
-    @Test
-    fun `Content types cover all expected values`() {
-        val types = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
-        val items = types.map { ContentItem(type = it) }
-        assertEquals(12, items.size)
-        items.forEachIndexed { index, item ->
-            assertEquals(types[index], item.type)
-        }
-    }
 
     @Test
     fun `Guideline version is an integer not a string`() {
