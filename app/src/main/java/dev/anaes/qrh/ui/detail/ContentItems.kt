@@ -34,12 +34,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
+import dev.anaes.qrh.R
 import dev.anaes.qrh.model.ContentItem
 import dev.anaes.qrh.ui.components.HtmlText
 import dev.anaes.qrh.ui.components.HtmlTextStatic
@@ -294,7 +296,7 @@ private fun CollapsibleBoxItem(
                 ) {
                     Icon(
                         imageVector = Icons.Filled.KeyboardArrowDown,
-                        contentDescription = if (isCollapsed) "Expand" else "Collapse",
+                        contentDescription = stringResource(if (isCollapsed) R.string.expand else R.string.collapse),
                         tint = colors.text,
                         modifier = Modifier.graphicsLayer { rotationZ = arrowRotation },
                     )
@@ -337,7 +339,7 @@ private fun ImageItem(
     ) {
         AsyncImage(
             model = "file:///android_asset/${item.body}",
-            contentDescription = item.head.ifEmpty { "Guideline image" },
+            contentDescription = item.head.ifEmpty { stringResource(R.string.guideline_image) },
             modifier = Modifier.fillMaxWidth(),
             contentScale = ContentScale.FillWidth,
         )
@@ -357,7 +359,7 @@ private fun VersionItem(
     modifier: Modifier = Modifier,
 ) {
     Text(
-        text = "Adapted from QRH section ${item.body}",
+        text = stringResource(R.string.adapted_from_section, item.body),
         style = MaterialTheme.typography.bodySmall,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
         textAlign = TextAlign.End,

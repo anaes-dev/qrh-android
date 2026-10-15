@@ -8,24 +8,19 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.anaes.qrh.data.GuidelineRepository
 import dev.anaes.qrh.model.Guideline
+import dev.anaes.qrh.search.GuidelineSearch
+import dev.anaes.qrh.search.SearchResult
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-
-data class SearchResult(
-    val guideline: Guideline,
-    val snippet: String? = null,
-    val matchStart: Int = -1,
-    val matchEnd: Int = -1,
-    val titleMatchStart: Int = -1,
-    val titleMatchEnd: Int = -1,
-)
+import kotlinx.coroutines.withContext
 
 class QrhViewModel(
-    val repository: GuidelineRepository,
+    private val repository: GuidelineRepository,
 ) : ViewModel() {
 
-    val guidelines: List<Guideline> = repository.guidelines
+    val guidelines: List<Guideline> get() = repository.guidelines
 
     var searchQuery by mutableStateOf("")
         private set
@@ -41,22 +36,8 @@ class QrhViewModel(
 
     private var searchJob: Job? = null
 
-    // Pre-compute plain text and lowercased versions for search
-    private val guidelineTextCache: Map<String, Pair<String, String>> by lazy {
-        guidelines.associate { guideline ->
-            val text = guideline.content.joinToString(" ") { item ->
-                val headText = if (item.head.isNotBlank()) stripHtml(item.head) else ""
-                val bodyText = if (item.body.isNotBlank()) stripHtml(item.body) else ""
-                "$headText $bodyText"
-            }.replace(WHITESPACE_REGEX, " ").trim()
-            guideline.code to (text to text.lowercase())
-        }
-    }
-
-    // Pre-compute lowercased title strings
-    private val guidelineTitleCache: Map<String, String> by lazy {
-        guidelines.associate { it.code to "${it.code} ${it.title}".lowercase() }
-    }
+    // Built (and its index populated) lazily on the first search, on a background thread
+    private val search by lazy { GuidelineSearch(repository.guidelines, ::stripHtml) }
 
     fun onSearchQueryChange(query: String) {
         searchQuery = query
@@ -69,7 +50,8 @@ class QrhViewModel(
         isSearching = true
         searchJob = viewModelScope.launch {
             delay(SEARCH_DEBOUNCE_MS)
-            searchResults = performSearch(query.trim())
+            val results = withContext(Dispatchers.Default) { search.search(query) }
+            searchResults = results
             isSearching = false
         }
     }
@@ -84,76 +66,10 @@ class QrhViewModel(
             return searchResults.map { it.guideline }
         }
 
-    private fun performSearch(query: String): List<SearchResult> {
-        val lowerQuery = query.lowercase()
-        val results = mutableListOf<SearchResult>()
-
-        for (guideline in guidelines) {
-            val titleMatch = guidelineTitleCache[guideline.code] ?: ""
-            if (titleMatch.contains(lowerQuery)) {
-                // Find where the match is within the title itself (not the "code title" combo)
-                val titleLower = guideline.title.lowercase()
-                val titleIdx = titleLower.indexOf(lowerQuery)
-                results.add(SearchResult(
-                    guideline = guideline,
-                    titleMatchStart = if (titleIdx >= 0) titleIdx else -1,
-                    titleMatchEnd = if (titleIdx >= 0) titleIdx + lowerQuery.length else -1,
-                ))
-                continue
-            }
-
-            val (fullText, lowerText) = guidelineTextCache[guideline.code] ?: continue
-            val matchIndex = lowerText.indexOf(lowerQuery)
-            if (matchIndex >= 0) {
-                val snippet = extractSnippet(fullText, matchIndex, lowerQuery.length)
-                results.add(SearchResult(
-                    guideline = guideline,
-                    snippet = snippet.text,
-                    matchStart = snippet.highlightStart,
-                    matchEnd = snippet.highlightEnd,
-                ))
-            }
-        }
-
-        return results
-    }
-
-    private data class Snippet(
-        val text: String,
-        val highlightStart: Int,
-        val highlightEnd: Int,
-    )
-
-    private fun extractSnippet(text: String, matchIndex: Int, matchLength: Int): Snippet {
-        val contextChars = 40
-        val snippetStart = (matchIndex - contextChars).coerceAtLeast(0)
-        val snippetEnd = (matchIndex + matchLength + contextChars).coerceAtMost(text.length)
-
-        val adjustedStart = if (snippetStart > 0) {
-            val spaceIndex = text.indexOf(' ', snippetStart)
-            if (spaceIndex in snippetStart until matchIndex) spaceIndex + 1 else snippetStart
-        } else snippetStart
-
-        val adjustedEnd = if (snippetEnd < text.length) {
-            val spaceIndex = text.lastIndexOf(' ', snippetEnd)
-            if (spaceIndex > matchIndex + matchLength) spaceIndex else snippetEnd
-        } else snippetEnd
-
-        val prefix = if (adjustedStart > 0) "\u2026" else ""
-        val suffix = if (adjustedEnd < text.length) "\u2026" else ""
-
-        val snippetText = prefix + text.substring(adjustedStart, adjustedEnd) + suffix
-        val highlightStart = prefix.length + (matchIndex - adjustedStart)
-        val highlightEnd = highlightStart + matchLength
-
-        return Snippet(snippetText, highlightStart, highlightEnd)
-    }
-
     fun getGuideline(code: String): Guideline? = repository.getGuideline(code)
 
     companion object {
         private const val SEARCH_DEBOUNCE_MS = 150L
-        private val WHITESPACE_REGEX = "\\s+".toRegex()
 
         private fun stripHtml(html: String): String {
             return Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY).toString().trim()

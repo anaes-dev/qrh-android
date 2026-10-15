@@ -6,23 +6,33 @@ import dev.anaes.qrh.model.AppData
 import dev.anaes.qrh.model.Guideline
 import kotlinx.serialization.json.Json
 
-class GuidelineRepository(assets: AssetManager) {
+class GuidelineRepository(private val assets: AssetManager) {
 
     private val json = Json { ignoreUnknownKeys = true }
 
-    private val appData: AppData = try {
-        assets.open("data.json").bufferedReader().use { reader ->
-            json.decodeFromString<AppData>(reader.readText())
+    // Synchronized lazy: parsed once, on whichever thread asks first (normally the
+    // background preload started by QrhApplication).
+    private val appData: AppData by lazy {
+        try {
+            assets.open("data.json").bufferedReader().use { reader ->
+                json.decodeFromString<AppData>(reader.readText())
+            }
+        } catch (e: Exception) {
+            Log.e("GuidelineRepository", "Failed to load guidelines data", e)
+            AppData(version = "0", data = emptyList())
         }
-    } catch (e: Exception) {
-        Log.e("GuidelineRepository", "Failed to load guidelines data", e)
-        AppData(version = "0", data = emptyList())
     }
 
-    val guidelines: List<Guideline> = appData.data
+    private val byCode: Map<String, Guideline> by lazy { guidelines.associateBy { it.code } }
 
-    val version: String = appData.version
+    val guidelines: List<Guideline> get() = appData.data
 
-    fun getGuideline(code: String): Guideline? =
-        guidelines.find { it.code == code }
+    val version: String get() = appData.version
+
+    /** Forces the JSON to be parsed now; call from a background thread. */
+    fun preload() {
+        byCode
+    }
+
+    fun getGuideline(code: String): Guideline? = byCode[code]
 }

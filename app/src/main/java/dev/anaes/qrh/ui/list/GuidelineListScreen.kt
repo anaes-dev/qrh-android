@@ -30,7 +30,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -49,8 +48,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.anaes.qrh.QrhViewModel
 import dev.anaes.qrh.R
-import dev.anaes.qrh.SearchResult
+import dev.anaes.qrh.search.SearchResult
 import dev.anaes.qrh.model.Guideline
+import dev.anaes.qrh.ui.theme.qrhTopAppBarColors
 import kotlinx.coroutines.flow.filter
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -100,15 +100,11 @@ fun GuidelineListScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("QRH") },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimary,
-                    actionIconContentColor = MaterialTheme.colorScheme.onPrimary,
-                ),
+                title = { Text(stringResource(R.string.app_name)) },
+                colors = qrhTopAppBarColors(),
                 actions = {
                     IconButton(onClick = onAboutClick) {
-                        Icon(Icons.Filled.Info, contentDescription = "About")
+                        Icon(Icons.Filled.Info, contentDescription = stringResource(R.string.title_about))
                     }
                 }
             )
@@ -124,12 +120,12 @@ fun GuidelineListScreen(
                 value = viewModel.searchQuery,
                 onValueChange = viewModel::onSearchQueryChange,
                 modifier = Modifier.fillMaxWidth(),
-                placeholder = { Text("Search guidelines...") },
+                placeholder = { Text(stringResource(R.string.search_hint)) },
                 leadingIcon = { Icon(Icons.Filled.Search, contentDescription = stringResource(R.string.search)) },
                 trailingIcon = if (viewModel.searchQuery.isNotEmpty()) {
                     {
                         IconButton(onClick = { viewModel.onSearchQueryChange("") }) {
-                            Icon(Icons.Filled.Clear, contentDescription = "Clear search")
+                            Icon(Icons.Filled.Clear, contentDescription = stringResource(R.string.clear_search))
                         }
                     }
                 } else null,
@@ -243,7 +239,7 @@ private fun GuidelineListItem(
         } else null,
         trailingContent = {
             Text(
-                "v.${guideline.version}",
+                stringResource(R.string.guideline_version, guideline.version),
                 fontSize = 12.sp,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )

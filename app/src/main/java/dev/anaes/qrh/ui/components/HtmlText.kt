@@ -2,6 +2,7 @@ package dev.anaes.qrh.ui.components
 
 import android.text.Html
 import android.text.Spanned
+import android.text.TextUtils
 import android.text.style.BulletSpan
 import android.text.style.StyleSpan
 import android.text.style.URLSpan
@@ -13,11 +14,13 @@ import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
@@ -107,6 +110,24 @@ fun HtmlTextStatic(
     }
 
     Text(text = annotated, modifier = modifier, style = style.copy(color = textColor))
+}
+
+/**
+ * Loads a string resource as HTML for [HtmlText], keeping its inline styling.
+ *
+ * `stringResource()` returns plain text, silently dropping any `<b>`, `<i>` or `<u>` in
+ * strings.xml; this reads the styled text and converts it back to HTML (newlines become
+ * paragraph and line breaks).
+ */
+@Composable
+fun htmlStringResource(@StringRes id: Int): String {
+    val resources = LocalContext.current.resources
+    return remember(id, resources) {
+        when (val text = resources.getText(id)) {
+            is Spanned -> Html.toHtml(text, Html.TO_HTML_PARAGRAPH_LINES_CONSECUTIVE)
+            else -> TextUtils.htmlEncode(text.toString()).replace("\n", "<br>")
+        }
+    }
 }
 
 @Composable

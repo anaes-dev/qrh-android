@@ -17,8 +17,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import dev.anaes.qrh.R
 
 data class BreadcrumbEntry(
     val code: String,
@@ -48,11 +50,11 @@ fun BreadcrumbBar(
     ) {
         AssistChip(
             onClick = onHomeClick,
-            label = { Text("Home", fontSize = 12.sp) },
+            label = { Text(stringResource(R.string.home), fontSize = 12.sp) },
             leadingIcon = {
                 Icon(
                     Icons.Filled.Home,
-                    contentDescription = "Home",
+                    contentDescription = null,
                     modifier = Modifier.size(16.dp)
                 )
             },

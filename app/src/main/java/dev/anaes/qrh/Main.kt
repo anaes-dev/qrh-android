@@ -1,16 +1,13 @@
 package dev.anaes.qrh
 
+import android.graphics.Color as AndroidColor
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
+import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.animation.core.EaseIn
 import androidx.compose.animation.core.EaseOut
 import androidx.compose.animation.core.tween
@@ -23,21 +20,34 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.platform.LocalView
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
+import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import dev.anaes.qrh.data.DisclaimerStatus
 import dev.anaes.qrh.data.GuidelineRepository
 import dev.anaes.qrh.data.UserPreferences
 import dev.anaes.qrh.ui.about.AboutScreen
@@ -48,6 +58,7 @@ import dev.anaes.qrh.ui.firstrun.FirstRunScreen
 import dev.anaes.qrh.ui.list.GuidelineListScreen
 import dev.anaes.qrh.ui.swipe.SwipeViewScreen
 import dev.anaes.qrh.ui.theme.QrhTheme
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 
@@ -79,14 +90,19 @@ private const val NAV_DURATION = 300
 /** Duration for simple fade transitions (ms). */
 private const val FADE_DURATION = 200
 
+// Navigation bar scrims, as used by androidx.activity's default edge-to-edge styling
+private val NAV_BAR_LIGHT_SCRIM = AndroidColor.argb(0xe6, 0xFF, 0xFF, 0xFF)
+private val NAV_BAR_DARK_SCRIM = AndroidColor.argb(0x80, 0x1b, 0x1b, 0x1b)
+
 class Main : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        val repository = GuidelineRepository(assets)
-        val preferences = UserPreferences(applicationContext)
+        val app = application as QrhApplication
+        val repository = app.repository
+        val preferences = app.preferences
 
         setContent {
             val nightDisabled by preferences.nightDisabled.collectAsState(initial = false)
@@ -96,15 +112,12 @@ class Main : ComponentActivity() {
                 // Sync the Activity window background with the Compose theme so
                 // navigation transitions don't reveal a mismatched background
                 // (e.g. dark window behind light Compose content).
-                val view = LocalView.current
-                val bgColor = if (darkTheme) 0xFF121212.toInt() else 0xFFFAFAFA.toInt()
+                val bgColor = MaterialTheme.colorScheme.background.toArgb()
                 SideEffect {
-                    (view.context as? ComponentActivity)?.window?.setBackgroundDrawable(
-                        ColorDrawable(bgColor)
-                    )
+                    window.setBackgroundDrawable(ColorDrawable(bgColor))
                 }
 
-                QrhApp(repository = repository, preferences = preferences)
+                QrhApp(repository = repository, preferences = preferences, darkTheme = darkTheme)
             }
         }
     }
@@ -114,29 +127,58 @@ class Main : ComponentActivity() {
 fun QrhApp(
     repository: GuidelineRepository,
     preferences: UserPreferences,
+    darkTheme: Boolean,
 ) {
     val navController = rememberNavController()
     val scope = rememberCoroutineScope()
-    val disclaimersAccepted by preferences.disclaimersAccepted.collectAsState(initial = null)
+
+    // Disclaimer status as it was at launch. Read once and kept across recreation, so accepting
+    // the disclaimers (which changes the stored status) doesn't swap the NavHost's start
+    // destination underneath the back stack.
+    var launchStatus by rememberSaveable { mutableStateOf<DisclaimerStatus?>(null) }
+    LaunchedEffect(Unit) {
+        if (launchStatus == null) launchStatus = preferences.disclaimerStatus.first()
+    }
 
     val viewModel: QrhViewModel = viewModel(
-        factory = object : ViewModelProvider.Factory {
-            @Suppress("UNCHECKED_CAST")
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                return QrhViewModel(repository) as T
-            }
-        }
+        factory = viewModelFactory { initializer { QrhViewModel(repository) } }
     )
 
+    // Every screen except the first-run disclaimers has a red / dark grey top bar, so needs
+    // light status bar icons; first run (and the loading screen) shows the plain background.
+    val currentEntry by navController.currentBackStackEntryAsState()
+    val onFirstRun = launchStatus == null ||
+        currentEntry?.destination?.hasRoute<FirstRunRoute>() == true
+    val lightStatusBarIcons = darkTheme || !onFirstRun
+    val activity = LocalActivity.current as? ComponentActivity
+    DisposableEffect(activity, darkTheme, lightStatusBarIcons) {
+        activity?.enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.auto(
+                AndroidColor.TRANSPARENT,
+                AndroidColor.TRANSPARENT,
+            ) { lightStatusBarIcons },
+            navigationBarStyle = SystemBarStyle.auto(
+                NAV_BAR_LIGHT_SCRIM,
+                NAV_BAR_DARK_SCRIM,
+            ) { darkTheme },
+        )
+        onDispose {}
+    }
+
     // Wait for DataStore to load before deciding start destination
-    if (disclaimersAccepted == null) {
+    val status = launchStatus
+    if (status == null) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             CircularProgressIndicator()
         }
         return
     }
 
-    val startDest: Any = if (disclaimersAccepted == true) ListRoute else FirstRunRoute(isUpdate = false)
+    val startDest: Any = when (status) {
+        DisclaimerStatus.ACCEPTED -> ListRoute
+        DisclaimerStatus.FIRST_RUN -> FirstRunRoute(isUpdate = false)
+        DisclaimerStatus.UPDATED -> FirstRunRoute(isUpdate = true)
+    }
 
     NavHost(
         navController = navController,
@@ -153,7 +195,6 @@ fun QrhApp(
             exitTransition = { fadeOut(tween(FADE_DURATION)) },
         ) { entry ->
             val route = entry.toRoute<FirstRunRoute>()
-            val activity = LocalContext.current as? ComponentActivity
             FirstRunScreen(
                 isUpdate = route.isUpdate,
                 onExit = { activity?.finish() },
@@ -241,13 +282,9 @@ fun QrhApp(
             val backStack by navController.currentBackStackEntryAsState()
             val breadcrumbs = remember(backStack) {
                 navController.currentBackStack.value
+                    .filter { navEntry -> navEntry.destination.hasRoute<DetailRoute>() }
                     .mapNotNull { navEntry ->
-                        val detailRoute = try {
-                            navEntry.toRoute<DetailRoute>()
-                        } catch (_: Exception) {
-                            null
-                        }
-                        detailRoute ?: return@mapNotNull null
+                        val detailRoute = navEntry.toRoute<DetailRoute>()
                         val entryGuideline = repository.getGuideline(detailRoute.code) ?: return@mapNotNull null
                         BreadcrumbEntry(detailRoute.code, entryGuideline.title)
                     }

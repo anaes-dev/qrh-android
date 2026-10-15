@@ -1,7 +1,8 @@
 package dev.anaes.qrh.ui.swipe
 
-import android.content.Intent
-import android.net.Uri
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -14,28 +15,27 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.animation.core.spring
-import androidx.compose.animation.core.Spring
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -45,19 +45,27 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
+import dev.anaes.qrh.R
 import dev.anaes.qrh.model.ContentItem
 import dev.anaes.qrh.model.Guideline
 import dev.anaes.qrh.ui.components.HtmlText
+import dev.anaes.qrh.ui.components.rememberExternalLinkHandler
 import dev.anaes.qrh.ui.theme.BoxColors
 import dev.anaes.qrh.ui.theme.LocalIsDarkTheme
+import dev.anaes.qrh.ui.theme.qrhTopAppBarColors
 import kotlinx.coroutines.launch
 import kotlin.math.abs
+
+/** Most dots shown at once; longer guidelines (up to 23 cards) get a sliding window. */
+private const val MAX_VISIBLE_DOTS = 9
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -66,8 +74,7 @@ fun SwipeViewScreen(
     onNavigateBack: () -> Unit,
     onGuidelineLink: (code: String) -> Unit,
 ) {
-    val context = LocalContext.current
-    val scope = rememberCoroutineScope()
+    val onExternalLink = rememberExternalLinkHandler()
     val filteredContent = remember(guideline.code) {
         guideline.content.filter { it.type != 11 && it.type != 12 }
     }
@@ -79,22 +86,22 @@ fun SwipeViewScreen(
                 title = {
                     Column {
                         Text(guideline.title, fontSize = 14.sp, maxLines = 1)
-                        Text(guideline.code, fontSize = 12.sp, color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.7f))
+                        Text(
+                            guideline.code,
+                            fontSize = 12.sp,
+                            color = LocalContentColor.current.copy(alpha = 0.7f),
+                        )
                     }
                 },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(
                             Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back",
-                            tint = MaterialTheme.colorScheme.onPrimary,
+                            contentDescription = stringResource(R.string.back),
                         )
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimary,
-                ),
+                colors = qrhTopAppBarColors(),
             )
         },
     ) { paddingValues ->
@@ -126,73 +133,107 @@ fun SwipeViewScreen(
                         5, 6, 7, 8, 9 -> SwipeBoxPage(
                             item = item,
                             onGuidelineLink = onGuidelineLink,
-                            onExternalLink = { url ->
-                                context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
-                            },
+                            onExternalLink = onExternalLink,
                         )
                         10 -> SwipeImagePage(item = item)
                         else -> SwipeStandardPage(
                             item = item,
                             onGuidelineLink = onGuidelineLink,
-                            onExternalLink = { url ->
-                                context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
-                            },
+                            onExternalLink = onExternalLink,
                         )
                     }
                 }
             }
 
-            // Page indicator
-            Text(
-                text = "${pagerState.currentPage + 1} of ${filteredContent.size}",
-                style = MaterialTheme.typography.bodySmall,
-                modifier = Modifier.padding(vertical = 4.dp),
-            )
+            if (filteredContent.isNotEmpty()) {
+                // Page indicator
+                Text(
+                    text = stringResource(
+                        R.string.card_position,
+                        pagerState.currentPage + 1,
+                        filteredContent.size,
+                    ),
+                    style = MaterialTheme.typography.bodySmall,
+                    modifier = Modifier.padding(vertical = 4.dp),
+                )
 
-            // Dot indicators
-            Row(
-                modifier = Modifier.padding(bottom = 12.dp),
-                horizontalArrangement = Arrangement.spacedBy(6.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                val activeColor = MaterialTheme.colorScheme.primary
-                val inactiveColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
+                PageDots(
+                    pagerState = pagerState,
+                    pageCount = filteredContent.size,
+                    modifier = Modifier.padding(bottom = 12.dp),
+                )
+            }
+        }
+    }
+}
 
-                repeat(filteredContent.size) { index ->
-                    val isSelected = index == pagerState.currentPage
-                    val scale by animateFloatAsState(
-                        targetValue = if (isSelected) 1f else 0.75f,
-                        animationSpec = spring(
-                            dampingRatio = Spring.DampingRatioMediumBouncy,
-                            stiffness = Spring.StiffnessMedium,
-                        ),
-                        label = "dotScale",
-                    )
-                    val alpha by animateFloatAsState(
-                        targetValue = if (isSelected) 1f else 0.4f,
-                        label = "dotAlpha",
-                    )
+/**
+ * Tappable page dots. Shows at most [MAX_VISIBLE_DOTS], sliding the window to keep the current
+ * page in view; dots at a window edge with more pages beyond are drawn smaller as a hint.
+ */
+@Composable
+private fun PageDots(
+    pagerState: PagerState,
+    pageCount: Int,
+    modifier: Modifier = Modifier,
+) {
+    val scope = rememberCoroutineScope()
+    val activeColor = MaterialTheme.colorScheme.primary
+    val inactiveColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
+    val currentPage = pagerState.currentPage
 
+    val visibleCount = minOf(pageCount, MAX_VISIBLE_DOTS)
+    val firstVisible = (currentPage - visibleCount / 2).coerceIn(0, pageCount - visibleCount)
+    val lastVisible = firstVisible + visibleCount - 1
+
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy(6.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        for (index in firstVisible..lastVisible) {
+            key(index) {
+                val isSelected = index == currentPage
+                val isEdgeHint = (index == firstVisible && index > 0) ||
+                    (index == lastVisible && index < pageCount - 1)
+                val scale by animateFloatAsState(
+                    targetValue = when {
+                        isSelected -> 1f
+                        isEdgeHint -> 0.5f
+                        else -> 0.75f
+                    },
+                    animationSpec = spring(
+                        dampingRatio = Spring.DampingRatioMediumBouncy,
+                        stiffness = Spring.StiffnessMedium,
+                    ),
+                    label = "dotScale",
+                )
+                val alpha by animateFloatAsState(
+                    targetValue = if (isSelected) 1f else 0.4f,
+                    label = "dotAlpha",
+                )
+                val dotDescription = stringResource(R.string.go_to_card, index + 1)
+
+                Box(
+                    modifier = Modifier
+                        .size(24.dp)
+                        .semantics { contentDescription = dotDescription }
+                        .clickable {
+                            scope.launch { pagerState.animateScrollToPage(index) }
+                        },
+                    contentAlignment = Alignment.Center,
+                ) {
                     Box(
                         modifier = Modifier
-                            .size(24.dp)
-                            .clickable {
-                                scope.launch { pagerState.animateScrollToPage(index) }
-                            },
-                        contentAlignment = Alignment.Center,
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .size(8.dp)
-                                .graphicsLayer {
-                                    scaleX = scale
-                                    scaleY = scale
-                                    this.alpha = alpha
-                                }
-                                .clip(CircleShape)
-                                .background(if (isSelected) activeColor else inactiveColor)
-                        )
-                    }
+                            .size(8.dp)
+                            .graphicsLayer {
+                                scaleX = scale
+                                scaleY = scale
+                                this.alpha = alpha
+                            }
+                            .clip(CircleShape)
+                            .background(if (isSelected) activeColor else inactiveColor)
+                    )
                 }
             }
         }
@@ -287,7 +328,7 @@ private fun SwipeImagePage(item: ContentItem) {
             )
             AsyncImage(
                 model = "file:///android_asset/${item.body}",
-                contentDescription = item.head.ifEmpty { "Guideline image" },
+                contentDescription = item.head.ifEmpty { stringResource(R.string.guideline_image) },
                 modifier = Modifier.fillMaxWidth(),
                 contentScale = ContentScale.FillWidth,
             )
