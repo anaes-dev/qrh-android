@@ -432,7 +432,7 @@
     {
       "code": "2-3",
       "title": "Increased airway pressure",
-      "version":1,
+      "version": 1,
       "url": "https://anaesthetists.org/Portals/0/PDFs/QRH/QRH_2-3_Increased_airway_pressure_v1.pdf",
       "content": [
         {
@@ -2632,7 +2632,6 @@
           "step": ""
         }
       ]
-
     },
     {
       "code": "3-14",
@@ -2889,7 +2888,6 @@
           "step": ""
         }
       ]
-
     },
     {
       "code": "4-2",
@@ -3000,7 +2998,6 @@
           "step": ""
         }
       ]
-
     },
     {
       "code": "4-3",
@@ -3124,7 +3121,5 @@
         }
       ]
     }
-
   ]
 }
-
