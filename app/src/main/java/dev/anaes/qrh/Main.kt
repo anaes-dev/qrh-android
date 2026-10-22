@@ -1,307 +1,526 @@
 package dev.anaes.qrh
 
-import android.animation.AnimatorInflater
-import android.content.Context
-import android.content.Intent
-import android.content.SharedPreferences
-import android.content.res.Configuration
-import android.graphics.Color
-import android.net.Uri
-import android.os.Build
+import android.graphics.Color as AndroidColor
 import android.os.Bundle
-import android.view.View
-import android.view.WindowManager
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.appcompat.widget.Toolbar
-import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.core.content.ContextCompat
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
-import com.google.android.material.appbar.AppBarLayout
-import dev.anaes.qrh.databinding.ActivityMainBinding
-import kotlinx.coroutines.delay
+import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
+import androidx.activity.compose.LocalActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.core.EaseIn
+import androidx.compose.animation.core.EaseOut
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.only
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.VerticalDivider
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.saveable.rememberSerializable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.unit.dp
+import androidx.core.graphics.drawable.toDrawable
+import androidx.lifecycle.createSavedStateHandle
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
+import androidx.navigation3.runtime.NavBackStack
+import androidx.navigation3.runtime.NavEntry
+import androidx.navigation3.runtime.NavKey
+import androidx.navigation3.scene.Scene
+import androidx.navigation3.ui.NavDisplay
+import dev.anaes.qrh.data.DisclaimerStatus
+import dev.anaes.qrh.data.GuidelineRepository
+import dev.anaes.qrh.data.UserPreferences
+import dev.anaes.qrh.model.Guideline
+import dev.anaes.qrh.search.SearchResult
+import dev.anaes.qrh.ui.about.AboutScreen
+import dev.anaes.qrh.ui.components.BreadcrumbEntry
+import dev.anaes.qrh.ui.detail.GuidelineDetailScreen
+import dev.anaes.qrh.ui.disclaimers.DisclaimersScreen
+import dev.anaes.qrh.ui.firstrun.FirstRunScreen
+import dev.anaes.qrh.ui.list.GuidelineListScreen
+import dev.anaes.qrh.ui.list.NoGuidelineSelectedScreen
+import dev.anaes.qrh.ui.swipe.SwipeViewScreen
+import dev.anaes.qrh.ui.theme.QrhTheme
+import java.util.UUID
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.serializer
 
-interface MainInt {
-    fun popToDetail(num: Int)
-    fun updateBar(
-        title: String,
-        code: String,
-        version: String,
-        expanded: Boolean,
-        hideKeyboard: Boolean,
-        opaque: Boolean
-    )
-    fun openURL(url: String)
-    fun progressShow(show: Boolean)
-    fun setDarkModeDisabled(disabled: Boolean)
-    fun setExpandingDisabled(disabled: Boolean)
-    fun recreateActivity()
-    fun collapseBar(collapse: Boolean)
-    fun swipeDetail(code: String, title: String, url: String, version: String)
+// --- Type-safe route definitions ---
+
+/** A screen. Sealed, so the back stack is saved with generated serializers (no reflection). */
+@Serializable
+sealed interface Route : NavKey
+
+@Serializable
+data class FirstRunRoute(val isUpdate: Boolean) : Route
+
+@Serializable
+data object ListRoute : Route
+
+/**
+ * A guideline. Opened from a search match inside it, [focusCard] is the content item to scroll to
+ * and [query] the search whose words are highlighted. [id] tells apart two visits to the same
+ * guideline on the back stack (3-1 → 3-2 → 3-1), so each keeps its own scroll position and boxes.
+ */
+@Serializable
+data class DetailRoute(
+    val code: String,
+    val focusCard: Int = -1,
+    val query: String = "",
+    val id: String = UUID.randomUUID().toString(),
+) : Route {
+    /** Whether this opens the same guideline, at the same place, as [other]. */
+    fun opensSameAs(other: DetailRoute): Boolean = copy(id = other.id) == other
 }
 
-class Main : AppCompatActivity(), MainInt {
+@Serializable
+data class SwipeRoute(val code: String) : Route
 
-    private val vm: MainViewModel by viewModels()
+@Serializable
+data object AboutRoute : Route
 
-    private lateinit var binding: ActivityMainBinding
+@Serializable
+data object DisclaimersRoute : Route
+
+/** The metadata key that holds each entry's route, so the transitions can tell screens apart. */
+private const val ROUTE_METADATA = "route"
+
+// --- Animation constants ---
+
+/** Duration for slide/combined navigation transitions (ms). */
+private const val NAV_DURATION = 300
+
+/** Duration for simple fade transitions (ms). */
+private const val FADE_DURATION = 200
+
+// --- Tablet layout (as on iPad) ---
+
+/** Smallest screen width of a tablet (or unfolded foldable); phones in landscape stay single-pane. */
+private const val TABLET_MIN_SMALLEST_WIDTH_DP = 600
+
+/** Window width from which the guideline list stays beside the open guideline. */
+private val TWO_PANE_MIN_WIDTH = 840.dp
+
+private val LIST_PANE_WIDTH = 360.dp
+
+/** Width from which a guideline shows its boxes and images in a column beside its steps. */
+private val TWO_COLUMN_MIN_WIDTH = 600.dp
+
+// Navigation bar scrims, as used by androidx.activity's default edge-to-edge styling
+private val NAV_BAR_LIGHT_SCRIM = AndroidColor.argb(0xe6, 0xFF, 0xFF, 0xFF)
+private val NAV_BAR_DARK_SCRIM = AndroidColor.argb(0x80, 0x1b, 0x1b, 0x1b)
+
+class Main : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
 
-        val oldSharedPref: SharedPreferences = getSharedPreferences(
-            "com.mttrnd.qrh.seenwarning",
-            Context.MODE_PRIVATE
-        )
+        val app = application as QrhApplication
+        val repository = app.repository
+        val preferences = app.preferences
 
-        val sharedPref: SharedPreferences = getSharedPreferences(
-            "dev.anaes.qrh",
-            Context.MODE_PRIVATE
-        )
+        setContent {
+            val nightDisabled by preferences.nightDisabled.collectAsState(initial = false)
+            val darkTheme = if (nightDisabled) false else isSystemInDarkTheme()
 
-        if (sharedPref.getInt("version", 0) < BuildConfig.VERSION_CODE) {
-            if(sharedPref.getInt("version", 0) == 42) {
-                val editor = sharedPref.edit()
-                editor.putInt("version", BuildConfig.VERSION_CODE)
-                editor.apply()
-            } else {
-                if (!sharedPref.getBoolean("seen_warning", false)) {
-                    if (oldSharedPref.getBoolean("com.mttrnd.qrh.seenwarning", false)) {
-                        startActivity(Intent(this, FirstRun::class.java).putExtra("isUpdate", true))
-                    } else {
-                        startActivity(
-                            Intent(this, FirstRun::class.java).putExtra(
-                                "isUpdate",
-                                false
-                            )
-                        )
-                    }
-                } else {
-                    startActivity(Intent(this, FirstRun::class.java).putExtra("isUpdate", true))
+            QrhTheme(darkTheme = darkTheme) {
+                // Sync the Activity window background with the Compose theme so
+                // navigation transitions don't reveal a mismatched background
+                // (e.g. dark window behind light Compose content).
+                val bgColor = MaterialTheme.colorScheme.background.toArgb()
+                SideEffect {
+                    window.setBackgroundDrawable(bgColor.toDrawable())
                 }
-                finish()
+
+                QrhApp(repository = repository, preferences = preferences, darkTheme = darkTheme)
             }
-        }
-
-        if (savedInstanceState != null) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                vm.breadcrumbTitles = savedInstanceState.getSerializable("breadcrumbs", HashMap::class.java) as HashMap<Int, String>
-            } else {
-                @Suppress("DEPRECATION")
-                vm.breadcrumbTitles = savedInstanceState.getSerializable("breadcrumbs") as HashMap<Int, String>
-            }
-        }
-
-        if (sharedPref.getBoolean("night_disabled", false)) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            vm.darkDisabled(true)
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-            vm.darkDisabled(false)
-        }
-
-        if (sharedPref.getBoolean("expanding_disabled", false)) {
-            vm.expandingDisabled(true)
-        } else {
-            vm.expandingDisabled(false)
-        }
-
-
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
-
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
-        val toolbar: Toolbar = binding.toolbar
-        setSupportActionBar(toolbar)
-        val appBarConfiguration = AppBarConfiguration(navController.graph)
-        setupActionBarWithNavController(navController, appBarConfiguration)
-
-        val appBar = binding.appBar
-        val params = appBar.layoutParams as CoordinatorLayout.LayoutParams
-        if (params.behavior == null)
-            params.behavior = AppBarLayout.Behavior()
-        val behaviour = params.behavior as AppBarLayout.Behavior
-        behaviour.setDragCallback(object : AppBarLayout.Behavior.DragCallback() {
-            override fun canDrag(appBarLayout: AppBarLayout): Boolean {
-                return false
-            }
-        })
-
-        if(this.resources.configuration.uiMode and
-            Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES) {
-            vm.isDarkMode = true
-        } else {
-            vm.isDarkMode = false
-            appBar.stateListAnimator =
-                AnimatorInflater.loadStateListAnimator(this, R.animator.appbar_elevated)
-        }
-
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        outState.putSerializable("breadcrumbs", vm.breadcrumbTitles)
-        super.onSaveInstanceState(outState)
-    }
-
-
-    override fun onSupportNavigateUp(): Boolean {
-        if (findNavController(R.id.nav_host_fragment).currentDestination.toString()
-                .contains("DetailFragment")
-        ) {
-            progressShow(true)
-        }
-        findNavController(R.id.nav_host_fragment).navigateUp()
-        return true
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
-        if (findNavController(R.id.nav_host_fragment).currentDestination.toString()
-                .contains("DetailFragment")
-        ) {
-            progressShow(true)
-        }
-        onBackPressedDispatcher.onBackPressed()
-    }
-
-
-//
-//    override fun onSaveInstanceState(savedInstanceState: Bundle) {
-//        super.onSaveInstanceState(savedInstanceState)
-//        savedInstanceState.putBundle(
-//            "nav_state",
-//            findNavController(R.id.nav_host_fragment).saveState()
-//        )
-//    }
-//
-//    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-//        super.onRestoreInstanceState(savedInstanceState)
-//        findNavController(R.id.nav_host_fragment).restoreState(savedInstanceState.getBundle("nav_state"))
-//    }
-
-
-    override fun popToDetail(num: Int) {
-        var x = num
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
-        while (x > 0) {
-            navController.popBackStack()
-            x--
-        }
-    }
-
-    override fun collapseBar(collapse: Boolean) {
-        binding.appBar.setExpanded(!collapse)
-    }
-
-    override fun swipeDetail(code: String, title: String, url: String, version: String) {
-        val navController = findNavController(R.id.nav_host_fragment)
-        val action = DetailFragmentDirections.loadNewDetail(code, title, url, version)
-        navController.navigateUp()
-        navController.navigate(action)
-    }
-
-    override fun updateBar(
-        title: String,
-        code: String,
-        version: String,
-        expanded: Boolean,
-        hideKeyboard: Boolean,
-        opaque: Boolean,
-    ) {
-        binding.toolbarLayout.title = title
-        binding.detailCode.text = code
-        binding.detailVersion.text = version
-        binding.appBar.setExpanded(expanded)
-
-        if(vm.isDarkMode) {
-            if (opaque) {
-                binding.toolbar.setBackgroundColor(
-                    ContextCompat.getColor(
-                        this,
-                        R.color.colorPrimary
-                    )
-                )
-            } else {
-                binding.toolbar.setBackgroundColor(Color.TRANSPARENT)
-            }
-        }
-
-        if (hideKeyboard && Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-            window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
-        }
-    }
-
-    override fun openURL(url: String) {
-        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
-    }
-
-    override fun progressShow(show: Boolean) {
-        val indicator = binding.progressCircular
-        if (show) {
-            indicator.visibility = View.VISIBLE
-        } else {
-            indicator.animate()
-                .setDuration(100)
-                .alpha(0F)
-                .withEndAction {
-                    indicator.visibility = View.GONE
-                    indicator.alpha = 0.5F
-                }
-        }
-    }
-
-
-    override fun setDarkModeDisabled(disabled: Boolean) {
-        val sharedPref: SharedPreferences = getSharedPreferences(
-            "dev.anaes.qrh",
-            Context.MODE_PRIVATE
-        )
-
-        if (disabled) {
-            sharedPref.edit()
-                .putBoolean("night_disabled", true)
-                .apply()
-        } else {
-            sharedPref.edit()
-                .putBoolean("night_disabled", false)
-                .apply()
-        }
-    }
-
-    override fun setExpandingDisabled(disabled: Boolean) {
-        val sharedPref: SharedPreferences = getSharedPreferences(
-            "dev.anaes.qrh",
-            Context.MODE_PRIVATE
-        )
-
-        if (disabled) {
-            sharedPref.edit()
-                .putBoolean("expanding_disabled", true)
-                .apply()
-        } else {
-            sharedPref.edit()
-                .putBoolean("expanding_disabled", false)
-                .apply()
-        }
-    }
-
-    override fun recreateActivity() {
-        startActivity(Intent(this, LoadingActivity::class.java))
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
-        lifecycleScope.launch {
-            delay(400)
-            recreate()
         }
     }
 }
+
+@Composable
+fun QrhApp(
+    repository: GuidelineRepository,
+    preferences: UserPreferences,
+    darkTheme: Boolean,
+) {
+    val scope = rememberCoroutineScope()
+
+    // Disclaimer status as it was at launch. Read once and kept across recreation, so accepting
+    // the disclaimers (which changes the stored status) doesn't swap the start route underneath
+    // the back stack.
+    var launchStatus by rememberSaveable { mutableStateOf<DisclaimerStatus?>(null) }
+    LaunchedEffect(Unit) {
+        if (launchStatus == null) launchStatus = preferences.disclaimerStatus.first()
+    }
+
+    val viewModel: QrhViewModel = viewModel(
+        factory = viewModelFactory { initializer { QrhViewModel(repository, createSavedStateHandle()) } }
+    )
+    val activity = LocalActivity.current as? ComponentActivity
+
+    // Wait for DataStore to load before deciding the start route
+    val status = launchStatus
+    if (status == null) {
+        SystemBars(activity, darkTheme, lightStatusBarIcons = darkTheme)
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            CircularProgressIndicator()
+        }
+        return
+    }
+
+    val backStack = rememberRouteBackStack(
+        when (status) {
+            DisclaimerStatus.ACCEPTED -> ListRoute
+            DisclaimerStatus.FIRST_RUN -> FirstRunRoute(isUpdate = false)
+            DisclaimerStatus.UPDATED -> FirstRunRoute(isUpdate = true)
+        },
+    )
+    val currentRoute = backStack.last()
+
+    // Every screen except the first-run disclaimers has a red / dark grey top bar, so needs
+    // light status bar icons; first run (and the loading screen) shows the plain background.
+    SystemBars(activity, darkTheme, lightStatusBarIcons = darkTheme || currentRoute !is FirstRunRoute)
+
+    // Tablets show the guideline list beside the open guideline (as the iPad sidebar does), and
+    // guidelines in two columns. The back stack is the same either way, so folding, unfolding or
+    // resizing the window keeps the user's place.
+    val isTablet = LocalConfiguration.current.smallestScreenWidthDp >= TABLET_MIN_SMALLEST_WIDTH_DP
+    // The open guidelines, bottom to top
+    val openRoutes = backStack.filterIsInstance<DetailRoute>()
+    // Shared by the list pane and the list screen, and kept while the pane is hidden
+    val guidelineListState = rememberLazyListState()
+
+    BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
+        val twoPane = isTablet && maxWidth >= TWO_PANE_MIN_WIDTH
+        val guidelineWidth = if (twoPane) maxWidth - LIST_PANE_WIDTH else maxWidth
+        val twoColumns = isTablet && guidelineWidth >= TWO_COLUMN_MIN_WIDTH
+        val showListPane = twoPane && backStack.isPaneActive()
+        // Read by the screens through State: NavDisplay only rebuilds an entry's content when the
+        // back stack changes, so a resized window (split screen, folding) would leave copies stale
+        val twoPaneState = rememberUpdatedState(twoPane)
+        val twoColumnsState = rememberUpdatedState(twoColumns)
+
+        Row(modifier = Modifier.fillMaxSize()) {
+            AnimatedVisibility(visible = showListPane) {
+                // Each pane keeps clear of a display cutout only on the screen edge it's at
+                Row(
+                    modifier = Modifier
+                        .width(LIST_PANE_WIDTH)
+                        .consumeWindowInsets(WindowInsets.safeDrawing.only(WindowInsetsSides.End)),
+                ) {
+                    GuidelineListScreen(
+                        viewModel = viewModel,
+                        // Both read the back stack itself, which a first tap has already changed, so a
+                        // quick second tap (or one while the pane hides for About) does nothing more
+                        onGuidelineClick = { guideline, result ->
+                            val route = detailRoute(guideline, result, viewModel.searchQuery)
+                            val open = backStack.filterIsInstance<DetailRoute>()
+                            // Replaces the open guidelines, unless it's already open, on its own, the same way
+                            if (backStack.isPaneActive() && (open.size != 1 || !open.single().opensSameAs(route))) {
+                                backStack.popAbove(ListRoute)
+                                backStack.add(route)
+                            }
+                        },
+                        onAboutClick = {
+                            if (backStack.isPaneActive()) backStack.add(AboutRoute)
+                        },
+                        selectedCode = openRoutes.firstOrNull()?.code,
+                        // Back closes the open guidelines before it clears the search
+                        clearSearchOnBack = openRoutes.isEmpty(),
+                        listState = guidelineListState,
+                        modifier = Modifier.weight(1f),
+                    )
+                    VerticalDivider()
+                }
+            }
+
+            NavDisplay(
+                backStack = backStack,
+                modifier = Modifier
+                    .weight(1f)
+                    .then(
+                        if (showListPane) {
+                            Modifier.consumeWindowInsets(WindowInsets.safeDrawing.only(WindowInsetsSides.Start))
+                        } else {
+                            Modifier
+                        }
+                    ),
+                onBack = { backStack.pop() },
+                transitionSpec = {
+                    enterTransition(targetState.route) togetherWith exitTransition(initialState.route)
+                },
+                popTransitionSpec = {
+                    popEnterTransition(targetState.route) togetherWith popExitTransition(initialState.route)
+                },
+                predictivePopTransitionSpec = {
+                    popEnterTransition(targetState.route) togetherWith popExitTransition(initialState.route)
+                },
+                entryProvider = { route ->
+                    NavEntry(route, metadata = mapOf(ROUTE_METADATA to route)) {
+                        when (route) {
+                            is FirstRunRoute -> FirstRunScreen(
+                                isUpdate = route.isUpdate,
+                                onExit = { activity?.finish() },
+                                onAgree = {
+                                    scope.launch {
+                                        preferences.acceptDisclaimers()
+                                        backStack.navigateFrom(route) {
+                                            add(ListRoute)
+                                            removeAll { it is FirstRunRoute }
+                                        }
+                                    }
+                                },
+                            )
+
+                            ListRoute -> if (twoPaneState.value) {
+                                // The list is in the pane beside this
+                                NoGuidelineSelectedScreen()
+                            } else {
+                                GuidelineListScreen(
+                                    viewModel = viewModel,
+                                    onGuidelineClick = { guideline, result ->
+                                        backStack.navigateFrom(route) { add(detailRoute(guideline, result, viewModel.searchQuery)) }
+                                    },
+                                    onAboutClick = {
+                                        backStack.navigateFrom(route) { add(AboutRoute) }
+                                    },
+                                    listState = guidelineListState,
+                                )
+                            }
+
+                            is DetailRoute -> {
+                                val guideline = viewModel.getGuideline(route.code) ?: return@NavEntry
+
+                                // The guidelines opened on the way here, ending with this one. Fixed while
+                                // it's open, as only the screens above it can change.
+                                val trail = remember(route) {
+                                    val index = backStack.indexOf(route)
+                                    if (index >= 0) backStack.subList(0, index + 1).filterIsInstance<DetailRoute>() else listOf(route)
+                                }
+                                val breadcrumbs = remember(trail) {
+                                    trail.mapNotNull { trailRoute ->
+                                        val trailGuideline = repository.getGuideline(trailRoute.code) ?: return@mapNotNull null
+                                        BreadcrumbEntry(trailRoute.code, trailGuideline.title)
+                                    }
+                                }
+
+                                GuidelineDetailScreen(
+                                    guideline = guideline,
+                                    focusCard = route.focusCard,
+                                    highlightQuery = route.query,
+                                    copyright = viewModel.getCopyright(guideline),
+                                    breadcrumbs = breadcrumbs,
+                                    preferences = preferences,
+                                    twoColumns = twoColumnsState.value,
+                                    // Beside the list, the first guideline has nothing to go back to
+                                    showBack = !(twoPaneState.value && breadcrumbs.size <= 1),
+                                    onNavigateBack = { backStack.navigateFrom(route) { pop() } },
+                                    onHomeClick = { backStack.navigateFrom(route) { popAbove(ListRoute) } },
+                                    onBreadcrumbClick = { index -> backStack.navigateFrom(route) { popAbove(trail[index]) } },
+                                    onGuidelineLink = { linkedCode ->
+                                        if (linkedCode != route.code) {
+                                            backStack.navigateFrom(route) { add(DetailRoute(linkedCode)) }
+                                        }
+                                    },
+                                    onSwipeView = {
+                                        backStack.navigateFrom(route) { add(SwipeRoute(route.code)) }
+                                    },
+                                )
+                            }
+
+                            is SwipeRoute -> {
+                                val guideline = viewModel.getGuideline(route.code) ?: return@NavEntry
+
+                                SwipeViewScreen(
+                                    guideline = guideline,
+                                    onNavigateBack = { backStack.navigateFrom(route) { pop() } },
+                                    onGuidelineLink = { linkedCode ->
+                                        backStack.navigateFrom(route) {
+                                            pop()
+                                            add(DetailRoute(linkedCode))
+                                        }
+                                    },
+                                )
+                            }
+
+                            AboutRoute -> AboutScreen(
+                                preferences = preferences,
+                                onNavigateBack = { backStack.navigateFrom(route) { pop() } },
+                                onViewDisclaimers = {
+                                    backStack.navigateFrom(route) { add(DisclaimersRoute) }
+                                },
+                            )
+
+                            DisclaimersRoute -> DisclaimersScreen(
+                                onNavigateBack = { backStack.navigateFrom(route) { pop() } },
+                            )
+                        }
+                    }
+                },
+            )
+        }
+    }
+}
+
+/** The status and navigation bar styles, matching the current screen's top bar and theme. */
+@Composable
+private fun SystemBars(activity: ComponentActivity?, darkTheme: Boolean, lightStatusBarIcons: Boolean) {
+    DisposableEffect(activity, darkTheme, lightStatusBarIcons) {
+        activity?.enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.auto(
+                AndroidColor.TRANSPARENT,
+                AndroidColor.TRANSPARENT,
+            ) { lightStatusBarIcons },
+            navigationBarStyle = SystemBarStyle.auto(
+                NAV_BAR_LIGHT_SCRIM,
+                NAV_BAR_DARK_SCRIM,
+            ) { darkTheme },
+        )
+        onDispose {}
+    }
+}
+
+/** The back stack, starting at [start], saved across configuration changes and process death. */
+@Composable
+private fun rememberRouteBackStack(start: Route): NavBackStack<Route> =
+    rememberSerializable(serializer = serializer()) { NavBackStack(start) }
+
+/**
+ * Runs [action] only while [from] is the screen on top. A screen's buttons stay tappable while it
+ * animates away, so this stops a quick second tap navigating again; the back stack is updated at
+ * once, so there's no window for it to slip through.
+ */
+private inline fun NavBackStack<Route>.navigateFrom(from: Route, action: NavBackStack<Route>.() -> Unit) {
+    if (lastOrNull() == from) action()
+}
+
+/** Whether the tablet list pane is showing, beside the list's placeholder or the open guidelines. */
+private fun NavBackStack<Route>.isPaneActive(): Boolean = last().let { it is ListRoute || it is DetailRoute }
+
+/** Goes back a screen, unless this is the first. */
+private fun NavBackStack<Route>.pop() {
+    if (size > 1) removeAt(lastIndex)
+}
+
+/** Goes back to [route], in one step. */
+private fun NavBackStack<Route>.popAbove(route: Route) {
+    val index = indexOf(route)
+    if (index < 0) return
+    while (lastIndex > index) removeAt(lastIndex)
+}
+
+// --- Transitions ---
+// As with Navigation Compose, each screen has its own enter and exit transitions, for opening
+// another screen and for going back.
+
+/** The route a scene shows, from its entry's metadata. */
+private val Scene<Route>.route: Route
+    get() = entries.last().metadata[ROUTE_METADATA] as Route
+
+/** Guidelines and the disclaimers slide in from the right, card view and about up from below. */
+private fun enterTransition(route: Route): EnterTransition = when (route) {
+    is DetailRoute, DisclaimersRoute -> slideInHorizontally(
+        initialOffsetX = { it / 3 },
+        animationSpec = tween(NAV_DURATION, easing = EaseOut)
+    ) + fadeIn(tween(NAV_DURATION))
+    is SwipeRoute -> slideInVertically(
+        initialOffsetY = { it / 2 },
+        animationSpec = tween(NAV_DURATION, easing = EaseOut)
+    ) + fadeIn(tween(NAV_DURATION))
+    AboutRoute -> slideInVertically(
+        initialOffsetY = { it / 4 },
+        animationSpec = tween(NAV_DURATION, easing = EaseOut)
+    ) + fadeIn(tween(FADE_DURATION))
+    is FirstRunRoute, ListRoute -> fadeIn(tween(FADE_DURATION))
+}
+
+/** The list, guidelines and about slide out left and shrink a little when a screen opens over them. */
+private fun exitTransition(route: Route): ExitTransition = when (route) {
+    ListRoute, is DetailRoute, AboutRoute -> slideOutHorizontally(
+        targetOffsetX = { -it / 4 },
+        animationSpec = tween(NAV_DURATION, easing = EaseIn)
+    ) + fadeOut(tween(NAV_DURATION)) + scaleOut(
+        targetScale = 0.94f,
+        animationSpec = tween(NAV_DURATION, easing = EaseIn)
+    )
+    is FirstRunRoute, is SwipeRoute, DisclaimersRoute -> fadeOut(tween(FADE_DURATION))
+}
+
+/** The reverse of [exitTransition], when the screen over them closes. */
+private fun popEnterTransition(route: Route): EnterTransition = when (route) {
+    ListRoute, is DetailRoute, AboutRoute -> slideInHorizontally(
+        initialOffsetX = { -it / 4 },
+        animationSpec = tween(NAV_DURATION, easing = EaseOut)
+    ) + fadeIn(tween(NAV_DURATION)) + scaleIn(
+        initialScale = 0.94f,
+        animationSpec = tween(NAV_DURATION, easing = EaseOut)
+    )
+    is FirstRunRoute, is SwipeRoute, DisclaimersRoute -> fadeIn(tween(FADE_DURATION))
+}
+
+/** The reverse of [enterTransition], when the screen closes. */
+private fun popExitTransition(route: Route): ExitTransition = when (route) {
+    is DetailRoute, DisclaimersRoute -> slideOutHorizontally(
+        targetOffsetX = { it / 3 },
+        animationSpec = tween(NAV_DURATION, easing = EaseIn)
+    ) + fadeOut(tween(NAV_DURATION))
+    is SwipeRoute -> slideOutVertically(
+        targetOffsetY = { it / 2 },
+        animationSpec = tween(NAV_DURATION, easing = EaseIn)
+    ) + fadeOut(tween(NAV_DURATION))
+    AboutRoute -> slideOutVertically(
+        targetOffsetY = { it / 4 },
+        animationSpec = tween(NAV_DURATION, easing = EaseIn)
+    ) + fadeOut(tween(FADE_DURATION))
+    is FirstRunRoute, ListRoute -> fadeOut(tween(FADE_DURATION))
+}
+
+/** The route for opening [guideline] from the list: at the matching item if found by its content. */
+private fun detailRoute(guideline: Guideline, result: SearchResult?, query: String): DetailRoute =
+    if (result != null && result.isContentMatch) {
+        DetailRoute(guideline.code, focusCard = result.cardIndex, query = query)
+    } else {
+        DetailRoute(guideline.code)
+    }
