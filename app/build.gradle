@@ -11,7 +11,7 @@ android {
     defaultConfig {
         applicationId = "dev.anaes.qrh"
         minSdk = 24
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 48
         versionName = "3.0"
     }
