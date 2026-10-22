@@ -13,7 +13,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LargeTopAppBar
-import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
@@ -26,7 +25,6 @@ import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.snapshots.SnapshotStateMap
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
@@ -55,8 +53,6 @@ private val TitleFontSize = 16.sp
 private val TitleLineHeight = 20.sp
 private val CollapsedTitleFontSize = 14.sp
 private val CollapsedTitleLineHeight = 18.sp
-private val VersionFontSize = 12.sp
-private val VersionLineHeight = 16.sp
 
 /** Height of the collapsed (single-row) app bar, matching Material 3's default. */
 private val CollapsedBarHeight = 64.dp
@@ -111,13 +107,12 @@ fun GuidelineDetailScreen(
         else -> 34.sp
     }
 
-    // Tall enough for the code line, two lines of title and the version line, so large codes
+    // Tall enough for the code line and two lines of title, so large codes
     // and long titles aren't clipped (the Material default of 152dp only fits the 34sp code)
     val expandedHeight = with(LocalDensity.current) {
         CollapsedBarHeight +
             (codeFontSize * CODE_LINE_HEIGHT_RATIO).toDp() +
             (TitleLineHeight * 2).toDp() +
-            VersionLineHeight.toDp() +
             ExpandedTitleBottomSpace
     }
 
@@ -211,7 +206,7 @@ fun GuidelineDetailScreen(
 }
 
 /**
- * Code, title and version for the large app bar.
+ * Code and title for the large app bar.
  *
  * Material 3 draws this same content in both the expanded (large) row and the collapsed (64dp)
  * row, cross-fading between them, so the text shrinks as the bar collapses — otherwise the
@@ -241,15 +236,5 @@ private fun DetailTitle(
             maxLines = if (nearlyCollapsed) 1 else 2,
             overflow = TextOverflow.Ellipsis,
         )
-        // Fades out while collapsing; dropped once fully collapsed to keep the 64dp row roomy
-        if (collapsedFraction < 1f) {
-            Text(
-                text = stringResource(R.string.guideline_version, guideline.version),
-                fontSize = VersionFontSize,
-                lineHeight = VersionLineHeight,
-                color = LocalContentColor.current.copy(alpha = 0.7f),
-                modifier = Modifier.alpha(1f - collapsedFraction),
-            )
-        }
     }
 }
