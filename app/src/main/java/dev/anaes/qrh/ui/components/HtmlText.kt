@@ -36,7 +36,9 @@ import java.util.regex.Pattern
 private val URL_PATTERN = Pattern.compile(
     "((ht|f)tp(s?)://|www\\.|yellowcard\\.)" +
         "([\\w\\-]+\\.){1,}?([\\w\\-.~]+/?)*" +
-        "[\\p{Alnum}.,%_=?&#\\-+()\\[\\]*\$~@!:/{};']*",
+        "[\\p{Alnum}.,%_=?&#\\-+()\\[\\]*\$~@!:/{};']*" +
+        // Bare github.com paths (e.g. the source code link in the disclaimers)
+        "|github\\.com/[\\w\\-./]*[\\w\\-/]",
     Pattern.CASE_INSENSITIVE or Pattern.MULTILINE or Pattern.DOTALL
 )
 private val PHONE_PATTERN = Pattern.compile("[0][0-9]{10}")

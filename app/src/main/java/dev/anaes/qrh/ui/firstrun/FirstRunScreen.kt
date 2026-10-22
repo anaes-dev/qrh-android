@@ -166,10 +166,12 @@ fun FirstRunScreen(
             }
 
             // App description + CC logo (qrh_info section)
-            Text(
-                text = stringResource(R.string.about_1),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            HtmlText(
+                html = htmlStringResource(R.string.about_1),
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                ),
+                onExternalLink = onExternalLink,
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
             )
 
@@ -186,11 +188,13 @@ fun FirstRunScreen(
                             context.openExternalLink("https://creativecommons.org/licenses/by-nc-sa/4.0/")
                         },
                 )
-                Text(
-                    text = stringResource(R.string.about_2),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    fontSize = 10.sp,
+                HtmlText(
+                    html = htmlStringResource(R.string.about_2),
+                    style = MaterialTheme.typography.bodySmall.copy(
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        fontSize = 10.sp,
+                    ),
+                    onExternalLink = onExternalLink,
                     modifier = Modifier.padding(8.dp),
                 )
             }

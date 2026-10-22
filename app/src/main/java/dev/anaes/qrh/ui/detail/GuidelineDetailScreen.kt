@@ -203,7 +203,11 @@ fun GuidelineDetailScreen(
                 }
 
                 item(key = "${guideline.code}-footer") {
-                    GuidelineFooter(version = guideline.version, copyright = copyright)
+                    GuidelineFooter(
+                        version = guideline.version,
+                        copyright = copyright,
+                        onExternalLink = onExternalLink,
+                    )
                 }
             }
         }

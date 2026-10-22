@@ -1,5 +1,6 @@
 package dev.anaes.qrh.ui.detail
 
+import android.text.TextUtils
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
@@ -364,12 +365,13 @@ private fun ImageItem(
 fun GuidelineFooter(
     version: Int,
     copyright: GuidelineCopyright?,
+    onExternalLink: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
         VersionLine(version)
         EndDisclaimerCard()
-        LicenseAttribution(copyright)
+        LicenseAttribution(copyright, onExternalLink)
     }
 }
 
@@ -414,20 +416,26 @@ private fun EndDisclaimerCard() {
 }
 
 @Composable
-private fun LicenseAttribution(copyright: GuidelineCopyright?) {
+private fun LicenseAttribution(
+    copyright: GuidelineCopyright?,
+    onExternalLink: (String) -> Unit,
+) {
     Column(
         modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
     ) {
         if (copyright != null) {
-            Text(
-                text = stringResource(
-                    R.string.cc_footer_attribution,
-                    copyright.holderName,
-                    copyright.year,
-                    copyright.website,
-                ),
-                style = MaterialTheme.typography.bodySmall,
-                fontWeight = FontWeight.Bold,
+            val attribution = stringResource(
+                R.string.cc_footer_attribution,
+                copyright.holderName,
+                copyright.year,
+                copyright.website,
+            )
+            // HtmlText so the holder's website is a tappable link, as it was in the
+            // pre-Compose app (holder names contain "&", so escape before parsing as HTML)
+            HtmlText(
+                html = TextUtils.htmlEncode(attribution),
+                style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.Bold),
+                onExternalLink = onExternalLink,
             )
             Spacer(modifier = Modifier.height(4.dp))
         }

@@ -48,7 +48,10 @@ import androidx.compose.ui.unit.sp
 import dev.anaes.qrh.R
 import dev.anaes.qrh.data.UserPreferences
 import dev.anaes.qrh.ui.components.HeaderCard
+import dev.anaes.qrh.ui.components.HtmlText
+import dev.anaes.qrh.ui.components.htmlStringResource
 import dev.anaes.qrh.ui.components.openExternalLink
+import dev.anaes.qrh.ui.components.rememberExternalLinkHandler
 import dev.anaes.qrh.ui.theme.qrhTopAppBarColors
 import kotlinx.coroutines.launch
 
@@ -60,6 +63,7 @@ fun AboutScreen(
     onViewDisclaimers: () -> Unit,
 ) {
     val context = LocalContext.current
+    val onExternalLink = rememberExternalLinkHandler()
     val scope = rememberCoroutineScope()
     val nightDisabled by preferences.nightDisabled.collectAsState(initial = false)
     val expandingDisabled by preferences.expandingDisabled.collectAsState(initial = false)
@@ -91,10 +95,12 @@ fun AboutScreen(
             HeaderCard(modifier = Modifier.padding(8.dp))
 
             // Description
-            Text(
-                text = stringResource(R.string.about_1),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            HtmlText(
+                html = htmlStringResource(R.string.about_1),
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                ),
+                onExternalLink = onExternalLink,
                 modifier = Modifier.padding(16.dp),
             )
 
@@ -232,11 +238,13 @@ fun AboutScreen(
                             context.openExternalLink("https://creativecommons.org/licenses/by-nc-sa/4.0/")
                         },
                 )
-                Text(
-                    text = stringResource(R.string.about_2),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    fontSize = 10.sp,
+                HtmlText(
+                    html = htmlStringResource(R.string.about_2),
+                    style = MaterialTheme.typography.bodySmall.copy(
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        fontSize = 10.sp,
+                    ),
+                    onExternalLink = onExternalLink,
                     modifier = Modifier.padding(8.dp),
                 )
             }
