@@ -44,9 +44,19 @@ class BundledDataTest {
 
     @Test
     fun `every content item has a known type`() {
+        // 11 (version) and 12 (end disclaimer) are drawn by the app's footer, not stored in data
         val unknown = appData.data.flatMap { guideline ->
-            guideline.content.filter { it.type !in 1..12 }.map { "${guideline.code}: type ${it.type}" }
+            guideline.content.filter { it.type !in 1..10 }.map { "${guideline.code}: type ${it.type}" }
         }
         assertTrue("Unknown content types: $unknown", unknown.isEmpty())
+    }
+
+    @Test
+    fun `every guideline has a copyright with a known holder`() {
+        val missing = appData.data.filter { guideline ->
+            val copyright = guideline.copyright
+            copyright == null || copyright.holder !in appData.copyrightHolders
+        }.map { it.code }
+        assertTrue("Missing or unknown copyright holder: $missing", missing.isEmpty())
     }
 }

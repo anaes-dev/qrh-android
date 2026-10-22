@@ -14,7 +14,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -43,6 +45,7 @@ import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import dev.anaes.qrh.R
 import dev.anaes.qrh.model.ContentItem
+import dev.anaes.qrh.model.GuidelineCopyright
 import dev.anaes.qrh.ui.components.HtmlText
 import dev.anaes.qrh.ui.components.HtmlTextStatic
 import dev.anaes.qrh.ui.theme.BoxColors
@@ -80,8 +83,8 @@ fun ContentItemView(
             modifier = modifier,
         )
         10 -> ImageItem(item, modifier)
-        11 -> VersionItem(item, modifier)
-        12 -> EndDisclaimerItem(item, modifier)
+        // 11 (version line) and 12 (end disclaimer) are no longer in the data; the detail
+        // screen draws them from the guideline itself in GuidelineFooter
     }
 }
 
@@ -353,38 +356,52 @@ private fun ImageItem(
     }
 }
 
+/**
+ * Footer shown after every guideline's content: source version, the standard clinical
+ * disclaimer, and the CC licence attribution for the guideline's copyright holder and year.
+ */
 @Composable
-private fun VersionItem(
-    item: ContentItem,
+fun GuidelineFooter(
+    version: Int,
+    copyright: GuidelineCopyright?,
     modifier: Modifier = Modifier,
 ) {
+    Column(modifier = modifier.fillMaxWidth()) {
+        VersionLine(version)
+        EndDisclaimerCard()
+        LicenseAttribution(copyright)
+    }
+}
+
+@Composable
+private fun VersionLine(version: Int) {
     Text(
-        text = stringResource(R.string.adapted_from_section, item.body),
+        text = stringResource(
+            R.string.adapted_from_section,
+            stringResource(R.string.guideline_version, version),
+        ),
         style = MaterialTheme.typography.bodySmall,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
         textAlign = TextAlign.End,
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 4.dp),
     )
 }
 
 @Composable
-private fun EndDisclaimerItem(
-    item: ContentItem,
-    modifier: Modifier = Modifier,
-) {
+private fun EndDisclaimerCard() {
     val isDark = LocalIsDarkTheme.current
     Card(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 12.dp, vertical = 8.dp),
         colors = CardDefaults.cardColors(
             containerColor = if (isDark) RedBgDark else RedBgLight,
         ),
     ) {
-        HtmlText(
-            html = item.head,
+        Text(
+            text = stringResource(R.string.about_4),
             style = TextStyle(
                 color = if (isDark) RedTxtDark else RedTxtLight,
                 fontWeight = FontWeight.Bold,
@@ -392,6 +409,31 @@ private fun EndDisclaimerItem(
                 lineHeight = 18.sp,
             ),
             modifier = Modifier.padding(12.dp),
+        )
+    }
+}
+
+@Composable
+private fun LicenseAttribution(copyright: GuidelineCopyright?) {
+    Column(
+        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+    ) {
+        if (copyright != null) {
+            Text(
+                text = stringResource(
+                    R.string.cc_footer_attribution,
+                    copyright.holderName,
+                    copyright.year,
+                    copyright.website,
+                ),
+                style = MaterialTheme.typography.bodySmall,
+                fontWeight = FontWeight.Bold,
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+        }
+        Text(
+            text = stringResource(R.string.cc_footer_license),
+            style = MaterialTheme.typography.bodySmall,
         )
     }
 }

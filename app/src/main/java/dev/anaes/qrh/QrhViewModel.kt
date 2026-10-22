@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.anaes.qrh.data.GuidelineRepository
 import dev.anaes.qrh.model.Guideline
+import dev.anaes.qrh.model.GuidelineCopyright
 import dev.anaes.qrh.search.GuidelineSearch
 import dev.anaes.qrh.search.SearchResult
 import kotlinx.coroutines.Dispatchers
@@ -67,6 +68,8 @@ class QrhViewModel(
         }
 
     fun getGuideline(code: String): Guideline? = repository.getGuideline(code)
+
+    fun getCopyright(guideline: Guideline): GuidelineCopyright? = repository.getCopyright(guideline)
 
     companion object {
         private const val SEARCH_DEBOUNCE_MS = 150L

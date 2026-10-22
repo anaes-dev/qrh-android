@@ -4,6 +4,7 @@ import android.content.res.AssetManager
 import android.util.Log
 import dev.anaes.qrh.model.AppData
 import dev.anaes.qrh.model.Guideline
+import dev.anaes.qrh.model.GuidelineCopyright
 import kotlinx.serialization.json.Json
 
 class GuidelineRepository(private val assets: AssetManager) {
@@ -35,4 +36,11 @@ class GuidelineRepository(private val assets: AssetManager) {
     }
 
     fun getGuideline(code: String): Guideline? = byCode[code]
+
+    /** The guideline's copyright with its holder resolved, or null if absent or unknown. */
+    fun getCopyright(guideline: Guideline): GuidelineCopyright? {
+        val copyright = guideline.copyright ?: return null
+        val holder = appData.copyrightHolders[copyright.holder] ?: return null
+        return GuidelineCopyright(holder.name, holder.website, copyright.year)
+    }
 }

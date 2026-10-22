@@ -292,6 +292,7 @@ fun QrhApp(
 
             GuidelineDetailScreen(
                 guideline = guideline,
+                copyright = viewModel.getCopyright(guideline),
                 breadcrumbs = breadcrumbs,
                 preferences = preferences,
                 onNavigateBack = { navController.popBackStack() },

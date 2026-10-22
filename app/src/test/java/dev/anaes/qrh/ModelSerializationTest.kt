@@ -119,6 +119,36 @@ class ModelSerializationTest {
     }
 
     @Test
+    fun `Copyright holders and guideline copyright are parsed`() {
+        val jsonString = """
+            {
+              "version": "3.00",
+              "copyrightHolders": {
+                "aoa": {"name": "Association of Anaesthetists", "website": "www.anaesthetists.org/qrh"}
+              },
+              "data": [{
+                "code": "3-1", "title": "Test", "version": 5,
+                "url": "https://example.com/1.pdf", "content": [],
+                "copyright": {"holder": "aoa", "year": 2022}
+              }]
+            }
+        """.trimIndent()
+        val appData = json.decodeFromString<AppData>(jsonString)
+        val copyright = appData.data[0].copyright!!
+        assertEquals("aoa", copyright.holder)
+        assertEquals(2022, copyright.year)
+        assertEquals("Association of Anaesthetists", appData.copyrightHolders.getValue("aoa").name)
+    }
+
+    @Test
+    fun `Copyright is optional`() {
+        val jsonString = """{"version": "1.00", "data": [{"code": "1-1", "title": "T", "version": 1, "url": "u", "content": []}]}"""
+        val appData = json.decodeFromString<AppData>(jsonString)
+        assertEquals(null, appData.data[0].copyright)
+        assertTrue(appData.copyrightHolders.isEmpty())
+    }
+
+    @Test
     fun `Empty data array is valid`() {
         val jsonString = """{"version": "1.00", "data": []}"""
         val appData = json.decodeFromString<AppData>(jsonString)

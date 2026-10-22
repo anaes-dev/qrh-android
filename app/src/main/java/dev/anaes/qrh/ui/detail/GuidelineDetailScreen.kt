@@ -1,9 +1,7 @@
 package dev.anaes.qrh.ui.detail
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -16,7 +14,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.LocalContentColor
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
@@ -43,6 +40,7 @@ import androidx.compose.ui.unit.sp
 import dev.anaes.qrh.R
 import dev.anaes.qrh.data.UserPreferences
 import dev.anaes.qrh.model.Guideline
+import dev.anaes.qrh.model.GuidelineCopyright
 import dev.anaes.qrh.ui.components.BreadcrumbBar
 import dev.anaes.qrh.ui.components.BreadcrumbEntry
 import dev.anaes.qrh.ui.components.openExternalLink
@@ -80,6 +78,7 @@ private val CollapsedStateSaver = listSaver<SnapshotStateMap<Int, Boolean>, Int>
 @Composable
 fun GuidelineDetailScreen(
     guideline: Guideline,
+    copyright: GuidelineCopyright?,
     breadcrumbs: List<BreadcrumbEntry>,
     preferences: UserPreferences,
     onNavigateBack: () -> Unit,
@@ -203,22 +202,8 @@ fun GuidelineDetailScreen(
                     )
                 }
 
-                // CC attribution footer
-                item {
-                    Column(
-                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-                    ) {
-                        Text(
-                            text = stringResource(R.string.cc_footer_attribution),
-                            style = MaterialTheme.typography.bodySmall,
-                            fontWeight = FontWeight.Bold,
-                        )
-                        Spacer(modifier = Modifier.height(4.dp))
-                        Text(
-                            text = stringResource(R.string.cc_footer_license),
-                            style = MaterialTheme.typography.bodySmall,
-                        )
-                    }
+                item(key = "${guideline.code}-footer") {
+                    GuidelineFooter(version = guideline.version, copyright = copyright)
                 }
             }
         }

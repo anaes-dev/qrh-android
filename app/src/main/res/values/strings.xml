@@ -78,6 +78,7 @@
     <string name="card_position">%1$d of %2$d</string>
     <string name="go_to_card">Go to card %1$d</string>
     <string name="no_app_for_link">No app available to open this link</string>
-    <string name="cc_footer_attribution">The Association of Anaesthetists of Great Britain &amp; Ireland 2018. www.aagbi.org/qrh</string>
+    <!-- Copyright holder name, year, website (from data.json) -->
+    <string name="cc_footer_attribution">%1$s %2$d. %3$s</string>
     <string name="cc_footer_license">Subject to Creative Commons license CC BY-NC-SA 4.0. You may distribute original version or adapt for yourself and distribute with acknowledgement of source. You may not use for commercial purposes. Visit website for details.</string>
 </resources>
