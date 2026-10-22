@@ -1,7 +1,12 @@
 package dev.anaes.qrh.ui.detail
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -9,34 +14,44 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
+import dev.anaes.qrh.R
 import dev.anaes.qrh.model.ContentItem
+import dev.anaes.qrh.model.GuidelineCopyright
 import dev.anaes.qrh.ui.components.HtmlText
+import dev.anaes.qrh.ui.components.HtmlTextStatic
 import dev.anaes.qrh.ui.theme.BoxColors
 import dev.anaes.qrh.ui.theme.LocalIsDarkTheme
+import dev.anaes.qrh.ui.theme.SubtleCardBgDark
+import dev.anaes.qrh.ui.theme.SubtleCardBgLight
 import dev.anaes.qrh.ui.theme.RedBgDark
 import dev.anaes.qrh.ui.theme.RedBgLight
 import dev.anaes.qrh.ui.theme.RedTxtDark
@@ -68,27 +83,47 @@ fun ContentItemView(
             modifier = modifier,
         )
         10 -> ImageItem(item, modifier)
-        11 -> VersionItem(item, modifier)
-        12 -> EndDisclaimerItem(item, modifier)
+        // 11 (version line) and 12 (end disclaimer) are no longer in the data; the detail
+        // screen draws them from the guideline itself in GuidelineFooter
     }
 }
 
 @Composable
 private fun StepCircle(step: String) {
     if (step.isBlank()) return
+    val isDark = LocalIsDarkTheme.current
     Box(
         modifier = Modifier
             .size(28.dp)
             .clip(CircleShape)
-            .background(MaterialTheme.colorScheme.primary),
+            .background(if (isDark) Color.White else Color.Black),
         contentAlignment = Alignment.Center,
     ) {
         Text(
             text = step,
-            color = Color.White,
+            color = if (isDark) Color.Black else Color.White,
             fontSize = 14.sp,
             fontWeight = FontWeight.Bold,
         )
+    }
+}
+
+@Composable
+private fun SubtleCard(
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit,
+) {
+    val isDark = LocalIsDarkTheme.current
+    Card(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 12.dp, vertical = 4.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = if (isDark) SubtleCardBgDark else SubtleCardBgLight,
+        ),
+        shape = RoundedCornerShape(8.dp),
+    ) {
+        content()
     }
 }
 
@@ -99,52 +134,8 @@ private fun PreambleItem(
     onExternalLink: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Column(modifier = modifier.padding(horizontal = 16.dp, vertical = 4.dp)) {
-        if (item.head.isNotBlank()) {
-            HtmlText(
-                html = item.head,
-                style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 15.sp, lineHeight = 20.sp),
-                onGuidelineLink = onGuidelineLink,
-                onExternalLink = onExternalLink,
-            )
-        }
-        if (item.body.isNotBlank()) {
-            HtmlText(
-                html = item.body,
-                style = TextStyle(fontSize = 15.sp, lineHeight = 20.sp),
-                onGuidelineLink = onGuidelineLink,
-                onExternalLink = onExternalLink,
-                modifier = Modifier.padding(top = 4.dp),
-            )
-        }
-    }
-}
-
-@Composable
-private fun StartMarker(
-    item: ContentItem,
-    modifier: Modifier = Modifier,
-) {
-    HtmlText(
-        html = item.body,
-        style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 16.sp),
-        modifier = modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-    )
-}
-
-@Composable
-private fun StandardStepItem(
-    item: ContentItem,
-    onGuidelineLink: (String) -> Unit,
-    onExternalLink: (String) -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    Row(
-        modifier = modifier.padding(horizontal = 16.dp, vertical = 6.dp),
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
-    ) {
-        StepCircle(item.step)
-        Column(modifier = Modifier.weight(1f)) {
+    SubtleCard(modifier = modifier) {
+        Column(modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)) {
             if (item.head.isNotBlank()) {
                 HtmlText(
                     html = item.head,
@@ -159,8 +150,70 @@ private fun StandardStepItem(
                     style = TextStyle(fontSize = 15.sp, lineHeight = 20.sp),
                     onGuidelineLink = onGuidelineLink,
                     onExternalLink = onExternalLink,
-                    modifier = Modifier.padding(top = 2.dp),
+                    modifier = Modifier.padding(top = 4.dp),
                 )
+            }
+        }
+    }
+}
+
+@Composable
+private fun StartMarker(
+    item: ContentItem,
+    modifier: Modifier = Modifier,
+) {
+    val isDark = LocalIsDarkTheme.current
+    val bgColor = if (isDark) Color.White else Color.Black
+    val fgColor = if (isDark) Color.Black else Color.White
+    Box(
+        modifier = modifier
+            .padding(horizontal = 12.dp, vertical = 4.dp)
+            .clip(RoundedCornerShape(4.dp))
+            .background(bgColor)
+            .padding(horizontal = 12.dp, vertical = 6.dp),
+    ) {
+        HtmlTextStatic(
+            html = item.body,
+            style = TextStyle(
+                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp,
+                color = fgColor,
+            ),
+        )
+    }
+}
+
+@Composable
+private fun StandardStepItem(
+    item: ContentItem,
+    onGuidelineLink: (String) -> Unit,
+    onExternalLink: (String) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    SubtleCard(modifier = modifier) {
+        Row(
+            modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
+            StepCircle(item.step)
+            Column(modifier = Modifier.weight(1f)) {
+                if (item.head.isNotBlank()) {
+                    HtmlText(
+                        html = item.head,
+                        style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 15.sp, lineHeight = 20.sp),
+                        onGuidelineLink = onGuidelineLink,
+                        onExternalLink = onExternalLink,
+                    )
+                }
+                if (item.body.isNotBlank()) {
+                    HtmlText(
+                        html = item.body,
+                        style = TextStyle(fontSize = 15.sp, lineHeight = 20.sp),
+                        onGuidelineLink = onGuidelineLink,
+                        onExternalLink = onExternalLink,
+                        modifier = Modifier.padding(top = 2.dp),
+                    )
+                }
             }
         }
     }
@@ -173,19 +226,21 @@ private fun OneLineStepItem(
     onExternalLink: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Row(
-        modifier = modifier.padding(horizontal = 16.dp, vertical = 6.dp),
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        StepCircle(item.step)
-        HtmlText(
-            html = item.body,
-            style = TextStyle(fontSize = 15.sp, lineHeight = 20.sp),
-            onGuidelineLink = onGuidelineLink,
-            onExternalLink = onExternalLink,
-            modifier = Modifier.weight(1f),
-        )
+    SubtleCard(modifier = modifier) {
+        Row(
+            modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            StepCircle(item.step)
+            HtmlText(
+                html = item.body,
+                style = TextStyle(fontSize = 15.sp, lineHeight = 20.sp),
+                onGuidelineLink = onGuidelineLink,
+                onExternalLink = onExternalLink,
+                modifier = Modifier.weight(1f),
+            )
+        }
     }
 }
 
@@ -201,21 +256,30 @@ private fun CollapsibleBoxItem(
 ) {
     val isDark = LocalIsDarkTheme.current
     val colors = BoxColors.forType(item.type, isDark)
+    val arrowRotation by animateFloatAsState(
+        targetValue = if (isCollapsed) 0f else 180f,
+        animationSpec = spring(
+            dampingRatio = Spring.DampingRatioMediumBouncy,
+            stiffness = Spring.StiffnessMedium,
+        ),
+        label = "arrowRotation",
+    )
 
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 12.dp, vertical = 4.dp)
-            .then(if (showArrow) Modifier.clickable { onToggle() } else Modifier),
+            .padding(start = 36.dp, end = 12.dp, top = 4.dp, bottom = 4.dp),
         colors = CardDefaults.cardColors(containerColor = colors.background),
     ) {
+        // Header row — uses HtmlTextStatic so it doesn't consume clicks
         Row(
             modifier = Modifier
                 .fillMaxWidth()
+                .then(if (showArrow) Modifier.clickable(onClick = onToggle) else Modifier)
                 .padding(start = 12.dp, end = 4.dp, top = 8.dp, bottom = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            HtmlText(
+            HtmlTextStatic(
                 html = item.head,
                 style = TextStyle(
                     color = colors.text,
@@ -234,18 +298,25 @@ private fun CollapsibleBoxItem(
                     contentAlignment = Alignment.Center,
                 ) {
                     Icon(
-                        imageVector = if (isCollapsed) Icons.Filled.KeyboardArrowDown
-                            else Icons.Filled.KeyboardArrowUp,
-                        contentDescription = if (isCollapsed) "Expand" else "Collapse",
+                        imageVector = Icons.Filled.KeyboardArrowDown,
+                        contentDescription = stringResource(if (isCollapsed) R.string.expand else R.string.collapse),
                         tint = colors.text,
+                        modifier = Modifier.graphicsLayer { rotationZ = arrowRotation },
                     )
                 }
             }
         }
         AnimatedVisibility(
             visible = !isCollapsed,
-            enter = expandVertically(),
-            exit = shrinkVertically(),
+            enter = expandVertically(
+                animationSpec = spring(
+                    dampingRatio = Spring.DampingRatioLowBouncy,
+                    stiffness = Spring.StiffnessMediumLow,
+                )
+            ) + fadeIn(spring(stiffness = Spring.StiffnessMediumLow)),
+            exit = shrinkVertically(
+                animationSpec = spring(stiffness = Spring.StiffnessMedium)
+            ) + fadeOut(spring(stiffness = Spring.StiffnessMedium)),
         ) {
             HtmlText(
                 html = item.body,
@@ -271,7 +342,7 @@ private fun ImageItem(
     ) {
         AsyncImage(
             model = "file:///android_asset/${item.body}",
-            contentDescription = item.head,
+            contentDescription = item.head.ifEmpty { stringResource(R.string.guideline_image) },
             modifier = Modifier.fillMaxWidth(),
             contentScale = ContentScale.FillWidth,
         )
@@ -285,38 +356,52 @@ private fun ImageItem(
     }
 }
 
+/**
+ * Footer shown after every guideline's content: source version, the standard clinical
+ * disclaimer, and the CC licence attribution for the guideline's copyright holder and year.
+ */
 @Composable
-private fun VersionItem(
-    item: ContentItem,
+fun GuidelineFooter(
+    version: Int,
+    copyright: GuidelineCopyright?,
     modifier: Modifier = Modifier,
 ) {
+    Column(modifier = modifier.fillMaxWidth()) {
+        VersionLine(version)
+        EndDisclaimerCard()
+        LicenseAttribution(copyright)
+    }
+}
+
+@Composable
+private fun VersionLine(version: Int) {
     Text(
-        text = "Adapted from QRH section ${item.body}",
+        text = stringResource(
+            R.string.adapted_from_section,
+            stringResource(R.string.guideline_version, version),
+        ),
         style = MaterialTheme.typography.bodySmall,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
         textAlign = TextAlign.End,
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 4.dp),
     )
 }
 
 @Composable
-private fun EndDisclaimerItem(
-    item: ContentItem,
-    modifier: Modifier = Modifier,
-) {
+private fun EndDisclaimerCard() {
     val isDark = LocalIsDarkTheme.current
     Card(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 12.dp, vertical = 8.dp),
         colors = CardDefaults.cardColors(
             containerColor = if (isDark) RedBgDark else RedBgLight,
         ),
     ) {
-        HtmlText(
-            html = item.head,
+        Text(
+            text = stringResource(R.string.about_4),
             style = TextStyle(
                 color = if (isDark) RedTxtDark else RedTxtLight,
                 fontWeight = FontWeight.Bold,
@@ -324,6 +409,31 @@ private fun EndDisclaimerItem(
                 lineHeight = 18.sp,
             ),
             modifier = Modifier.padding(12.dp),
+        )
+    }
+}
+
+@Composable
+private fun LicenseAttribution(copyright: GuidelineCopyright?) {
+    Column(
+        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+    ) {
+        if (copyright != null) {
+            Text(
+                text = stringResource(
+                    R.string.cc_footer_attribution,
+                    copyright.holderName,
+                    copyright.year,
+                    copyright.website,
+                ),
+                style = MaterialTheme.typography.bodySmall,
+                fontWeight = FontWeight.Bold,
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+        }
+        Text(
+            text = stringResource(R.string.cc_footer_license),
+            style = MaterialTheme.typography.bodySmall,
         )
     }
 }

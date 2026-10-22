@@ -70,6 +70,10 @@ val PurpleTxtDark = Color(0xFFB39DDB)
 val RedBgDark = Color(0xFF241615)
 val RedTxtDark = Color(0xFFE57373)
 
+// Subtle card backgrounds (non-expanding items)
+val SubtleCardBgLight = Color(0xFFF5F5F5)
+val SubtleCardBgDark = Color(0xFF1E1E1E)
+
 // Launch buttons
 val LaunchBtnTxtDisabledLight = Color(0xFF555555)
 val LaunchBtnTxtEnabledLight = Color(0xFFFFFFFF)

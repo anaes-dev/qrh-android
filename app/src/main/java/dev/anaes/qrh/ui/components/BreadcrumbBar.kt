@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ChevronRight
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.Icon
@@ -17,8 +17,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import dev.anaes.qrh.R
 
 data class BreadcrumbEntry(
     val code: String,
@@ -48,11 +50,11 @@ fun BreadcrumbBar(
     ) {
         AssistChip(
             onClick = onHomeClick,
-            label = { Text("Home", fontSize = 12.sp) },
+            label = { Text(stringResource(R.string.home), fontSize = 12.sp) },
             leadingIcon = {
                 Icon(
                     Icons.Filled.Home,
-                    contentDescription = "Home",
+                    contentDescription = null,
                     modifier = Modifier.size(16.dp)
                 )
             },
@@ -60,7 +62,7 @@ fun BreadcrumbBar(
 
         entries.forEachIndexed { index, entry ->
             Icon(
-                Icons.AutoMirrored.Filled.ChevronRight,
+                Icons.AutoMirrored.Filled.KeyboardArrowRight,
                 contentDescription = null,
                 modifier = Modifier.size(16.dp),
                 tint = MaterialTheme.colorScheme.onSurfaceVariant,

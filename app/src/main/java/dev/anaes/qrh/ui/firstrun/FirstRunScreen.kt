@@ -1,7 +1,5 @@
 package dev.anaes.qrh.ui.firstrun
 
-import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -10,12 +8,15 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
@@ -46,6 +47,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.anaes.qrh.R
 import dev.anaes.qrh.ui.components.HeaderCard
+import dev.anaes.qrh.ui.components.HtmlText
+import dev.anaes.qrh.ui.components.htmlStringResource
+import dev.anaes.qrh.ui.components.openExternalLink
+import dev.anaes.qrh.ui.components.rememberExternalLinkHandler
 import dev.anaes.qrh.ui.theme.LaunchBtnBgDisabledDark
 import dev.anaes.qrh.ui.theme.LaunchBtnBgDisabledLight
 import dev.anaes.qrh.ui.theme.LaunchBtnBgEnabledDark
@@ -62,18 +67,20 @@ import dev.anaes.qrh.ui.theme.RedBgLight
 import dev.anaes.qrh.ui.theme.RedTxtDark
 import dev.anaes.qrh.ui.theme.RedTxtLight
 import kotlinx.coroutines.launch
-import kotlin.system.exitProcess
 
 @Composable
 fun FirstRunScreen(
     isUpdate: Boolean,
     onAgree: () -> Unit,
+    onExit: () -> Unit = {},
 ) {
     val scrollState = rememberScrollState()
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
     val isDark = LocalIsDarkTheme.current
     val context = LocalContext.current
+    val scrollFirstText = stringResource(R.string.please_scroll_first)
+    val onExternalLink = rememberExternalLinkHandler()
 
     val hasScrolledToBottom by remember {
         derivedStateOf {
@@ -94,11 +101,12 @@ fun FirstRunScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .windowInsetsPadding(WindowInsets.navigationBars)
                     .padding(16.dp),
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
             ) {
                 Button(
-                    onClick = { exitProcess(1) },
+                    onClick = onExit,
                     modifier = Modifier.weight(1f),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = btnBgExit,
@@ -114,7 +122,7 @@ fun FirstRunScreen(
                             onAgree()
                         } else {
                             scope.launch {
-                                snackbarHostState.showSnackbar("Please scroll and read first.")
+                                snackbarHostState.showSnackbar(scrollFirstText)
                             }
                         }
                     },
@@ -175,12 +183,7 @@ fun FirstRunScreen(
                         .width(120.dp)
                         .padding(8.dp)
                         .clickable {
-                            context.startActivity(
-                                Intent(
-                                    Intent.ACTION_VIEW,
-                                    Uri.parse("https://creativecommons.org/licenses/by-nc-sa/4.0/")
-                                )
-                            )
+                            context.openExternalLink("https://creativecommons.org/licenses/by-nc-sa/4.0/")
                         },
                 )
                 Text(
@@ -253,22 +256,26 @@ fun FirstRunScreen(
 
             // Step 2
             DisclaimerStep(number = "2", isDark = isDark) {
-                Text(
-                    text = stringResource(R.string.splash_3),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    fontSize = 12.sp,
+                HtmlText(
+                    html = htmlStringResource(R.string.splash_3),
+                    style = MaterialTheme.typography.bodySmall.copy(
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        fontSize = 12.sp,
+                    ),
+                    onExternalLink = onExternalLink,
                     modifier = Modifier.padding(8.dp),
                 )
             }
 
             // Step 3
             DisclaimerStep(number = "3", isDark = isDark) {
-                Text(
-                    text = stringResource(R.string.splash_4),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    fontSize = 12.sp,
+                HtmlText(
+                    html = htmlStringResource(R.string.splash_4),
+                    style = MaterialTheme.typography.bodySmall.copy(
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        fontSize = 12.sp,
+                    ),
+                    onExternalLink = onExternalLink,
                     modifier = Modifier.padding(8.dp),
                 )
             }
