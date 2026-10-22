@@ -1,0 +1,6 @@
+<resources>
+    <!-- The window behind the Compose content, shown before it first draws; the app's colours are in ui/theme -->
+    <style name="Theme.QRH" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">#121212</item>
+    </style>
+</resources>

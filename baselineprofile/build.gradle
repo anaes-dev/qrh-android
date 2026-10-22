@@ -1,0 +1,34 @@
+plugins {
+    alias(libs.plugins.android.test)
+    alias(libs.plugins.baselineprofile)
+}
+
+android {
+    namespace = "dev.anaes.qrh.baselineprofile"
+    compileSdk = 37
+
+    defaultConfig {
+        minSdk = 28
+        targetSdk = 36
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    targetProjectPath = ":app"
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+}
+
+// Generated on the devices plugged in (or emulators running), and merged across them, so a phone
+// and a tablet together cover both layouts
+baselineProfile {
+    useConnectedDevices = true
+}
+
+dependencies {
+    implementation(libs.androidx.junit)
+    implementation(libs.uiautomator)
+    implementation(libs.benchmark.macro.junit4)
+}

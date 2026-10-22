@@ -13,5 +13,5 @@
 /captures
 .externalNativeBuild
 .cxx
-gradlew
-gradlew.bat
+.kotlin
+/app/release
