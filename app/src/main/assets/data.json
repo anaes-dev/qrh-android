@@ -294,7 +294,7 @@
         {
           "type": 8,
           "head": "Box C: DEFIBRILLATION",
-          "body": "<p>Continue compressions while charging</p><p>Biphasic 4 J.kg⁻¹ (adult 150-200 J)</p><p>DO NOT check pulse after defibrillation</p><p>Use 3 stacked shocks in cardiac catheterisation lab</p>",
+          "body": "<p>Continue compressions while charging</p><p>Biphasic 4 J.kg⁻¹ <small>(adult 150-200 J)</small></p><p>DO NOT check pulse after defibrillation</p><p>Use 3 stacked shocks in cardiac catheterisation lab</p>",
           "step": ""
         },
         {
